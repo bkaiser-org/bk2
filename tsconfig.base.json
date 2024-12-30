@@ -14,7 +14,18 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@bk2/social-feed-data-access": [
+        "libs/social-feed/social-feed-data-access/src/index.ts"
+      ],
+      "@bk2/social-feed-feature": [
+        "libs/social-feed/social-feed-feature/src/index.ts"
+      ],
+      "@bk2/social-feed-model": [
+        "libs/social-feed/social-feed-model/src/index.ts"
+      ],
+      "@bk2/social-feed-ui": ["libs/social-feed/social-feed-ui/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
