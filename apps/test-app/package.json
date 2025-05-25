@@ -4,12 +4,16 @@
   "private": true,
   "scripts": {
     "build": "npx nx build test-app --configuration=production",
+
     "start": "serve -s ../../dist/apps/test-app/browser -l tcp://0.0.0.0:${PORT:-8080}"
   },
   "dependencies": {
-    "serve": "^14.2.1"
+    "serve": "^14.2.1" 
+  },
+  "devDependencies": {
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=23.8.0", 
+    "pnpm": ">=10.11.0" 
   }
 }
