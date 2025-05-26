@@ -1,10 +1,10 @@
 {
-  "name": "test-app-firebase-build",
+  "name": "test-app-firebase-apphosting-build",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "cd ../.. && pnpm install --frozen-lockfile && pnpm exec nx build test-app --configuration=production",
-    "start": "cd ../.. && pnpm exec serve -s dist/apps/test-app/browser -l tcp://0.0.0.0:${PORT:-8080}"
+    "build": "echo \"Attempting to install pnpm@10.11.0 globally...\" && npm install -g pnpm@10.11.0 && echo \"pnpm installation command completed. Navigating to root and running pnpm commands...\" && cd ../.. && pnpm --version && echo \"Running pnpm install...\" && pnpm install --frozen-lockfile --prefer-offline && echo \"Running nx build...\" && pnpm exec nx build test-app --configuration=production && echo \"Build script finished.\"",
+    "start": "cd ../.. && pnpm --version && pnpm exec serve -s dist/apps/test-app/browser -l tcp://0.0.0.0:${PORT:-8080}"
   },
   "dependencies": {
   },
