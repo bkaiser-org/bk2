@@ -3,12 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "npx nx build test-app --configuration=production",
-
-    "start": "serve -s ../../dist/apps/test-app/browser -l tcp://0.0.0.0:${PORT:-8080}"
+    "build": "cd ../.. && pnpm install --frozen-lockfile && pnpm exec nx build test-app --configuration=production",
+    "start": "cd ../.. && pnpm exec serve -s dist/apps/test-app/browser -l tcp://0.0.0.0:${PORT:-8080}"
   },
   "dependencies": {
-    "serve": "^14.2.1" 
   },
   "devDependencies": {
   },
