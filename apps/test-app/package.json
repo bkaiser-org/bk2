@@ -3,15 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "echo \"BUILD SCRIPT STARTED - CWD: $(pwd)\" && echo \"Node version: $(node --version)\" && echo \"Ensuring CWD is /workspace for core operations...\" && if [ \"$(pwd)\" != \"/workspace\" ]; then cd /workspace; else echo \"Already in /workspace\"; fi && echo \"==== Verifying /workspace/package.json (first 30 lines) BEFORE Corepack ====\" && head -n 30 /workspace/package.json && echo \"==== Verifying /workspace/.pnpmrc contents ====\" && cat /workspace/.pnpmrc && echo \"Enabling corepack (should pick up packageManager from root package.json)...\" && corepack enable && echo \"Verifying pnpm version (Corepack should have set this up): $(pnpm --version)\" && echo \"Removing existing /workspace/node_modules (if any)...\" && rm -rf /workspace/node_modules && echo \"Running pnpm install (force, frozen lockfile, debug loglevel) from /workspace...\" && pnpm install --force --frozen-lockfile --loglevel debug && echo \"Listing /workspace/node_modules (if it exists) and .bin AFTER pnpm install to confirm nx shim...\" && if [ -d \"/workspace/node_modules\" ]; then ls -la /workspace/node_modules; if [ -d \"/workspace/node_modules/.bin\" ]; then ls -la /workspace/node_modules/.bin; else echo \"/workspace/node_modules/.bin NOT FOUND\"; fi else echo \"/workspace/node_modules NOT FOUND\"; fi && echo \"Attempting to run nx build test-app from /workspace using direct call to /workspace/node_modules/.bin/nx...\" && if [ -f \"/workspace/node_modules/.bin/nx\" ]; then /workspace/node_modules/.bin/nx build test-app --configuration=production; else echo \"/workspace/node_modules/.bin/nx NOT FOUND, cannot build.\"; fi && echo \"BUILD SCRIPT FINISHED.\"",
-    "start": "echo \"START SCRIPT STARTED - CWD: $(pwd)\" && echo \"Ensuring CWD is /workspace for core operations...\" && if [ \"$(pwd)\" != \"/workspace\" ]; then cd /workspace; else echo \"Already in /workspace\"; fi && if [ -f \"/workspace/node_modules/.bin/serve\" ]; then /workspace/node_modules/.bin/serve -s dist/apps/test-app/browser -l tcp://0.0.0.0:${PORT:-8080}; else echo \"Serve command not found in /workspace/node_modules/.bin\"; fi"
   },
   "dependencies": {
   },
   "devDependencies": {
-  },
-  "engines": {
-    "node": ">=23.8.0", 
-    "pnpm": ">=10.11.0" 
   }
 }
