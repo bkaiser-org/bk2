@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "echo \"Current working directory: $(pwd)\" && echo \"Current Node.js version:\" && node --version && echo \"Ensuring pnpm@10.11.0 is used via npx...\" && npx pnpm@10.11.0 --version && cd ../.. && echo \"Current working directory after cd: $(pwd)\" && echo \"Running pnpm install via npx with custom store path...\" && PNPM_STORE_PATH=/workspace/.pnpm-store npx pnpm@10.11.0 install --frozen-lockfile && echo \"Running nx build via npx pnpm exec with custom store path...\" && PNPM_STORE_PATH=/workspace/.pnpm-store npx pnpm@10.11.0 exec nx build test-app --configuration=production && echo \"Build script finished.\"",
-    "start": "echo \"Current Node.js version:\" && node --version && echo \"Ensuring pnpm@10.11.0 is used for start script via npx...\" && npx pnpm@10.11.0 --version && cd ../.. && PNPM_STORE_PATH=/workspace/.pnpm-store npx pnpm@10.11.0 exec serve -s dist/apps/test-app/browser -l tcp://0.0.0.0:${PORT:-8080}"
+    "build": "echo \"Initial CWD (should be /workspace/apps/test-app): $(pwd)\" && echo \"Current Node.js version:\" && node --version && echo \"Ensuring pnpm@10.11.0 is used via npx...\" && npx pnpm@10.11.0 --version && echo \"Changing to MONOREPO ROOT (/workspace)...\" && cd /workspace && echo \"CWD after cd /workspace: $(pwd)\" && echo \"Running pnpm install from MONOREPO ROOT...\" && PNPM_STORE_PATH=/workspace/.pnpm-store npx pnpm@10.11.0 install --frozen-lockfile && echo \"Running nx build from MONOREPO ROOT...\" && PNPM_STORE_PATH=/workspace/.pnpm-store npx pnpm@10.11.0 exec nx build test-app --configuration=production && echo \"Build script finished.\"",
+    "start": "echo \"Initial CWD (should be /workspace/apps/test-app): $(pwd)\" && echo \"Current Node.js version:\" && node --version && echo \"Ensuring pnpm@10.11.0 is used for start script via npx...\" && npx pnpm@10.11.0 --version && echo \"Changing to MONOREPO ROOT (/workspace) for start...\" && cd /workspace && PNPM_STORE_PATH=/workspace/.pnpm-store npx pnpm@10.11.0 exec serve -s dist/apps/test-app/browser -l tcp://0.0.0.0:${PORT:-8080}"
   },
   "dependencies": {
   },
