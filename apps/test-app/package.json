@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "echo \"Triggering build from apps/test-app/package.json. CWD: $(pwd). Executing root build script...\" && npx pnpm@10.11.0 run build-test",
-    "start": "echo \"Triggering start from apps/test-app/package.json. CWD: $(pwd). Executing root start script...\" && npx pnpm@10.11.0 run start-test"
+    "build": "echo \"Triggering build from apps/test-app/package.json. Initial CWD: $(pwd)\" && echo \"Listing /workspace contents:\" && ls -la /workspace && echo \"Displaying /workspace/package.json (relevant parts):\" && cat /workspace/package.json | grep -E '(\"scripts\"|build-test)' -A 5 && echo \"Attempting to run root build-test script using --prefix /workspace...\" && npx pnpm@10.11.0 --prefix /workspace run build-test",
+    "start": "echo \"Triggering start from apps/test-app/package.json. Initial CWD: $(pwd)\" && npx pnpm@10.11.0 --prefix /workspace run start-test"
   },
   "dependencies": {
   },
