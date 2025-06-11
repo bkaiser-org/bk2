@@ -5,22 +5,24 @@ Additionally, it makes sure that the environments directory is made persistent a
 
 ## Environment configuration
 
-script bk2/set-env.js is called with 
+As a preparation for the build process, script bk2/set-env.js is called with 
 
 ```sh
 ts-node ./set-env.js
 ```
 
 to generate environment.ts for test environment and environment.prod.ts for prod environment.
-see target config in bk2/apps/{APPDIR}/project.json
 
-DO NOT COMMIT THIS FILE INTO YOUR SOURCE CODE MANAGEMENT SYSTEM AS IT CONTAINS SENSITIVE INFORMATION.
+See target config in bk2/apps/{APPDIR}/project.json.
+
+DO NOT COMMIT THE environment*.ts FILES INTO YOUR SOURCE CODE MANAGEMENT SYSTEM AS THEY CONTAIN SENSITIVE INFORMATION.
+
 
 ### Environment parameters in productive environment
 
 In prod environment with Firebase AppHosting deployment, the environment parameters are read from Google Cloud Secrets.
 The secrets are read once during build time by the build script (target config in bk2/apps/{APPDIR}/project.json).
-The secret names are identical for all tenants. That's why you need to make sure to adapt the following tenant-specific values:
+The secret names are identical for all tenants. That's why you need to make sure to adapt the following tenant-specific values before starting the build of a different tenant:
 
 - NEXT_PUBLIC_AUTH_TENANTID
 - ev. DPO and OP contact information
@@ -34,7 +36,13 @@ The secret names are identical for all tenants. That's why you need to make sure
 
 Tip: consider .env as the master data and copy the values into GCP Secret Manager.
 
-Add secrets with firebase apphosting:secrets:set {SECRET_NAME} {SECRET_VALUE} or in the google cloud console Secret Manager view.
+Add secrets on the command line with 
+
+```sh
+firebase apphosting:secrets:set {SECRET_NAME} {SECRET_VALUE}
+```
+
+Alternatively, you may use the Secret Manager view in the google cloud console.
 
 Make sure to configure the correct permissions to make these secrets readable.
 
@@ -50,7 +58,7 @@ You can find a file bk2/apps/{APPDIR}/.env. Execute this file to write the param
 source ./apps/{APPDIR}/.env
 ```
 
-DO NOT COMMIT THIS FILE INTO YOUR SOURCE CODE MANAGEMENT SYSTEM AS IT CONTAINS SENSITIVE INFORMATION.
+DO NOT COMMIT THE .env FILE INTO YOUR SOURCE CODE MANAGEMENT SYSTEM AS IT CONTAINS SENSITIVE INFORMATION.
 
 ## Build process
 
