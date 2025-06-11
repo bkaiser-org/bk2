@@ -5,13 +5,12 @@ import { ModalController } from '@ionic/angular/standalone';
 import { of } from 'rxjs';
 
 import { FIRESTORE } from '@bk2/shared/config';
-import { debugListLoaded, isPerson, warn } from '@bk2/shared/util';
-import { findUserByPersonKey, getSystemQuery, searchData } from '@bk2/shared/data';
+import { debugListLoaded, findUserByPersonKey, getSystemQuery, isPerson, searchData, warn } from '@bk2/shared/util';
 import { LogInfo, logMessage, PersonCollection, PersonModel, UserCollection, UserModel } from '@bk2/shared/models';
 import { PersonSelectModalComponent } from '@bk2/shared/feature';
 
 import { AppStore } from '@bk2/auth/feature';
-import { AuthService } from '@bk2/auth/data';
+import { AuthService } from '@bk2/auth/data-access';
 
 export type AocRolesState = {
   calendarName: string;

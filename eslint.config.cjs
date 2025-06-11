@@ -5,6 +5,7 @@ const allowedFrontendExternalImports = [
   '@angular/*',
   '@ionic/*',
   'ionicons*',
+  'crypto-js',
   '*capacitor*',
   'rxjs',
   '*fire*',
@@ -48,6 +49,7 @@ module.exports = [
               sourceTag: 'type:app',
               onlyDependOnLibsWithTags: [
                 'type:feature',
+                'type:data-access',
                 'type:ui',
                 'type:model',
                 'platform:mobile',
@@ -65,7 +67,7 @@ module.exports = [
               onlyDependOnLibsWithTags: [
                 'type:feature',
                 'type:ui',
-                'type:data',
+                'type:data-access',
                 'type:util',
                 'type:model',
                 'type:config'
@@ -76,7 +78,7 @@ module.exports = [
               sourceTag: 'type:ui',
               onlyDependOnLibsWithTags: [
                 'type:ui',
-                'type:data',
+                'type:data-access',
                 'type:util',
                 'type:model',
                 'type:config'
@@ -84,9 +86,9 @@ module.exports = [
               allowedExternalImports: allowedFrontendExternalImports,
             },
             {
-              sourceTag: 'type:data',
+              sourceTag: 'type:data-access',
               onlyDependOnLibsWithTags: [
-                'type:data',
+                'type:data-access',
                 'type:util',
                 'type:model',
                 'type:config',
@@ -103,11 +105,14 @@ module.exports = [
               allowedExternalImports: [
                 'echarts',
                 '@capacitor/*',
+                'crypto-js',
+                'ibantools',
                 '@ionic/*',
                 'rxjs',
                 '*vest*',
                 '@angular*',
                 'firebase*',
+                'rxfire/*',
                 'date-fns',
                 '*fullcalendar*',
                 '*transloco*',

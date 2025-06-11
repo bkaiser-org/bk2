@@ -1,0 +1,54 @@
+{
+  "firestore": {
+    "database": "(default)",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "apphosting": {
+    "backendId": "bko-euw4-backend",
+    "rootDir": ".",
+    "ignore": [
+      "node_modules",
+      ".pnpm-store",
+      ".pnpm_home_local",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "functions",
+      "dist"
+    ],
+    "environmentVariables": {
+      "GOOGLE_NODE_RUN_SCRIPTS": "",
+      "NODE_VERSION": "23.8.0",
+      "NPM_CONFIG_USERCONFIG": "/dev/null",
+      "NPM_CONFIG_GLOBALCONFIG": "/dev/null"
+    }
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "emulators": {
+    "apphosting": {
+      "port": 5002,
+      "rootDirectory": ".",
+      "environmentVariables": {
+        "GOOGLE_NODE_RUN_SCRIPTS": "",
+        "NODE_VERSION": "23.8.0"
+      }
+    },
+    "auth": {
+      "port": 9099
+    },
+    "firestore": {
+      "port": 8080
+    },
+    "storage": {
+      "port": 9199
+    },
+    "ui": {
+      "enabled": true,
+      "port": 5000
+    },
+    "singleProjectMode": true
+  }
+}
