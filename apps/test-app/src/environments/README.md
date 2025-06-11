@@ -32,6 +32,8 @@ The secret names are identical for all tenants. That's why you need to make sure
 - APP_DOMAIN
 - APP_LATITUDE and APP_LONGITUDE
 
+Tip: consider .env as the master data and copy the values into GCP Secret Manager.
+
 Add secrets with firebase apphosting:secrets:set {SECRET_NAME} {SECRET_VALUE} or in the google cloud console Secret Manager view.
 
 Make sure to configure the correct permissions to make these secrets readable.
