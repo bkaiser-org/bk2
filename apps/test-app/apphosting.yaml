@@ -22,7 +22,7 @@ env:
     secret: NEXT_PUBLIC_APP_TITLE
   - variable: NEXT_PUBLIC_APP_NAME
     secret: NEXT_PUBLIC_APP_NAME
-  - variable NEXT_PUBLIC_CHAT_API_KEY
+  - variable: NEXT_PUBLIC_CHAT_API_KEY
     secret: NEXT_PUBLIC_CHAT_API_KEY
   
   
