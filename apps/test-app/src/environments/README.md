@@ -19,8 +19,20 @@ DO NOT COMMIT THIS FILE INTO YOUR SOURCE CODE MANAGEMENT SYSTEM AS IT CONTAINS S
 ### Environment parameters in productive environment
 
 In prod environment with Firebase AppHosting deployment, the environment parameters are read from Google Cloud Secrets.
+The secrets are read once during build time by the build script (target config in bk2/apps/{APPDIR}/project.json).
+The secret names are identical for all tenants. That's why you need to make sure to adapt the following tenant-specific values:
 
-Add secrets with firebase apphosting:secrets:set {SECRET_NAME} {SECRET_VALUE}.
+- NEXT_PUBLIC_AUTH_TENANTID
+- ev. DPO and OP contact information
+- FIREBASE_APP_ID
+- APP_TITLE
+- APP_SUBTITLE
+- APP_NAME
+- APP_VERSION
+- APP_DOMAIN
+- APP_LATITUDE and APP_LONGITUDE
+
+Add secrets with firebase apphosting:secrets:set {SECRET_NAME} {SECRET_VALUE} or in the google cloud console Secret Manager view.
 
 Make sure to configure the correct permissions to make these secrets readable.
 
