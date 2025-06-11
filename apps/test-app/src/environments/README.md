@@ -45,6 +45,15 @@ firebase apphosting:secrets:set {SECRET_NAME} {SECRET_VALUE}
 Alternatively, you may use the Secret Manager view in the google cloud console.
 
 Make sure to configure the correct permissions to make these secrets readable.
+For the Firebase App Hosting Service (runtime and build-time injection), the service account that your Firebase App Hosting backend runs as needs the Secret Manager Secret Accessor role (roles/secretmanager.secretAccessor) on the secrets it needs to access.
+
+This service account is typically one of the following:
+- a dedicated Firebase App Hosting service account: service-PROJECT_NUMBER@gcp-sa-apphosting.iam.gserviceaccount.com (common for newer projects)
+- the compute engine default service account PROJECT_NUMBER-compute@developer.gserviceaccount.com (might be used in older projects or certain configurations)
+
+When you configure the secrets, Firebase usually attempts to automatically grant this role to the appropriate App Hosting service account. This allows App Hosting to securely inject these secrets as environment variables into both your build environment and your runtime environment.
+
+Because our setup fetches the secrets directly with set-env.js (instead of relying on App Hosting to inject them as environment variables), the cloud build service account (PROJECT_NUMBER@cloudbuild.gserviceaccount.com) also needs the Secret Manager Secret Accessor role (roles/secretmanager.secretAccessor).
 
 see: [how-to-keep-your-secrets-from-your-source-code-in-an-angular-project](https://pazel.dev/how-to-keep-your-secrets-from-your-source-code-in-an-angular-project)
 
