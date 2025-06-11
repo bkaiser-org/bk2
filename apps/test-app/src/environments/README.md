@@ -53,8 +53,6 @@ This service account is typically one of the following:
 
 When you configure the secrets, Firebase usually attempts to automatically grant this role to the appropriate App Hosting service account. This allows App Hosting to securely inject these secrets as environment variables into both your build environment and your runtime environment.
 
-Because our setup fetches the secrets directly with set-env.js (instead of relying on App Hosting to inject them as environment variables), the cloud build service account (PROJECT_NUMBER@cloudbuild.gserviceaccount.com) also needs the Secret Manager Secret Accessor role (roles/secretmanager.secretAccessor).
-
 see: [how-to-keep-your-secrets-from-your-source-code-in-an-angular-project](https://pazel.dev/how-to-keep-your-secrets-from-your-source-code-in-an-angular-project)
 
 
