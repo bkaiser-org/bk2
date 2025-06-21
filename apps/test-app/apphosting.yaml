@@ -6,6 +6,10 @@ runConfig:
   # concurrency: 80
   # cpu: 1
   # memoryMiB: 512
+  # The command to start your server. This will be run from the 'entryPoint' directory.
+  command: ["npm", "start"]
+  # The directory (relative to the repository root) containing your runnable application.
+  entryPoint: "dist/apps/test-app"
 
 # Environment variables and secrets.
 # See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
@@ -21,6 +25,10 @@ env:
   - variable: NEXT_PUBLIC_IMGIX_BASE_URL
     secret: NEXT_PUBLIC_IMGIX_BASE_URL
 
-
-  
-  
+# Build settings for App Hosting.
+# See https://firebase.google.com/docs/app-hosting/configure#build-commands
+buildConfig:
+  # Command to build your application. This is run from the root of your repository.
+  buildCommand: "npx nx build test-app"
+  # Optional: Specify a version of Node.js to use for building if needed.
+  # nodeVersion: "18"
