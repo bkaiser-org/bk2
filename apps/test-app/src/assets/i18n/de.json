@@ -442,7 +442,7 @@
     "cellBackgroundColor": {
       "label": "Hintergrundfarbe",
       "placeholder": "Farbe",
-      "helper": "Die Hintergrundfarbe der Felder, z.B. #f0f0f0, grey etc."
+      "helper": "Die Hintergrundfarbe der Felder, z.B. #f0f0f0, grey etc. Empfehlung: verwende Referenzen auf die Ionic Themes, damit auch dark mode funktioniert, z.b. var(--ion-color-background)."
     },
     "cellTextAlign": {
       "label": "Textausrichtung",
@@ -681,7 +681,7 @@
     "gridBackgroundColor": {
       "label": "Hintergrundfarbe",
       "placeholder": "Farbe",
-      "helper": "Die Hintergrundfarbe der Tabelle, z.B. #f0f0f0, grey etc."
+      "helper": "Die Hintergrundfarbe der Tabelle, z.B. #f0f0f0, grey etc. Empfehlung: verwende Referenzen auf die Ionic Themes, damit auch dark mode funktioniert, z.b. var(--ion-color-step-200)."
     },
     "gridGap": {
       "label": "Gap",
@@ -701,7 +701,7 @@
     "headerBackgroundColor": {
       "label": "Hintergrundfarbe",
       "placeholder": "Farbe",
-      "helper": "Die Hintergrundfarbe des Headers, z.B. #f0f0f0, grey etc."
+      "helper": "Die Hintergrundfarbe des Headers, z.B. #f0f0f0, grey etc. Empfehlung: verwende Referenzen auf die Ionic Themes, damit auch dark mode funktioniert, z.b. var(--ion-color-step-150)."
     },
     "headerTextAlign": {
       "label": "Textausrichtung",
@@ -1282,11 +1282,6 @@
     "title": {
       "label": "Titel",
       "placeholder": "text..."
-    },
-    "toastLength": {
-      "label": "Toast Dauer",
-      "placeholder": "nnnn (msec)",
-      "helper": "Die Dauer, wie lange die Nachrichten am unteren Bildschirmrand angezeigt werden (1 sec = 1000)."
     },
     "transferState": {
       "label": "Status",
@@ -4926,7 +4921,6 @@
       "useTouchId": "TouchID benutzen",
       "useFaceId": "FaceID benutzen",
       "userLang": "Sprache",
-      "toastLength": "Anzeigedauer der Mitteilungen",
       "avatarUsage": "Avatar Benutzung",
       "nameDisplay": "Anzeigeart des Namens",
       "gravatarEmail": "Gravatar E-Mail",
@@ -5017,15 +5011,15 @@
       }
     },
     "privacyUsage": {
-      "none": {
+      "public": {
         "label": "Öffentlich",
         "description": "Keine Einschränkung der Verwendung. Diese Daten dürfen auch auf der Website verwendet werden."
       },
-      "registered": {
+      "restricted": {
         "label": "Eingeschränkt",
         "description": "Nur für Mitglieder des Seeclubs Stäfa innerhalb der App sichtbar (Registrierte User)."
       },
-      "privileged": {
+      "protected": {
         "label": "Geschützt",
         "description": "Nur für autorisierte Benutzer (z.B. Vorstand) im Rahmen der Vereinsaufgaben nutzbar."
       }

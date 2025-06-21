@@ -1,20 +1,22 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { IonApp, IonContent, IonHeader, IonMenu, IonRouterOutlet, IonSplitPane, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { AsyncPipe } from '@angular/common';
-import { ENV, RoleName } from '@bk2/shared/config';
+import { RoleName } from '@bk2/shared/config';
 import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared/util';
 import { MenuComponent } from '@bk2/cms/menu/feature';
 import { TranslatePipe } from '@bk2/shared/i18n';
 import { AuthInfoComponent } from '@bk2/auth/ui';
-import { AppStore } from '@bk2/auth/feature';
+import { AppStore } from '@bk2/shared/feature';
+import { SpinnerComponent } from '@bk2/shared/ui';
 
 @Component({
   imports: [
     TranslatePipe, AsyncPipe,
     MenuComponent, AuthInfoComponent,
     IonApp, IonSplitPane, IonMenu, IonHeader,
-    IonTitle, IonContent, IonToolbar, IonRouterOutlet
-  ],
+    IonTitle, IonContent, IonToolbar, IonRouterOutlet,
+    SpinnerComponent
+],
   selector: 'bk-root',
   styles: [
     `
@@ -95,8 +97,14 @@ import { AppStore } from '@bk2/auth/feature';
             </ion-toolbar>
           </ion-header>
           <ion-content>
-            <bk-menu [menuName]="mainMenuName" />
-            <bk-auth-info [currentUser]="appStore.currentUser()" [fbUser]="appStore.fbUser()" [isAuthenticated]="appStore.isAuthenticated()" [isAdmin]="hasRole('admin')" />
+            @if (isUserSessionReady()) {
+              <bk-menu [menuName]="mainMenuName()" />
+            } @else {
+              <bk-spinner />
+            }
+            <!-- @if(showDebugInfo()) { -->
+              <bk-auth-info [currentUser]="appStore.currentUser()" [fbUser]="appStore.fbUser()" [isAuthenticated]="appStore.isAuthenticated()" [isAdmin]="hasRole('admin')" />
+            <!-- } -->
           </ion-content>
         </ion-menu>
         <ion-router-outlet id="main" />
@@ -104,7 +112,7 @@ import { AppStore } from '@bk2/auth/feature';
     </ion-app>
     } @placeholder (minimum 1000ms) {
     <div class="logo-container">
-      <img class="kenburns-top" [src]="logoUrl" alt="logo" />
+      <img class="kenburns-top" [src]="logoUrl()" alt="logo" />
     </div>
     } @loading(after 100ms; minimum 500ms) {
     <span>Bitte warten... die Applikation wird geladen.</span>
@@ -118,10 +126,29 @@ import { AppStore } from '@bk2/auth/feature';
 })
 export class AppComponent {
   protected appStore = inject(AppStore);
-  private readonly env = inject(ENV);
-  protected mainMenuName = 'main_' + this.env.owner.tenantId;
 
-  public logoUrl = `${this.env.app.imgixBaseUrl}/${getImgixUrlWithAutoParams(this.env.app.logoUrl)}`;
+  protected showDebugInfo = computed(() => this.appStore.showDebugInfo());
+  protected mainMenuName = computed(() => `main_${this.appStore.tenantId()}`);
+  protected logoUrl = computed(() => (`${this.appStore.services.imgixBaseUrl()}/${getImgixUrlWithAutoParams(this.appStore.appConfig().logoUrl)}`));
+  
+  protected isUserSessionReady = computed(() => {
+    const fbUser = this.appStore.fbUser();
+    const currentUser = this.appStore.currentUser();
+
+    // If the Firebase auth state is null, the user is logged out. We are ready.
+    if (fbUser === null) {
+      return true;
+    }
+
+    // If the Firebase auth state is populated, we are only ready if the 
+    // corresponding application user object has also been found.
+    if (fbUser && currentUser) {
+      return true;
+    }
+
+    // Otherwise, we are in a transitional state (e.g., logging in but waiting for data).
+    return false;
+  });
 
   protected hasRole(role: RoleName | undefined): boolean {
     return hasRole(role, this.appStore.currentUser());
