@@ -16,6 +16,8 @@ env:
     secret: NEXT_PUBLIC_SVC_GMAP_KEY
   - variable: NEXT_PUBLIC_IMGIX_BASE_URL
     secret: NEXT_PUBLIC_IMGIX_BASE_URL
+  - variable: IPINFO_TOKEN
+    secret: IPINFO_TOKEN
 
 buildConfig:
   buildCommand: >

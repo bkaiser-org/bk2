@@ -3,7 +3,6 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "bk",
-  "type": "module",
   "sourceRoot": "apps/test-app/src",
   "tags": [
     "type:app",
@@ -19,14 +18,14 @@
       "dependsOn": [
         "config"
       ],
-      "executor": "@angular-devkit/build-angular:application",
+      "executor": "@angular-devkit/build-angular:browser",
       "outputs": [
         "{options.outputPath}"
       ],
       "options": {
         "outputPath": "dist/apps/test-app",
         "index": "apps/test-app/src/index.html",
-        "browser": "apps/test-app/src/main.ts",
+        "main": "apps/test-app/src/main.ts",
         "polyfills": [],
         "tsConfig": "apps/test-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
@@ -41,11 +40,6 @@
             "glob": "**/*.svg",
             "input": "node_modules/ionicons/dist/ionicons/svg",
             "output": "./svg"
-          },
-          {
-            "glob": "package.json",
-            "input": "apps/test-app",
-            "output": "package.json"
           }
         ],
         "styles": [
@@ -102,8 +96,7 @@
           "buildTarget": "test-app:build:production"
         },
         "development": {
-          "buildTarget": "test-app:build:development",
-          "host": "0.0.0.0"
+          "buildTarget": "test-app:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -130,8 +123,6 @@
       "executor": "@nx/web:file-server",
       "options": {
         "buildTarget": "test-app:build",
-        "port": 4200,
-        "staticFilePath": "dist/apps/test-app/browser",
         "spa": true
       }
     }

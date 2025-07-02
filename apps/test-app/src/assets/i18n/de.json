@@ -1060,6 +1060,12 @@
       "placeholder": "Passwort",
       "error": "Das Passwort muss mindestens 6 Zeichen lang sein."
     },
+    "passwordAoc": {
+      "label": "Passwort",
+      "placeholder": "Passwort",
+      "error": "Das Passwort muss mindestens 6 Zeichen lang sein.",
+      "helper": "Du kannst hier ein explizites Passwort setzen (z.B. für Testzwecke). Wenn du keines setzts, dann wir ein zufälliges Passwort gewählt und der User kann anschliessend mit Passwort Reset sein eigenes setzen."
+    },
     "participants": {
       "label": "Teilnehmer",
       "placeholder": "Anzahl und Art Teilnehmer",
@@ -4851,6 +4857,13 @@
         "select": "Person auswählen",
         "password-set": "Passwort setzen",
         "password-reset": "Passwort Reset Email senden"
+      },
+      "chat": {
+        "title": "Chat-User synchronisieren",
+        "content": "Firebase user mit Stream Chat User synchronisieren.",
+        "add": "Chat-User hinzufügen",
+        "check": "Chat-User prüfen",
+        "token": "Chat-Token generieren"
       }
     },
     "statistics": {
@@ -5976,6 +5989,7 @@
     "calEventEndDateMandatory": "Das Enddatum ist obligatorisch.",
     "calEventModelType": "Der ModelType muss EventModel sein.",
     "iconNotUndefined": "Das Icon muss definiert sein.",
+    "idRequired": "Die ID ist obligatorisch.",
     "invoicePositionCurrency": "Die Währung muss CHF sein.",
     "invoicePositionModelType": "Der ModelType muss InvoicePositionModel sein.",
     "labelNotUndefined": "Das Label muss definiert sein.",
