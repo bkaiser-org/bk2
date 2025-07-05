@@ -1,4 +1,4 @@
-import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, isDevMode, PLATFORM_ID, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, isDevMode, PLATFORM_ID } from '@angular/core';
 import { PreloadAllModules, RouteReuseStrategy, provideRouter, withComponentInputBinding, withEnabledBlockingInitialNavigation, withPreloading } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
@@ -29,7 +29,6 @@ try {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideExperimentalZonelessChangeDetection(),
     { provide: ENV, useValue: environment },
     provideAnimations(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
