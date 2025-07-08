@@ -69,9 +69,9 @@ export const appRoutes: Route[] = [
     path: 'person',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/person/feature').then((m) => m.PersonListComponent)},
+      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject/person/feature').then((m) => m.PersonListComponent)},
       { path: 'profile', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/profile/feature').then((m) => m.ProfilePageComponent), data: { preload: true }},
-      { path: ':personKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/person/feature').then((m) => m.PersonEditPageComponent )}
+      { path: ':personKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject/person/feature').then((m) => m.PersonEditPageComponent )}
     ],
   },
   {
@@ -86,65 +86,65 @@ export const appRoutes: Route[] = [
     path: 'org',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/org/feature').then((m) => m.OrgListComponent)},
-      { path: ':orgKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/org/feature').then((m) => m.OrgEditPageComponent )}
+      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject/org/feature').then((m) => m.OrgListComponent)},
+      { path: ':orgKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject/org/feature').then((m) => m.OrgEditPageComponent )}
     ],
   },
   {
     path: 'group-view',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: ':groupKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/group/feature').then((m) => m.GroupViewPageComponent )}
+      { path: ':groupKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject/group/feature').then((m) => m.GroupViewPageComponent )}
     ],
   },
   {
     path: 'group',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/group/feature').then((m) => m.GroupListComponent)},
-      { path: ':groupKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/group/feature').then((m) => m.GroupEditPageComponent )}
+      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject/group/feature').then((m) => m.GroupListComponent)},
+      { path: ':groupKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject/group/feature').then((m) => m.GroupEditPageComponent )}
     ],
   },
   {
     path: 'membership',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: ':listId/:orgId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/membership/feature').then((m) => m.MembershipListComponent)},
+      { path: ':listId/:orgId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship/membership/feature').then((m) => m.MembershipListComponent)},
     ],
   },
   {
     path: 'ownership',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/ownership/feature').then((m) => m.OwnershipListComponent)},
+      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship/ownership/feature').then((m) => m.OwnershipListComponent)},
     ],
   },
   {
     path: 'reservation',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/reservation/feature').then((m) => m.ReservationListComponent)},
+      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship/reservation/feature').then((m) => m.ReservationListComponent)},
     ],
   },
   {
     path: 'personalrel',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/personal-rel/feature').then((m) => m.PersonalRelListComponent)},
+      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship/personal-rel/feature').then((m) => m.PersonalRelListComponent)},
     ],
   },
   {
     path: 'workingrel',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/working-rel/feature').then((m) => m.WorkingRelListComponent)},
+      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship/working-rel/feature').then((m) => m.WorkingRelListComponent)},
     ],
   },
   {
     path: 'transfer',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/transfer/feature').then((m) => m.TransferListComponent)},
+      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship/transfer/feature').then((m) => m.TransferListComponent)},
     ],
   },
   {
