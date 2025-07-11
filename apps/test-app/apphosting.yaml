@@ -6,6 +6,8 @@ runConfig:
   entryPoint: "dist/apps/test-app"
 
 env:
+  - variable: APP_ID
+    value: test-app
   - variable: NODE_ENV
     value: production
   - variable: NEXT_PUBLIC_FIREBASE_RECAPTCHA_KEY
@@ -20,23 +22,4 @@ env:
     secret: IPINFO_TOKEN
 
 buildConfig:
-  buildCommand: >
-    set -e &&
-    echo "--- Starting build for test-app ---" &&
-    npx nx build test-app &&
-    echo "--- Build completed. Checking for package.json ---" &&
-    if [ ! -f dist/apps/test-app/package.json ]; then
-      echo "ERROR: dist/apps/test-app/package.json NOT FOUND after build!" >&2;
-      echo "--- Listing dist/apps ---" >&2;
-      ls -l dist/apps >&2;
-      echo "--- Listing dist/apps/test-app (if exists) ---" >&2;
-      ls -l dist/apps/test-app >&2 || echo "dist/apps/test-app does not exist or ls failed" >&2;
-      exit 1;
-    else
-      echo "SUCCESS: dist/apps/test-app/package.json found after build.";
-    fi &&
-    echo "--- Listing contents of dist/apps/test-app ---" &&
-    ls -lA dist/apps/test-app &&
-    echo "--- Listing contents of dist/apps/test-app/browser (if exists) ---" &&
-    ls -lA dist/apps/test-app/browser || echo "dist/apps/test-app/browser does not exist or ls failed" &&
-    echo "--- Build script finished ---"
+  buildCommand: pnpm run build

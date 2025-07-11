@@ -1,4 +1,4 @@
-import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, isDevMode, PLATFORM_ID } from '@angular/core';
+import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, isDevMode, PLATFORM_ID, provideZonelessChangeDetection } from '@angular/core';
 import { PreloadAllModules, RouteReuseStrategy, provideRouter, withComponentInputBinding, withEnabledBlockingInitialNavigation, withPreloading } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
@@ -18,6 +18,7 @@ import { environment } from '../environments/environment';
 import { provideTransloco } from '@jsverse/transloco';
 import { TranslateModule } from '@ngx-translate/core';
 import { I18nService, TranslocoHttpLoader } from '@bk2/shared/i18n';
+import { provideClientHydration, withHttpTransferCacheOptions, withIncrementalHydration } from '@angular/platform-browser';
 
 // Initialize Firebase. This is safe to run on the server.
 try {
@@ -29,6 +30,13 @@ try {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideClientHydration(
+      withIncrementalHydration(),
+      withHttpTransferCacheOptions({
+        includePostRequests: true,
+      }),
+    ),
+    provideZonelessChangeDetection(),
     { provide: ENV, useValue: environment },
     provideAnimations(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -53,7 +61,7 @@ export const appConfig: ApplicationConfig = {
     }),
     I18nService,
 
-    // this provider is to safely initializes browser-only services AFTER the app has rendered.
+    // this provider is to safely initialize browser-only services AFTER the app has rendered.
     {
       provide: APP_BOOTSTRAP_LISTENER,
       useFactory: (platformId: object) => {

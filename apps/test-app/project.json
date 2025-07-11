@@ -18,15 +18,17 @@
       "dependsOn": [
         "config"
       ],
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:application",
       "outputs": [
         "{options.outputPath}"
       ],
       "options": {
         "outputPath": "dist/apps/test-app",
         "index": "apps/test-app/src/index.html",
-        "main": "apps/test-app/src/main.ts",
-        "polyfills": [],
+        "browser": "apps/test-app/src/main.ts",
+        "polyfills": [
+          "apps/test-app/src/polyfills.server.ts"
+        ],
         "tsConfig": "apps/test-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -63,15 +65,37 @@
           "isomorphic-ws",
           "lodash.deburr"
         ],
-        "scripts": []
+        "scripts": [],
+        "server": "apps/test-app/src/main.server.ts",
+        "prerender": true,
+        "ssr": {
+          "entry": "apps/test-app/src/main.server.ts"
+        },
+        "externalDependencies": [
+          "zone.js/node",
+          "http",
+          "https",
+          "net",
+          "tls",
+          "fs",
+          "path",
+          "os",
+          "stream",
+          "crypto",
+          "url",
+          "assert",
+          "vm",
+          "zlib",
+          "child_process"
+        ]
       },
       "configurations": {
         "production": {
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "5mb",
-              "maximumError": "5mb"
+              "maximumWarning": "8mb",
+              "maximumError": "10mb"
             },
             {
               "type": "anyComponentStyle",
