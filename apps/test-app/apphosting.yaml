@@ -10,6 +10,8 @@ env:
     value: test-app
   - variable: NODE_ENV
     value: production
+  - variable: auth-chat-STREAM_API_KEY
+    secret: auth-chat-STREAM_API_KEY
   - variable: NEXT_PUBLIC_FIREBASE_RECAPTCHA_KEY
     secret: NEXT_PUBLIC_FIREBASE_RECAPTCHA_KEY
   - variable: NEXT_PUBLIC_NX_CLOUD_ACCESS_TOKEN
