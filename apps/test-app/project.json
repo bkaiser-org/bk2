@@ -103,12 +103,14 @@
               "maximumError": "8kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "NODE_OPTIONS": "--require ./apps/test-app/dom.mock.js"
         },
         "development": {
           "optimization": false,
           "extractLicenses": false,
-          "sourceMap": true
+          "sourceMap": true,
+          "NODE_OPTIONS": "--require ./apps/test-app/dom.mock.js"
         }
       },
       "defaultConfiguration": "production"
