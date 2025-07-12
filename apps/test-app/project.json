@@ -19,15 +19,13 @@
         "config"
       ],
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/test-app",
         "index": "apps/test-app/src/index.html",
         "browser": "apps/test-app/src/main.ts",
         "polyfills": [
-          "apps/test-app/src/polyfills.server.ts"
+          "zone.js"
         ],
         "tsConfig": "apps/test-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
@@ -69,7 +67,8 @@
         "server": "apps/test-app/src/main.server.ts",
         "prerender": true,
         "ssr": {
-          "entry": "apps/test-app/src/main.server.ts"
+          "entry": "apps/test-app/src/main.server.ts",
+          "polyfills": "apps/test-app/src/polyfills.server.ts"
         },
         "externalDependencies": [
           "zone.js/node",
