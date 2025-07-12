@@ -1,44 +1,44 @@
 /**
- * This script is preloaded using Node's --require flag
- * to set up a global JSDOM environment before the Angular build process starts.
- * This version (v7) performs a comprehensive copy while explicitly preventing
- * the cyclic references that cause the "Cyclic __proto__ value" error.
+ * This script provides a mock DOM environment for Node.js, which is necessary for
+ * Server-Side Rendering (SSR) and prerendering of Angular applications that use
+ * browser-specific APIs, especially those with Web Components (like Ionic).
+ *
+ * It must be loaded before Angular's server-side code runs.
  */
-const { JSDOM } = require('jsdom');
+import { JSDOM } from 'jsdom';
 
-console.log('--- [SSR Preload] Initializing JSDOM Mock (v7 - Cycle Prevention) ---');
+console.log('--- Loading DOM Mock for Node.js ---');
 
 const dom = new JSDOM('<!DOCTYPE html><html><head></head><body></body></html>', {
   url: 'http://localhost',
 });
 
-const g = global;
+// The JSDOM window object
+const { window } = dom;
 
-// Eine Liste von Eigenschaften, die bekanntermaßen Zyklen verursachen.
-// Diese werden wir überspringen.
-const propertiesToSkip = new Set(['window', 'self', 'top', 'parent']);
+// Copy all properties from the JSDOM window to the Node.js global object.
+// This makes browser APIs like `document`, `navigator`, etc., available globally.
+Object.assign(global, window);
 
-// Kopiere dynamisch alle Eigenschaften, außer den problematischen.
-Object.getOwnPropertyNames(dom.window)
-  .filter(prop => typeof g[prop] === 'undefined' && !propertiesToSkip.has(prop))
-  .forEach(prop => {
-    try {
-      const descriptor = Object.getOwnPropertyDescriptor(dom.window, prop);
-      if (descriptor) {
-        Object.defineProperty(g, prop, descriptor);
-      }
-    } catch (e) {
-      console.warn(`Skipping property ${prop} due to error:`, e.message);
-    }
-  });
+// --- CRITICAL FIX for "customElements is not defined" ---
+// The 'customElements' API is not automatically assigned by Object.assign
+// because it's a complex object on the window's prototype. We must assign it explicitly.
+global.customElements = window.customElements;
+global.Window = window.constructor; // Also polyfill the Window constructor
+global.Event = window.Event; // Polyfill Event as well, often needed with custom elements
 
-// Der entscheidende Schritt: Setze `window` manuell auf das globale Objekt,
-// um das Browser-Verhalten korrekt nachzuahmen, OHNE den Zyklus von JSDOM einzuführen.
-g.window = g;
+// Further common globals that might be missing
+global.HTMLElement = window.HTMLElement;
+global.Node = window.Node;
 
-// Mock für `whenDefined`, falls es benötigt wird.
-if (g.customElements && !g.customElements.whenDefined) {
-  g.customElements.whenDefined = (name) => Promise.resolve();
-}
 
-console.log('--- [SSR Preload] JSDOM Mock Initialized (v7 - Cycle Prevention) ---');
+// Mock for requestAnimationFrame, often used by UI libraries
+global.requestAnimationFrame = (callback) => {
+  return setTimeout(callback, 0);
+};
+
+global.cancelAnimationFrame = (id) => {
+  clearTimeout(id);
+};
+
+console.log('--- DOM Mock loaded successfully. `customElements` is now defined. ---');
