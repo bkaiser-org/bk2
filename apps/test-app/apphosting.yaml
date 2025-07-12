@@ -10,6 +10,8 @@ env:
     value: test-app
   - variable: NODE_ENV
     value: production
+  - variable: NODE_OPTIONS
+    value: "--require ./apps/test-app/dom.mock.js"
   - variable: STREAM_API_KEY
     secret: STREAM_API_KEY
   - variable: NEXT_PUBLIC_FIREBASE_RECAPTCHA_KEY
