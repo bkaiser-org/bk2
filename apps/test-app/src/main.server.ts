@@ -1,4 +1,4 @@
-import '../../dom.mock.js'; // IMPORTANT: Must be the first import
+import '../dom.mock.js'; // IMPORTANT: Must be the first import
 
 /***************************************************************************************************
  * Zone.js wird von Angular für die Change Detection benötigt (für SSR).
