@@ -65,6 +65,7 @@
         ],
         "scripts": [],
         "server": "apps/test-app/src/main.server.ts",
+        "serverTsConfig": "apps/test-app/tsconfig.server.json",
         "prerender": true,
         "ssr": true,
         "externalDependencies": [
