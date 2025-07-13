@@ -29,7 +29,11 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/test-app/src/assets",
-          "apps/test-app/dom.mock.js",
+          {
+            "glob": "dom.mock.js",
+            "input": "apps/test-app",
+            "output": "."
+          },
           {
             "glob": "**/*.json",
             "input": "libs/subject/swisscities/ui/src/lib",
