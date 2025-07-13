@@ -3,7 +3,8 @@
  * Wird vor der Server-Anwendung geladen, um Browser-APIs zu simulieren,
  * die für SSR/Prerendering von Angular mit Web Components (Ionic) benötigt werden.
  */
-import 'zone.js/node';
+// WICHTIG: 'zone.js/node' hier nicht importieren. Es wird in `main.server.ts` importiert,
+// NACHDEM diese Mocks eingerichtet wurden.
 import { JSDOM } from 'jsdom';
 
 console.log('--- Loading Server-Side DOM Polyfills ---');
@@ -31,5 +32,16 @@ Object.keys(window).forEach(key => {
 (global as any).customElements = window.customElements;
 (global as any).HTMLElement = window.HTMLElement;
 (global as any).Event = window.Event;
+(global as any).Node = window.Node;
+(global as any).Window = window.constructor;
+
+// Mock für requestAnimationFrame, der oft von UI-Bibliotheken für Animationen verwendet wird.
+(global as any).requestAnimationFrame = (callback: FrameRequestCallback): number => {
+  return setTimeout(() => callback(Date.now()), 0) as any;
+};
+
+(global as any).cancelAnimationFrame = (id: number) => {
+  clearTimeout(id);
+};
 
 console.log('--- Server-Side DOM Polyfills loaded successfully. ---');

@@ -1,7 +1,8 @@
+import './ssr.mocks';
+
 /***************************************************************************************************
- * Zone.js für den Server
- *
- * Muss NACH den DOM-Polyfills importiert werden.
+ * zone.js/node is a special version of Zone.js specifically for Node.js environments (like for SSR and pre-rendering).
+ * It patches Node.js-specific asynchronous APIs.
  ***************************************************************************************************/
 import 'zone.js/node';
 

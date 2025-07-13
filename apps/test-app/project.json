@@ -30,11 +30,6 @@
         "assets": [
           "apps/test-app/src/assets",
           {
-            "glob": "dom.mock.js",
-            "input": "apps/test-app",
-            "output": "."
-          },
-          {
             "glob": "**/*.json",
             "input": "libs/subject/swisscities/ui/src/lib",
             "output": "assets"
