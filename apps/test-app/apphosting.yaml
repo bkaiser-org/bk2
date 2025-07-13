@@ -4,14 +4,15 @@ runConfig:
   maxInstances: 10
   command: ["node", "server/main.js"]
   entryPoint: "dist/apps/test-app"
+  env:
+  - variable: NODE_OPTIONS
+    value: --require ./dom.mock.js
 
 env:
   - variable: APP_ID
     value: test-app
   - variable: NODE_ENV
     value: production
-  - variable: NODE_OPTIONS
-    value: --require ./dom.mock.js
   - variable: STREAM_API_KEY
     secret: STREAM_API_KEY
   - variable: NEXT_PUBLIC_FIREBASE_RECAPTCHA_KEY
