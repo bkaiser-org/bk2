@@ -66,10 +66,7 @@
         "scripts": [],
         "server": "apps/test-app/src/main.server.ts",
         "prerender": true,
-        "ssr": {
-          "entry": "apps/test-app/src/main.server.ts",
-          "polyfills": "apps/test-app/src/polyfills.server.ts"
-        },
+        "ssr": true,
         "externalDependencies": [
           "zone.js/node",
           "http",
