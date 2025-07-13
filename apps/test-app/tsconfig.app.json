@@ -10,8 +10,7 @@
   },
   "files": [
     "src/main.ts",
-    "src/main.server.ts",
-    "src/ssr.mocks.ts"
+    "src/main.server.ts"
   ],
   "include": [
     "src/**/*.d.ts"
