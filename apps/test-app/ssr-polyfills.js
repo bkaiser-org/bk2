@@ -13,12 +13,6 @@ const dom = new JSDOM('<!DOCTYPE html><html><head></head><body></body></html>', 
 
 const { window } = dom;
 
-Object.keys(window).forEach((key) => {
-  if (typeof global[key] === 'undefined' && key !== 'global' && key !== 'process') {
-    global[key] = window[key];
-  }
-});
-
 global.window = window;
 global.document = window.document;
 global.navigator = window.navigator;
