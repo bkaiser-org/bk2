@@ -5,6 +5,12 @@
  */
 const { JSDOM } = require('jsdom');
 
+// Guard to prevent the polyfills from being loaded multiple times in different workers.
+if (global.window) {
+  // The DOM has already been mocked, so we can exit.
+  return;
+}
+
 console.log('--- [SSR] Loading DOM polyfills via --require ---');
 
 const dom = new JSDOM('<!DOCTYPE html><html><head></head><body></body></html>', {
