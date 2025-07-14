@@ -4,6 +4,9 @@ runConfig:
   maxInstances: 10
   command: ["node", "server/main.js"]
   entryPoint: "dist/apps/test-app"
+  env:
+    - variable: NODE_OPTIONS
+      value: --require ./ssr-polyfills.js
 
 env:
   - variable: APP_ID
