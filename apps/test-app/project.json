@@ -15,6 +15,22 @@
       "cache": true
     },
     "build": {
+      "executor": "@nx/run-commands",
+      "outputs": ["{workspaceRoot}/dist/apps/test-app"],
+      "options": {
+        "command": "NODE_OPTIONS='--require ./apps/test-app/ssr-polyfills.js' nx run test-app:_build"
+      },
+      "configurations": {
+        "production": {
+          "command": "NODE_OPTIONS='--require ./apps/test-app/ssr-polyfills.js' nx run test-app:_build:production"
+        },
+        "development": {
+          "command": "NODE_OPTIONS='--require ./apps/test-app/ssr-polyfills.js' nx run test-app:_build:development"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "_build": {
       "dependsOn": [
         "config"
       ],
