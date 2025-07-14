@@ -15,31 +15,15 @@
       "cache": true
     },
     "build": {
-      "executor": "@nx/run-commands",
-      "outputs": ["{workspaceRoot}/dist/apps/test-app"],
-      "options": {
-        "command": "NODE_OPTIONS='--require ./apps/test-app/ssr-polyfills.js' nx run test-app:_build"
-      },
-      "configurations": {
-        "production": {
-          "command": "NODE_OPTIONS='--require ./apps/test-app/ssr-polyfills.js' nx run test-app:_build:production"
-        },
-        "development": {
-          "command": "NODE_OPTIONS='--require ./apps/test-app/ssr-polyfills.js' nx run test-app:_build:development"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "_build": {
       "dependsOn": [
         "config"
       ],
-      "executor": "@angular-devkit/build-angular:application",
+      "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/test-app",
+        "outputPath": "dist/apps/test-app/browser",
         "index": "apps/test-app/src/index.html",
-        "browser": "apps/test-app/src/main.ts",
+        "main": "apps/test-app/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/test-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
@@ -82,27 +66,7 @@
           "isomorphic-ws",
           "lodash.deburr"
         ],
-        "scripts": [],
-        "server": "apps/test-app/src/main.server.ts",
-        "prerender": true,
-        "ssr": true,
-        "externalDependencies": [
-          "zone.js/node",
-          "http",
-          "https",
-          "net",
-          "tls",
-          "fs",
-          "path",
-          "os",
-          "stream",
-          "crypto",
-          "url",
-          "assert",
-          "vm",
-          "zlib",
-          "child_process"
-        ]
+        "scripts": []
       },
       "configurations": {
         "production": {
@@ -128,14 +92,76 @@
       },
       "defaultConfiguration": "production"
     },
+    "server": {
+      "dependsOn": [
+        "config"
+      ],
+      "executor": "@angular-devkit/build-angular:server",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/test-app/server",
+        "server": "apps/test-app/src/main.server.ts",
+        "tsConfig": "apps/test-app/tsconfig.server.json",
+        "externalDependencies": [
+          "zone.js/node",
+          "http",
+          "https",
+          "net",
+          "tls",
+          "fs",
+          "path",
+          "os",
+          "stream",
+          "crypto",
+          "url",
+          "assert",
+          "vm",
+          "zlib",
+          "child_process"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "none"
+        },
+        "development": {
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "prerender": {
+      "executor": "@angular-devkit/build-angular:prerender",
+      "options": {
+        "browserTarget": "test-app:build",
+        "serverTarget": "test-app:server"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "test-app:build:production",
+          "serverTarget": "test-app:server:production"
+        },
+        "development": {
+          "browserTarget": "test-app:build:development",
+          "serverTarget": "test-app:server:development"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "test-app:build:production"
+          "buildTarget": "test-app:build:production",
+          "browserTarget": "test-app:build:production",
+          "serverTarget": "test-app:server:production"
         },
         "development": {
-          "buildTarget": "test-app:build:development"
+          "buildTarget": "test-app:build:development",
+          "browserTarget": "test-app:build:development",
+          "serverTarget": "test-app:server:development"
         }
       },
       "defaultConfiguration": "development"
