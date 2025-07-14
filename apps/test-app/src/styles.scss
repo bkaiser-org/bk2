@@ -1,5 +1,6 @@
-// emojis
-@use "@ctrl/ngx-emoji-mart/picker";
+// to use custom properties from variables.scss
+// @import './theme/variables.scss';
+
 
 /* You can add global styles to this file, and also import other style files */
 /*
@@ -40,6 +41,7 @@
 
 /* Chat with Stream.io */
 @import 'stream-chat-angular/src/assets/styles/css/index.css';
+// @import '@ctrl/ngx-emoji-mart/picker/styles.css';
 
 /********************* custom style extensions *****************************/
 
