@@ -3,6 +3,10 @@
  * for the Node.js environment used during Server-Side Rendering (SSR) and prerendering.
  * It is loaded using the NODE_OPTIONS='--require ./path/to/this/file.js' environment variable.
  */
+const domino = require('domino');
+const fs = require('fs');
+const path = require('path');
+
 // Guard to prevent the polyfills from being loaded multiple times in different workers.
 if (global.window) {
   // The DOM has already been mocked, so we can exit.
@@ -10,10 +14,6 @@ if (global.window) {
 }
 
 console.log('--- [SSR] Loading DOM polyfills via --require using domino ---');
-
-const domino = require('domino');
-const fs = require('fs');
-const path = require('path');
 
 // Use the actual index.html as a template for a more accurate DOM.
 const template = fs.readFileSync(path.join(__dirname, 'src/index.html')).toString();
