@@ -27,4 +27,7 @@ env:
     secret: IPINFO_TOKEN
 
 buildConfig:
-  buildCommand: pnpm run build
+  buildCommand: >
+    set -e &&
+    echo "--- Building test-app with SSR polyfills ---" &&
+    NODE_OPTIONS="--require ./apps/test-app/ssr-polyfills.js" pnpm exec nx run test-app:build:production
