@@ -32,4 +32,4 @@ buildConfig:
   buildCommand: >
     set -e &&
     echo "--- [BUILD SCRIPT] Using apphosting.yaml to build test-app ---" &&
-    npx nx run test-app:build:production
+    npx nx run test-app:build:production --verbose
