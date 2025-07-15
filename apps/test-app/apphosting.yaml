@@ -27,4 +27,7 @@ env:
     secret: IPINFO_TOKEN
 
 buildConfig:
-  buildCommand: pnpm run build
+  buildCommand: >
+    set -e &&
+    echo "--- [BUILD SCRIPT] Using apphosting.yaml to build test-app ---" &&
+    NODE_OPTIONS="--require ./ssr-polyfills.js" npx nx run test-app:build:production
