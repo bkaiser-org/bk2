@@ -29,7 +29,21 @@ global.Event = window.Event;
 global.Node = window.Node;
 global.HTMLElement = window.HTMLElement;
 // A mock for customElements is often needed for Web Components (like Ionic).
-global.customElements = window.customElements || { define: () => {} };
+global.customElements = window.customElements || {
+    define: (tagName, constructor) => {
+        // Basic define implementation
+        if (!window.customElementsRegistry) {
+            window.customElementsRegistry = {};
+        }
+        window.customElementsRegistry[tagName] = constructor;
+    },
+    get: (tagName) => {
+        // Basic get implementation
+        return window.customElementsRegistry ? window.customElementsRegistry[tagName] : undefined;
+    },
+    whenDefined: () => Promise.resolve()
+};
+
 global.requestAnimationFrame = (callback) => setTimeout(() => callback(Date.now()), 0);
 global.cancelAnimationFrame = (id) => clearTimeout(id);
 global.Window = window.constructor;
