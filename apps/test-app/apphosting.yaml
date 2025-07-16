@@ -27,5 +27,4 @@ env:
     secret: IPINFO_TOKEN
 
 scripts:
-  buildCommand: |
-    echo "TEST: Simple App Hosting build command is running!" > /tmp/build_test.txt
+  buildCommand: echo "TEST BUILDCOMMAND"
