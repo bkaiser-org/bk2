@@ -32,4 +32,10 @@ buildConfig:
   buildCommand: >
     set -e &&
     echo "--- [BUILD SCRIPT] Using apphosting.yaml to build test-app ---" &&
+    echo "NODE_OPTIONS is set to: $NODE_OPTIONS" &&
+    echo "--- Checking for ssr-polyfills.js at the repository root ---" &&
+    ls -l ssr-polyfills.js &&
+    echo "--- ssr-polyfills.js content ---" &&
+    cat ssr-polyfills.js &&
+    echo "-------------------------------------" &&
     npx nx run test-app:build:production --verbose

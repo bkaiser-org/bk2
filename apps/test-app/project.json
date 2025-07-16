@@ -36,7 +36,7 @@
           "apps/test-app/src/assets",
           {
             "glob": "ssr-polyfills.js",
-            "input": "apps/test-app",
+            "input": ".",
             "output": "."
           },
           {
