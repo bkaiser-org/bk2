@@ -28,16 +28,20 @@ env:
 
 buildConfig:
   environmentVariables:
-    NODE_OPTIONS: --require ./ssr-polyfills.js
+    NODE_OPTIONS: --require ./apps/test-app/ssr-polyfills.js
   buildCommand: >
     set -e &&
     echo "--- [BUILD SCRIPT] Using apphosting.yaml to build test-app ---" &&
     echo "NODE_OPTIONS is set to: $NODE_OPTIONS" &&
+    echo "Current working directory:" &&
+    pwd &&
     echo "--- Checking for ssr-polyfills.js at the repository root ---" &&
     ls -l ssr-polyfills.js &&
     echo "Checking Node Version:" &&
     node --version &&
     echo "--- ssr-polyfills.js content ---" &&
     cat ssr-polyfills.js &&
+    echo "--- Clearing Nx cache ---" &&
+    npx nx reset &&
     echo "-------------------------------------" &&
     npx nx run test-app:build:production --verbose

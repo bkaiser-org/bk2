@@ -1,3 +1,14 @@
+/**
+ * Server-side rendering (SSR) requires that customElements be polyfilled.
+ */
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+const polyfillPath = join(process.cwd(), 'ssr-polyfills.js');
+if (existsSync(polyfillPath)) {
+  require(polyfillPath);
+}
+
+
 /***************************************************************************************************
  * zone.js/node is a special version of Zone.js specifically for Node.js environments (like for SSR and pre-rendering).
  * It patches Node.js-specific asynchronous APIs.
