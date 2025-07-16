@@ -35,6 +35,8 @@ buildConfig:
     echo "NODE_OPTIONS is set to: $NODE_OPTIONS" &&
     echo "--- Checking for ssr-polyfills.js at the repository root ---" &&
     ls -l ssr-polyfills.js &&
+    echo "Checking Node Version:" &&
+    node --version &&
     echo "--- ssr-polyfills.js content ---" &&
     cat ssr-polyfills.js &&
     echo "-------------------------------------" &&
