@@ -21,11 +21,6 @@
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-                 "esbuildOptions": {
-            "define": {
-              "EXTRA": "\"test2\""
-            }
-         },
         "outputPath": "dist/apps/test-app",
         "index": "apps/test-app/src/index.html",
         "browser": "apps/test-app/src/main.ts",
