@@ -1,7 +1,7 @@
 {
   "apphosting": {
     "backendId": "bko-test-euw4-be",
-    "rootDir": ".",
+    "rootDir": "apps/test-app",
     "ignore": [
       "node_modules",
       ".git",
@@ -10,7 +10,7 @@
       "functions"
     ],
     "environmentVariables": {
-      "NODE_OPTIONS": "--require ./ssr-polyfills.js",
+      "NODE_OPTIONS": "--require ./apps/test-app/ssr-polyfills.js",
       "NODE_VERSION": "20",
       "NODE_ENV": "production"
     }
