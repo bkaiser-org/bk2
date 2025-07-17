@@ -14,7 +14,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   </head>
   <body>
-    <bk-root></bk-root>
+    <!--
+    ngSkipHydration:
+    Temporarily disabling Angular's server-side rendering hydration to avoid issues with missing custom elements.
+    see also in project.json: "ssr": false
+    Once the root cause (e.g., Ionic mocks via @ionic/angular-server) is fixed, re-enable prerender for performance 
+    (static HTML serves faster). Hydration should stay enabled long-term unless 
+    Ionic Web Components consistently conflict—test incrementally.
+  -->
+    <bk-root ngSkipHydration></bk-root>
     <noscript>Please enable JavaScript to continue using this application.</noscript>
     <script defer type="module" src="https://static.imgix.net/ix-player/@latest/dist/ix-player.mjs"></script>
   </body>
