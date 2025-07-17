@@ -1,7 +1,7 @@
-import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, mergeApplicationConfig } from '@angular/core';
 import { provideServerRendering } from '@angular/platform-server';
-import { appConfig } from './app.config';
 import { IonicServerModule } from '@ionic/angular-server';  // Import for SSR support
+import { appConfig } from './app.config';  // Your client-side config (e.g., with provideIonicAngular)
 
 /**
  * Server-side configuration for the Angular application.
@@ -10,8 +10,8 @@ import { IonicServerModule } from '@ionic/angular-server';  // Import for SSR su
  */
 const serverConfig: ApplicationConfig = {
   providers: [
-    provideServerRendering(),
-    IonicServerModule  // Adds Ionic SSR mocks/polyfills (e.g., customElements)
+    importProvidersFrom(IonicServerModule),  // Handles Ionic SSR mocks (customElements, etc.)
+    provideServerRendering()
   ],
 };
 
