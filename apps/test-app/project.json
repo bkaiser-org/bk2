@@ -26,7 +26,6 @@
         "browser": "apps/test-app/src/main.ts",
         "server": "apps/test-app/src/main.server.ts",
         "prerender": false, 
-        "hydration": false,
         "ssr": {
           "entry": "apps/test-app/src/main.server.ts"
         },
