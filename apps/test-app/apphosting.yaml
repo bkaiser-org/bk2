@@ -25,6 +25,3 @@ env:
     secret: NEXT_PUBLIC_IMGIX_BASE_URL
   - variable: IPINFO_TOKEN
     secret: IPINFO_TOKEN
-
-scripts:
-  buildCommand: echo "TEST BUILDCOMMAND"
