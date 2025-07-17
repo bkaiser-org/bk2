@@ -35,11 +35,6 @@
         "assets": [
           "apps/test-app/src/assets",
           {
-            "glob": "ssr-polyfills.js",
-            "input": ".",
-            "output": "."
-          },
-          {
             "glob": "**/*.json",
             "input": "libs/subject/swisscities/ui/src/lib",
             "output": "assets"

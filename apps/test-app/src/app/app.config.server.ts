@@ -1,8 +1,7 @@
 import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
 import { provideServerRendering } from '@angular/platform-server';
 import { appConfig } from './app.config';
-import { bootstrapApplication } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
+import { IonicServerModule } from '@ionic/angular-server';  // Import for SSR support
 
 /**
  * Server-side configuration for the Angular application.
@@ -12,10 +11,8 @@ import { AppComponent } from './app.component';
 const serverConfig: ApplicationConfig = {
   providers: [
     provideServerRendering(),
+    IonicServerModule  // Adds Ionic SSR mocks/polyfills (e.g., customElements)
   ],
 };
 
 export const config = mergeApplicationConfig(appConfig, serverConfig);
-
-// Create and export the bootstrap function
-export const bootstrap = () => bootstrapApplication(AppComponent, config);
