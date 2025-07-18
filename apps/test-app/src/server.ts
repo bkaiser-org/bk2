@@ -4,7 +4,7 @@ import {
   isMainModule,
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
-import express from 'express';
+import express, { ErrorRequestHandler } from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -25,6 +25,24 @@ const angularApp = new AngularNodeAppEngine();
  * });
  * ```
  */
+
+// Add a global Express error handler for fallback
+interface GlobalError extends Error {
+  status?: number;
+}
+
+const globalErrorHandler: ErrorRequestHandler = (
+  err: GlobalError,
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  console.error('Global Express Error:', err);
+  console.error('Stack Trace:', err.stack);
+  res.status(500).send('Server Error');
+};
+
+app.use(globalErrorHandler);
 
 /**
  * Serve static files from /browser
@@ -64,3 +82,7 @@ if (isMainModule(import.meta.url)) {
  * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
  */
 export const reqHandler = createNodeRequestHandler(app);
+function ngExpressEngine(arg0: { bootstrap: any; }): (path: string, options: object, callback: (e: any, rendered?: string) => void) => void {
+  throw new Error('Function not implemented.');
+}
+

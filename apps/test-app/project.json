@@ -19,7 +19,6 @@
         "index": "apps/test-app/src/index.html",
         "browser": "apps/test-app/src/main.ts",
         "server": "apps/test-app/src/main.server.ts",
-        "prerender": false,
         "ssr": {
           "entry": "apps/test-app/src/server.ts"
         },
@@ -61,8 +60,7 @@
           "lodash.deburr",
           "jsdom"
         ],
-        "scripts": [],
-        "outputMode": "server"
+        "scripts": []
       },
       "configurations": {
         "production": {
