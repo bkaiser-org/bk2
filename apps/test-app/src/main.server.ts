@@ -5,29 +5,9 @@
  ***************************************************************************************************/
 import 'zone.js/node';
 import { bootstrapApplication } from '@angular/platform-browser';
+import { ApplicationRef } from '@angular/core';  // Import for explicit typing
 import { AppComponent } from './app/app.component';
 import { config } from './app/app.config.server';
-
-global['customElements'] = {
-  get: (name: string) => {
-    console.log(`Attempting to get custom element: ${name}`);
-    return undefined;  // Or mock class
-  },
-  define: (name: string, ctor: CustomElementConstructor) => {
-    console.log(`Defining custom element: ${name}`);
-  },
-  getName: (constructor: Function) => {
-    console.log(`Getting name for constructor: ${constructor.name}`);
-    return null;
-  },
-  upgrade: (root: Node) => {
-    console.log('Upgrading custom elements in:', root);
-  },
-  whenDefined: (name: string) => {
-    console.log(`whenDefined called for: ${name}`);
-    return Promise.resolve(undefined as unknown as CustomElementConstructor);
-  }
-};
 
 // Add global error handlers for more context
 process.on('unhandledRejection', (reason, promise) => {
@@ -43,9 +23,12 @@ process.on('uncaughtException', (err) => {
   process.exit(1);  // Optional: Exit to prevent hanging
 });
 
-const bootstrap = () => bootstrapApplication(AppComponent, config).catch((err) => {
-  console.error('Bootstrap Error:', err);
-  console.error('Stack Trace:', err.stack);
-});
+// Explicitly type bootstrap to avoid broad 'Function' inference
+const bootstrap: () => Promise<ApplicationRef> = () =>
+  bootstrapApplication(AppComponent, config).catch((err) => {
+    console.error('Bootstrap Error:', err);
+    console.error('Stack Trace:', err.stack);
+    return Promise.reject(err instanceof Error ? err : new Error(String(err))); // Ensure the rejection reason is always an Error
+  });
 
 export default bootstrap;

@@ -34,8 +34,7 @@ interface GlobalError extends Error {
 const globalErrorHandler: ErrorRequestHandler = (
   err: GlobalError,
   req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
+  res: express.Response
 ) => {
   console.error('Global Express Error:', err);
   console.error('Stack Trace:', err.stack);
@@ -82,7 +81,4 @@ if (isMainModule(import.meta.url)) {
  * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
  */
 export const reqHandler = createNodeRequestHandler(app);
-function ngExpressEngine(arg0: { bootstrap: any; }): (path: string, options: object, callback: (e: any, rendered?: string) => void) => void {
-  throw new Error('Function not implemented.');
-}
 
