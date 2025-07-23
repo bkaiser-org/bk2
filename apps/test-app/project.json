@@ -22,7 +22,7 @@
         "ssr": {
           "entry": "apps/test-app/src/server.ts"
         },
-        "polyfills": ["zone.js"],
+        "polyfills": [],
         "tsConfig": "apps/test-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
