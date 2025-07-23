@@ -18,7 +18,6 @@ import { environment } from '../environments/environment';
 import { provideTransloco } from '@jsverse/transloco';
 import { TranslateModule } from '@ngx-translate/core';
 import { I18nService, TranslocoHttpLoader } from '@bk2/shared/i18n';
-import { provideClientHydration, withHttpTransferCacheOptions, withIncrementalHydration } from '@angular/platform-browser';
 
 // Initialize Firebase. This is safe to run on the server.
 try {
@@ -30,12 +29,6 @@ try {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideClientHydration(
-      withIncrementalHydration(),
-      withHttpTransferCacheOptions({
-        includePostRequests: true,
-      }),
-    ),
     provideZonelessChangeDetection(),
     { provide: ENV, useValue: environment },
     provideAnimations(),
