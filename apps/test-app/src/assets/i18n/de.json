@@ -527,7 +527,7 @@
       "placeholder": "tt.mm.jjjj",
       "helper": "An diesem Datum wurde die Aufgabe erledigt.",
       "error": "Das Datumsformat ist nicht korrekt."
-    },  
+    },
     "currency": {
       "label": "Währung",
       "placeholder": "CHF, EUR, USD, etc.",
@@ -731,7 +731,7 @@
     "i18nBase": {
       "label": "I18n Basis",
       "placeholder": "e.g. membership.category",
-      "helper": "Der Aufsetzpunkt in der Uebersetzungstabelle, wo die Uebersetzungen für die Kategorien-Bezeichnung gefunden werden können. Die Angabe wird für die Anzeige der Kategorie-Bezeichnung und auch der Element benutzt (falls übersetzt wird)." 
+      "helper": "Der Aufsetzpunkt in der Uebersetzungstabelle, wo die Uebersetzungen für die Kategorien-Bezeichnung gefunden werden können. Die Angabe wird für die Anzeige der Kategorie-Bezeichnung und auch der Element benutzt (falls übersetzt wird)."
     },
     "iban": {
       "label": "IBAN-Nummer",
@@ -1195,7 +1195,7 @@
     },
     "slot": {
       "label": "Slot",
-      "helper": "Slot bezeichnet die Positionierung des Icons (am Anfang = start, am Schluss = end)" 
+      "helper": "Slot bezeichnet die Positionierung des Icons (am Anfang = start, am Schluss = end)"
     },
     "speed": {
       "label": "Geschwindigkeit",
@@ -2138,7 +2138,6 @@
     "field": {
       "empty": "Keine Resourcen gefunden.",
       "data": "Eigenschaften"
-
     },
     "operation": {
       "create": {
@@ -3340,7 +3339,8 @@
         "label": "Kalender ändern",
         "conf": "Der Kalender wurde geändert.",
         "error": "Der Kalender konnte nicht geändert werden."
-      }    }
+      }
+    }
   },
   "calEvent": {
     "singular": "Ereignis",
@@ -4863,7 +4863,7 @@
         "content": "Firebase user mit Stream Chat User synchronisieren.",
         "add": "Chat-User hinzufügen",
         "check": "Chat-User prüfen",
-        "token": "Chat-Token generieren"
+        "revoke": "Chat-Token widerrufen"
       }
     },
     "statistics": {
@@ -5363,7 +5363,7 @@
         "description": "Ein Ereignis auf der Zeitachse mit einem Start, Ende, Beschreibung.",
         "placeholder": "Name des Ereignisses"
       },
-     "expense": {
+      "expense": {
         "label": "Spesen",
         "description": "Ein Aufwand, der in der Buchhaltung erfasst wird.",
         "placeholder": "Name des Aufwands"
@@ -5428,7 +5428,7 @@
         "description": "Etwas, das man benützen, reservieren, besitzen kann (Boot, Auto, Immobilie, Schlüssel, Chäschtli etc.).",
         "placeholder": "Name oder ID der Resource"
       },
-     "section": {
+      "section": {
         "label": "Sektion",
         "description": "Teil einer Webpage (horizontaler Streifen).",
         "placeholder": "Sektionsname"
@@ -5443,7 +5443,7 @@
         "description": "Ein Transfer einer Resource von einer Person zu einer anderen Person.",
         "placeholder": "Name des Transfers"
       },
-       "trip": {
+      "trip": {
         "label": "Trip",
         "description": "Eine Reise/Ausflug/Ausfahrt/Fahrt/Wanderung mit einer oder mehreren Locations.",
         "placeholder": "Name der Reise"
