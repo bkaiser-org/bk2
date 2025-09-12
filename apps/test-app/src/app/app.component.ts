@@ -1,24 +1,19 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { IonApp, IonContent, IonHeader, IonMenu, IonRouterOutlet, IonSplitPane, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { AsyncPipe } from '@angular/common';
 
-import { RoleName } from '@bk2/shared/models';
-import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared/util-core';
-import { MenuComponent } from '@bk2/cms/menu/feature';
-import { TranslatePipe } from '@bk2/shared/i18n';
-import { AuthInfoComponent } from '@bk2/auth/ui';
-import { AppStore } from '@bk2/shared/feature';
-import { SpinnerComponent } from '@bk2/shared/ui';
+import { AuthInfoComponent } from '@bk2/auth-ui';
+import { MenuComponent } from '@bk2/cms-menu-feature';
+import { AppStore } from '@bk2/shared-feature';
+import { TranslatePipe } from '@bk2/shared-i18n';
+import { RoleName } from '@bk2/shared-models';
+import { SpinnerComponent } from '@bk2/shared-ui';
+import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
 
 @Component({
-  imports: [
-    TranslatePipe, AsyncPipe,
-    MenuComponent, AuthInfoComponent,
-    IonApp, IonSplitPane, IonMenu, IonHeader,
-    IonTitle, IonContent, IonToolbar, IonRouterOutlet,
-    SpinnerComponent
-],
+  imports: [AsyncPipe, TranslatePipe, MenuComponent, AuthInfoComponent, IonApp, IonSplitPane, IonMenu, IonHeader, IonTitle, IonContent, IonToolbar, IonRouterOutlet, SpinnerComponent],
   selector: 'bk-root',
+  standalone: true,
   styles: [
     `
       /* ----------------------------------------------
@@ -70,8 +65,7 @@ import { SpinnerComponent } from '@bk2/shared/ui';
         height: 100%;
       }
       .kenburns-top {
-        -webkit-animation: kenburns-top 1s
-          cubic-bezier(0.6, -0.28, 0.735, 0.045) both;
+        -webkit-animation: kenburns-top 1s cubic-bezier(0.6, -0.28, 0.735, 0.045) both;
         animation: kenburns-top 1s cubic-bezier(0.6, -0.28, 0.735, 0.045) both;
         margin: 0 auto;
         display: block;
@@ -92,19 +86,17 @@ import { SpinnerComponent } from '@bk2/shared/ui';
         <ion-menu side="start" menuId="main" contentId="main" type="overlay">
           <ion-header>
             <ion-toolbar color="secondary">
-              <ion-title>{{
-                '@menu.main.title' | translate | async
-              }}</ion-title>
+              <ion-title>{{ '@menu.main.title' | translate | async }}</ion-title>
             </ion-toolbar>
           </ion-header>
           <ion-content>
             @if (isUserSessionReady()) {
-              <bk-menu [menuName]="mainMenuName()" />
+            <bk-menu [menuName]="mainMenuName()" />
             } @else {
-              <bk-spinner />
+            <bk-spinner />
             }
             <!-- @if(showDebugInfo()) { -->
-              <bk-auth-info [currentUser]="appStore.currentUser()" [fbUser]="appStore.fbUser()" [isAuthenticated]="appStore.isAuthenticated()" [isAdmin]="hasRole('admin')" />
+            <bk-auth-info [currentUser]="appStore.currentUser()" [fbUser]="appStore.fbUser()" [isAuthenticated]="appStore.isAuthenticated()" [isAdmin]="hasRole('admin')" />
             <!-- } -->
           </ion-content>
         </ion-menu>
@@ -118,10 +110,7 @@ import { SpinnerComponent } from '@bk2/shared/ui';
     } @loading(after 100ms; minimum 500ms) {
     <span>Bitte warten... die Applikation wird geladen.</span>
     } @error {
-    <span
-      >Oops ! Die Applikation konnte nicht geladen werden. Bitte nochmals
-      probieren.
-    </span>
+    <span>Oops ! Die Applikation konnte nicht geladen werden. Bitte nochmals probieren.</span>
     }
   `,
 })
@@ -130,8 +119,8 @@ export class AppComponent {
 
   protected showDebugInfo = computed(() => this.appStore.showDebugInfo());
   protected mainMenuName = computed(() => `main_${this.appStore.tenantId()}`);
-  protected logoUrl = computed(() => (`${this.appStore.services.imgixBaseUrl()}/${getImgixUrlWithAutoParams(this.appStore.appConfig().logoUrl)}`));
-  
+  protected logoUrl = computed(() => `${this.appStore.services.imgixBaseUrl()}/${getImgixUrlWithAutoParams(this.appStore.appConfig().logoUrl)}`);
+
   protected isUserSessionReady = computed(() => {
     const fbUser = this.appStore.fbUser();
     const currentUser = this.appStore.currentUser();
@@ -141,7 +130,7 @@ export class AppComponent {
       return true;
     }
 
-    // If the Firebase auth state is populated, we are only ready if the 
+    // If the Firebase auth state is populated, we are only ready if the
     // corresponding application user object has also been found.
     if (fbUser && currentUser) {
       return true;

@@ -4845,6 +4845,11 @@
         "content": "Prüfen, ob eine Person ein User-Account hat oder die Voraussetzungen, dass eines erstellt werden kann.",
         "button": "Prüfen"
       },
+      "impersonate": {
+        "title": "Benutzer impersonifizieren",
+        "content": "Die Rolle des Users wird temporär auf den ausgewählten User gesetzt. Dadurch kann der Admin die Applikation als dieser User benutzen. Um wieder in die Admin-Rolle zurückzukehren, muss der Admin sich abmelden und wieder anmelden.",
+        "button": "Impersonate"
+      },
       "assignment": {
         "title": "Rollen zuweisen",
         "content": "Zuteilungen von Rollen zu Personen vornehmen und prüfen."
@@ -4873,27 +4878,32 @@
       "competitionLevels": {
         "title": "Wettkampf-Kategorien",
         "label": "Wettkampf-Kategorien aktualisieren",
+        "conf": "Wettkampf-Kategorien wurden neu berechnet.",
         "button": "Ausführen",
         "description": "Die Collection competitionLevels cached Daten aus den Collections subjects, memberships, ownerships. Diese Daten werden zur Darstellung der Wettkampf-Kategorien benötigt."
       },
       "clStats": {
         "title": "Übersichts-Statistik",
         "label": "Statistik der Wettkampf-Kategorien aktualisieren",
+        "conf": "Statistik wurde neu berechnet.",
         "button": "Ausführen"
       },
       "ageByGender": {
         "title": "Alters-Struktur",
         "label": "Alters-Statistik neu berechnen",
+        "conf": "Alters-Statisik wurde neu berechnet.",
         "button": "Ausführen"
       },
       "categoryByGender": {
         "title": "Mitglieder-Struktur",
         "label": "Mitglieder-Struktur neu berechnen",
+        "conf": "Mitglieder-Struktur wurde neu berechnet.",
         "button": "Ausführen"
       },
       "memberLocation": {
         "title": "Herkunft der Aktivmitglieder",
         "label": "Wohnort-Statistik neu berechnen",
+        "conf": "Wohnort-Statistik wurde neu berechnet.",
         "button": "Ausführen"
       }
     },

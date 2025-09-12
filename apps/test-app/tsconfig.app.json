@@ -1,10 +1,12 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "types": ["node"]
+    "outDir": "../../dist/out-tsc/apps/test-app",
+    "module": "esnext",
+    "target": "es2022",
+    "types": ["node", "vitest"],
+    "moduleResolution": "node"
   },
-  "files": ["src/main.ts", "src/main.server.ts", "src/server.ts"],
-  "include": ["src/**/*.d.ts"],
-  "exclude": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/*.spec.ts", "**/*.spec2.ts", "vite.config.ts", "**/test-setup.ts","node_modules"]
 }

@@ -1,9 +1,13 @@
-import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, isDevMode, PLATFORM_ID, provideZonelessChangeDetection } from '@angular/core';
-import { PreloadAllModules, RouteReuseStrategy, provideRouter, withComponentInputBinding, withEnabledBlockingInitialNavigation, withPreloading } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, isDevMode, PLATFORM_ID, provideZonelessChangeDetection } from '@angular/core';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { PreloadAllModules, provideRouter, RouteReuseStrategy, withComponentInputBinding, withEnabledBlockingInitialNavigation, withPreloading } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
+
+import { ENV } from '@bk2/shared-config';
+import { environment } from '../environments/environment';
 
 import { appRoutes } from './app.routes';
 
@@ -11,13 +15,10 @@ import { appRoutes } from './app.routes';
 import { getApp, initializeApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
 
-import { ENV } from '@bk2/shared/config';
-import { environment } from '../environments/environment';
-
 // i18n with transloco
+import { I18nService, TranslocoHttpLoader } from '@bk2/shared-i18n';
 import { provideTransloco } from '@jsverse/transloco';
 import { TranslateModule } from '@ngx-translate/core';
-import { I18nService, TranslocoHttpLoader } from '@bk2/shared/i18n';
 
 // Initialize Firebase. This is safe to run on the server.
 try {
@@ -31,15 +32,11 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
     { provide: ENV, useValue: environment },
-    provideAnimations(),
+    provideAnimationsAsync(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular({ useSetInputAPI: true }),
-    provideRouter(
-      appRoutes,
-      withComponentInputBinding(),
-      withPreloading(PreloadAllModules),
-      withEnabledBlockingInitialNavigation()
-    ),
+    provideClientHydration(withEventReplay()),
+    provideRouter(appRoutes, withComponentInputBinding(), withPreloading(PreloadAllModules), withEnabledBlockingInitialNavigation()),
 
     importProvidersFrom(TranslateModule.forRoot()),
     provideHttpClient(),
@@ -70,12 +67,9 @@ export const appConfig: ApplicationConfig = {
             }
             // Initialize App Check only on the client
             initializeAppCheck(getApp(), {
-              provider: new ReCaptchaEnterpriseProvider(
-                environment.services.appcheckRecaptchaEnterpriseKey
-              ),
+              provider: new ReCaptchaEnterpriseProvider(environment.services.appcheckRecaptchaEnterpriseKey),
               isTokenAutoRefreshEnabled: true,
             });
-
           }
         };
       },
