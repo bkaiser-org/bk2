@@ -618,6 +618,10 @@
       "helper": "Die Richtung, in die man sich bewegt.",
       "error": "Es muss eine Ganzzahl aus lauter Ziffern eingegeben werden."
     },
+    "displayName": {
+      "label": "Angezeigter Name",
+      "placeholder": "ssssssss"
+    },
     "dueDate": {
       "label": "Fälligkeitsdatum",
       "placeholder": "tt.mm.jjjj",
@@ -642,6 +646,12 @@
       "placeholder": "ssss@ssssssss.sss",
       "helper": "Eine gültige Email-Adresse mit folgendem Format: ssss@sssssss.sss",
       "error": "Bitte eine gültige Email Adresse eingeben."
+    },
+    "emailAoc": {
+      "label": "Login Email",
+      "placeholder": "Email Adresse",
+      "error": "Bitte eine gültige Email Adresse eingeben.",
+      "helper": "Wechsle die LoginEmail eines bestehenden Users. Es wird nur die Email-Adresse im Firebase User geändert. Im User und Person muss diese Email Adresse ebenfalls geändert werden."
     },
     "extension": {
       "label": "Dateierweiterung",
@@ -1064,7 +1074,9 @@
       "label": "Passwort",
       "placeholder": "Passwort",
       "error": "Das Passwort muss mindestens 6 Zeichen lang sein.",
-      "helper": "Du kannst hier ein explizites Passwort setzen (z.B. für Testzwecke). Wenn du keines setzts, dann wir ein zufälliges Passwort gewählt und der User kann anschliessend mit Passwort Reset sein eigenes setzen."
+      "helper": "Du kannst hier ein Passwort für den selektierten User setzen (z.B. für Testzwecke). Ein leeres Passwort-Feld führt zu einem zufälligen Passwort. Der User kann anschliessend mit Passwort Reset sein eigenes Passwort setzen.",
+      "set": "Setze ein neues Passwort für den ausgewählten User, ohne eine Passwort-Reset Email auszulösen. Ein leeres Passwort-Feld führt zu einem zufälligen Passwort.",
+      "reset": "Sende eine Passwort-Reset Email an den ausgewählten User."
     },
     "participants": {
       "label": "Teilnehmer",
@@ -1095,6 +1107,10 @@
       "placeholder": "Orts-ID",
       "helper": "Die Orts-ID wird verwendet, um den Standort eindeutig zu identifizieren.",
       "error": "Die Orts-ID muss aus einem Wort mit alphanumerischen Zeichen mit Kleinbuchstaben bestehen."
+    },
+    "photoUrl": {
+      "label": "Photo URL",
+      "placeholder": "URL"
     },
     "priority": {
       "label": "Priorität",
@@ -1419,6 +1435,14 @@
     "confirmed": {
       "label": "Hiermit bestätige ich, die obigen Bestimmungen gelesen zu haben und mich daran zu halten.",
       "helperText": "Die Vermietung der Clubanlagen erfolgt nur, wenn die obigen Bestimmungen eingehalten werden. Der Club behält sich vor, bei Missachtung der Bestimmungen die Veranstaltung abzusagen oder dem Mieter allfällige Schäden oder Mehraufwände zu verrechnen."
+    },
+    "emailVerified": {
+      "label": "E-Mail validiert",
+      "helperText": "Die E-Mail Adresse wurde manuell oder automatisch geprüft und ist korrekt."
+    },
+    "disabled": {
+      "label": "Account inaktiv",
+      "helperText": "Das Firebase User Account kann erst wieder benützt werden, wenn es aktiviert wurde."
     },
     "hasContent": {
       "label": "Inhalt anzeigen",
@@ -4841,8 +4865,8 @@
         "content": "Die meisten der untenstehenden Operationen basieren auf einer Person. Deshalb muss hier zuerst eine Person ausgewählt werden. Danach können die Operationen auf dieser Person durchgeführt werden."
       },
       "check": {
-        "title": "Autorisierung prüfen",
-        "content": "Prüfen, ob eine Person ein User-Account hat oder die Voraussetzungen, dass eines erstellt werden kann.",
+        "title": "User Account prüfen",
+        "content": "Prüfen, ob eine Person einen User-Account in Firebase Auth hat oder ob die Voraussetzungen für die Erstellung des Accounts erfüllt sind.",
         "button": "Prüfen"
       },
       "impersonate": {
@@ -4855,13 +4879,18 @@
         "content": "Zuteilungen von Rollen zu Personen vornehmen und prüfen."
       },
       "account": {
-        "title": "Konto erstellen",
-        "content": "Eine bestehende Person mit ID wird registriert, dh. Firebase-Konto und User werden erzeugt. Falls das Firebase-Konto bereits existiert, wird nur ein User erstellt, welcher Firebase Konto und Subject/Person verlinkt.",
+        "title": "User Account erstellen",
+        "content": "Eine bestehende Person wird als User in Firebase Auth registriert, dh. das Firebase-Account und der User werden erzeugt. Falls das Firebase-Account bereits existiert, wird nur ein User erstellt, welcher das Firebase Account und die Person verlinkt.",
         "input": "Person ID",
         "button": "Konto erstellen",
         "select": "Person auswählen",
         "password-set": "Passwort setzen",
         "password-reset": "Passwort Reset Email senden"
+      },
+      "fbuser": {
+        "title": "Firebase User ändern",
+        "content": "Ändere einen bestehenden Firebase User. Die Aenderung erfolgt nur in Firebase Auth, allenfalls müssen auch das UserModel oder PersonModel geändert werden.",
+        "button": "Firebase User ändern"
       },
       "chat": {
         "title": "Chat-User synchronisieren",
@@ -4957,6 +4986,11 @@
       "title": "User Attribute",
       "description": "Allgemeine Attribute, welche diesen User beschreiben."
     },
+    "fbuser": {
+      "edit": {
+        "title": "Firebase User ändern"
+      }
+    },
     "display": {
       "title": "Anzeige",
       "description": "Einstellungen zur Darstellungsart von verschiedenen Daten. Diese Einstellungen überschreiben die Standardeinstellungen und gelten nur für den selektierten User."
@@ -4969,7 +5003,7 @@
       "create": {
         "label": "User hinzufügen",
         "error": "Der User konnte nicht erstellt werden.",
-        "confirmation": "Der User wurde erstellt."
+        "conf": "Der User wurde erstellt."
       },
       "update": {
         "label": "User ändern",
@@ -5048,6 +5082,11 @@
       }
     },
     "operation": {
+      "create": {
+        "title": "Benutzerkonto erstellen",
+        "confirmation": "Das Benutzerkonto wurde erfolgreich erstellt",
+        "error": "Das Benutzerkonto konnte nicht erstellt werden. Bitte versuche es nochmals."
+      },
       "login": {
         "title": "Anmelden",
         "confirmation": "Willkommen im Mitgliederbereich !",
@@ -6040,6 +6079,7 @@
     "personCityRequiresZip": "Ein Ort benötigt eine PLZ.",
     "personSwissZipNumeric": "Schweizer PLZ müssen numerisch sein.",
     "personSwissZipLength": "Schweizer PLZ müssen genau 4 Zeichen lang sein.",
+    "phoneNotNull": "Die Telefon Nummer ist obligatorisch.",
     "validDirPathFormat": "Der Ordner-Name muss einen korrekten Pfad darstellen.",
     "validEmailFormat": "Die E-Mail Adresse muss ein gültiges Format haben.",
     "validIban": "Die IBAN muss ein gültiges Format haben.",
