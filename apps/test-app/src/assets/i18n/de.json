@@ -1221,6 +1221,9 @@
       "helperKmh": "Die Geschwindigkeit in Kilometern pro Stunde.",
       "error": "Es muss eine Ganzzahl aus lauter Ziffern eingegeben werden."
     },
+    "srvEmail": {
+      "label": "Willst du die SRV News erhalten ?"
+    },
     "ssnId": {
       "label": "AHV-Nummer",
       "placeholder": "756.xxxx.xxxx.xc",
@@ -1327,22 +1330,22 @@
     "usage": {
       "label": "Verwendung"
     },
-    "usage_images": {
+    "usageImages": {
       "label": "Verwendung von Bildern"
     },
-    "usage_dateOfBirth": {
+    "usageDateOfBirth": {
       "label": "Verwendung des Geburtsdatums"
     },
-    "usage_postalAddress": {
+    "usagePostalAddress": {
       "label": "Verwendung der Postadresse"
     },
-    "usage_phone": {
+    "usagePhone": {
       "label": "Verwendung der Telefonnummer"
     },
-    "usage_email": {
+    "usageEmail": {
       "label": "Verwendung der E-Mail Adresse"
     },
-    "usage_name": {
+    "usageName": {
       "label": "Verwendung deines Namens"
     },
     "usageLabel": {
@@ -1430,6 +1433,19 @@
       "helper": "Der Zoomfaktor wird verwendet, um die Darstellung zu vergrössern oder zu verkleinern, default = 2x.",
       "error": "Der Zoomfaktor muss eine Ganzzahl aus lauter Ziffern sein."
     }
+  },
+  "actionsheet": {
+    "label": {
+      "choose": "Wähle eine Aktion"
+    },
+    "cancel": "Abbrechen",
+    "call": "Anrufen",
+    "copy": "Kopieren",
+    "delete": "Löschen",
+    "edit": "Ändern",
+    "send": "Senden",
+    "show": "Anzeigen",
+    "upload": "Hochladen"
   },
   "checkbox": {
     "confirmed": {
@@ -1551,6 +1567,10 @@
     "showVideos": {
       "label": "Videos anzeigen",
       "helperText": "Videos werden angezeigt."
+    },
+    "srvEmail": {
+      "label": "Möchtest du die SRV News erhalten ?",
+      "helperText": "Für den Versand der SRV-News (früheres Swissrowing Magazin) benötigt der SRV deine Email Adresse. Hier hast du eine Opt-Out Möglichkeit, falls du diese News nicht erhalten möchtest. In diesem Fall wird deine Email bei der nächsten Synchronisierung nicht an SRV weiter geleitet. Du erhälst dann auch keine News von SRV mehr."
     },
     "translateItems": {
       "label": "Übersetzungen anzeigen",
@@ -5079,6 +5099,11 @@
       "protected": {
         "label": "Geschützt",
         "description": "Nur für autorisierte Benutzer (z.B. Vorstand) im Rahmen der Vereinsaufgaben nutzbar."
+      },
+      "srv": {
+        "label": "Weiterleitung an SRV",
+        "description": "Der Seeclub Stäfa ist Mitglied beim Schweizerischen Ruderverband SRV. Als Mitglied beim SCS bist du automatisch auch Mitglied beim SRV. Der SRV verlangt von uns die Weiterleitung von persönlichen Informationen (Name, Vorname, Post-Adresse, Tel Nr.) von allen unseren Mitgliedern. Mit der Mitgliedschaft beim SCS willigst du implizit ein, dass diese Daten jährlich an SRV weiter gegeben werden.",
+        "srvemail": "Für den Versand der SRV-News (früheres Swissrowing Magazin) benötigt der SRV deine Email Adresse. Hier hast du eine Opt-Out Möglichkeit, falls du diese News nicht erhalten möchtest. In diesem Fall wird deine Email bei der nächsten Synchronisierung nicht an SRV weiter geleitet. Du erhälst dann auch keine News von SRV mehr."
       }
     },
     "operation": {
