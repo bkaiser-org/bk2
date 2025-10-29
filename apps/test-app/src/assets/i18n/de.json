@@ -1438,6 +1438,7 @@
     "label": {
       "choose": "Wähle eine Aktion"
     },
+    "album": "Album anzeigen",
     "cancel": "Abbrechen",
     "call": "Anrufen",
     "copy": "Kopieren",
@@ -1445,7 +1446,12 @@
     "edit": "Ändern",
     "send": "Senden",
     "show": "Anzeigen",
-    "upload": "Hochladen"
+    "upload": "Hochladen",
+    "endmembership": "Mitgliedschaft beenden",
+    "changemcat": "Mitgliederkategorie ändern",
+    "endownership": "Nutzung beenden",
+    "endrel": "Beziehung beenden",
+    "endres": "Reservation beenden"
   },
   "checkbox": {
     "confirmed": {
