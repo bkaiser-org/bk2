@@ -11,7 +11,11 @@ import { SpinnerComponent } from '@bk2/shared-ui';
 import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
 
 @Component({
-  imports: [AsyncPipe, TranslatePipe, MenuComponent, AuthInfoComponent, IonApp, IonSplitPane, IonMenu, IonHeader, IonTitle, IonContent, IonToolbar, IonRouterOutlet, SpinnerComponent],
+  imports: [
+    AsyncPipe, TranslatePipe,
+    MenuComponent, AuthInfoComponent, SpinnerComponent,
+    IonApp, IonSplitPane, IonMenu, IonHeader, IonTitle, IonContent, IonToolbar, IonRouterOutlet
+  ],
   selector: 'bk-root',
   standalone: true,
   styles: [
@@ -91,9 +95,9 @@ import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
           </ion-header>
           <ion-content>
             @if (isUserSessionReady()) {
-            <bk-menu [menuName]="mainMenuName()" />
+              <bk-menu [menuName]="mainMenuName()" />
             } @else {
-            <bk-spinner />
+              <bk-spinner />
             }
             <!-- @if(showDebugInfo()) { -->
             <bk-auth-info [currentUser]="appStore.currentUser()" [fbUser]="appStore.fbUser()" [isAuthenticated]="appStore.isAuthenticated()" [isAdmin]="hasRole('admin')" />

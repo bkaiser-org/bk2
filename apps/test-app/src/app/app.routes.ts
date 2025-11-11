@@ -118,7 +118,7 @@ export const appRoutes: Route[] = [
   {
     path: 'workingrel',
     canActivate: [isAuthenticatedGuard],
-    children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship-working-rel-feature').then(m => m.WorkingRelListComponent) }],
+    children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship-workrel-feature').then(m => m.WorkrelListComponent) }],
   },
   {
     path: 'transfer',

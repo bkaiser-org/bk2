@@ -190,3 +190,20 @@ ion-modal.stack-modal {
   --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.32);
 }
+
+/* Force hover & activated states in ALL popovers, e.g. bk-cat-select */
+ion-popover ion-item {
+  --ion-item-background-hover: var(--ion-color-light) !important;
+  --ion-item-color-hover: var(--ion-color-primary) !important;
+}
+
+ion-popover ion-item.active,
+ion-popover ion-item[button]:active {
+  --ion-item-background: var(--ion-color-primary) !important;
+  --ion-item-color: var(--ion-color-primary-contrast) !important;
+}
+
+ion-popover ion-item.hover {
+  --ion-item-background: var(--ion-color-light) !important;
+  --ion-item-color: var(--ion-color-primary) !important;
+}
