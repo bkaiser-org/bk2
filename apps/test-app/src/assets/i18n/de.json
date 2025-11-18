@@ -215,7 +215,7 @@
         "conf": "Der Wert wurde kopiert."
       },
       "change": {
-        "confirm": "Änderungen speichern ?",
+        "confirm": "Speichern ?",
         "ok": "OK",
         "cancel": "Abbrechen"
       },
@@ -1255,6 +1255,16 @@
       "placeholder": "Strassenname mit Nr.",
       "error": "Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
     },
+    "streetName": {
+      "label": "Strasse",
+      "placeholder": "Strassenname ohne Nr.",
+      "error": "Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
+    },
+    "streetNumber": {
+      "label": "Nr.",
+      "placeholder": "Hausnummer an der Strasse",
+      "error": "Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
+    },
     "strings": {
       "title": "Wörter",
       "addString": "Wort hinzufügen"
@@ -1451,6 +1461,7 @@
     "edit": "Ändern",
     "send": "Senden",
     "show": "Anzeigen",
+    "view": "Anzeigen",
     "upload": "Hochladen",
     "endmembership": "Mitgliedschaft beenden",
     "changemcat": "Mitgliederkategorie ändern",
@@ -1829,7 +1840,8 @@
         "delete": {
           "label": "Person entfernen",
           "error": "Die Person konnte nicht entfernt werden.",
-          "conf": "Die Person wurde entfernt."
+          "conf": "Die Person wurde entfernt.",
+          "confirm": "Soll die Person wirklich gelöscht werden ?"
         },
         "reactivate": {
           "label": "Person reaktivieren",
@@ -4260,7 +4272,7 @@
       "label": "Kategorie",
       "labelOld": "Aktuelle Kategorie",
       "labelNew": "Neue Kategorie",
-      "helper": "Die Mitgliederkategorie ist hier fix. Wenn du sie ändern willst, mache bitte einen Kategorien-Wechsel (Swipe nach links in der Listen-Darstellung).",
+      "helper": "Die Mitgliederkategorie ist hier fix. Wenn du sie ändern willst, wähle die Aktion Kategorien-Wechsel in der Listen-Darstellung.",
       "all": {
         "label": "Alle",
         "description": "Alle Mitglieder"
@@ -4823,7 +4835,7 @@
       "all": {
         "label": "Alle Arten"
       },
-      "socialEvent": {
+      "social": {
         "label": "Sozialer Anlass",
         "description": "Reservation für einen gesellschaftlichen Anlass"
       },
@@ -4835,19 +4847,19 @@
         "label": "Kurs",
         "description": "Reserviert für einen Kurs"
       },
-      "sportsEvent": {
+      "sport": {
         "label": "Sportanlass",
         "description": "Reserviert für einen sportlichen Anlass"
       },
-      "businessEvent": {
+      "business": {
         "label": "Geschäftsanlass",
         "description": "Reserviert für einen geschäftlichen Anlass"
       },
-      "privateEvent": {
+      "private": {
         "label": "Privatanlass",
         "description": "Reserviert für einen privaten Anlass"
       },
-      "publicEvent": {
+      "public": {
         "label": "Öffentlicher Anlass",
         "description": "Reserviert für einen öffentlichen Anlass"
       },
@@ -4863,11 +4875,11 @@
         "label": "Party",
         "description": "Reserviert für eine Party"
       },
-      "storagePlace": {
+      "storage": {
         "label": "Lagerung",
         "description": "Reservation eines Lagerplatzes"
       },
-      "clubEvent": {
+      "club": {
         "label": "Clubanlass",
         "description": "Reserviert für einen Clubanlass"
       }
@@ -5069,6 +5081,9 @@
     "operation": {
       "initial": {
         "conf": "erstellt"
+      },
+      "update": {
+        "conf": "geändert"
       }
     },
     "message": {
@@ -6427,6 +6442,9 @@
     "tenantsLength": "Es muss mind. ein Mandant existieren.",
     "urlStart": "Die URL muss mit https:// oder assets oder tenant oder / starten.",
     "urlValid": "Die URL muss ein gültiges Format haben.",
-    "urlNotUndefined": "Die URL muss definiert sein."
+    "urlValidProtocol": "Die URL muss ein gültiges Protokoll haben (https://).",
+    "urlHost": "Die URL muss einen gültigen Hostnamen haben.",
+    "urlNotUndefined": "Die URL muss definiert sein.",
+    "urlParts": "Die URL darf keine _ oder . enthalten."
   }
 }
