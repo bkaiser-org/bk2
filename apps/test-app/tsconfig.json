@@ -14,6 +14,7 @@
   "include": [],
   "references": [
     { "path": "./tsconfig.app.json" },
+    { "path": "../../libs/auth/feature/tsconfig.lib.json"},
     { "path": "../../libs/category/feature/tsconfig.lib.json"},
     { "path": "../../libs/cms/page/feature/tsconfig.lib.json" },
     { "path": "../../libs/cms/menu/feature/tsconfig.lib.json" },

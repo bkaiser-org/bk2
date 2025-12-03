@@ -331,6 +331,11 @@
       "helper": "Bezeichnung eines Teilgebietes, z.B. Küche, Lager, Garten etc.",
       "error": "Beliebigen Text eingeben."
     },
+    "authorKey": {
+      "label": "Autoren ID",
+      "placeholder": "Datenbank ID des Autors (Person)",
+      "helper": "Der Schlüssel des Autors, dh. der Primärschlüssel in der Personen-Tabelle."
+    },
     "authorName": {
       "label": "Autor",
       "placeholder": "Name des Autors"
@@ -672,6 +677,11 @@
       "placeholder": "Vorname(n)",
       "error": "Es sind nur Buchstaben ohne Sonderzeichen oder Zahlen erlaubt."
     },
+    "fullPath": {
+      "label": "Pfad",
+      "placeholder": "relativer Pfad in Firebase Storage",
+      "helper": "Der volle Pfad der Datei, inklusive Verzeichnis, Dateiname und Dateierweiterung."
+    },
     "function": {
       "label": "Funktion",
       "placeholder": "z.B. Präsident",
@@ -900,10 +910,10 @@
       "error": "Das Passwort muss mindestens 6 Zeichen lang sein.",
       "helper": "Falls du noch kein Passwort hast oder dieses nicht kennst, kannst du unten auf den Button 'Passwort zurücksetzen' klicken und ein neues Passwort setzen."
     },
-    "md5hash": {
-      "label": "MD5 Hash",
-      "placeholder": "MD5 Hash",
-      "helper": "Der MD5 Hash wird verwendet, um eine Datei eindeutig zu identifizieren."
+    "hash": {
+      "label": "Hash",
+      "placeholder": "Hash (SHA-256)",
+      "helper": "Der SHA-256 Hash wird verwendet, um z.B. eine Datei eindeutig zu identifizieren."
     },
     "memberAbbreviation": {
       "label": "Abkürzung",
@@ -1137,6 +1147,11 @@
       "placeholder": "Preis in CHF",
       "helper": "Der Preis eines Artikels oder einer Dienstleistung.",
       "error": "Es muss eine Ganzzahl aus lauter Ziffern eingegeben werden."
+    },
+    "priorVersionKey": {
+      "label": "Vorherige Version",
+      "placeholder": "ID des Dokumentes mit der vorherigen Version",
+      "helper": "Die vorherige Version dieses Modells, z.B. für Dokumente oder Artikel, ermöglicht die Verlinkung zwischen verschiedenen Versionen."
     },
     "content": {
       "label": "HTML-Inhalt",
@@ -1401,6 +1416,11 @@
       "placeholder": "Wert in CHF",
       "error": "Es muss eine Ganzzahl aus lauter Ziffern eingegeben werden"
     },
+    "version": {
+      "label": "Version",
+      "placeholder": "n.n.n",
+      "helper": "Die Versionsnummer des Dokuments oder der Applikation, z.B. 1.0.0. Die Version ist durch den Benutzer frei wählbar und dient nur zur externen Identifikation."
+    },
     "web": {
       "label": "Webseite",
       "placeholder": "https://www.domain.ch",
@@ -1463,11 +1483,125 @@
     "show": "Anzeigen",
     "view": "Anzeigen",
     "upload": "Hochladen",
-    "endmembership": "Mitgliedschaft beenden",
-    "changemcat": "Mitgliederkategorie ändern",
-    "endownership": "Nutzung beenden",
-    "endrel": "Beziehung beenden",
-    "endres": "Reservation beenden"
+    "address": {
+      "view": "Adresse anzeigen",
+      "edit": "Adresse bearbeiten",
+      "copy": "Adresse kopieren",
+      "delete": "Adresse löschen",
+      "email": {
+        "send": "E-Mail senden",
+        "copy": "E-Mail Adresse kopieren"
+      },
+      "phone": {
+        "call": "Anrufen",
+        "copy": "Telefonnummer kopieren",
+        "sms": "SMS senden"
+      },
+      "chat": {
+        "start": "Chat starten"
+      },
+      "postal": {
+        "view": "Postadresse auf Karte anzeigen"
+      },
+      "iban": {
+        "view": "QR EZS anzeigen",
+        "upload": "QR EZS hochladen"
+      },
+      "web": {
+        "open": "Webseite öffnen",
+        "copy": "URL kopieren"
+      }
+    },
+    "calevent": {
+      "view": "Ereignis anzeigen",
+      "edit": "Ereignis bearbeiten",
+      "delete": "Ereignis löschen"
+    },
+    "category": {
+      "view": "Kategorie anzeigen",
+      "edit": "Kategorie bearbeiten",
+      "delete": "Kategorie löschen"
+    },
+    "person": {
+      "call": "Person anrufen",
+      "copyemail": "E-Mail Adresse kopieren",
+      "copyphone": "Telefonnummer kopieren",
+      "showalbum": "Fotoalbum anzeigen",
+      "view": "Person anzeigen",
+      "edit": "Person bearbeiten",
+      "delete": "Person löschen",
+      "sendemail": "E-Mail senden",
+      "sendsms": "SMS senden",
+      "callphone": "Anrufen"
+    },
+    "org": {
+      "view": "Organisation anzeigen",
+      "edit": "Organisation bearbeiten",
+      "delete": "Organisation löschen"
+    },
+    "group": {
+      "view": "Gruppe anzeigen",
+      "edit": "Gruppe bearbeiten",
+      "delete": "Gruppe löschen"
+    },
+    "menu": {
+      "view": "Menü anzeigen",
+      "edit": "Menü bearbeiten",
+      "delete": "Menü löschen"
+    },
+    "page": {
+      "view": "Seite anzeigen",
+      "edit": "Seite bearbeiten",
+      "delete": "Seite löschen"
+    },
+    "section": {
+      "view": "Sektion anzeigen",
+      "edit": "Sektion bearbeiten",
+      "delete": "Sektion löschen"
+    },
+    "document": {
+      "download": "Dokument herunterladen",
+      "preview": "Dokumentenvorschau",
+      "view": "Dokument anzeigen",
+      "print": "Dokument drucken",
+      "share": "Dokument teilen",
+      "update": "Neue Version hochladen",
+      "delete": "Dokument löschen",
+      "edit": "Dokument bearbeiten",
+      "showRevisions": "Versionsverlauf anzeigen"
+    },
+    "location": {
+      "view": "Standortdaten anzeigen",
+      "edit": "Standort bearbeiten",
+      "delete": "Standort löschen",
+      "showOnMap": "Standort auf Karte anzeigen",
+      "copy": "Koordinaten kopieren"
+    },
+    "membership": {
+      "view": "Mitgliedschaft anzeigen",
+      "edit": "Mitgliedschaft bearbeiten",
+      "delete": "Mitgliedschaft löschen",
+      "end": "Mitgliedschaft beenden",
+      "changecat": "Mitgliederkategorie ändern"
+    },
+    "ownership": {
+      "view": "Nutzung anzeigen",
+      "edit": "Nutzung bearbeiten",
+      "delete": "Nutzung löschen",
+      "end": "Nutzung beenden"
+    },
+    "reservation": {
+      "view": "Reservation anzeigen",
+      "edit": "Reservation bearbeiten",
+      "delete": "Reservation löschen",
+      "end": "Reservation beenden"
+    },
+    "relationship": {
+      "view": "Beziehung anzeigen",
+      "edit": "Beziehung bearbeiten",
+      "delete": "Beziehung löschen",
+      "end": "Beziehung beenden"
+    }
   },
   "checkbox": {
     "confirmed": {
@@ -1598,10 +1732,6 @@
       "label": "Übersetzungen anzeigen",
       "helperText": "Übersetzt die Elemente der Kategorie in die gewählte Sprache. Dazu müssen jedoch in den Uebersetzungstabellen die nötigen Einträge gemacht werden (@[i18nBase].[categoryName].[itemName].label) und es ist ein Release nötig. Wenn dies nicht gewünscht ist, wird einfach der Name unverändert dargestellt."
     },
-    "useDisplayName": {
-      "label": "Spitzname verwenden",
-      "helperText": "Anstelle deines richtigen Namens kann ein Spitzname verwendet werden (z.B. bei der Personensuche)."
-    },
     "useFaceId": {
       "label": "Face ID verwenden",
       "helperText": "Authentisierung mittels Gesichtserkennung (sofern auf deinem Gerät möglich)."
@@ -1666,10 +1796,14 @@
   "profile": {
     "label": "Profil",
     "description": "Persönliche Informationen und Applikations-Einstellungen",
-    "intro": "In deinem Profil kannst du persönliche App-Einstellungen vornehmen z.B. für Datenschutz, Applikationsverhalten oder Notifizierungen. Auch kannst du hier deine Adressen ändern. Bitte wende dich für weitere Aenderungen an ",
+    "intro": "Hier kannst du deine Kontaktdaten festlegen und das Verhalten der Applikation an deine Bedürfnisse anpassen. Gewisse Felder kannst du nicht selber ändern, weil sie im System benötigt werden. Bitte wende dich für solche Korrekturen an ",
+    "addresses": {
+      "title": "Adressen",
+      "description": "Hier kannst du deine Adressen verwalten. Du kannst verschiedene Adressen für unterschiedliche Verwendungszwecke angeben, z.B. Privat, Geschäft, Notfallkontakt, etc. Die Sichtbarkeit dieser Adressen kannst du unten bei den Datenschutz-Einstellungen einstellen. Bank-Konto Informationen (IBAN-Nummer) für Rückerstattungen kannst du als Adressen mit Typ Bank-Konto eingeben. "
+    },
     "data": {
       "title": "Persönliche Daten",
-      "description": "Aktualisiere hier deine persönlichen Daten wie z.B deine Adressen. Bank-Konto Informationen (IBAN-Nummer) für Rückerstattungen kannst du als Adressen mit Typ Bank-Konto eingeben. Die Sichtbarkeit dieser Daten kannst du unten bei den Datenschutz-Einstellungen einstellen."
+      "description": "Aktualisiere hier deine persönlichen Daten wie z.B die AHV-Nummer."
     },
     "settings": {
       "title": "Applikations-Einstellungen",
@@ -1785,7 +1919,7 @@
       "gender": {
         "name": "Geschlecht",
         "all": {
-          "label": "Alle Personen",
+          "label": "Alle Geschlechter",
           "icon": "gender_diverse"
         },
         "female": {
@@ -1866,6 +2000,14 @@
           "taxId": {
             "label": "AHV-Nummer kopieren",
             "conf": "Die AHV-Nummer wurde kopiert."
+          },
+          "email": {
+            "label": "E-Mail Adresse kopieren",
+            "conf": "Die E-Mail Adresse wurde kopiert."
+          },
+          "phone": {
+            "label": "Telefonnummer kopieren",
+            "conf": "Die Telefonnummer wurde kopiert."
           }
         }
       }
@@ -2007,6 +2149,10 @@
         },
         "emailCopy": {
           "conf": "E-Mail Adressen wurden kopiert."
+        },
+        "view": {
+          "label": "Adresse anzeigen",
+          "description": "Die Adresse anzeigen."
         },
         "locate": {
           "label": "Adresse lokalisieren",
@@ -2243,7 +2389,8 @@
     "type": {
       "undefined": {
         "label": "Undefiniert",
-        "description": "Der Resourcentyp ist nicht gesetzt oder unbekannt."
+        "description": "Der Resourcentyp ist nicht gesetzt oder unbekannt.",
+        "formTitle": "Angaben zur Resource"
       },
       "all": {
         "label": "Alle Resourcen"
@@ -2251,16 +2398,19 @@
       "boat": {
         "label": "Boot",
         "title": "Boote",
+        "formTitle": "Angaben zum Boot",
         "description": "Motorboot, Segelboot, etc."
       },
       "rboat": {
         "label": "Ruderboot",
         "title": "Ruderboote",
+        "formTitle": "Angaben zum Ruderboot",
         "description": "Ruderboot im Club- oder Privatbesitz"
       },
       "car": {
         "label": "Auto",
         "title": "Autos",
+        "formTitle": "Angaben zum Fahrzeug",
         "description": "Auto, Lastwagen, Bus"
       },
       "clubBoat": {
@@ -2288,12 +2438,20 @@
       "locker": {
         "label": "Garderobe",
         "title": "Garderoben - Kasten",
+        "formTitle": "Angaben zum Garderobenkasten",
         "description": "Umkleidekasten in der Männer-Garderobe"
       },
       "key": {
         "label": "Schlüssel",
         "title": "Bootshaus-Schlüssel",
+        "formTitle": "Angaben zum Schlüssel",
         "description": "Schlüssel, zB für die Haustüre"
+      },
+      "pet": {
+        "label": "Haustier",
+        "title": "Haustiere",
+        "formTitle": "Angaben zum Haustier",
+        "description": "Haustier, zB Hund oder Katze"
       },
       "license": {
         "label": "Lizenz",
@@ -2313,6 +2471,7 @@
       "realestate": {
         "label": "Immobilie",
         "title": "Immobilie",
+        "formTitle": "Angaben zur Immobilie",
         "description": "Haus, Wohnung, Grundstück"
       }
     },
@@ -3036,6 +3195,9 @@
           "conf": "Webseite wurde gelöscht.",
           "error": "Webseite konnte nicht gelöscht werden.",
           "askConfirmation": "Soll diese Webseite wirklich gelöscht werden ?"
+        },
+        "sort": {
+          "label": "Webseiten sortieren"
         }
       },
       "list": {
@@ -3407,7 +3569,7 @@
     "type": {
       "name": "Dokumentenart",
       "all": {
-        "label": "Alle"
+        "label": "Alle Arten"
       },
       "marketing": {
         "label": "Marketing",
@@ -3441,6 +3603,10 @@
         "label": "Instruktion",
         "description": "Anleitung, Weisung, Kochbuch, Rezept."
       },
+      "other": {
+        "label": "Andere",
+        "description": "Sonstige Dokumente."
+      },
       "legal": {
         "label": "Rechtlich",
         "description": "Vertrag, Offerte, Lizenz, NDA, AGB, Gesetz, Statuten, Visum, Patent, Zertifikat, Pass, ID."
@@ -3456,6 +3622,9 @@
     },
     "source": {
       "name": "Dokumentenherkunft",
+      "all": {
+        "label": "Alle Quellen"
+      },
       "local": {
         "label": "Lokal",
         "description": "Die Datei ist Teil der Applikation (asset)"
@@ -3471,8 +3640,8 @@
     },
     "operation": {
       "create": {
-        "label": "Neues Dokument erstellen",
-        "conf": "Neues Dokument gespeichert.",
+        "label": "Dokument hinzufügen",
+        "conf": "Das neue Dokument wurde hinzugefügt.",
         "error": "Das Dokument konnte nicht gespeichert werden."
       },
       "update": {
@@ -3525,7 +3694,9 @@
       "header": {
         "name": "Filename",
         "type": "Typ",
-        "extension": "Extension"
+        "extension": "Extension",
+        "size": "Grösse",
+        "lastUpdate": "Letzte Änderung"
       }
     }
   },
@@ -3569,7 +3740,7 @@
     "type": {
       "name": "Art des Anlasses",
       "all": {
-        "label": "Alle"
+        "label": "Alle Ereignisarten"
       },
       "ga": {
         "label": "Vollversammlung",
@@ -4003,6 +4174,11 @@
         "label": "Ort löschen",
         "conf": "Ort wurde gelöscht.",
         "error": "Ort konnte nicht gelöscht werden."
+      },
+      "copy": {
+        "label": "Ort kopieren",
+        "conf": "Der Ort wurde kopiert.",
+        "error": "Der Ort konnte nicht kopiert werden."
       }
     }
   },
@@ -4572,6 +4748,9 @@
         "label": "Beschäftigung löschen",
         "conf": "Beschäftigung wurde gelöscht.",
         "error": "Beschäftigung konnte nicht gelöscht werden."
+      },
+      "view": {
+        "label": "Beschäftigung anzeigen"
       }
     },
     "type": {
@@ -4580,43 +4759,43 @@
         "label": "Alle"
       },
       "employee": {
-        "label": "angestellt bei",
+        "label": "Angestellte/r",
         "description": "Angestellter"
       },
       "contractor": {
-        "label": "Auftragnehmer von",
+        "label": "Auftragnehmer/in",
         "description": "Auftragnehmer"
       },
       "volunteer": {
-        "label": "Freiwilliger bei",
+        "label": "Freiwillige/r",
         "description": "Freiwilliger"
       },
       "intern": {
-        "label": "Praktikant bei",
+        "label": "Praktikant/in",
         "description": "Praktikant"
       },
       "trainee": {
-        "label": "Lehrling von",
+        "label": "Lehrling",
         "description": "Lehrling"
       },
       "freelancer": {
-        "label": "Freelancer bei",
+        "label": "Freelancer/in",
         "description": "Freelancer"
       },
       "student": {
-        "label": "Student an",
+        "label": "Student/in",
         "description": "Student"
       },
       "boardMember": {
-        "label": "Vorstandsmitglied von",
+        "label": "Vorstand",
         "description": "Vorstandsmitglied"
       },
       "cooperation": {
-        "label": "Kooperationspartner von",
+        "label": "Kooperation",
         "description": "Kooperationspartner"
       },
       "competition": {
-        "label": "Wettbewerber von",
+        "label": "Wettbewerb",
         "description": "Steht im Wettbewerb mit einer anderen Organisation."
       },
       "custom": {
@@ -5084,6 +5263,13 @@
       },
       "update": {
         "conf": "geändert"
+      },
+      "add": {
+        "label": "Kommentar hinzufügen",
+        "title": "Schreibe hier deinen Kommentar",
+        "placeholder": "Text",
+        "conf": "Kommentar wurde hinzugefügt.",
+        "error": "Kommentar konnte nicht hinzugefügt werden."
       }
     },
     "message": {
@@ -5264,24 +5450,28 @@
       },
       "clStats": {
         "title": "Übersichts-Statistik",
+        "subTitle": "Statistik der Wettkampf-Kategorien",
         "label": "Statistik der Wettkampf-Kategorien aktualisieren",
         "conf": "Statistik wurde neu berechnet.",
         "button": "Ausführen"
       },
       "ageByGender": {
         "title": "Alters-Struktur",
+        "subTitle": "Mitglieder nach Alter und Geschlecht",
         "label": "Alters-Statistik neu berechnen",
         "conf": "Alters-Statisik wurde neu berechnet.",
         "button": "Ausführen"
       },
       "categoryByGender": {
         "title": "Mitglieder-Struktur",
+        "subTitle": "Mitglieder nach Kategorie und Geschlecht",
         "label": "Mitglieder-Struktur neu berechnen",
         "conf": "Mitglieder-Struktur wurde neu berechnet.",
         "button": "Ausführen"
       },
       "memberLocation": {
         "title": "Herkunft der Aktivmitglieder",
+        "subTitle": "Aktivmitglieder nach Wohnort (PLZ)",
         "label": "Wohnort-Statistik neu berechnen",
         "conf": "Wohnort-Statistik wurde neu berechnet.",
         "button": "Ausführen"
@@ -5776,6 +5966,11 @@
         "description": "Ein Aufwand, der in der Buchhaltung erfasst wird.",
         "placeholder": "Name des Aufwands"
       },
+      "group": {
+        "label": "Gruppe",
+        "description": "Eine Gruppe von Personen oder Organisationen.",
+        "placeholder": "Name der Gruppe"
+      },
       "invoice": {
         "label": "Rechnung",
         "description": "Debitorenrechnung",
@@ -5897,15 +6092,15 @@
         "label": "Alle"
       },
       "partner": {
-        "label": "Partner*in von",
+        "label": "Partner*in",
         "description": "Lebens-Partner*in"
       },
       "husband": {
-        "label": "verheiratet mit",
+        "label": "verheiratet",
         "description": "Ehepartner*in"
       },
       "friend": {
-        "label": "befreundet mit",
+        "label": "befreundet",
         "description": "Freund oder Freundin"
       },
       "neighbor": {
@@ -5913,11 +6108,11 @@
         "description": "Nachbarn"
       },
       "incompatible": {
-        "label": "inkompatibel mit",
+        "label": "inkompatibel",
         "description": "Zwei Personen, die nicht miteinander auskommen."
       },
       "related": {
-        "label": "verwandt mit",
+        "label": "verwandt",
         "description": "z.B. Neffe, Nichten, Onkel, Tanten, Enkel, Cousins, Cousinen"
       },
       "parentChild": {
@@ -5925,7 +6120,7 @@
         "description": "Tochter oder Sohn"
       },
       "sibling": {
-        "label": "Schwester/Bruder von",
+        "label": "Schwester/Bruder",
         "description": "Geschwister"
       },
       "custom": {
@@ -6401,7 +6596,7 @@
     "validDirPathFormat": "Der Ordner-Name muss einen korrekten Pfad darstellen.",
     "validEmailFormat": "Die E-Mail Adresse muss ein gültiges Format haben.",
     "validIban": "Die IBAN muss ein gültiges Format haben.",
-    "validSSN": "Die AHV-Nummer muss ein gültiges Format haben.",
+    "validSSN": "Bitte eine gültige AHV-Nummer eingeben.",
     "validTenant": "Der Mandant muss einen gültigen Wert aufweisen.",
     "nameRequired": "Die Angabe eines Namens ist obligatorisch.",
     "notNull": "Wert darf nicht null sein",
@@ -6435,6 +6630,7 @@
     "resourceSubTypeUndefined": "Der SubType einer Resource muss undefined sein.",
     "resourceUsageUndefined": "Die Usage einer Resource muss undefined sein.",
     "sectionModelType": "Der ModelType muss SectionModel sein.",
+    "ssnIdNotUndefined": "Die Sozialversicherungsnummer muss entweder definiert sein oder ein leerer String (aber nicht undefined).",
     "subjectModelType": "Der ModelType muss Person, Org oder Group sein.",
     "subjectCategoryGroup": "Die SubjectCategory muss GroupType sein.",
     "taskModelType": "Der ModelType muss TaskModel sein.",

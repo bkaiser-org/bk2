@@ -62,7 +62,7 @@ export const appRoutes: Route[] = [
     canActivate: [isAuthenticatedGuard],
     children: [
       { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject-person-feature').then(m => m.PersonListComponent) },
-      { path: 'profile', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/profile-feature').then(m => m.ProfilePageComponent), data: { preload: true } },
+      { path: 'profile', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/profile-feature').then(m => m.ProfileEditPageComponent), data: { preload: true } },
       { path: ':personKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject-person-feature').then(m => m.PersonEditPageComponent) },
     ],
   },
@@ -162,6 +162,14 @@ export const appRoutes: Route[] = [
     path: 'calevent',
     canActivate: [isAuthenticatedGuard],
     children: [{ path: ':listId/:contextMenuName', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/calevent-feature').then(m => m.CalEventListComponent) }],
+  },
+  {
+    path: 'document',
+    canActivate: [isAuthenticatedGuard],
+    children: [
+      { path: ':listId/:contextMenuName', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/document-feature').then(m => m.DocumentListComponent) },
+      { path: ':documentKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/document-feature').then(m => m.DocumentEditPageComponent) }
+    ],
   },
   {
     path: 'task',
