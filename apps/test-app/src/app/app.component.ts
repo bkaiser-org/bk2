@@ -7,13 +7,13 @@ import { MenuComponent } from '@bk2/cms-menu-feature';
 import { AppStore } from '@bk2/shared-feature';
 import { TranslatePipe } from '@bk2/shared-i18n';
 import { RoleName } from '@bk2/shared-models';
-import { SpinnerComponent } from '@bk2/shared-ui';
+import { ConnectionStatusButtonComponent, SpinnerComponent } from '@bk2/shared-ui';
 import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
 
 @Component({
   imports: [
     AsyncPipe, TranslatePipe,
-    MenuComponent, AuthInfoComponent, SpinnerComponent,
+    MenuComponent, AuthInfoComponent, SpinnerComponent, ConnectionStatusButtonComponent,
     IonApp, IonSplitPane, IonMenu, IonHeader, IonTitle, IonContent, IonToolbar, IonRouterOutlet
   ],
   selector: 'bk-root',
@@ -90,6 +90,7 @@ import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
         <ion-menu side="start" menuId="main" contentId="main" type="overlay">
           <ion-header>
             <ion-toolbar color="secondary">
+              <bk-connection-status-button />
               <ion-title>{{ '@menu.main.title' | translate | async }}</ion-title>
             </ion-toolbar>
           </ion-header>
