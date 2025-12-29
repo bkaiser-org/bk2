@@ -34,7 +34,7 @@ export const appConfig: ApplicationConfig = {
     { provide: ENV, useValue: environment },
     provideAnimationsAsync(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular({ useSetInputAPI: true }),
+    provideIonicAngular({ useSetInputAPI: true, innerHTMLTemplatesEnabled: true }),
     provideClientHydration(withEventReplay()),
     provideRouter(appRoutes, withComponentInputBinding(), withPreloading(PreloadAllModules), withEnabledBlockingInitialNavigation()),
 

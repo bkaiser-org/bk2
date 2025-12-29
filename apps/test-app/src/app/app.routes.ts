@@ -44,7 +44,6 @@ export const appRoutes: Route[] = [
     canActivate: [isAuthenticatedGuard],
     children: [
       { path: 'all', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/cms-section-feature').then(m => m.SectionAllListComponent) },
-      { path: ':id', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/cms-section-feature').then(m => m.SectionPageComponent) },
     ],
   },
   {
@@ -79,7 +78,6 @@ export const appRoutes: Route[] = [
     canActivate: [isAuthenticatedGuard],
     children: [
       { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject-org-feature').then(m => m.OrgListComponent) },
-      { path: ':orgKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject-org-feature').then(m => m.OrgEditPageComponent) },
     ],
   },
   {
@@ -92,7 +90,7 @@ export const appRoutes: Route[] = [
     canActivate: [isAuthenticatedGuard],
     children: [
       { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject-group-feature').then(m => m.GroupListComponent) },
-      { path: ':groupKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject-group-feature').then(m => m.GroupEditPageComponent) },
+      { path: ':groupKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject-group-feature').then(m => m.GroupViewPageComponent) },
     ],
   },
   {

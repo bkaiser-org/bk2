@@ -149,6 +149,16 @@
       "version": {
         "title": "Version"
       }
+    },
+    "connection": {
+      "title": "Internet Verbindungsstatus",
+      "intro": "Dein Verbindungsstatus zum Internet wird laufend aktualisiert und farblich wie folgt dargestellt:",
+      "good": "Gute Verbindung",
+      "goodExplanation": "Alle Funktionen der App stehen uneingeschränkt zur Verfügung. Du kannst problemlos Inhalte laden, Daten übertragen und mit anderen Benutzern interagieren.",
+      "slow": "Langsame Verbindung",
+      "slowExplanation": "Einige Funktionen der App sind möglicherweise eingeschränkt. Das Laden von Inhalten kann länger dauern, und es kann zu Verzögerungen bei der Datenübertragung kommen.",
+      "offline": "Keine Verbindung",
+      "offlineExplanation": "Du bist derzeit offline. Einige Funktionen der App sind nicht verfügbar, und du kannst keine neuen Daten laden oder übertragen. Bitte überprüfe deine Internetverbindung."
     }
   },
   "general": {
@@ -298,6 +308,11 @@
       "value": "Accordion-ID (value)",
       "valueHelper": "Die ID des Akkordeons, das aufgeklappt werden soll."
     },
+    "actionUrl": {
+      "label": "Aktions-URL",
+      "placeholder": "URL, die bei der Aktion aufgerufen wird.",
+      "helper": "Die URL, die bei der Aktion aufgerufen wird, z.B. beim Klick auf einen Button."
+    },
     "addressValue": {
       "label": "Addresswert",
       "placeholder": "URL, ID, Nummer etc.",
@@ -379,6 +394,11 @@
     },
     "boatUsage": {
       "label": "Art der Boots-Verwendung"
+    },
+    "border": {
+      "label": "Rahmen",
+      "placeholder": "npx",
+      "helper": "Vereinfachte Konfiguraton des HTML border Attributs, z.B. 5px solid red"
     },
     "buttonAction": {
       "label": "Aktion",
@@ -487,9 +507,15 @@
     },
     "cols": {
       "label": "Anzahl Spalten",
+      "placeholder": "Anzahl Spalten (1..12)",
+      "helper": "Die Anzahl Spalten, die in der Zeile verwendet werden sollen. Maximal 12 Spalten pro Zeile.",
+      "error": "Die Anzahl Spalten muss eine Ganzzahl aus lauter Ziffern sein, zwischen 1 und 12."
+    },
+    "colSize": {
+      "label": "Spaltengrösse",
       "placeholder": "0..12",
-      "helper": "Die Breite des Avatars in Anzahl Spalten aus einem Grid von max 12 Spalten, z.B. 1, 2, 3 etc.",
-      "error": "Die Anzahl der Spalten muss eine Ganzzahl aus lauter Ziffern sein, zwischen 0 und 12."
+      "helper": "Die Breite in Anzahl Spalten aus einem Grid von max 12 Spalten, z.B. 1, 2, 3 etc.",
+      "error": "Die Spaltengrösse muss eine Ganzzahl aus lauter Ziffern sein, zwischen 0 und 12."
     },
     "coordinates": {
       "label": "Koordinaten",
@@ -636,6 +662,11 @@
     "duration": {
       "label": "von-bis"
     },
+    "effect": {
+      "label": "Übergangs-Effekt",
+      "placeholder": "Effekt",
+      "helper": "Der Effekt, der bei der Anzeige des Bildes verwendet wird, z.B. fade, slide, zoom etc."
+    },
     "endDate": {
       "label": "Enddatum",
       "placeholder": "tt.mm.jjjj",
@@ -657,6 +688,11 @@
       "placeholder": "Email Adresse",
       "error": "Bitte eine gültige Email Adresse eingeben.",
       "helper": "Wechsle die LoginEmail eines bestehenden Users. Es wird nur die Email-Adresse im Firebase User geändert. Im User und Person muss diese Email Adresse ebenfalls geändert werden."
+    },
+    "exportFormat": {
+      "label": "Export Format",
+      "placeholder": "csv | kmz | json",
+      "helper": "Das Format, in dem die Daten exportiert werden sollen: csv, xlsx oder pdf."
     },
     "extension": {
       "label": "Dateierweiterung",
@@ -698,50 +734,40 @@
       "placeholder": "E-Mail Adresse für Gravatar",
       "helper": "Die E-Mail Adresse, die für den Gravatar verwendet wird (globally recognized avatar auf gravatar.com). Wenn du deinen Gravatar angibst, wird dieser anstelle eines hochgeladenen Bildes im Avatar der App verwendet."
     },
-    "gridBackgroundColor": {
+    "backgroundColor": {
       "label": "Hintergrundfarbe",
       "placeholder": "Farbe",
-      "helper": "Die Hintergrundfarbe der Tabelle, z.B. #f0f0f0, grey etc. Empfehlung: verwende Referenzen auf die Ionic Themes, damit auch dark mode funktioniert, z.b. var(--ion-color-step-200)."
+      "helper": "Die Hintergrundfarbe , z.B. #f0f0f0, grey etc. Empfehlung: verwende Referenzen auf die Ionic Themes, damit auch dark mode funktioniert, z.b. var(--ion-color-step-200)."
     },
-    "gridGap": {
+    "gap": {
       "label": "Gap",
       "placeholder": "nn",
-      "helper": "Der Zwischenraum zwischen den Zellen in der Tabelle in Pixel, z.B. 10, 20 etc."
+      "helper": "Der Zwischenraum zwischen den Zellen in der Tabelle in Pixel, z.B. 10px"
     },
-    "gridPadding": {
+    "padding": {
       "label": "Padding",
       "placeholder": "nn",
-      "helper": "Der Abstand zwischen dem Rand der Tabelle und den Zellen in Pixel, z.B. 10, 20 etc."
+      "helper": "Der Abstand zwischen dem Text und dem Rand des Elements in Pixel, z.B. 5px"
     },
-    "gridTemplate": {
+    "template": {
       "label": "Template",
       "placeholder": "auto auto",
-      "helper": "Die Definition des Grids. Sie gibt an, wie wiele Spalten angezeigt werden und wie breit diese sein sollen. Beispiele Drei automatisch breite Spalten: 'auto auto auto', 2 Spalten, die erste mit fixer Breite: '200px auto'"
+      "helper": "Die Definition des Grids. Sie gibt an, wie wiele Spalten angezeigt werden und wie breit diese sein sollen. Beispiele: drei automatisch breite Spalten: 'auto auto auto', 2 Spalten, die erste mit fixer Breite: '200px auto'"
     },
-    "headerBackgroundColor": {
-      "label": "Hintergrundfarbe",
-      "placeholder": "Farbe",
-      "helper": "Die Hintergrundfarbe des Headers, z.B. #f0f0f0, grey etc. Empfehlung: verwende Referenzen auf die Ionic Themes, damit auch dark mode funktioniert, z.b. var(--ion-color-step-150)."
-    },
-    "headerTextAlign": {
+    "textAlign": {
       "label": "Textausrichtung",
       "placeholder": "left | center | right",
-      "helper": "Die Ausrichtung des Textes im Header."
+      "helper": "Die Ausrichtung des Textes."
     },
-    "headerFontSize": {
+    "fontSize": {
       "label": "Schriftgrösse",
       "placeholder": "nnpx",
-      "helper": "Die Schriftgrösse des Textes im Header in Pixel, z.B. 16, 20 etc."
+      "helper": "Die Schriftgrösse des Textes in Pixel, z.B. 16, 20 etc."
     },
-    "headerFontWeight": {
+    "fontWeight": {
       "label": "Schriftstärke",
       "placeholder": "normal | bold",
-      "helper": "Die Stärke der Schrift im Header, z.B. normal oder bold."
-    },
-    "headerPadding": {
-      "label": "Textausrichtung",
-      "placeholder": "nnpx",
-      "helper": "Der Abstand zwischen dem Text und dem Rand des Headers in Pixel, z.B. 10, 20 etc."
+      "helper": "Die Stärke der Schrift, z.B. normal oder bold."
     },
     "height": {
       "label": "Höhe",
@@ -779,6 +805,11 @@
       "helper": "Die Grösse des Icons in Pixel, z.B. 24, 32, 48 etc.",
       "error": "Die Grösse des Icons muss eine Ganzzahl aus lauter Ziffern sein."
     },
+    "iconSlot": {
+      "label": "Icon Position",
+      "placeholder": "start | end | top | bottom",
+      "helper": "Die Position des Icons im Bezug zum Text, z.B. links, rechts, oben, unten. Bei none wird nur das Icon angezeigt."
+    },
     "id": {
       "label": "ID",
       "placeholder": "ssssss",
@@ -811,6 +842,12 @@
     },
     "importance": {
       "label": "Wichtigkeit"
+    },
+    "intervalInSeconds": {
+      "label": "Intervall in Sekunden",
+      "placeholder": "nnn",
+      "helper": "Das Zeitintervall in Sekunden, z.B. 60 für eine Minute, 3600 für eine Stunde etc.",
+      "error": "Es muss eine Ganzzahl aus lauter Ziffern eingegeben werden."
     },
     "invoiceDelivery": {
       "label": "Rechnungsversand",
@@ -914,6 +951,12 @@
       "label": "Hash",
       "placeholder": "Hash (SHA-256)",
       "helper": "Der SHA-256 Hash wird verwendet, um z.B. eine Datei eindeutig zu identifizieren."
+    },
+    "maximumAge": {
+      "label": "Maximale Wartezeit",
+      "placeholder": "nn",
+      "helper": "Die maximale Wartezeit in Millisekunden, z.B. 1800000 für 30 Minuten für eine akzeptierbare cached Position, default ist 0.",
+      "error": "Es muss eine Ganzzahl aus lauter Ziffern eingegeben werden."
     },
     "memberAbbreviation": {
       "label": "Abkürzung",
@@ -1019,6 +1062,12 @@
       "placeholder": "Anzahl Teilnehmer",
       "helper": "Die Anzahl der Teilnehmer an einem Event."
     },
+    "objects": {
+      "label": "An:",
+      "placeholder": "",
+      "helper": "Die empfangende Person des Transfers, z.B. der Zahlungsempfänger bei einer Überweisung.",
+      "addString": "Person hinzufügen"
+    },
     "order": {
       "label": "Reihenfolge",
       "placeholder": "nn",
@@ -1058,6 +1107,12 @@
     },
     "orgType": {
       "label": "Organisations-Typ"
+    },
+    "overlay": {
+      "label": "Overlay",
+      "placeholder": "Text",
+      "helper": "Ein Text, der als Overlay auf einem Bild angezeigt werden soll.",
+      "error": ""
     },
     "owner": {
       "label": "Besitzer",
@@ -1126,6 +1181,11 @@
     "photoUrl": {
       "label": "Photo URL",
       "placeholder": "URL"
+    },
+    "position": {
+      "label": "Position",
+      "helper": "Die Position eines GUI-Elements, z.b. links, rechts, oben, unten. Meistens ein Bild im Verhältnis zum Text.",
+      "error": "Gültige Positions-Werte: top, bottom, left, right, none."
     },
     "priority": {
       "label": "Priorität",
@@ -1229,6 +1289,12 @@
     "sectionType": {
       "label": "Typ"
     },
+    "sizes": {
+      "label": "Bild Grössen",
+      "placeholder": "(max-width: 768px) 100vw, 50vw",
+      "helper": "HTML sizes Attribut (mit Komma getrennte Werte) definiert die Bildauflösungen für responsive Bilder.",
+      "error": "Die Grössen müssen durch Kommas getrennte Wörter sein."
+    },
     "slot": {
       "label": "Slot",
       "helper": "Slot bezeichnet die Positionierung des Icons (am Anfang = start, am Schluss = end)"
@@ -1289,23 +1355,29 @@
       "placeholder": "CSS attribute",
       "helper": "Mit den CSS Attributen kann das Aussehen des Elements verändert werden (Farben, Ränder, Layout, Font etc.)."
     },
+    "subjects": {
+      "label": "Von",
+      "placeholder": "",
+      "helper": "Die auslösende Person des Transfers, z.B. der Absender bei einer Überweisung.",
+      "addString": "Person hinzufügen"
+    },
     "subTitle": {
       "label": "Untertitel",
       "placeholder": "Untertitel der Sektion (oftmals das Datum)"
     },
-    "tableContent": {
+    "tableBody": {
       "label": "Tabelleninhalt (Daten)",
       "placeholder": "text",
       "helper": "Der Inhalt (typischerweise Text) in den Zellen der Tabelle.",
-      "title": "Felder",
+      "title": "Daten: Felder der Tabelle",
       "description": "Hier kannst du die Daten der Tabelle eintragen. Füge für jede Zelle der Tabelle ein eigenes Feld hinzu. Die Feld-Einträge bestehen aus html-Fragmenten. Es können also auch Links eingegeben werden. Umlaute sind als HTML-Codes einzugeben. Die Reihenfolge der Feld-Einträge entspricht der Reihenfolge der Zellen in der Tabelle. Die Felder können nachträglich sortiert oder gelöscht werden.",
       "addLabel": "Neues Feld hinzufügen"
     },
     "tableHeader": {
-      "label": "Tabellenkopf",
-      "placeholder": "Tabellenkopf",
-      "helper": "Der Text im Tabellenkopf.",
-      "title": "Titel (Header)",
+      "label": "Header",
+      "placeholder": "Header",
+      "helper": "Der Text im Header.",
+      "title": "Daten: Titel/Header",
       "description": "Optional kannst du hier die Inhalte der Titel-Zeile der Tabelle eintragen. Die Reihenfolge der Einträge entspricht der Reihenfolge der Zellen in der Tabelle. Die Einträge können nachträglich sortiert oder gelöscht werden. Die Titelzeile wird nur angezeigt, wenn sie Inhalte enthält.",
       "addLabel": "Neuen Titel hinzufügen"
     },
@@ -1501,7 +1573,7 @@
         "start": "Chat starten"
       },
       "postal": {
-        "view": "Postadresse auf Karte anzeigen"
+        "view": "Auf Karte anzeigen"
       },
       "iban": {
         "view": "QR EZS anzeigen",
@@ -1526,13 +1598,12 @@
       "call": "Person anrufen",
       "copyemail": "E-Mail Adresse kopieren",
       "copyphone": "Telefonnummer kopieren",
-      "showalbum": "Fotoalbum anzeigen",
+      "show": "Adresse auf der Karte zeigen",
       "view": "Person anzeigen",
       "edit": "Person bearbeiten",
       "delete": "Person löschen",
       "sendemail": "E-Mail senden",
-      "sendsms": "SMS senden",
-      "callphone": "Anrufen"
+      "sendsms": "SMS senden"
     },
     "org": {
       "view": "Organisation anzeigen",
@@ -1540,7 +1611,8 @@
       "delete": "Organisation löschen"
     },
     "group": {
-      "view": "Gruppe anzeigen",
+      "view": "Gruppenkonfiguration anzeigen",
+      "show": "Gruppe anzeigen",
       "edit": "Gruppe bearbeiten",
       "delete": "Gruppe löschen"
     },
@@ -1550,14 +1622,16 @@
       "delete": "Menü löschen"
     },
     "page": {
-      "view": "Seite anzeigen",
-      "edit": "Seite bearbeiten",
-      "delete": "Seite löschen"
+      "view": "Webseiten-Konfiguration anzeigen",
+      "edit": "Webseite bearbeiten",
+      "show": "Webseite anzeigen",
+      "delete": "Webseite löschen",
+      "removesection": "Sektion entfernen"
     },
     "section": {
-      "view": "Sektion anzeigen",
       "edit": "Sektion bearbeiten",
-      "delete": "Sektion löschen"
+      "delete": "Sektion löschen",
+      "view": "Sektionskonfiguration anzeigen"
     },
     "document": {
       "download": "Dokument herunterladen",
@@ -1601,9 +1675,57 @@
       "edit": "Beziehung bearbeiten",
       "delete": "Beziehung löschen",
       "end": "Beziehung beenden"
+    },
+    "workrel": {
+      "view": "Beschäftigung anzeigen",
+      "edit": "Beschäftigung bearbeiten",
+      "delete": "Beschäftigung löschen",
+      "end": "Beschäftigung beenden"
+    },
+    "transfer": {
+      "view": "Transfer anzeigen",
+      "edit": "Transfer bearbeiten",
+      "delete": "Transfer löschen",
+      "end": "Transfer beenden"
+    },
+    "resource": {
+      "view": "Resource anzeigen",
+      "edit": "Resource bearbeiten",
+      "delete": "Resource löschen"
+    },
+    "key": {
+      "view": "Schlüssel anzeigen",
+      "edit": "Schlüssel bearbeiten",
+      "delete": "Schlüssel löschen"
+    },
+    "locker": {
+      "view": "Garderobe anzeigen",
+      "edit": "Garderobe bearbeiten",
+      "delete": "Garderobe löschen"
+    },
+    "rboat": {
+      "view": "Ruderboot anzeigen",
+      "edit": "Ruderboot bearbeiten",
+      "delete": "Ruderboot löschen"
+    },
+    "task": {
+      "view": "Todo anzeigen",
+      "edit": "Todo bearbeiten",
+      "delete": "Todo löschen",
+      "complete": "Todo als erledigt markieren"
+    },
+    "user": {
+      "view": "Benutzer anzeigen",
+      "edit": "Benutzer bearbeiten",
+      "delete": "Benutzer löschen",
+      "deactivate": "Benutzer sperren"
     }
   },
   "checkbox": {
+    "autostart": {
+      "label": "Autostart",
+      "helperText": "Das Video startet automatisch, sobald die Seite geladen wird."
+    },
     "confirmed": {
       "label": "Hiermit bestätige ich, die obigen Bestimmungen gelesen zu haben und mich daran zu halten.",
       "helperText": "Die Vermietung der Clubanlagen erfolgt nur, wenn die obigen Bestimmungen eingehalten werden. Der Club behält sich vor, bei Missachtung der Bestimmungen die Veranstaltung abzusagen oder dem Mieter allfällige Schäden oder Mehraufwände zu verrechnen."
@@ -1615,6 +1737,14 @@
     "disabled": {
       "label": "Account inaktiv",
       "helperText": "Das Firebase User Account kann erst wieder benützt werden, wenn es aktiviert wurde."
+    },
+    "enableHighAccuracy": {
+      "label": "Hohe Genauigkeit aktivieren",
+      "helperText": "Verwendet GPS und andere Sensoren, um den Standort genauer zu bestimmen. Dies kann jedoch den Akkuverbrauch erhöhen."
+    },
+    "fill": {
+      "label": "Fill",
+      "helperText": "NgOptimizedImage Attribut, das definiert, ob das Bild den verfügbaren Platz vollständig ausfüllen soll."
     },
     "hasContent": {
       "label": "Inhalt anzeigen",
@@ -1644,6 +1774,10 @@
       "label": "Mitglieder anzeigen",
       "helperText": "Die Mitglieder der Gruppe werden allen Gruppenmitgliedern angezeigt."
     },
+    "hasPriority": {
+      "label": "hasPriority",
+      "helperText": "Definiert höhere Priorität beim Laden von Bildern."
+    },  
     "isArchived": {
       "label": "Archiviert",
       "helperText": "Archivierte Daten werden nicht mehr in Listen oder Suchresultaten angezeigt."
@@ -1688,6 +1822,10 @@
       "label": "Archivierte Daten anzeigen",
       "helperText": "Zeigt archivierte Daten ebenfalls an. Kann nur von Admin im Profil eingeschaltet werden oder direkt in der Datenbank für einen anderen Benutzer."
     },
+    "showChannelList": {
+      "label": "Kanal-Liste anzeigen",
+      "helperText": "Zeigt die Liste der verfügbaren Chat-Kanäle an."
+    },
     "showDebugInfo": {
       "label": "Debug Informationen anzeigen",
       "helperText": "Zeigt Debug-Informationen der Forms und Menus an. Kann nur von Admin im Profil eingeschaltet werden oder direkt in der Datenbank für einen anderen Benutzer."
@@ -1731,6 +1869,10 @@
     "translateItems": {
       "label": "Übersetzungen anzeigen",
       "helperText": "Übersetzt die Elemente der Kategorie in die gewählte Sprache. Dazu müssen jedoch in den Uebersetzungstabellen die nötigen Einträge gemacht werden (@[i18nBase].[categoryName].[itemName].label) und es ist ein Release nötig. Wenn dies nicht gewünscht ist, wird einfach der Name unverändert dargestellt."
+    },
+    "useCurrentLocationAsCenter": {
+      "label": "Aktuellen Standort als Karten-Zentrum verwenden",
+      "helperText": "Der aktuelle GPS-Standort deines Gerätes wird als Karten-Zentrum verwendet."
     },
     "useFaceId": {
       "label": "Face ID verwenden",
@@ -1829,6 +1971,7 @@
     "cancelled": "Abgesagt",
     "carriage": "Kutsche",
     "cgig": "CGIG",
+    "comment": "Kommentar",
     "culture": "Kultur",
     "draft": "Entwurf",
     "edurebate": "Ausbildungsrabatt",
@@ -2405,7 +2548,28 @@
         "label": "Ruderboot",
         "title": "Ruderboote",
         "formTitle": "Angaben zum Ruderboot",
-        "description": "Ruderboot im Club- oder Privatbesitz"
+        "description": "Ruderboot im Club- oder Privatbesitz",
+        "operation": {
+          "create": {
+            "label": "Neues Ruderboot erfassen",
+            "conf": "Das neue Ruderboot wurde gespeichert.",
+            "error": "Das Ruderboot konnte nicht gespeichert werden."
+          },
+          "update": {
+            "label": "Ruderboot ändern",
+            "conf": "Die Aenderungen wurden gespeichert",
+            "error": "Die Aenderungen konnten nicht gespeichert werden."
+          },
+          "delete": {
+            "label": "Ruderboot löschen",
+            "conf": "Das Ruderboot wurde gelöscht.",
+            "error": "Das Ruderboot konnte nicht gelöscht werden.",
+            "askConfirmation": "Soll das Ruderboot wirklich gelöscht werden ?"
+          },
+          "view": {
+            "label": "Ruderboot anzeigen" 
+          }
+        }
       },
       "car": {
         "label": "Auto",
@@ -2439,19 +2603,82 @@
         "label": "Garderobe",
         "title": "Garderoben - Kasten",
         "formTitle": "Angaben zum Garderobenkasten",
-        "description": "Umkleidekasten in der Männer-Garderobe"
+        "description": "Umkleidekasten in der Männer-Garderobe",
+        "operation": {
+          "create": {
+            "label": "Neuen Garderobenkasten erfassen",
+            "conf": "Der neue Garderobenkasten wurde gespeichert.",
+            "error": "Der Garderobenkasten konnte nicht gespeichert werden."
+          },
+          "update": {
+            "label": "Garderobenkasten ändern",
+            "conf": "Die Aenderungen wurden gespeichert",
+            "error": "Die Aenderungen konnten nicht gespeichert werden."
+          },
+          "delete": {
+            "label": "Garderobenkasten löschen",
+            "conf": "Der Garderobenkasten wurde gelöscht.",
+            "error": "Der Garderobenkasten konnte nicht gelöscht werden.",
+            "askConfirmation": "Soll der Garderobenkasten wirklich gelöscht werden ?"
+          },
+          "view": {
+            "label": "Garderobenkasten anzeigen"
+          }
+        }
       },
       "key": {
         "label": "Schlüssel",
         "title": "Bootshaus-Schlüssel",
         "formTitle": "Angaben zum Schlüssel",
-        "description": "Schlüssel, zB für die Haustüre"
+        "description": "Schlüssel, zB für die Haustüre",
+        "operation": {
+          "create": {
+            "label": "Neuen Schlüssel erfassen",
+            "conf": "Der neue Schlüssel wurde gespeichert.",
+            "error": "Der Schlüssel konnte nicht gespeichert werden."
+          },
+          "update": {
+            "label": "Schlüssel ändern",
+            "conf": "Die Aenderungen wurden gespeichert",
+            "error": "Die Aenderungen konnten nicht gespeichert werden."
+          },
+          "delete": {
+            "label": "Schlüssel löschen",
+            "conf": "Der Schlüssel wurde gelöscht.",
+            "error": "Der Schlüssel konnte nicht gelöscht werden.",
+            "askConfirmation": "Soll der Schlüssel wirklich gelöscht werden ?"
+          },
+          "view": {
+            "label": "Schlüssel anzeigen"
+          }
+        }
       },
       "pet": {
         "label": "Haustier",
         "title": "Haustiere",
         "formTitle": "Angaben zum Haustier",
-        "description": "Haustier, zB Hund oder Katze"
+        "description": "Haustier, zB Hund oder Katze",
+        "operation": {
+          "create": {
+            "label": "Neues Haustier erfassen",
+            "conf": "Das neue Haustier wurde gespeichert.",
+            "error": "Das Haustier konnte nicht gespeichert werden."
+          },
+          "update": {
+            "label": "Haustier ändern",
+            "conf": "Die Aenderungen wurden gespeichert",
+            "error": "Die Aenderungen konnten nicht gespeichert werden."
+          },
+          "delete": {
+            "label": "Haustier löschen",
+            "conf": "Das Haustier wurde gelöscht.",
+            "error": "Das Haustier konnte nicht gelöscht werden.",
+            "askConfirmation": "Soll das Haustier wirklich gelöscht werden ?"
+          },
+          "view": {
+            "label": "Haustier anzeigen"
+          }
+        }
       },
       "license": {
         "label": "Lizenz",
@@ -3061,6 +3288,9 @@
       "empty": "Es sind noch keine Inhalte erfasst worden."
     },
     "state": {
+        "all": {
+          "label": "Alle Stati"
+        },
         "draft": {
           "label": "Entwurf",
           "description": "Die Webseite ist in Arbeit."
@@ -3197,7 +3427,12 @@
           "askConfirmation": "Soll diese Webseite wirklich gelöscht werden ?"
         },
         "sort": {
-          "label": "Webseiten sortieren"
+          "label": "Webseiten sortieren",
+          "noSections": "Es sind keine Sektionen zum Sortieren vorhanden.",
+          "onlyOneSection": "Es ist nur eine Sektion vorhanden, Sortieren ist nicht nötig."
+        },
+        "view": {
+          "label": "Webseiten Konfiguration anzeigen"
         }
       },
       "list": {
@@ -3255,23 +3490,32 @@
       "forms": {
         "title": "Sektion",
         "imageConfig": {
-          "title": "Bild",
-          "select": "Bild wählen",
-          "label": "Bild-Titel",
-          "textOnImage": "Overlay auf dem Bild",
-          "altText": "Alt Text für Barrierefreiheit (Accessibility)",
-          "editImage": "Bild-Attribute ändern",
-          "imageChangeNok": "Das Bild selber kann hier nicht geändert werden, sondern nur seine Attribute. Bitte lösche das Bild in der Bilderliste und füge ein neues hinzu.",
-          "heroInfo": "Die Hero-Section braucht zwei Bilder. Das erste ist das grosse Hintergrundbild, das zweite ein kleineres Bild, welches darüber platziert wird (z.B. ein Logo)."
+          "title": "Konfiguration des Bildes (Datei)"
+        },
+        "imageDisplay": {
+          "title": "Konfiguration der Bild-Darstellung"
+        },
+        "imageStyle": {
+          "title": "Bild Styles (CSS)"
+        },
+        "imageAction": {
+          "title": "Konfiguration der Aktion auf dem Bild"
         },
         "article": {
           "title": "Artikel"
         },
-        "peopleList": {
+        "people": {
           "title": "Personen-Liste"
         },
         "iframe": {
           "title": "Iframe"
+        },
+        "content": {
+          "title": "Inhalt",
+          "placeholder": "Hier den Inhalt eingeben..."
+        },
+        "roleNeeded": {
+          "title": "Benötigte Rolle:"
         }
       },
       "field": {
@@ -3280,95 +3524,125 @@
         "empty": "Es sind noch keine Sektionen erstellt worden. Erstelle eine mit Klicken des + Buttons.",
         "role": "Benötigte Rolle"
       },
-    "type": {
-      "all": {
-          "label": "Alle Sektionsarten"
-      },
-      "album": {
-        "label": "Album",
-        "description": "Bildübersicht mit Thumbnails."
-      },
-      "article": {
-        "label": "Artikel",
-        "description": "Artikel mit Titel, Untertitel und Freitext. Das Bild ist optional und die Anordnung kann eingestellt werden.",
-        "zoomedImage": "Zoom"
-      },
-      "button": {
-        "label": "Button",
-        "description": "Button mit Icon und/oder Text für Download oder Navigation."
-      },
-      "chart": {
-        "label": "Diagramm",
-        "description": "Darstellung von Daten in Form von Diagrammen"
-      },
-      "chat": {
-        "label": "Chat",
-        "description": "Chat-Fenster für direkte oder Gruppen-Kommunikation"
-      },
-      "gallery": {
-        "label": "Gallerie",
-        "description": "Darstellung von Bildern in Grossformat"
-      },
-      "hero": {
-        "label": "Hero",
-        "description": "Sektion mit grossem Bild und Titel"
-      },
-      "map": {
-        "label": "Karte",
-        "description": "Sektion zeigt einen Kartenausschnitt"
-      },
-      "model": {
-        "label": "Modell",
-        "description": "3D Modell, z.B. Boot, Haus, Auto"
-      },
-      "peopleList": {
-        "label": "Personen",
-        "addLabel": "Person auswählen",
-        "editorLabel": "Optionale Beschreibung",
-        "configLabel": "Avatar Konfiguration",
-        "description": "Liste von Personen mit Bild, Name, Funktion und optionaler Beschreibung",
-        "labelField": {
-          "label": "Name",
-          "placeholder": "Text, der zusätzlich zum Namen angezeigt wird, z.B. Abkürzung, Funktion"
+      "type": {
+        "all": {
+            "label": "Alle Sektionsarten"
+        },
+        "album": {
+          "label": "Album",
+          "edit": "Albumskonfiguration bearbeiten",
+          "description": "Bildübersicht mit Thumbnails."
+        },
+        "article": {
+          "label": "Artikel",
+          "edit": "Artikel bearbeiten",
+          "description": "Artikel mit Titel, Untertitel und Freitext. Das Bild ist optional und die Anordnung kann eingestellt werden.",
+          "zoomedImage": "Zoom"
+        },
+        "button": {
+          "label": "Button",
+          "edit": "Button Konfiguration ändern",
+          "subtitle": "Definiere das Aussehen des Buttons",
+          "description": "Button mit Icon und/oder Text für Download oder Navigation."
+        },
+        "chart": {
+          "label": "Diagramm",
+          "edit": "Diagramm Konfiguration ändern",
+          "description": "Darstellung von Daten in Form von Diagrammen"
+        },
+        "chat": {
+          "label": "Chat",
+          "title": "Chat Konfiguration ändern",
+          "subtitle": "Passe hier die Chat-Einstellungen an deine Bedürfnisse an.",
+          "edit": "Chat Konfiguration ändern",
+          "description": "Chat-Fenster für direkte oder Gruppen-Kommunikation"
+        },
+        "gallery": {
+          "label": "Gallerie",
+          "edit": "Gallerie Konfiguration ändern",
+          "description": "Darstellung von Bildern in Grossformat"
+        },
+        "hero": {
+          "label": "Hero",
+          "edit": "Hero Konfiguration ändern",
+          "description": "Sektion mit grossem Bild und Titel"
+        },
+        "map": {
+          "label": "Karte",
+          "edit": "Karten-Konfiguration ändern",
+          "description": "Sektion zeigt einen Kartenausschnitt"
+        },
+        "model": {
+          "label": "Modell",
+          "description": "3D Modell, z.B. Boot, Haus, Auto"
+        },
+        "people": {
+          "label": "Personen",
+          "addLabel": "Person auswählen",
+          "edit": "Personen Konfiguration ändern",
+          "editorLabel": "Optionale Beschreibung",
+          "configLabel": "Avatar Konfiguration",
+          "description": "Liste von Personen mit Bild, Name, Funktion und optionaler Beschreibung",
+          "labelField": {
+            "label": "Name",
+            "placeholder": "Text, der zusätzlich zum Namen angezeigt wird, z.B. Abkürzung, Funktion"
+          }
+        },
+        "slider": {
+          "label": "Slider",
+          "edit": "Slider Konfiguration ändern",
+          "description": "Mehrere Bilder werden nebeneinander oder nacheinander dargestellt."
+        },
+        "list": {
+          "label": "Liste",
+          "edit": "Listen-Konfiguration ändern",
+          "description": "Eine Listendarstellung von BOM-Objekten (z.B. Personen, Boote, Events)"
+        },
+        "video": {
+          "label": "Video",
+          "edit": "Video Konfiguration ändern",
+          "description": "Sektion zeigt ein Youtube Video. Geeignet z.B. für Anleitungen, Marketing etc."
+        },
+        "form": {
+          "label": "Form",
+          "edit": "Formular Konfiguration ändern",
+          "description": "Formular, um Daten zu erfassen, z.B. Bootshaus Reservation, Anmeldung, Kontaktformular"
+        },
+        "cal": {
+          "label": "Kalender",
+          "edit": "Kalender Konfiguration ändern",
+          "description": "Darstellung von Terminen in einem Kalender"
+        },
+        "table": {
+          "label": "Tabelle",
+          "edit": "Tabellen-Konfiguration ändern",
+          "description": "Tabellarische Darstellung von Daten",
+          "grid": {
+            "title": "Tabellen-Layout"
+          },
+          "header": {
+            "title": "Header Stil"
+          },
+          "body": {
+            "title": "Body Stil"
+          }
+        },
+        "iframe": {
+          "label": "Iframe",
+          "edit": "Iframe Konfiguration ändern",
+          "description": "Einbetten von externen Inhalten, z.B. Wetter, Webcams, Videoconf"
+        },
+        "accordion": {
+          "label": "Akkordeon",
+          "edit": "Akkordeon Konfiguration ändern",
+          "description": "Ein- und Ausklappbare Sektionen"
+        },
+        "tracker": {
+          "label": "Tracker",
+          "edit": "Tracker Konfiguration ändern",
+          "description": "Tracking-Elemente, z.B. für Regatten, Wanderfahrten, Trainings"
         }
       },
-      "slider": {
-        "label": "Slider",
-        "description": "Mehrere Bilder werden nebeneinander oder nacheinander dargestellt."
-      },
-      "list": {
-        "label": "Liste",
-        "description": "Eine Listendarstellung von BOM-Objekten (z.B. Personen, Boote, Events)"
-      },
-      "video": {
-        "label": "Video",
-        "description": "Sektion zeigt ein Youtube Video. Geeignet z.B. für Anleitungen, Marketing etc."
-      },
-      "form": {
-        "label": "Form",
-        "description": "Formular, um Daten zu erfassen, z.B. Bootshaus Reservation, Anmeldung, Kontaktformular"
-      },
-      "calendar": {
-        "label": "Kalender",
-        "description": "Darstellung von Terminen in einem Kalender"
-      },
-      "table": {
-        "label": "Tabelle",
-        "description": "Tabellarische Darstellung von Daten"
-      },
-      "iframe": {
-        "label": "Iframe",
-        "description": "Einbetten von externen Inhalten, z.B. Wetter, Webcams, Videoconf"
-      },
-      "accordion": {
-        "label": "Akkordeon",
-        "description": "Ein- und Ausklappbare Sektionen"
-      },
-      "tracker": {
-        "label": "Tracker",
-        "description": "Tracking-Elemente, z.B. für Regatten, Wanderfahrten, Trainings"
-      }
-    },
       "operation": {
         "selectImage": {
           "title": "Bild hinzufügen",
@@ -3400,6 +3674,9 @@
         },
         "select": {
           "label": "Sektion wählen"
+        },
+        "view": {
+          "label": "Sektions-Konfiguration anzeigen"
         }
       },
       "error": {
@@ -3720,16 +3997,21 @@
       }
     }
   },
-  "calEvent": {
+  "calevent": {
     "singular": "Ereignis",
     "plural": "Ereignisse",
     "description": "Ein Anlass erfolgt zu einer bestimmten Zeit und kann in einem Kalender dargestellt werden.",
     "field": {
-      "empty": "Es sind noch keine Ereignisse erstellt worden. Erstelle eines mit Klicken des + Buttons."
+      "empty": "Es sind noch keine Ereignisse erstellt worden. Erstelle eines mit Klicken des + Buttons.",
+      "responsible": {
+        "label": "Organisatoren",
+        "description": "Personen, die für den Anlass verantwortlich sind.",
+        "addLabel": "Organisator/in hinzufügen"
+      }
     },
     "list": {
       "header": {
-        "name": "Name",
+        "name": "Anlass",
         "duration": "von-bis",
         "year": "Jahr",
         "responsible": "Organisator",
@@ -3890,6 +4172,9 @@
         "label": "Ereignis ändern",
         "conf": "Das Ereignis wurde geändert.",
         "error": "Das Ereignis konnte nicht geändert werden."
+      },
+      "view": {
+        "label": "Ereignis anzeigen"
       }
     },
     "weekDay": {
@@ -4179,6 +4464,9 @@
         "label": "Ort kopieren",
         "conf": "Der Ort wurde kopiert.",
         "error": "Der Ort konnte nicht kopiert werden."
+      },
+      "view": {
+        "label": "Ort anzeigen"
       }
     }
   },
@@ -4354,7 +4642,7 @@
         "category": "Kat.",
         "dateOfDeath": "Todesdatum",
         "exit": "Austritt",
-        "titleRel": "im"
+        "titleRel": "in"
       },
       "memberships": {
         "title": "Mitgliedschaften (Personen und Organisationen)"
@@ -4449,6 +4737,11 @@
       "labelOld": "Aktuelle Kategorie",
       "labelNew": "Neue Kategorie",
       "helper": "Die Mitgliederkategorie ist hier fix. Wenn du sie ändern willst, wähle die Aktion Kategorien-Wechsel in der Listen-Darstellung.",
+      "change": {
+        "title": "Mitgliederkategorie ändern",
+        "helper": "Auf der linken Seite siehst du die aktuelle Mitgliederkategorie. Wähle auf der rechten Seite die neue Kategorie aus, in die das Mitglied wechseln soll.",
+        "helperDate": "Das Datum, ab dem die neue Kategorie gelten soll. Die aktuelle Mitgliedschaft wird einen Tag vorher beendet. Standardmässig wird das heutige Datum vorgeschlagen."
+      },
       "all": {
         "label": "Alle",
         "description": "Alle Mitglieder"
@@ -4968,11 +5261,11 @@
         "label": "Entwurf",
         "description": "Transfer wird gerade erstellt (z.B. Offerten- oder Vertragsdiskussion)."
       },
-      "inprogress": {
+      "active": {
         "label": "Aktiv",
         "description": "Der Transfer ist aktiv und gültig."
       },
-      "completed": {
+      "terminated": {
         "label": "Abgeschlossen",
         "description": "Der Transfer ist abgeschlossen."
       },
@@ -5142,6 +5435,9 @@
         "label": "Todo löschen",
         "conf": "Todo wurde gelöscht.",
         "error": "Todo konnte nicht gelöscht werden."
+      },
+      "view": {
+        "label": "Todo anzeigen"
       }
     },
     "list": {
@@ -5155,6 +5451,9 @@
       }
     },
     "state": {
+      "all": {
+        "label": "Alle Stati"
+      },
       "label": "Status",
       "initial": {
         "label": "Initial",
@@ -5393,6 +5692,15 @@
           "validate": "Daten validieren",
           "select": "Collection wählen"
         }
+      },
+      "createIndex": {
+        "title": "Index erstellen",
+        "content": "Erstellt einen Index auf einer Collection. Dies ist nützlich, wenn ein Index in der Datenbank fehlt und eine Abfrage nicht ausgeführt werden kann.",
+        "label": "Datentyp",
+        "operation": {
+          "create": "Index erstellen",
+          "select": "Collection wählen"
+        }
       }
     },
     "roles": {
@@ -5495,6 +5803,7 @@
   "user": {
     "singular": "User",
     "plural": "Users",
+    "unknown": "Unbekannter User",
     "intro": "Ein User entspricht 1:1 einem authentisierten Konto (Firebase UID = User.bkey) und genau einer Person (User.personKey = Person.bkey).",
     "auth": {
       "title": "Authentifizierung",
@@ -5846,6 +6155,7 @@
       }
     },
     "galleryEffect": {
+      "label": "Folienübergang",
       "slide": {
         "label": "Slide",
         "description": "Slide effect"
@@ -5899,6 +6209,40 @@
       "none": {
         "label": "None",
         "description": "Keine Aktion"
+      }
+    },
+    "imageType": {
+      "image": {
+        "label": "Bild",
+        "description": "Ein Bild (jpg, png, gif)"
+      },
+      "video": {
+        "label": "Video",
+        "description": "Ein Video (mp4, mov)"
+      },
+      "streamingvideo": {
+        "label": "Streaming Video",
+        "description": "Ein Streaming Video (YouTube, Vimeo)"
+      },
+      "audio": {
+        "label": "Audio",
+        "description": "Eine Audio Datei (mp3, wav, ogg)"
+      },
+      "pdf": {
+        "label": "PDF",
+        "description": "Ein PDF Dokument"
+      },
+      "doc": {
+        "label": "Dokument",
+        "description": "Ein Dokument (doc, docx, txt, rtf)"
+      },
+      "dir": {
+        "label": "Ordner",
+        "description": "Ein Ordner mit Dateien"
+      },
+      "other": {
+        "label": "Andere",
+        "description": "Andere Dateitypen"
       }
     },
     "importance": {
@@ -5956,7 +6300,7 @@
         "description": "Ein Dokument in elektronischer Form.",
         "placeholder": "Name des Dokuments"
       },
-      "calEvent": {
+      "calevent": {
         "label": "Ereignis",
         "description": "Ein Ereignis auf der Zeitachse mit einem Start, Ende, Beschreibung.",
         "placeholder": "Name des Ereignisses"
@@ -5991,7 +6335,7 @@
         "description": "Mitgliedschaft einer Person oder Organisation in einer anderen Organisation.",
         "placeholder": "Mitgliedsnummer"
       },
-      "menuItem": {
+      "menuitem": {
         "label": "Menü",
         "description": "Ein Element in einem Menü.",
         "placeholder": "Name des Menü-Elements"
@@ -6544,12 +6888,12 @@
     "docUpdateAfterCreation": "Das Änderungsdatum muss nach dem Erstellungsdatum liegen.",
     "emailMustContainAt": "Die E-Mail Adresse muss ein @ enthalten.",
     "emailMustContainDot": "Die E-Mail Adresse muss einen Punkt enthalten.",
-    "calEventRepeatUntilDateMandatoryWithGivenPeriodicity": "Das Wiederholen-bis Datum ist mit dieser Periodizität obligatorisch",
-    "calEventRepeatUntilDateAfterStartDate": "Das Wiederholen-bis Datum muss nach dem Startdatum liegen",
-    "calEventEndDateAfterStartDate": "Das Enddatum muss nach dem Startdatum liegen.",
-    "calEventStartDateMandatory": "Das Startdatum ist obligatorisch.",
-    "calEventEndDateMandatory": "Das Enddatum ist obligatorisch.",
-    "calEventModelType": "Der ModelType muss EventModel sein.",
+    "caleventRepeatUntilDateMandatoryWithGivenPeriodicity": "Das Wiederholen-bis Datum ist mit dieser Periodizität obligatorisch",
+    "caleventRepeatUntilDateAfterStartDate": "Das Wiederholen-bis Datum muss nach dem Startdatum liegen",
+    "caleventEndDateAfterStartDate": "Das Enddatum muss nach dem Startdatum liegen.",
+    "caleventStartDateMandatory": "Das Startdatum ist obligatorisch.",
+    "caleventEndDateMandatory": "Das Enddatum ist obligatorisch.",
+    "caleventModelType": "Der ModelType muss EventModel sein.",
     "iconNotUndefined": "Das Icon muss definiert sein.",
     "idRequired": "Die ID ist obligatorisch.",
     "invoicePositionCurrency": "Die Währung muss CHF sein.",
