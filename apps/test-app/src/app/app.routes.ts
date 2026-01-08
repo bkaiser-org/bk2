@@ -11,12 +11,21 @@ export const appRoutes: Route[] = [
     children: [
       { path: 'welcome', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.BkWelcomePageComponent) },
       { path: 'notfound', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageNotFoundComponent) },
-      { path: ':id/:contextMenuName', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ContentPageComponent) },
+      { 
+        path: ':id/:contextMenuName', 
+        loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ContentPageComponent),
+        data: { color: 'secondary' }
+      },
     ],
   },
   {
     path: 'private',
-    children: [{ path: ':id/:contextMenuName', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ContentPageComponent) }],
+    children: [{ 
+      path: ':id/:contextMenuName',
+      loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ContentPageComponent),
+      data: { color: 'secondary'
+    }
+}],
   },
   {
     path: 'quiz',
@@ -96,7 +105,12 @@ export const appRoutes: Route[] = [
   {
     path: 'membership',
     canActivate: [isAuthenticatedGuard],
-    children: [{ path: ':listId/:orgId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship-membership-feature').then(m => m.MembershipListComponent) }],
+    children: [{ 
+      path: ':listId/:orgId/:contextMenuName', 
+      canActivate: [isAuthenticatedGuard], 
+      loadComponent: () => import('@bk2/relationship-membership-feature').then(m => m.MembershipListComponent),
+      data: { color: 'secondary', view: 'default' }
+    }],
   },
   {
     path: 'ownership',
@@ -159,7 +173,12 @@ export const appRoutes: Route[] = [
   {
     path: 'calevent',
     canActivate: [isAuthenticatedGuard],
-    children: [{ path: ':listId/:contextMenuName', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/calevent-feature').then(m => m.CalEventListComponent) }],
+    children: [{ 
+      path: ':listId/:contextMenuName', 
+      canActivate: [isPrivilegedGuard], 
+      loadComponent: () => import('@bk2/calevent-feature').then(m => m.CalEventListComponent),
+      data: { color: 'secondary', view: 'list' }
+    }],
   },
   {
     path: 'document',
