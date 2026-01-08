@@ -256,6 +256,7 @@
     "noData": {
       "label": "Keine Daten",
       "documents": "Es sind keine Dokumente vorhanden.",
+      "invitations": "Es sind keine Einladungen vorhanden.",
       "memberships": "Es gibt keine Mitgliedschaften.",
       "ownerships": "Es gibt keine Nutzungen.",
       "owners": "Besitzer sind nicht definiert.",
@@ -363,8 +364,8 @@
       "label": "Autoren ID",
       "placeholder": "ID des Autors, dh. der Schlüssel in der Personen-Tabelle."
     },
-    "avatars": {
-      "label": "Avatare",
+    "avatar": {
+      "label": "Avatar",
       "addString": "Avatar hinzufügen",
       "placeholder": "URL des Avatars (dh. Logo-Bild)",
       "helper": "Die URL des Avatars, der für die Darstellung verwendet wird."
@@ -662,6 +663,12 @@
     "duration": {
       "label": "von-bis"
     },
+    "durationMinutes": {
+      "label": "Dauer in Minuten",
+      "placeholder": "z.B. 60, 120, 1440 (fullday)",
+      "helper": "Die Dauer des Ereignisses in Minuten, startend vom Startzeitpunkt.",
+      "error": "Es muss eine Ganzzahl aus lauter Ziffern eingegeben werden."
+    },
     "effect": {
       "label": "Übergangs-Effekt",
       "placeholder": "Effekt",
@@ -733,6 +740,17 @@
       "label": "Gravatar E-Mail",
       "placeholder": "E-Mail Adresse für Gravatar",
       "helper": "Die E-Mail Adresse, die für den Gravatar verwendet wird (globally recognized avatar auf gravatar.com). Wenn du deinen Gravatar angibst, wird dieser anstelle eines hochgeladenen Bildes im Avatar der App verwendet."
+    },
+    "groupName": {
+      "label": "Gruppenname",
+      "placeholder": "Name der Gruppe",
+      "helper": "Der Gruppenname ist beliebig definierbar, kann aus mehreren Wörtern bestehen und ist änderbar. Er sollte kurz und verständlich die Gruppe bezeichnen.",
+      "error": "Der Gruppenname ist obligatorisch und darf keine Sonderzeichen enthalten."
+    },
+    "groupId": {
+      "label": "Gruppen ID",
+      "placeholder": "ssssss",
+      "helper": "Ein eindeutiger Bezeichner in Form eines Wortes, z.B. '202501_kurs'. Diese ID wird für die Zuordnung von Kalender, Chat etc. verwendet. Es dürfen nur Kleinbuchstaben, Zahlen und _ oder - verwendet werden. Die ID muss eindeutig (dh. noch nicht vergeben) sein und kann später nicht mehr geändert werden."
     },
     "backgroundColor": {
       "label": "Hintergrundfarbe",
@@ -813,7 +831,7 @@
     "id": {
       "label": "ID",
       "placeholder": "ssssss",
-      "helper": "Ein eindeutiger Bezeichner in Form eines Wortes, z.B. '202501_kurs'. Diese ID wird für die Zuordnung von Kalender, Chat etc. verwendet. Es dürfen nur Kleinbuchstaben, Zahlen und _ oder - verwendet werden."
+      "helper": "Ein eindeutiger Bezeichner in Form eines Wortes. Es dürfen nur Kleinbuchstaben, Zahlen und _ oder - verwendet werden."
     },
     "imageAction": {
       "label": "Bildaktion",
@@ -841,7 +859,8 @@
       "helper": "Hier kannst du beliebige imgix-Parameter eingeben, um die Darstellung der Bilder zu definieren. Siehe imgix.com für die Dokumentationl."
     },
     "importance": {
-      "label": "Wichtigkeit"
+      "label": "Wichtigkeit",
+      "helper": "Die Wichtigkeit einer Aufgabe, z.B. niedrig, mittel, hoch. Wird normalerweise verwendet, um Aufgaben zu priorisieren (Filter in einer Liste)."
     },
     "intervalInSeconds": {
       "label": "Intervall in Sekunden",
@@ -1189,7 +1208,7 @@
     },
     "priority": {
       "label": "Priorität",
-      "helper": "Die Priorität eines Ereignisses, kann auch für Wartelisten/Bewerbungen/Sortierungen verwendet werden.",
+      "helper": "Die Priorität eines Ereignisses. Wird normalerweise als Filter in einer Liste verwendet.",
       "placeholder": "hoch | mittel | niedrig"
     },
     "property": {
@@ -1257,6 +1276,12 @@
     "resourceType": {
       "label": "Resourcenart"
     },
+    "respondedAt": {
+      "label": "Antwort erhalten am",
+      "placeholder": "tt.mm.jjjj",
+      "helper": "Das Datum, an dem die Antwort auf die Einladung erhalten wurde.",
+      "error": "Das Datumsformat ist nicht korrekt."
+    },
     "responsiblePersons": {
       "label": "Verantwortlich",
       "addString": "Verantwortliche Person hinzufügen",
@@ -1288,6 +1313,12 @@
     },
     "sectionType": {
       "label": "Typ"
+    },
+    "sentAt": {
+      "label": "Gesendet am",
+      "placeholder": "tt.mm.jjjj",
+      "helper": "Das Datum, an dem die Einladung gesendet wurde.",
+      "error": "Das Datumsformat ist nicht korrekt."
     },
     "sizes": {
       "label": "Bild Grössen",
@@ -1329,7 +1360,8 @@
       "error": "Das Zeitformat ist nicht korrekt."
     },
     "state": {
-      "label": "Status"
+      "label": "Status",
+      "helper": "Der Status eines Objektes, z.B. aktiv, inaktiv, ausstehend, etc. Wird normalerweise als Filter verwendet."
     },
     "street": {
       "label": "Strasse",
@@ -1587,12 +1619,23 @@
     "calevent": {
       "view": "Ereignis anzeigen",
       "edit": "Ereignis bearbeiten",
-      "delete": "Ereignis löschen"
+      "delete": "Ereignis löschen",
+      "inviteGroup": "Gruppenmitglieder einladen",
+      "invitePerson": "Person einladen"
     },
     "category": {
       "view": "Kategorie anzeigen",
       "edit": "Kategorie bearbeiten",
       "delete": "Kategorie löschen"
+    },
+    "invitation": {
+      "view": "Einladung anzeigen",
+      "edit": "Einladung bearbeiten",
+      "delete": "Einladung löschen",
+      "resend": "Einladung erneut senden",
+      "accept": "Einladung annehmen",
+      "decline": "Einladung ablehnen",
+      "maybe": "Teilnahme unsicher"
     },
     "person": {
       "call": "Person anrufen",
@@ -1745,6 +1788,10 @@
     "fill": {
       "label": "Fill",
       "helperText": "NgOptimizedImage Attribut, das definiert, ob das Bild den verfügbaren Platz vollständig ausfüllen soll."
+    },
+    "fullDay": {
+      "label": "Ganztägig",
+      "helperText": "Das Ereignis dauert den ganzen Tag."
     },
     "hasContent": {
       "label": "Inhalt anzeigen",
@@ -2221,7 +2268,8 @@
       "field": {
         "empty": "Keine Gruppen gefunden.",
         "attributes": "Gruppen-Eigenschaften",
-        "display": "Darstellung"
+        "display": "Darstellung",
+        "groupId": "Gruppen ID"
       },
       "segment": {
         "content": "Inhalt",
@@ -2242,6 +2290,12 @@
           "label": "Gruppe ändern",
           "error": "Die Aenderungen konnten nicht gespeichert werden",
           "conf": "Die Aenderungen wurden gespeichert."
+        },
+        "delete": {
+          "label": "Gruppe löschen",
+          "error": "Die Gruppe konnte nicht gelöscht werden.",
+          "conf": "Die Gruppe wurde gelöscht.",
+          "confirm": "Soll die Gruppe wirklich gelöscht werden ?"
         },
         "view": {
           "label": "Gruppe anzeigen"
@@ -2699,7 +2753,28 @@
         "label": "Immobilie",
         "title": "Immobilie",
         "formTitle": "Angaben zur Immobilie",
-        "description": "Haus, Wohnung, Grundstück"
+        "description": "Haus, Wohnung, Grundstück",
+        "operation": {
+          "create": {
+            "label": "Neue Immobilie erfassen",
+            "conf": "Die neue Immobilie wurde gespeichert.",
+            "error": "Die Immobilie konnte nicht gespeichert werden."
+          },
+          "update": {
+            "label": "Immobilie ändern",
+            "conf": "Die Aenderungen wurden gespeichert",
+            "error": "Die Aenderungen konnten nicht gespeichert werden."
+          },
+          "delete": {
+            "label": "Immobilie löschen",
+            "conf": "Die Immobilie wurde gelöscht.",
+            "error": "Die Immobilie konnte nicht gelöscht werden.",
+            "askConfirmation": "Soll die Immobilie wirklich gelöscht werden ?"
+          },
+          "view": {
+            "label": "Immobilie anzeigen"
+          }
+        }
       }
     },
     "state": {
@@ -3024,7 +3099,7 @@
         }
       }
     },
-    "realEstate": {
+    "realestate": {
       "singular": "Immobilie",
       "plural": "Immobilien",
       "operation": {
@@ -3380,6 +3455,9 @@
           "conf": "Menüeintrag wurde gelöscht.",
           "error": "Menüeintrag konnte nicht gelöscht werden.",
           "askConfirmation": "Soll dieser Menüeintrag wirklich gelöscht werden ?"
+        },
+        "view": {
+          "label": "Menüeintrag anzeigen"
         }
       },
       "list": {
@@ -3997,6 +4075,36 @@
       }
     }
   },
+  "invitation": {
+    "singular": "Einladung",
+    "plural": "Einladungen",
+    "description": "Eine Einladung zu einem Anlass oder Ereignis.",
+    "accepted": "angenommene Einladungen",
+    "field": {
+      "empty": "Es sind noch keine Einladungen erstellt worden. Erstelle eine mit Klicken des + Buttons."
+    },
+    "operation": {
+      "create": {
+        "label": "Person einladen",
+        "conf": "Die Einladung wurde hinzugefügt.",
+        "error": "Die Einladung konnte nicht hinzugefügt werden."
+      },
+      "update": {
+        "label": "Einladung ändern",
+        "conf": "Die Einladung wurde geändert.",
+        "error": "Die Einladung konnte nicht geändert werden."
+      },
+      "delete": {
+        "label": "Einladung löschen",
+        "conf": "Die Einladung wurde gelöscht.",
+        "error": "Die Einladung konnte nicht gelöscht werden.",
+        "confirm": "Soll diese Einladung wirklich gelöscht werden ?"
+      },
+      "view": {
+        "label": "Einladungs-Details anzeigen"
+      }
+    }
+  },
   "calevent": {
     "singular": "Ereignis",
     "plural": "Ereignisse",
@@ -4168,6 +4276,15 @@
         "conf": "Das Ereignis wurde hinzugefügt.",
         "error": "Das Ereignis konnte nicht hinzugefügt werden."
       },
+      "seriesupdate": {
+        "label": "Ereignis-Serie ändern",
+        "conf": "Die Ereignis-Serie wurde geändert.",
+        "error": "Die Ereignis-Serie konnte nicht geändert werden.",
+        "intro": "Dieses Ereignis ist Teil einer Serie von wiederkehrenden Ereignissen. Möchtest du nur dieses eine Ereignis ändern, oder alle zukünftigen Ereignisse der Serie?",
+        "current": "Nur dieses Ereignis ändern (das Ereignis wird von der Serie abgekoppelt)",
+        "future": "Alle zukünftigen Ereignisse ändern",
+        "all": "Alle Ereignisse der Serie ändern"
+      },
       "update": {
         "label": "Ereignis ändern",
         "conf": "Das Ereignis wurde geändert.",
@@ -4175,6 +4292,16 @@
       },
       "view": {
         "label": "Ereignis anzeigen"
+      },
+      "delete": {
+        "label": "Ereignis löschen",
+        "confirm": "Soll das Ereignis wirklich gelöscht werden ?",
+        "conf": "Das Ereignis wurde gelöscht.",
+        "error": "Das Ereignis konnte nicht gelöscht werden.",
+        "intro": "Dieses Ereignis ist Teil einer Serie von wiederkehrenden Ereignissen. Möchtest du nur dieses eine Ereignis löschen, oder alle zukünftigen Ereignisse der Serie?",
+        "current": "Nur dieses Ereignis löschen (das Ereignis wird von der Serie abgekoppelt)",
+        "future": "Alle zukünftigen Ereignisse löschen",
+        "all": "Alle Ereignisse der Serie löschen"
       }
     },
     "weekDay": {
@@ -4709,6 +4836,15 @@
       "catChange": {
         "label": "Mitglieder-Kategorie ändern",
         "chooseNew": "Neue Kategorie wählen"
+      },
+      "end": {
+        "title": "Mitgliedschaft beenden",
+        "select": "Austrittsdatum wählen",
+        "confirm": "Möchtest du die Mitgliedschaft wirklich beenden?",
+        "conf": "Die Mitgliedschaft wurde beendet.",
+        "error": "Die Mitgliedschaft konnte nicht beendet werden.",
+        "comment": "Mitgliedschaft beendet",
+        "intro": "<p>Das Austrittsdatum ist der letzte Tag der Mitgliedschaft. Ab dem nächsten Tag ist die Person kein Mitglied mehr.<br /> Meistens ist dies der 31.12. des aktuellen Jahres.</p>"
       }
     },
     "type": {
@@ -5415,9 +5551,18 @@
       "empty": "Keine Todos gefunden.",
       "name": "Name",
       "dueDate": "Termin",
-      "assignee": "Zuständig",
-      "author": "Autor/-in",
-      "scope": "Scope",
+      "assignee": {
+        "label": "Zuständig",
+        "description": "Person, die für die Erledigung der Aufgabe verantwortlich ist."
+      },
+      "author": {
+        "label": "Autor/-in",
+        "description": "Person, die die Aufgabe erstellt hat."
+      },
+      "scope": {
+        "label": "Kontext",
+        "description": "Die Aufgabe ist normalerweise sichtbar für Autor/in, Zuständige/n und Privilegierte User. Mit dem Kontext kann die Sichtbarkeit auf eine Gruppe erweitert werden."
+      },
       "state": "Status"
     },
     "operation": {
