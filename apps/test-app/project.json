@@ -34,11 +34,17 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/test-app/src/assets",
+          "apps/test-app/src/firebase-messaging-sw.js",
           {
             "glob": "**/*.svg",
             "input": "node_modules/ionicons/dist/ionicons/svg",
             "output": "./svg"
-          }        
+          },
+          {
+            "glob": "manifest.webmanifest",
+            "input": "apps/test-app/src",
+            "output": "."
+          },
         ],
         "styles": [
           "apps/test-app/src/styles.scss",
