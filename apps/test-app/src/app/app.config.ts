@@ -2,7 +2,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, isDevMode, PLATFORM_ID, provideZonelessChangeDetection } from '@angular/core';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { PreloadAllModules, provideRouter, RouteReuseStrategy, withComponentInputBinding, withEnabledBlockingInitialNavigation, withPreloading } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
@@ -32,7 +31,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
     { provide: ENV, useValue: environment },
-    provideAnimationsAsync(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular({ useSetInputAPI: true, innerHTMLTemplatesEnabled: true }),
     provideClientHydration(withEventReplay()),
