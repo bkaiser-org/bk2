@@ -30,6 +30,11 @@
         "outputPath": "dist/apps/test-app",
         "index": "apps/test-app/src/index.html",
         "browser": "apps/test-app/src/main.ts",
+        "server": "apps/test-app/src/main.server.ts",
+        "prerender": false,
+        "ssr": {
+          "entry": "apps/test-app/server.ts"
+        },
         "tsConfig": "apps/test-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -88,9 +93,7 @@
         "development": {
           "optimization": false,
           "extractLicenses": false,
-          "sourceMap": true,
-          "ssr": false,
-          "prerender": false
+          "sourceMap": true
         }
       },
       "defaultConfiguration": "production"
