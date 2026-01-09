@@ -297,6 +297,16 @@
       "year": "Jahr"
     }
   },
+  "app": {
+    "version": {
+      "update": {
+        "header": "Update verfügbar",
+        "message": "Eine neue Version der App ist verfügbar. Bitte aktualisiere die App, um die neuesten Funktionen und Verbesserungen zu nutzen. Falls du das Icon der App auf deinem Homescreen gespeichert hast, lösche es bitte und füge es dann erneut hinzu.",
+        "later": "Später",
+        "now": "Jetzt aktualisieren"
+      }
+    }
+  },
   "input": {
     "abbreviation": {
       "label": "Abkürzung",

@@ -5,7 +5,8 @@
     "module": "esnext",
     "target": "es2022",
     "types": ["node", "vitest"],
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "resolveJsonModule": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["**/*.spec.ts", "**/*.spec2.ts", "vite.config.ts", "**/test-setup.ts","node_modules"]
