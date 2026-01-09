@@ -46,10 +46,24 @@ function run(): void {
   const port = process.env['PORT'] || 4000;
   const host = '0.0.0.0'; // Listen on all interfaces for Cloud Run
 
-  // Start up the Node server
-  const server = app();
-  server.listen(Number(port), host, () => {
-    console.log(`Node Express server listening on http://${host}:${port}`);
+  // Load manifests at runtime
+  const serverDistFolder = dirname(fileURLToPath(import.meta.url));
+  Promise.all([
+    import(join(serverDistFolder, 'angular-app-manifest.mjs')),
+    import(join(serverDistFolder, 'angular-app-engine-manifest.mjs'))
+  ]).then(([appManifest, engineManifest]) => {
+    // Set the manifests globally (required by CommonEngine)
+    (globalThis as any).ɵgetAngularAppManifest = () => appManifest.default;
+    (globalThis as any).ɵgetAngularAppEngineManifest = () => engineManifest.default;
+
+    // Start up the Node server
+    const server = app();
+    server.listen(Number(port), host, () => {
+      console.log(`Node Express server listening on http://${host}:${port}`);
+    });
+  }).catch(err => {
+    console.error('Failed to load Angular manifests:', err);
+    process.exit(1);
   });
 }
 
