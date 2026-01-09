@@ -4,7 +4,7 @@ import { appConfig } from './app/app.config';
 
 bootstrapApplication(AppComponent, appConfig).catch(err => console.error(err));
 
-if ('serviceWorker' in navigator) {
+if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
   navigator.serviceWorker
     .register('/firebase-messaging-sw.js')
     .then(registration => {
