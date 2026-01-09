@@ -49,7 +49,7 @@
             "glob": "manifest.webmanifest",
             "input": "apps/test-app/src",
             "output": "."
-          },
+          }
         ],
         "styles": [
           "apps/test-app/src/styles.scss",
