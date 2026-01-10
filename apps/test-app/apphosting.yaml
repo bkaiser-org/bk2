@@ -2,8 +2,6 @@
 runConfig:
   minInstances: 0
   maxInstances: 10
-  command: ["node", "--import", "./server/server.mjs"]
-  entryPoint: "dist/apps/test-app"
 
 env:
   - variable: APP_ID

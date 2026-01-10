@@ -35,7 +35,7 @@ export const appConfig: ApplicationConfig = {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular({ useSetInputAPI: true, innerHTMLTemplatesEnabled: true }),
     provideClientHydration(withEventReplay()),
-    provideRouter(appRoutes, withComponentInputBinding(), withPreloading(PreloadAllModules), withEnabledBlockingInitialNavigation()),
+    provideRouter(appRoutes, withComponentInputBinding(), withPreloading(PreloadAllModules)),
 
     importProvidersFrom(TranslateModule.forRoot()),
     provideHttpClient(),
