@@ -98,9 +98,9 @@ import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
             } @else {
               <bk-spinner />
             }
-            <!-- @if(showDebugInfo()) { -->
-            <bk-auth-info [currentUser]="appStore.currentUser()" [fbUser]="appStore.fbUser()" [isAuthenticated]="appStore.isAuthenticated()" [isAdmin]="hasRole('admin')" />
-            <!-- } -->
+            @if(showDebugInfo()) {
+              <bk-auth-info [currentUser]="appStore.currentUser()" [fbUser]="appStore.fbUser()" [isAuthenticated]="appStore.isAuthenticated()" [isAdmin]="hasRole('admin')" />
+            }
           </ion-content>
         </ion-menu>
         <ion-router-outlet id="main" />
