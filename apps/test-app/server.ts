@@ -46,8 +46,9 @@ app.use('*', (req, res, next) => {
  */
 if (isMainModule(import.meta.url)) {
   const port = process.env['PORT'] || 4000;
-  app.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
+  const host = '0.0.0.0'; // Cloud Run requires listening on all interfaces
+  app.listen(Number(port), host, () => {
+    console.log(`Node Express server listening on http://${host}:${port}`);
   });
 }
 
