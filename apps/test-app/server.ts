@@ -1,24 +1,21 @@
-import { AngularNodeAppEngine, createNodeRequestHandler, isMainModule, writeResponseToNodeResponse } from '@angular/ssr/node';
+import { AngularNodeAppEngine, createNodeRequestHandler, writeResponseToNodeResponse } from '@angular/ssr/node';
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const app = express();
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
-const angularApp = new AngularNodeAppEngine();
 
-/**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/**', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
+// Load manifests and set them globally before creating the engine
+const { default: angularAppManifest } = await import(new URL('./angular-app-manifest.mjs', import.meta.url).href);
+const { default: angularAppEngineManifest } = await import(new URL('./angular-app-engine-manifest.mjs', import.meta.url).href);
+
+// Set manifests globally (required by AngularNodeAppEngine)
+(globalThis as any).ɵgetAngularAppManifest = () => angularAppManifest;
+(globalThis as any).ɵgetAngularAppEngineManifest = () => angularAppEngineManifest;
+
+const app = express();
+const angularApp = new AngularNodeAppEngine();
 
 /**
  * Serve static files from /browser
@@ -41,16 +38,14 @@ app.use('*', (req, res, next) => {
 });
 
 /**
- * Start the server if this module is the main entry point.
+ * Start the server.
  * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
  */
-if (isMainModule(import.meta.url)) {
-  const port = process.env['PORT'] || 4000;
-  const host = '0.0.0.0'; // Cloud Run requires listening on all interfaces
-  app.listen(Number(port), host, () => {
-    console.log(`Node Express server listening on http://${host}:${port}`);
-  });
-}
+const port = process.env['PORT'] || 4000;
+const host = '0.0.0.0'; // Cloud Run requires listening on all interfaces
+app.listen(Number(port), host, () => {
+  console.log(`Node Express server listening on http://${host}:${port}`);
+});
 
 /**
  * The request handler used by the Angular CLI (dev-server and during build).
