@@ -121,3 +121,14 @@
     --bk-logo-width: 80%;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-color-light: #2f2f2f;
+    --ion-color-light-rgb: 47,47,47;
+    --ion-color-light-contrast: #ffffff;
+    --ion-color-light-contrast-rgb: 255,255,255;
+    --ion-color-light-shade: #292929;
+    --ion-color-light-tint: #444444;
+  }
+}
