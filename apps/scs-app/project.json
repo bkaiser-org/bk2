@@ -37,6 +37,7 @@
         "assets": [
           "apps/scs-app/src/assets",
           "apps/scs-app/src/firebase-messaging-sw.js",
+          "apps/scs-app/src/firebase-config.js",
           {
             "glob": "**/*.svg",
             "input": "node_modules/ionicons/dist/ionicons/svg",
@@ -107,6 +108,7 @@
       },
       "defaultConfiguration": "development",
       "options": {
+        "port": 4201,
         "headers": {
           "Content-Security-Policy": "script-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.google.com https://apis.google.com https://static.imgix.net https://maps.googleapis.com; object-src 'none'; base-uri 'self';"
         }

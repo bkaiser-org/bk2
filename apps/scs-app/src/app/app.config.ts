@@ -62,10 +62,13 @@ export const appConfig: ApplicationConfig = {
           if (isPlatformBrowser(platformId)) {
             if (isDevMode()) {
               // in development, set the debug token
+              // Set to true to generate a new token (check console and register in Firebase Console)
+              // Or set to your registered debug token string: 'your-debug-token-here'
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               (<any>window).FIREBASE_APPCHECK_DEBUG_TOKEN = true;
             }
             // Initialize App Check only on the client
+            // Note: In dev mode, you may see 403 errors until the debug token is registered
             initializeAppCheck(getApp(), {
               provider: new ReCaptchaEnterpriseProvider(environment.services.appcheckRecaptchaEnterpriseKey),
               isTokenAutoRefreshEnabled: true,

@@ -37,6 +37,7 @@
         "assets": [
           "apps/test-app/src/assets",
           "apps/test-app/src/firebase-messaging-sw.js",
+          "apps/test-app/src/firebase-config.js",
           {
             "glob": "**/*.svg",
             "input": "node_modules/ionicons/dist/ionicons/svg",
