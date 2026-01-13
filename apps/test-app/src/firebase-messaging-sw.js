@@ -4,17 +4,11 @@
 importScripts('https://www.gstatic.com/firebasejs/12.7.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/12.7.0/firebase-messaging-compat.js');
 
-// Initialize Firebase in the service worker
-// Note: Firebase config is injected at runtime via environment
-// For production, get this from your Firebase project settings
-firebase.initializeApp({
-    apiKey: 'AIzaSyCrHhhgiAb-QYLbbjmSG4Fo9IdeRrt0Bz4',
-    authDomain: 'bkaiser-org.firebaseapp.com',
-    projectId: 'bkaiser-org',
-    storageBucket: 'bkaiser-org.appspot.com',
-    messagingSenderId: '502368729998',
-    appId: '1:502368729998:web:5443c8888e316a028802df'
-});
+// Import Firebase configuration (generated at build time from environment)
+importScripts('./firebase-config.js');
+
+// Initialize Firebase in the service worker using the generated config
+firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
 
