@@ -1,0 +1,132 @@
+{
+  "name": "scs-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "bk",
+  "sourceRoot": "apps/scs-app/src",
+  "tags": ["type:app", "platform:mobile", "platform:web"],
+  "targets": {
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --write ."
+      }
+    },
+    "format:check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prettier --check ."
+      }
+    },
+    "config": {
+      "command": "ts-node ./set-env.js",
+      "cache": true
+    },
+    "build": {
+      "dependsOn": ["config", "^build"],
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/scs-app",
+        "index": "apps/scs-app/src/index.html",
+        "browser": "apps/scs-app/src/main.ts",
+        "server": "apps/scs-app/src/main.server.ts",
+        "prerender": false,
+        "tsConfig": "apps/scs-app/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/scs-app/src/assets",
+          "apps/scs-app/src/firebase-messaging-sw.js",
+          {
+            "glob": "**/*.svg",
+            "input": "node_modules/ionicons/dist/ionicons/svg",
+            "output": "./svg"
+          },
+          {
+            "glob": "manifest.webmanifest",
+            "input": "apps/scs-app/src",
+            "output": "."
+          }
+        ],
+        "styles": [
+          "apps/scs-app/src/styles.scss",
+          "apps/scs-app/src/theme/variables.scss"
+        ],
+        "allowedCommonJsDependencies": [
+          "countries-list",
+          "fast-deep-equal",
+          "dayjs",
+          "dayjs/plugin/calendar",
+          "dayjs/plugin/relativeTime",
+          "fix-webm-duration",
+          "i18n-iso-countries",
+          "crypto-js",
+          "base64-js",
+          "@babel/runtime/regenerator",
+          "form-data",
+          "jszip",
+          "file-saver",
+          "isomorphic-ws",
+          "lodash.deburr"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "8mb",
+              "maximumError": "10mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular/build:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "scs-app:build:production"
+        },
+        "development": {
+          "buildTarget": "scs-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "headers": {
+          "Content-Security-Policy": "script-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.google.com https://apis.google.com https://static.imgix.net https://maps.googleapis.com; object-src 'none'; base-uri 'self';"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular/build:extract-i18n",
+      "options": {
+        "buildTarget": "scs-app:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "scs-app:build",
+        "spa": true
+      }
+    }
+  }
+}
