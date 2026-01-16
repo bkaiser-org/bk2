@@ -410,7 +410,7 @@
     "border": {
       "label": "Rahmen",
       "placeholder": "npx",
-      "helper": "Vereinfachte Konfiguraton des HTML border Attributs, z.B. 5px solid red"
+      "helper": "Vereinfachte Konfiguraton des HTML border Attributs, z.B. 5px solid red. Wenn du das Feld leer lässt, wird kein Rahmen angezeigt."
     },
     "buttonAction": {
       "label": "Aktion",
@@ -725,6 +725,12 @@
     "fileType": {
       "label": "Dateityp",
       "helper": "Der Typ der Datei, z.B. pdf, jpg, etc."
+    },
+    "fill": {
+      "label": "Füllung",
+      "placeholder": "solid | outline | clear | default",
+      "helper": "Die Darstellungsart eines Buttons: outline, clear, solid/default",
+      "error": "Die Füllung eines Buttons muss default, clear, outline oder solid sein."
     },
     "firstName": {
       "label": "Vorname",
@@ -1331,6 +1337,17 @@
       "helper": "Das Datum, an dem die Einladung gesendet wurde.",
       "error": "Das Datumsformat ist nicht korrekt."
     },
+    "shape": {
+      "label": "Form",
+      "placeholder": "circle | square | rounded",
+      "helper": "Die Form eines Buttons: circle, square, rounded",
+      "error": "Die Form des Icons muss circle, square oder rounded sein."
+    },
+    "showTitleAs": {
+      "label": "Titel anzeigen als",
+      "placeholder": "header | title | legend | none",
+      "helper": "Bestimmt die Darstellungsart des Titels."
+    },
     "sizes": {
       "label": "Bild Grössen",
       "placeholder": "(max-width: 768px) 100vw, 50vw",
@@ -1448,6 +1465,12 @@
       "placeholder": "Placeholder",
       "helper": "helper text: Ssss",
       "error": "error text: Eingabe muss aus mind. 4 Chars, startend mit S bestehen."
+    },
+    "textColor": {
+      "label": "Textfarbe",
+      "placeholder": "#RRGGBB | #RRGGBBAA | rgb(nnn,nnn,nnn) | rgba(nnn,nnn,nnn,aa) | colorname",
+      "helper": "Die Textfarbe in einem gültigen CSS Format (Hex, RGB(A), Farbnamen).",
+      "error": "Die Textfarbe muss in einem der folgenden Formate angegeben werden: #RRGGBB, #RRGGBBAA, rgb(nnn,nnn,nnn), rgba(nnn,nnn,nnn,aa) oder ein gültiger Farbnamen."
     },
     "title": {
       "label": "Titel",
@@ -1685,7 +1708,13 @@
     "section": {
       "edit": "Sektion bearbeiten",
       "delete": "Sektion löschen",
-      "view": "Sektionskonfiguration anzeigen"
+      "view": "Sektionskonfiguration anzeigen",
+      "image": {
+        "upload": "Bild hochladen"
+      },
+      "file": {
+        "upload": "Datei hochladen"
+      }
     },
     "document": {
       "download": "Dokument herunterladen",
@@ -3632,7 +3661,15 @@
           "label": "Button",
           "edit": "Button Konfiguration ändern",
           "subtitle": "Definiere das Aussehen des Buttons",
-          "description": "Button mit Icon und/oder Text für Download oder Navigation."
+          "description": "Button mit Icon und/oder Text für Download oder Navigation.",
+          "icon": {
+            "title": "Icon Konfiguration",
+            "subtitle": "Wähle ein Icon und seine Darstellung"
+          },
+          "style": {
+            "title": "Button Konfiguration",
+            "subtitle": "Definiere das Aussehen des Buttons"
+          }
         },
         "chart": {
           "label": "Diagramm",
