@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import { IonApp, IonAvatar, IonButtons, IonContent, IonHeader, IonImg, IonItem, IonLabel, IonMenu, IonRouterOutlet, IonSplitPane, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonApp, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonMenu, IonRouterOutlet, IonSplitPane, IonToolbar } from '@ionic/angular/standalone';
 
 import { AuthInfoComponent } from '@bk2/auth-ui';
 import { MenuComponent } from '@bk2/cms-menu-feature';
@@ -11,8 +11,8 @@ import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
 @Component({
   imports: [
     MenuComponent, AuthInfoComponent, SpinnerComponent, ConnectionStatusButtonComponent, AvatarUserComponent,
-    IonApp, IonSplitPane, IonMenu, IonHeader, IonContent, IonToolbar, IonRouterOutlet, IonButtons, IonAvatar,
-    IonImg, IonLabel, IonItem,
+    IonApp, IonSplitPane, IonMenu, IonHeader, IonContent, IonToolbar, IonRouterOutlet, IonButtons,
+    IonLabel, IonItem,
     AvatarUserComponent
 ],
   selector: 'bk-root',
