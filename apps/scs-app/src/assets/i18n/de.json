@@ -1093,11 +1093,6 @@
     "number": {
       "label": "Nummer"
     },
-    "numberOfParticipants": {
-      "label": "Anzahl Teilnehmer",
-      "placeholder": "Anzahl Teilnehmer",
-      "helper": "Die Anzahl der Teilnehmer an einem Event."
-    },
     "objects": {
       "label": "An:",
       "placeholder": "",
@@ -1264,7 +1259,7 @@
       "helper": "Das Datum, bis zu dem das Ereignis wiederholt wird.",
       "error": "Das Datumsformat ist nicht korrekt."
     },
-    "reservationRef": {
+    "resref": {
       "label": "Reservations-Referenz",
       "placeholder": "z.B. Email: Datum",
       "helper": "Ein optionaler Hinweis, wie reserviert wurde z.B. Email oder Telefon und das Datum der Reservation."
@@ -1272,13 +1267,10 @@
     "reservationType": {
       "label": "Art des Anlasses"
     },
-    "reservationReason": {
-      "label": "Art des Anlasses",
-      "placeholder": "Anlass",
+    "resreason": {
+      "label": "Grund",
+      "placeholder": "Grund",
       "helper": "Der Grund für die Reservation, z.B. Training, Wettkampf, etc."
-    },
-    "reservationState": {
-      "label": "Status"
     },
     "resourceData": {
       "label": "Eigenschaften",
@@ -5479,9 +5471,10 @@
     "list": {
       "title": "Reservationen",
       "header": {
-        "name": "Name",
+        "reserver": "Wer",
+        "name": "Anlass",
         "state": "Status",
-        "resource": "Resource",
+        "resource": "Was",
         "validFrom": "Datum",
         "duration": "von - bis",
         "category": "Typ"
