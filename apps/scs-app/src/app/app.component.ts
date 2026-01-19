@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import { IonApp, IonButtons, IonContent, IonHeader, IonMenu, IonRouterOutlet, IonSplitPane, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonApp, IonAvatar, IonButtons, IonContent, IonHeader, IonImg, IonItem, IonLabel, IonMenu, IonRouterOutlet, IonSplitPane, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 
 import { AuthInfoComponent } from '@bk2/auth-ui';
 import { MenuComponent } from '@bk2/cms-menu-feature';
@@ -11,7 +11,8 @@ import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
 @Component({
   imports: [
     MenuComponent, AuthInfoComponent, SpinnerComponent, ConnectionStatusButtonComponent, AvatarUserComponent,
-    IonApp, IonSplitPane, IonMenu, IonHeader, IonContent, IonToolbar, IonRouterOutlet, IonButtons,
+    IonApp, IonSplitPane, IonMenu, IonHeader, IonContent, IonToolbar, IonRouterOutlet, IonButtons, IonAvatar,
+    IonImg, IonLabel, IonItem,
     AvatarUserComponent
 ],
   selector: 'bk-root',
@@ -89,6 +90,9 @@ import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
           <ion-header>
             <ion-toolbar color="secondary">
               <ion-buttons slot="start"><bk-connection-status-button /></ion-buttons>
+              <ion-item lines="none" color="secondary">
+                <ion-label>{{ appStore.appConfig().appName }}</ion-label>
+              </ion-item>
               <ion-buttons slot="end"><bk-avatar-user [currentUser]="appStore.currentUser()" /></ion-buttons>
             </ion-toolbar>
           </ion-header>
