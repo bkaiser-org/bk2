@@ -515,9 +515,6 @@
     "showTestData": {
       "label": "Testdaten anzeigen"
     },
-    "useDisplayName": {
-      "label": "Anzeigenamen verwenden"
-    },
     "useTouchId": {
       "label": "Touch ID verwenden"
     },
