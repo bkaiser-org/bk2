@@ -1005,6 +1005,12 @@
       "helper": "Die ID des gleichen Kontaktes in Bexio zum Synchronisieren von Daten.",
       "error": "Bexio ID ist eine sechsstellige Zahl."
     },
+    "memberId": {
+      "label": "Mitglieder ID",
+      "placeholder": "nnnnn",
+      "error": "Es muss eine Ganzzahl aus lauter Ziffern eingegeben werden.",
+      "helper": "Die eindeutige Identifikationsnummer des Mitglieds in dieser Organisation."
+    },
     "memberName1": {
       "label": "Vorname",
       "placeholder": "sssssss",
