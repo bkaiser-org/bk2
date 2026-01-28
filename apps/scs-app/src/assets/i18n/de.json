@@ -517,6 +517,9 @@
       "placeholder": "Ortsname",
       "error": "Es sind nur Buchstaben ohne Sonderzeichen oder Zahlen erlaubt."
     },
+    "club": {
+      "label": "Club"
+    },
     "cols": {
       "label": "Anzahl Spalten",
       "placeholder": "Anzahl Spalten (1..12)",
@@ -1586,6 +1589,9 @@
     "workrelType": {
       "label": "Beschäftigungsart",
       "helper": "Die Art einer Beschäftigung, z.B. Angestellt, Student, etc."
+    },
+    "year": {
+      "label": "Jahr"
     },
     "youtubeId": {
       "label": "YouTube Video ID",
