@@ -997,6 +997,12 @@
       "placeholder": "Hash (SHA-256)",
       "helper": "Der SHA-256 Hash wird verwendet, um z.B. eine Datei eindeutig zu identifizieren."
     },
+    "maxEvents": {
+      "label": "Maximale Anzahl Ereignisse",
+      "placeholder": "nnn",
+      "helper": "Die maximale Anzahl Ereignisse, die angezeigt werden sollen.",
+      "error": "Es muss eine Ganzzahl aus lauter Ziffern eingegeben werden, wenn das Feld leer bleibt, werden alle Ereignisse angezeigt."
+    },
     "maximumAge": {
       "label": "Maximale Wartezeit",
       "placeholder": "nn",
@@ -1079,6 +1085,11 @@
         "error": "Das Attribut ist obligatorisch und muss aus einem Wort mit alphanumerischen Zeichen bestehen.",
         "helper": "Die Attribute sind die Eigenschaften des Modells."
       }
+    },
+    "moreUrl": {
+      "label": "URL zu vollständigen Daten",
+      "placeholder": "interne, relative URL",
+      "helper": "Eine URL, die auf eine Seite mit mehr Informationen verweist. Typischerweise auf eine Liste innerhalb der App."
     },
     "name": {
       "label": "Name",
@@ -1933,6 +1944,22 @@
     "showDocs": {
       "label": "Dokumente anzeigen",
       "helperText": "Zeigt Dokumente."
+    },
+    "showPastEvents": {
+      "label": "Vergangene Ereignisse anzeigen",
+      "helperText": "Wähle, ob vergangene Ereignisse in der Liste oder im Kalender angezeigt werden sollen."
+    },
+    "showUpcomingEvents": {
+      "label": "Kommende Ereignisse anzeigen",
+      "helperText": "Wähle, ob zukünftige Ereignisse in der Liste oder im Kalender angezeigt werden sollen."
+    },
+    "showEventTime": {
+      "label": "Zeit des Ereignisses anzeigen",
+      "helperText": "wähle, ob zum Datum auch die Zeit des Ereignisses angezeigt werden soll."
+    },
+    "showEventLocation": {
+      "label": "Ort des Ereignisses anzeigen",
+      "helperText": "Wähle, ob der Ort des Ereignisses angezeigt werden soll."
     },
     "showHelpers": {
       "label": "Hilfetexte anzeigen",
@@ -3783,6 +3810,8 @@
         },
         "events": {
           "label": "Events",
+          "title": "Konfiguration der Eventliste",
+          "subtitle": "Passe hier die Einstellungen der Eventliste an deine Bedürfnisse an.",
           "edit": "Eventliste Konfiguration ändern",
           "description": "Darstellung von Events, z.B. Regatten, Anlässe, Trainings"
         }
