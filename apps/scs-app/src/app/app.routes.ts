@@ -24,7 +24,7 @@ export const appRoutes: Route[] = [
       path: ':id/:contextMenuName',
       loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ContentPageComponent),
       data: { color: 'secondary'
-    }
+    },
 }],
   },
   {

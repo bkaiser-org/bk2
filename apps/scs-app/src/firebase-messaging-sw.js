@@ -13,7 +13,7 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 // Handle background messages
-messaging.onBackgroundMessage((payload) => {
+messaging.onBackgroundMessage(payload => {
   console.log('[firebase-messaging-sw.js] Received background message:', payload);
 
   const notificationTitle = payload.notification?.title || 'New Message';
@@ -26,7 +26,7 @@ messaging.onBackgroundMessage((payload) => {
     requireInteraction: true,
     actions: [
       { action: 'open', title: 'Open Chat' },
-      { action: 'dismiss', title: 'Dismiss' }
+      { action: 'dismiss', title: 'Dismiss' },
     ]
   };
 
@@ -34,9 +34,8 @@ messaging.onBackgroundMessage((payload) => {
 });
 
 // Handle notification click
-self.addEventListener('notificationclick', (event) => {
-  console.log('[firebase-messaging-sw.js] Notification click:', event);
-  
+self.addEventListener('notificationclick', event => {
+  console.log('[firebase-messaging-sw.js] Notification click:', event);  
   event.notification.close();
 
   if (event.action === 'open' || !event.action) {
@@ -45,7 +44,7 @@ self.addEventListener('notificationclick', (event) => {
     
     event.waitUntil(
       clients.matchAll({ type: 'window', includeUncontrolled: true })
-        .then((clientList) => {
+        .then(clientList => {
           // If app is already open, focus it
           for (const client of clientList) {
             if (client.url.includes(self.registration.scope) && 'focus' in client) {
