@@ -49,9 +49,9 @@
         "todos": "Aufgaben"
       },
       "calEvent": {
-        "title": "Ereignisse",
+        "title": "Anlässe",
         "calendar": "Kalender",
-        "list": "Ereignis-Liste"
+        "list": "Anlässe"
       },
       "members": {
         "title": "Mitglieder",
@@ -709,6 +709,12 @@
       "placeholder": "Email Adresse",
       "error": "Bitte eine gültige Email Adresse eingeben.",
       "helper": "Wechsle die LoginEmail eines bestehenden Users. Es wird nur die Email-Adresse im Firebase User geändert. Im User und Person muss diese Email Adresse ebenfalls geändert werden."
+    },
+    "eventQuickEntry": {
+      "label": "Schnelleingabe",
+      "placeholder": "yyyymmdd[,hhmm]: name[,location] [//type]",
+      "helper": "Für die Schnelleingabe sind Startdatum (im Format yyyymmdd) und eine Bezeichnung des Anlasses (name) obligatorisch. Optional kann die Startzeit (hhmm), der Ort (location) und der Ereignistyp (type) angegeben werden. Beispiel: 20240115,1800: Neujahrsapéro, Clubhaus //social",
+      "error": "Die Schnelleingabe-Bezeichnung ist obligatorisch."
     },
     "exportFormat": {
       "label": "Export Format",
@@ -1442,9 +1448,10 @@
       "description": "Optional kannst du hier die Inhalte der Titel-Zeile der Tabelle eintragen. Die Reihenfolge der Einträge entspricht der Reihenfolge der Zellen in der Tabelle. Die Einträge können nachträglich sortiert oder gelöscht werden. Die Titelzeile wird nur angezeigt, wenn sie Inhalte enthält.",
       "addLabel": "Neuen Titel hinzufügen"
     },
-    "taskName": {
-      "label": "Neues Todo",
-      "placeholder": "neue Aufgabe beschreiben (incl. :tag[,tag] @assignee //dueDate)"
+    "taskQuickEntry": {
+      "label": "Schnelleingabe",
+      "placeholder": "neue Aufgabe beschreiben (incl. :tag[,tag] @assignee //dueDate)",
+      "helper": "Ermöglicht die schnelle Erstellung einer Aufgabe mit Beschreibung, Tags, Zuweisung und Fälligkeitsdatum. Beispiel: 'Bericht schreiben :arbeit @max //25.12.2024' "
     },
     "taskState": {
       "label": "Status"
@@ -1659,7 +1666,9 @@
       "edit": "Ereignis bearbeiten",
       "delete": "Ereignis löschen",
       "inviteGroup": "Gruppenmitglieder einladen",
-      "invitePerson": "Person einladen"
+      "invitePerson": "Person einladen",
+      "subscribe": "Ich nehme teil",
+      "unsubscribe": "Ich kann nicht teilnehmen"
     },
     "category": {
       "view": "Kategorie anzeigen",
@@ -3771,6 +3780,11 @@
           "label": "Tracker",
           "edit": "Tracker Konfiguration ändern",
           "description": "Tracking-Elemente, z.B. für Regatten, Wanderfahrten, Trainings"
+        },
+        "events": {
+          "label": "Events",
+          "edit": "Eventliste Konfiguration ändern",
+          "description": "Darstellung von Events, z.B. Regatten, Anlässe, Trainings"
         }
       },
       "operation": {
@@ -4269,6 +4283,10 @@
       "team": {
         "label": "Team-Meeting",
         "description": "Regelmässiges Treffen des Teams."
+      },
+      "work": {
+        "label": "Arbeit",
+        "description": "zB. Putzen, Reparaturen, Wartung"
       },
       "other": {
         "label": "Andere",
