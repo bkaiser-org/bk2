@@ -1,11 +1,15 @@
-import { Route } from '@angular/router';
 
+import { Route } from '@angular/router';
 import { isAdminGuard, isAuthenticatedGuard, isPrivilegedGuard, LoginPageComponent, PasswordResetPageComponent } from '@bk2/auth-feature';
 import { MenuListComponent } from '@bk2/cms-menu-feature';
 import { QuizPageComponent } from '@bk2/quiz-feature';
 
 export const appRoutes: Route[] = [
-  { path: '', pathMatch: 'full', redirectTo: 'public/welcome' },
+  { 
+    path: '', 
+    pathMatch: 'full',
+    redirectTo: 'private/dashboard/c-contentpage'
+  },
   {
     path: 'public',
     children: [
@@ -20,12 +24,14 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'private',
-    children: [{ 
-      path: ':id/:contextMenuName',
-      loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ContentPageComponent),
-      data: { color: 'secondary'
-    },
-}],
+    canActivate: [isAuthenticatedGuard],
+    children: [
+      { 
+        path: ':id/:contextMenuName',
+        loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ContentPageComponent),
+        data: { color: 'secondary'
+      },
+    }],
   },
   {
     path: 'quiz',
@@ -41,12 +47,16 @@ export const appRoutes: Route[] = [
   {
     path: 'category',
     canActivate: [isAuthenticatedGuard],
-    children: [{ path: ':listId/:contextMenuName', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/category-feature').then(m => m.CategoryListComponent) }],
+    children: [
+      { path: ':listId/:contextMenuName', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/category-feature').then(m => m.CategoryListComponent) }
+    ],
   },
   {
     path: 'page',
     canActivate: [isAuthenticatedGuard],
-    children: [{ path: ':listId/:contextMenuName', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageAllListComponent) }],
+    children: [
+      { path: ':listId/:contextMenuName', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageAllListComponent) }
+    ],
   },
   {
     path: 'section',
@@ -58,12 +68,16 @@ export const appRoutes: Route[] = [
   {
     path: 'menu',
     canActivate: [isAuthenticatedGuard],
-    children: [{ path: 'all', canActivate: [isPrivilegedGuard], component: MenuListComponent }],
+    children: [
+      { path: 'all', canActivate: [isPrivilegedGuard], component: MenuListComponent }
+    ],
   },
   {
     path: 'album',
     canActivate: [isAuthenticatedGuard],
-    children: [{ path: ':id', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/cms-page-feature').then(m => m.AlbumPageComponent) }],
+    children: [
+      { path: ':id', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/cms-page-feature').then(m => m.AlbumPageComponent) }
+    ],
   },
   {
     path: 'person',
@@ -111,6 +125,11 @@ export const appRoutes: Route[] = [
       loadComponent: () => import('@bk2/relationship-membership-feature').then(m => m.MembershipListComponent),
       data: { color: 'secondary', view: 'default' }
     }],
+  },
+  {
+    path: 'invitation',
+    canActivate: [isAuthenticatedGuard],
+    children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship-invitation-feature').then(m => m.InvitationListComponent) }],
   },
   {
     path: 'ownership',

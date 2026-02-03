@@ -1003,6 +1003,12 @@
       "helper": "Die maximale Anzahl Ereignisse, die angezeigt werden sollen.",
       "error": "Es muss eine Ganzzahl aus lauter Ziffern eingegeben werden, wenn das Feld leer bleibt, werden alle Ereignisse angezeigt."
     },
+    "maxItems": {
+      "label": "Maximale Anzahl Einträge",
+      "placeholder": "nnn",
+      "helper": "Die maximale Anzahl Einträge, die angezeigt werden sollen.",
+      "error": "Es muss eine Ganzzahl aus lauter Ziffern eingegeben werden, wenn das Feld leer bleibt, werden alle Einträge angezeigt."
+    },
     "maximumAge": {
       "label": "Maximale Wartezeit",
       "placeholder": "nn",
@@ -1693,7 +1699,9 @@
       "resend": "Einladung erneut senden",
       "accept": "Einladung annehmen",
       "decline": "Einladung ablehnen",
-      "maybe": "Teilnahme unsicher"
+      "maybe": "Teilnahme unsicher",
+      "subscribe":"Ich nehme teil",
+      "unsubscribe":"Ich kann nicht teilnehmen"
     },
     "person": {
       "call": "Person anrufen",
@@ -1944,6 +1952,14 @@
     "showDocs": {
       "label": "Dokumente anzeigen",
       "helperText": "Zeigt Dokumente."
+    },
+    "showPastItems": {
+      "label": "Vergangene Einträge anzeigen",
+      "helperText": "Wähle, ob vergangene Einträge in der Liste oder im Kalender angezeigt werden sollen."
+    },
+    "showUpcomingItems": {
+      "label": "Kommende Einträge anzeigen",
+      "helperText": "Wähle, ob zukünftige Einträge in der Liste oder im Kalender angezeigt werden sollen."
     },
     "showPastEvents": {
       "label": "Vergangene Ereignisse anzeigen",
@@ -3814,6 +3830,13 @@
           "subtitle": "Passe hier die Einstellungen der Eventliste an deine Bedürfnisse an.",
           "edit": "Eventliste Konfiguration ändern",
           "description": "Darstellung von Events, z.B. Regatten, Anlässe, Trainings"
+        },
+        "invitations": {
+          "label": "Einladungen",
+          "title": "Konfiguration der Einladungen",
+          "subtitle": "Passe hier die Einstellungen der Einladungen an deine Bedürfnisse an.",
+          "edit": "Einladungen Konfiguration ändern",
+          "description": "Darstellung von Einladungen, z.B. für Veranstaltungen, Meetings"
         }
       },
       "operation": {
@@ -4198,6 +4221,36 @@
       "view": {
         "label": "Einladungs-Details anzeigen"
       }
+    },
+    "state": {
+      "all": {
+        "label": "Alle Stati"
+      },
+      "pending": {
+        "label": "Ausstehend",
+        "description": "Die Einladung wurde verschickt, aber noch nicht beantwortet."
+      },
+      "accepted": {
+        "label": "Angenommen",
+        "description": "Die Einladung wurde angenommen."
+      },
+      "declined": {
+        "label": "Abgelehnt",
+        "description": "Die Einladung wurde abgelehnt."
+      },
+      "maybe": {
+        "label": "Vielleicht",
+        "description": "Die Einladung wurde mit 'Vielleicht' beantwortet."
+      }
+    },
+    "list": {
+      "header": {
+        "date": "Datum",
+        "name": "Name",
+        "invitee": "Teilnehmer",
+        "inviter": "Organisator",
+        "state": "Status"
+      }
     }
   },
   "calevent": {
@@ -4246,6 +4299,10 @@
       "competition": {
         "label": "Wettkampf",
         "description": "zB. Regatta, Rennen, Turnier, Meisterschaft"
+      },
+      "education": {
+        "label": "Bildung",
+        "description": "Weiterbildung / Ausbildung, zB. Vortrag, Seminar, Workshop, Kurs"
       },
       "social": {
         "label": "Sozialer Anlass",
