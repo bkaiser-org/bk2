@@ -2097,13 +2097,13 @@
     },
     "privacy": {
       "title": "Datenschutz",
-      "description": "In diesen Datenschutzeinstellungen kannst du für alle sensitiven Attribute (z.B. Geburtsdatum) festlegen, wer diese sehen darf. Öffentliche Attribute sind für alle sichtbar, also auch ausserhalb des Vereins z.B. auf der Website. Eingeschränkte Attribute sind nur für Mitglieder innerhalb der App sichtbar. Geschützte Attribute sind nur für Chargierte Personen sichtbar (z.B. Vorstand), welche diese Daten für die Arbeit im Verein benötigen. Das Teilen deiner Daten mit anderen Seeclub-Mitgliedern ist in deinem eigenen Interesse, weil du so z.B. für Ruderausfahrten kontaktiert werden kannst."
+      "description": "In diesen Datenschutzeinstellungen kannst du für alle sensitiven Attribute (z.B. Geburtsdatum) festlegen, wer diese sehen darf. Öffentliche Attribute sind für alle sichtbar, also auch ausserhalb des Vereins z.B. auf der Website. Eingeschränkte Attribute sind nur für Mitglieder innerhalb der App sichtbar. Geschützte Attribute sind nur für chargierte Personen sichtbar (z.B. Vorstand), welche diese Daten für die Arbeit im Verein benötigen. Das Teilen deiner Daten mit anderen Seeclub-Mitgliedern ist in deinem eigenen Interesse, weil du so z.B. für Ruderausfahrten kontaktiert werden kannst."
     },
     "operation": {
       "update": {
         "label": "Profil ändern",
-        "error": "Die Aenderungen konnten nicht gespeichert werden",
-        "conf": "Die Aenderungen wurden gespeichert."
+        "error": "Die Änderungen konnten nicht gespeichert werden",
+        "conf": "Die Änderungen wurden gespeichert."
       }
     }
   },
