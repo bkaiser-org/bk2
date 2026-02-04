@@ -165,7 +165,7 @@ export const appRoutes: Route[] = [
     ],
   },
   {
-    path: 'boat',
+    path: 'rboat',
     canActivate: [isAuthenticatedGuard],
     children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/resource-feature').then(m => m.RowingBoatListComponent) }],
   },
