@@ -2693,7 +2693,28 @@
         "label": "Boot",
         "title": "Boote",
         "formTitle": "Angaben zum Boot",
-        "description": "Motorboot, Segelboot, etc."
+        "description": "Motorboot, Segelboot, etc.",
+        "operation": {
+          "create": {
+            "label": "Neues Boot erfassen",
+            "conf": "Das neue Boot wurde gespeichert.",
+            "error": "Das Boot konnte nicht gespeichert werden."
+          },
+          "update": {
+            "label": "Boot ändern",
+            "conf": "Die Aenderungen wurden gespeichert",
+            "error": "Die Aenderungen konnten nicht gespeichert werden."
+          },
+          "delete": {
+            "label": "Boot löschen",
+            "conf": "Das Boot wurde gelöscht.",
+            "error": "Das Boot konnte nicht gelöscht werden.",
+            "askConfirmation": "Soll das Boot wirklich gelöscht werden ?"
+          },
+          "view": {
+            "label": "Boot anzeigen" 
+          }
+        }
       },
       "rboat": {
         "label": "Ruderboot",
@@ -2723,10 +2744,31 @@
         }
       },
       "car": {
-        "label": "Auto",
-        "title": "Autos",
+        "label": "Fahrzeug",
+        "title": "Fahrzeuge",
         "formTitle": "Angaben zum Fahrzeug",
-        "description": "Auto, Lastwagen, Bus"
+        "description": "Auto, Lastwagen, Bus",
+        "operation": {
+          "create": {
+            "label": "Neues Fahrzeug erfassen",
+            "conf": "Das neue Fahrzeug wurde gespeichert.",
+            "error": "Das Fahrzeug konnte nicht gespeichert werden."
+          },
+          "update": {
+            "label": "Fahrzeug ändern",
+            "conf": "Die Aenderungen wurden gespeichert",
+            "error": "Die Aenderungen konnten nicht gespeichert werden."
+          },
+          "delete": {
+            "label": "Fahrzeug löschen",
+            "conf": "Das Fahrzeug wurde gelöscht.",
+            "error": "Das Fahrzeug konnte nicht gelöscht werden.",
+            "askConfirmation": "Soll das Fahrzeug wirklich gelöscht werden ?"
+          },
+          "view": {
+            "label": "Fahrzeug anzeigen" 
+          }
+        }
       },
       "clubBoat": {
         "label": "Club-Boot",
@@ -2738,7 +2780,29 @@
       },
       "other": {
         "label": "Andere Resource",
-        "description": "Resource, welche keiner vordefinierten Art zugeordnet werden kann"
+        "description": "Resource, welche keiner vordefinierten Art zugeordnet werden kann",
+        "formTitle": "Angaben zur Resource",
+        "operation": {
+          "create": {
+            "label": "Neuen Resource erfassen",
+            "conf": "Die neue Resource wurde gespeichert.",
+            "error": "Die neue Resource konnte nicht gespeichert werden."
+          },
+          "update": {
+            "label": "Resource ändern",
+            "conf": "Die Änderungen wurden gespeichert",
+            "error": "Die Änderungen konnten nicht gespeichert werden."
+          },
+          "delete": {
+            "label": "Resource löschen",
+            "conf": "Die Resource wurde gelöscht.",
+            "error": "Die Resource konnte nicht gelöscht werden.",
+            "askConfirmation": "Soll die Resource wirklich gelöscht werden ?"
+          },
+          "view": {
+            "label": "Resource anzeigen"
+          }
+        }
       },
       "motorBoat": {
         "label": "Motorboot",
@@ -2763,8 +2827,8 @@
           },
           "update": {
             "label": "Garderobenkasten ändern",
-            "conf": "Die Aenderungen wurden gespeichert",
-            "error": "Die Aenderungen konnten nicht gespeichert werden."
+            "conf": "Die Änderungen wurden gespeichert",
+            "error": "Die Änderungen konnten nicht gespeichert werden."
           },
           "delete": {
             "label": "Garderobenkasten löschen",
@@ -2790,8 +2854,8 @@
           },
           "update": {
             "label": "Schlüssel ändern",
-            "conf": "Die Aenderungen wurden gespeichert",
-            "error": "Die Aenderungen konnten nicht gespeichert werden."
+            "conf": "Die Änderungen wurden gespeichert",
+            "error": "Die Änderungen konnten nicht gespeichert werden."
           },
           "delete": {
             "label": "Schlüssel löschen",
@@ -2817,8 +2881,8 @@
           },
           "update": {
             "label": "Haustier ändern",
-            "conf": "Die Aenderungen wurden gespeichert",
-            "error": "Die Aenderungen konnten nicht gespeichert werden."
+            "conf": "Die Änderungen wurden gespeichert",
+            "error": "Die Änderungen konnten nicht gespeichert werden."
           },
           "delete": {
             "label": "Haustier löschen",
@@ -2859,8 +2923,8 @@
           },
           "update": {
             "label": "Immobilie ändern",
-            "conf": "Die Aenderungen wurden gespeichert",
-            "error": "Die Aenderungen konnten nicht gespeichert werden."
+            "conf": "Die Änderungen wurden gespeichert",
+            "error": "Die Änderungen konnten nicht gespeichert werden."
           },
           "delete": {
             "label": "Immobilie löschen",
@@ -3212,6 +3276,38 @@
         },
         "view": {
           "label": "Immobilie anzeigen"
+        }
+      }
+    },
+    "pet": {
+      "type": {
+        "cat": {
+          "label": "Katze",
+          "description": "Eine Katze als Haustier"
+        },
+        "dog": {
+          "label": "Hund",
+          "description": "Ein Hund als Haustier"
+        },
+        "bird": {
+          "label": "Vogel",
+          "description": "Ein Vogel als Haustier"
+        },
+        "sheep": {
+          "label": "Schaf",
+          "description": "Ein Schaf als Haustier"
+        },
+        "rabbit": {
+          "label": "Hase",
+          "description": "Ein Hase als Haustier"
+        },
+        "horse": {
+          "label": "Pferd",
+          "description": "Ein Pferd als Haustier"
+        },
+        "fish": {
+          "label": "Fisch",
+          "description": "Ein Fisch als Haustier"
         }
       }
     },
