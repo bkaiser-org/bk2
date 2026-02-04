@@ -263,7 +263,8 @@
       "owners": "Besitzer sind nicht definiert.",
       "addresses": "Es sind keine Adressen erfasst.",
       "members": "Die Organisation hat keine Mitglieder.",
-      "comments": "Es gibt noch keine Kommentare"
+      "comments": "Es gibt noch keine Kommentare",
+      "attendance": "Es sind noch keine Teilnehmenden erfasst."
     },
     "validate": {
       "email": "Bitte eine gültige E-Mail Adresse eingeben.",
@@ -4260,9 +4261,17 @@
     "field": {
       "empty": "Es sind noch keine Ereignisse erstellt worden. Erstelle eines mit Klicken des + Buttons.",
       "responsible": {
-        "label": "Organisatoren",
+        "label": "Organisierende",
         "description": "Personen, die für den Anlass verantwortlich sind.",
-        "addLabel": "Organisator/in hinzufügen"
+        "addLabel": "Organisierende hinzufügen"
+      },
+      "attendance": {
+        "label": "Teilnehmende",
+        "plural": "Teilnehmende",
+        "description": "Personen, die am Anlass teilnehmen.",
+        "addLabel": "Teilnehmende hinzufügen",
+        "accepted": "Teilnahmen",
+        "exists": "Diese Person ist bereits als Teilnehmende erfasst."
       }
     },
     "list": {
@@ -4270,7 +4279,7 @@
         "name": "Anlass",
         "duration": "von-bis",
         "year": "Jahr",
-        "responsible": "Organisator",
+        "responsible": "Organisierende",
         "location": "Ort",
         "description": "Thema"
       }
