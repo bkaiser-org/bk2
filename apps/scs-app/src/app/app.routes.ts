@@ -13,11 +13,9 @@ export const appRoutes: Route[] = [
   {
     path: 'public',
     children: [
-      { path: 'welcome', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.BkWelcomePageComponent) },
-      { path: 'notfound', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageNotFoundComponent) },
       { 
         path: ':id/:contextMenuName', 
-        loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ContentPageComponent),
+        loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageDispatcher),
         data: { color: 'secondary' }
       },
     ],
@@ -28,7 +26,7 @@ export const appRoutes: Route[] = [
     children: [
       { 
         path: ':id/:contextMenuName',
-        loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ContentPageComponent),
+        loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageDispatcher),
         data: { color: 'secondary'
       },
     }],
@@ -70,13 +68,6 @@ export const appRoutes: Route[] = [
     canActivate: [isAuthenticatedGuard],
     children: [
       { path: 'all', canActivate: [isPrivilegedGuard], component: MenuListComponent }
-    ],
-  },
-  {
-    path: 'album',
-    canActivate: [isAuthenticatedGuard],
-    children: [
-      { path: ':id', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/cms-page-feature').then(m => m.AlbumPageComponent) }
     ],
   },
   {
@@ -224,5 +215,5 @@ export const appRoutes: Route[] = [
       { path: 'storage', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocStorageComponent) },
     ],
   },
-  { path: '**', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageNotFoundComponent) },
+  { path: '**', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageDispatcher) },
 ];
