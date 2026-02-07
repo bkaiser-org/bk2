@@ -18,6 +18,11 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageDispatcher),
         data: { color: 'secondary' }
       },
+      { 
+        path: ':id', 
+        loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageDispatcher),
+        data: { color: 'secondary' }
+      }
     ],
   },
   {
@@ -27,9 +32,14 @@ export const appRoutes: Route[] = [
       { 
         path: ':id/:contextMenuName',
         loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageDispatcher),
-        data: { color: 'secondary'
+        data: { color: 'secondary' }
       },
-    }],
+      { 
+        path: ':id',
+        loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageDispatcher),
+        data: { color: 'secondary' }
+      },
+    ],
   },
   {
     path: 'quiz',

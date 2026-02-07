@@ -3354,10 +3354,25 @@
   },
   "cms": {
     "welcome": {
-      "header": "Willkommen !",
-      "title": "Test Application",
-      "subTitle": "SubTitle",
-      "help": "Dies ist die Startseite. Klicke oben links aufs Menü und wähle eine Funktion."
+      "title": "Seeclub Stäfa",
+      "subTitle": "Rudern auf dem Zürichsee",
+      "abstract": "Dies ist die Startseite. Klicke oben links aufs Menü und wähle eine Funktion.",
+      "logoAltText": "Logo des Seeclub Stäfa",
+      "bannerAltText": "Hintergrundbild mit einem Ruderer auf dem Zürichsee."
+    },
+    "not-found": {
+      "title": "404 Not Found",
+      "subTitle": "im Schilf gelandet ?",
+      "abstract": "Die angeforderte HTML Seite konnte nicht gefunden werden. Probiere es erneut mit einer anderen URL, dh. klicke oben links aufs Menü und wähle eine Funktion.",
+      "logoAltText": "Logo des Seeclub Stäfa",
+      "bannerAltText": "Hintergrundbild aus dem Schilf heraus mit Sonnenuntergang auf dem Zürichsee."
+    },
+    "unknown-page-type": {
+      "title": "404 Not Found",
+      "subTitle": "im Schilf gelandet ?",
+      "abstract": "Es wurde eine HTML-Seite mit einem unbekannten Typ aufgerufen. Bitte versuche es erneut mit einer anderen URL, dh. klicke oben links aufs Menü und wähle eine Funktion.",
+      "logoAltText": "Logo des Seeclub Stäfa",
+      "bannerAltText": "Hintergrundbild aus dem Schilf heraus mit Sonnenuntergang auf dem Zürichsee."
     },
     "help": {
       "title": "Hilfe und Anleitung",
