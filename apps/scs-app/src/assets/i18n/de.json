@@ -570,7 +570,7 @@
       "date": "Datum"
     },
     "completionDate": {
-      "label": "Erledigt",
+      "label": "Erledigt am",
       "placeholder": "tt.mm.jjjj",
       "helper": "An diesem Datum wurde die Aufgabe erledigt.",
       "error": "Das Datumsformat ist nicht korrekt."
@@ -670,7 +670,7 @@
       "placeholder": "ssssssss"
     },
     "dueDate": {
-      "label": "Fälligkeitsdatum",
+      "label": "Fällig am",
       "placeholder": "tt.mm.jjjj",
       "helper": "Bis zu diesem Datum muss eine Aufgabe erledigt sein.",
       "error": "Das Datumsformat ist nicht korrekt."
@@ -5826,6 +5826,7 @@
     "description": "Aufgaben, die erledigt werden sollen.",
     "field": {
       "empty": "Keine Todos gefunden.",
+      "empty-my": "Gratulation ! - Du hast keine offenen Aufgaben.",
       "name": "Name",
       "dueDate": "Termin",
       "assignee": {
