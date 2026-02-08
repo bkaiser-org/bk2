@@ -1715,6 +1715,17 @@
       "sendemail": "E-Mail senden",
       "sendsms": "SMS senden"
     },
+    "message": {
+      "view": "Mitteilung anzeigen",
+      "edit": "Mitteilung bearbeiten",
+      "answer": "Mitteilung beantworten",
+      "delete": "Mitteilung löschen"
+    },
+    "news": {
+      "view": "News-Artikel anzeigen",
+      "edit": "News-Artikel bearbeiten",
+      "delete": "News-Artikel löschen"
+    },
     "org": {
       "view": "Organisation anzeigen",
       "edit": "Organisation bearbeiten",
@@ -3477,6 +3488,16 @@
         "subTitle": "Stand:",
         "category": "Kat."
       }
+    },
+    "messages": {
+      "title": "Offene Mitteilungen",
+      "subTitle": "Offene Chat-Messages",
+      "empty": "Du hast keine offenen Mitteilungen."
+    },
+    "news": {
+      "title": "Latest News",
+      "subTitle": "Aktuelle Neuigkeiten",
+      "empty": "Es gibt keine Neuigkeiten."
     },
     "notfound": {
       "title": "im Schilf gelandet ?",
