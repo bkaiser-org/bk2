@@ -2212,7 +2212,11 @@
       "singular": "Person",
       "plural": "Personen",
       "field": {
-        "empty": "Keine Personen gefunden."
+        "empty": "Keine Personen gefunden.",
+        "address": "Adressen",
+        "membership": "Mitgliedschaft (optional)",
+        "details": "Angaben zur Person",
+        "misc": "Verschiedenes"
       },
       "gender": {
         "name": "Geschlecht",
