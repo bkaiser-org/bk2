@@ -19,8 +19,9 @@ app.set('views', browserDistFolder);
  * Serve static files from /browser with proper MIME types
  * This must come BEFORE the catch-all route
  */
-app.get('*.*', express.static(browserDistFolder, {
+app.use(express.static(browserDistFolder, {
   maxAge: '1y',
+  index: false, // Prevent serving index.html for directory requests
   setHeaders: (res, path) => {
     // Ensure correct MIME types for JavaScript modules
     if (path.endsWith('.js') || path.endsWith('.mjs')) {
