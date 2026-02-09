@@ -5111,6 +5111,11 @@
         "error": "Die Mitgliedschaft konnte nicht erstellt werden.",
         "conf": "Die Mitgliedschaft wurde erstellt."
       },
+      "createMember": {
+        "label": "Mitglied hinzufügen",
+        "error": "Das neue Mitglied konnte nicht erstellt werden.",
+        "conf": "Das neue Mitglied wurde gespeichert."
+      },
       "update": {
         "label": "Mitgliedschaft ändern",
         "error": "Die Aenderungen konnten nicht gespeichert werden",
