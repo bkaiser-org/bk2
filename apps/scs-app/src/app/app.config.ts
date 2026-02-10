@@ -1,7 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, inject, isDevMode, PLATFORM_ID, provideZonelessChangeDetection } from '@angular/core';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { PreloadAllModules, provideRouter, RouteReuseStrategy, withComponentInputBinding, withPreloading } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
@@ -34,7 +33,7 @@ export const appConfig: ApplicationConfig = {
     { provide: ENV, useValue: environment },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular({ useSetInputAPI: true, innerHTMLTemplatesEnabled: true }),
-    provideClientHydration(withEventReplay()),
+    // provideClientHydration disabled - Ionic doesn't fully support SSR hydration yet
     provideRouter(appRoutes, withComponentInputBinding(), withPreloading(PreloadAllModules)),
 
     importProvidersFrom(TranslateModule.forRoot()),
