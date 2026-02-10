@@ -8,7 +8,7 @@ export const appRoutes: Route[] = [
   { 
     path: '', 
     pathMatch: 'full',
-    redirectTo: 'private/dashboard/c-contentpage'
+    redirectTo: 'private/welcome/c-contentpage'
   },
   {
     path: 'public',
