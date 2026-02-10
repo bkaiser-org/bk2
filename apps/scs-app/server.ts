@@ -33,6 +33,17 @@ app.use(express.static(browserDistFolder, {
 }));
 
 /**
+ * Explicitly handle chunk files (lazy-loaded modules)
+ */
+app.get(/.*\.(js|mjs|css|json|ico|svg|png|jpg|jpeg|gif|woff|woff2|ttf|eot)$/, (req, res, next) => {
+  res.sendFile(join(browserDistFolder, req.url), (err) => {
+    if (err) {
+      next(); // File not found, continue to SSR
+    }
+  });
+});
+
+/**
  * All other routes use the Angular engine (SPA fallback)
  */
 app.get('*', (req, res, next) => {
