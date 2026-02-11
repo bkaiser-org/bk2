@@ -6278,6 +6278,13 @@
       "title": "Authentifizierung",
       "description": "Einstellungen zur Authentifizierung des Users. Diese Einstellungen gelten nur für den selektierten User."
     },
+    "field": {
+      "loginEmail": "Login E-Mail",
+      "personKey": "Person Key",
+      "accessLevel": "Zugriffsebene",
+      "role": "Rolle",
+      "name": "Name"
+    },
     "notification": {
       "title": "Notifizierungen",
       "description": "Wie soll der selektierte User notifiziert werden ?"
