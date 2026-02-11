@@ -2,6 +2,8 @@
 runConfig:
   minInstances: 0
   maxInstances: 10
+  build:
+    outputDirectory: dist
 
 env:
   - variable: APP_ID
