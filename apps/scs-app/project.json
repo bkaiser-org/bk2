@@ -40,11 +40,6 @@
           "apps/scs-app/src/firebase-messaging-sw.js",
           "apps/scs-app/src/firebase-config.js",
           {
-            "glob": "server.ts",
-            "input": "apps/scs-app",
-            "output": "./server"
-          },
-          {
             "glob": "**/*.svg",
             "input": "node_modules/ionicons/dist/ionicons/svg",
             "output": "./svg"
