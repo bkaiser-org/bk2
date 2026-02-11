@@ -2,8 +2,9 @@
 runConfig:
   minInstances: 0
   maxInstances: 10
-  build:
-    outputDirectory: dist
+
+# App Hosting looks for this relative to workspace root
+outputDirectory: ../../dist/apps/scs-app
 
 env:
   - variable: APP_ID
