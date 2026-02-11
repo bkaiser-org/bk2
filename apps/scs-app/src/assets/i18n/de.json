@@ -397,6 +397,11 @@
       "helper": "ID zum Synchronisieren mit einem Kontakt in Bexio.",
       "error": "Bexio ID ist eine sechsstellige Zahl."
     },
+    "bkey": {
+      "label": "bkey",
+      "placeholder": "bkey",
+      "helper": "Der bkey ist der Schlüssel eines Elements, bestehend aus dem Präfix der Kategorie und einer fortlaufenden Nummer, z.B. boat-001 für das erste Boot."
+    },
     "boatName": {
       "label": "Bootsname",
       "placeholder": "Name des Bootes",
@@ -1362,6 +1367,11 @@
       "helper": "Das Datum, an dem die Einladung gesendet wurde.",
       "error": "Das Datumsformat ist nicht korrekt."
     },
+    "seriesId": {
+      "label": "Serien-ID",
+      "placeholder": "ID der Serie",
+      "helper": "Die Serien-ID ermöglicht die Gruppierung von Ereignissen, die zu einer Serie gehören, z.B. wöchentliche Trainings."
+    },
     "shape": {
       "label": "Form",
       "placeholder": "circle | square | rounded",
@@ -2068,6 +2078,9 @@
         "label": "Kategorie löschen",
         "error": "Die Kategorie konnte nicht gelöscht werden",
         "conf": "Die Kategorie wurde gelöscht."
+      },
+      "view": {
+        "label": "Kategorie anzeigen"
       }
     }
   },
@@ -4266,6 +4279,9 @@
       },
       "search": {
         "label": "Dokument suchen"
+      },
+      "view": {
+        "label": "Dokument anzeigen"
       },
       "upload": {
         "single": {
