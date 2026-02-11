@@ -27,7 +27,7 @@
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist",
+        "outputPath": "dist/apps/scs-app",
         "index": "apps/scs-app/src/index.html",
         "browser": "apps/scs-app/src/main.ts",
         "server": "apps/scs-app/src/main.server.ts",
