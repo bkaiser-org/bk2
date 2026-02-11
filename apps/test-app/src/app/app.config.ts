@@ -34,7 +34,7 @@ export const appConfig: ApplicationConfig = {
     { provide: ENV, useValue: environment },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular({ useSetInputAPI: true, innerHTMLTemplatesEnabled: true }),
-    provideClientHydration(withEventReplay()),
+    // provideClientHydration disabled - Ionic doesn't fully support SSR hydration yet
     provideRouter(appRoutes, withComponentInputBinding(), withPreloading(PreloadAllModules)),
 
     importProvidersFrom(TranslateModule.forRoot()),
