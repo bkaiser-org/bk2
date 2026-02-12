@@ -31,7 +31,7 @@
         "index": "apps/scs-app/src/index.html",
         "browser": "apps/scs-app/src/main.ts",
         "server": "apps/scs-app/src/main.server.ts",
-        "ssr": true,
+        "ssr": false,
         "prerender": false,
         "tsConfig": "apps/scs-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
