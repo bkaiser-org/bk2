@@ -30,7 +30,7 @@
         "outputPath": "dist/apps/scs-app",
         "index": "apps/scs-app/src/index.html",
         "browser": "apps/scs-app/src/main.ts",
-        "prerender": false,
+        "polyfills": [],
         "tsConfig": "apps/scs-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -69,7 +69,9 @@
           "isomorphic-ws",
           "lodash.deburr"
         ],
-        "scripts": []
+        "scripts": [],
+        "prerender": false,
+        "namedChunks": true
       },
       "configurations": {
         "production": {
@@ -85,6 +87,11 @@
               "maximumError": "8kb"
             }
           ],
+          "optimization": {
+            "scripts": true,
+            "styles": true,
+            "fonts": true
+          },
           "outputHashing": "all"
         },
         "development": {
