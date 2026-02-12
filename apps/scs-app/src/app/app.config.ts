@@ -11,8 +11,7 @@ import { environment } from '../environments/environment';
 import { appRoutes } from './app.routes';
 
 // plain firebase with rxfire
-import { getApp, initializeApp } from 'firebase/app';
-import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
+import { initializeApp } from 'firebase/app';
 
 // i18n with transloco
 import { I18nService, TranslocoHttpLoader } from '@bk2/shared-i18n';
@@ -56,25 +55,9 @@ export const appConfig: ApplicationConfig = {
         const versionCheck = inject(VersionCheckService);
         return () => {
           // This factory returns a function that runs after the app is bootstrapped.
-          // It checks if the platform is a browser and initializes App Check.
-          // This is necessary because App Check should only be initialized in the browser environment.
           if (isPlatformBrowser(platformId)) {
-            if (isDevMode()) {
-              // in development, set the debug token
-              // Set to true to generate a new token (check console and register in Firebase Console)
-              // Or set to your registered debug token string: 'your-debug-token-here'
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (<any>window).FIREBASE_APPCHECK_DEBUG_TOKEN = true;
-            }
-            // Initialize App Check only on the client
-            // Note: In dev mode, you may see 403 errors until the debug token is registered
-            initializeAppCheck(getApp(), {
-              provider: new ReCaptchaEnterpriseProvider(environment.services.appcheckRecaptchaEnterpriseKey),
-              isTokenAutoRefreshEnabled: true,
-            });
-
-            // Check app version
-            versionCheck.checkVersion();
+            // Check app version after a short delay
+            setTimeout(() => versionCheck.checkVersion(), 1000);
           }
         };
       },
