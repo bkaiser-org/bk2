@@ -3730,19 +3730,14 @@
         }
       },
       "operation": {
-        "update": {
-          "label": "Webseite ändern",
-          "conf": "Webseite wurde geändert.",
-          "error": "Webseite konnte nicht geändert werden."
+        "add": {
+          "label": "Webseite hinzufügen",
+          "placeholder": "Name der Webseite"
         },
         "create": {
           "label": "Neue Webseite erstellen",
           "conf": "Webseite wurde erstellt.",
           "error": "Webseite konnte nicht erstellt werden."
-        },
-        "add": {
-          "label": "Webseite hinzufügen",
-          "placeholder": "Name der Webseite"
         },
         "delete": {
           "label": "Webseite löschen",
@@ -3754,6 +3749,11 @@
           "label": "Webseiten sortieren",
           "noSections": "Es sind keine Sektionen zum Sortieren vorhanden.",
           "onlyOneSection": "Es ist nur eine Sektion vorhanden, Sortieren ist nicht nötig."
+        },
+        "update": {
+          "label": "Webseite ändern",
+          "conf": "Webseite wurde geändert.",
+          "error": "Webseite konnte nicht geändert werden."
         },
         "view": {
           "label": "Webseiten Konfiguration anzeigen"
@@ -3840,6 +3840,9 @@
         },
         "roleNeeded": {
           "title": "Benötigte Rolle:"
+        },
+        "state": {
+          "title": "Publikations-Status"
         }
       },
       "field": {
@@ -3990,9 +3993,8 @@
         }
       },
       "operation": {
-        "selectImage": {
-          "title": "Bild hinzufügen",
-          "upload": "Bild wählen"
+        "add": {
+          "label": "Neue Sektion hinzufügen"
         },
         "addImage": {
           "label": "Bild hinzufügen",
@@ -4000,11 +4002,6 @@
           "error": "Bild konnte nicht hinzugefügt werden.",
           "empty": "Es sind noch keine Bilder konfiguriert. Bitte zuerst Bilder hinzufügen.",
           "title": "Bilder"
-        },
-        "update": {
-          "label": "Sektion ändern",
-          "conf": "Sektion wurde geändert.",
-          "error": "Sektion konnte nicht geändert werden."
         },
         "clear": {
           "all": "Alle Feld-Inhalte löschen",
@@ -4015,11 +4012,23 @@
           "conf": "Sektion wurde erstellt.",
           "error": "Sektion konnte nicht erstellt werden."
         },
-        "add": {
-          "label": "Neue Sektion hinzufügen"
+        "delete": {
+          "label": "Sektion löschen",
+          "conf": "Sektion wurde gelöscht.",
+          "error": "Sektion konnte nicht gelöscht werden.",
+          "confirm": "Soll diese Sektion wirklich gelöscht werden ?"
         },
         "select": {
           "label": "Sektion wählen"
+        },
+        "selectImage": {
+          "title": "Bild hinzufügen",
+          "upload": "Bild wählen"
+        },
+        "update": {
+          "label": "Sektion ändern",
+          "conf": "Sektion wurde geändert.",
+          "error": "Sektion konnte nicht geändert werden."
         },
         "view": {
           "label": "Sektions-Konfiguration anzeigen"
