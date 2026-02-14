@@ -9,7 +9,8 @@ import { isDevMode } from '@angular/core';
 // Initialize App Check and wait for token BEFORE bootstrapping the app
 async function initializeApp() {
   if (typeof window !== 'undefined') {
-    if (isDevMode()) {
+    // Only use debug token in development (NOT in production)
+    if (!environment.production) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (<any>window).FIREBASE_APPCHECK_DEBUG_TOKEN = true;
     }
@@ -24,9 +25,13 @@ async function initializeApp() {
       await getToken(appCheck);
       console.log('App Check token ready');
     } catch (error) {
-      console.warn('App Check token failed - continuing anyway. Add domain to reCAPTCHA Enterprise and Firebase Auth authorized domains:', error);
+      if (!environment.production) {
+        console.warn('App Check token failed in development - continuing anyway.');
+        console.warn('To fix: Copy the debug token from console and add it in Firebase Console → App Check → Manage debug tokens');
+      } else {
+        console.error('App Check token failed:', error);
+      }
       // Continue bootstrapping even if App Check fails
-      // In production, you might want to show an error message instead
     }
   }
 

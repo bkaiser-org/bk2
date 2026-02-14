@@ -54,10 +54,8 @@ export const appConfig: ApplicationConfig = {
       useFactory: (platformId: object) => {
         const versionCheck = inject(VersionCheckService);
         return () => {
-          // This factory returns a function that runs after the app is bootstrapped.
           if (isPlatformBrowser(platformId)) {
-            // Check app version after a short delay
-            setTimeout(() => versionCheck.checkVersion(), 1000);
+            versionCheck.checkVersion();
           }
         };
       },
