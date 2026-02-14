@@ -4639,6 +4639,15 @@
       "saturday": "Samstag",
       "sunday": "Sonntag"
     },
+    "weekDayAbbreviation": {
+      "monday": "Mo",
+      "tuesday": "Di",
+      "wednesday": "Mi",
+      "thursday": "Do",
+      "friday": "Fr",
+      "saturday": "Sa",
+      "sunday": "So"
+    },
     "month": {
       "january": "Januar",
       "february": "Februar",
