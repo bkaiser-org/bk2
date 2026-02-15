@@ -19,8 +19,16 @@
       }
     },
     "config": {
-      "command": "ts-node ./set-env.js",
-      "cache": true
+      "executor": "nx:run-commands",
+      "cache": true,
+      "options": {
+        "command": "NODE_ENV=development node ./set-env.js"
+      },
+      "configurations": {
+        "production": {
+          "command": "NODE_ENV=production node ./set-env.js"
+        }
+      }
     },
     "build": {
       "dependsOn": ["config", "^build"],
