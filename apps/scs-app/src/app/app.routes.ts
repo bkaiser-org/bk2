@@ -1,6 +1,6 @@
 
 import { Route } from '@angular/router';
-import { isAdminGuard, isAuthenticatedGuard, isPrivilegedGuard, LoginPageComponent, PasswordResetPageComponent } from '@bk2/auth-feature';
+import { isAdminGuard, isAuthenticatedGuard, isPrivilegedGuard, LoginPageComponent, PasswordResetPageComponent, MatrixOidcCallbackComponent } from '@bk2/auth-feature';
 import { MenuListComponent } from '@bk2/cms-menu-feature';
 import { QuizPageComponent } from '@bk2/quiz-feature';
 
@@ -50,6 +50,7 @@ export const appRoutes: Route[] = [
     children: [
       { path: 'login', component: LoginPageComponent },
       { path: 'pwdreset', component: PasswordResetPageComponent },
+      { path: 'matrix-callback', component: MatrixOidcCallbackComponent },
     ],
   },
   {
