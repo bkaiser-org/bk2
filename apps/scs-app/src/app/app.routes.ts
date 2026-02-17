@@ -119,13 +119,23 @@ export const appRoutes: Route[] = [
     ],
   },
   {
+    path: 'contact',
+    canActivate: [isAuthenticatedGuard],
+    children: [{ 
+      path: ':listId/:orgId/:contextMenuName', 
+      canActivate: [isAuthenticatedGuard], 
+      loadComponent: () => import('@bk2/relationship-membership-feature').then(m => m.MembershipListComponent),
+      data: { color: 'secondary', view: 'contact' }
+    }],
+  },
+  {
     path: 'membership',
     canActivate: [isAuthenticatedGuard],
     children: [{ 
       path: ':listId/:orgId/:contextMenuName', 
       canActivate: [isAuthenticatedGuard], 
       loadComponent: () => import('@bk2/relationship-membership-feature').then(m => m.MembershipListComponent),
-      data: { color: 'secondary', view: 'default' }
+      data: { color: 'secondary', view: 'mcat' }
     }],
   },
   {
