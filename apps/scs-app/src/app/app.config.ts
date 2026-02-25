@@ -18,7 +18,7 @@ import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-ch
 import { I18nService, TranslocoHttpLoader } from '@bk2/shared-i18n';
 import { provideTransloco } from '@jsverse/transloco';
 import { TranslateModule } from '@ngx-translate/core';
-//import { MatrixInitializationService } from '@bk2/chat-feature';
+import { MatrixInitializationService } from '@bk2/chat-feature';
 
 // Initialize Firebase. This is safe to run on the server.
 try {
@@ -81,20 +81,18 @@ export const appConfig: ApplicationConfig = {
     },
 
     // Initialize Matrix chat early (non-blocking, after user authentication)
-/*     {
+    {
       provide: APP_BOOTSTRAP_LISTENER,
       useFactory: (platformId: object) => {
         const matrixInit = inject(MatrixInitializationService);
         return () => {
-          // Start Matrix initialization watcher (runs after user is authenticated)
           if (isPlatformBrowser(platformId)) {
-            console.log('AppConfig: Starting Matrix early initialization');
             matrixInit.startEarlyInitialization();
           }
         };
       },
       deps: [PLATFORM_ID],
       multi: true,
-    }, */
+    },
   ],
 };

@@ -1343,6 +1343,12 @@
       "label": "Benötigte Rolle",
       "helper": "Minimale Rolle, die benötigt wird, um auf die Seite zuzugreifen."
     },
+    "roomId": {
+      "label": "Raum-ID",
+      "placeholder": "Raum-ID",
+      "helper": "Die Raum-ID wird verwendet, um einen Chat-Raum eindeutig zu identifizieren.",
+      "error": "Die Raum-ID muss aus einem Wort mit alphanumerischen Zeichen mit Kleinbuchstaben bestehen."
+    },
     "route": {
       "label": "Route",
       "placeholder": "/route/to/page",
@@ -1478,7 +1484,7 @@
     },
     "taskQuickEntry": {
       "label": "Schnelleingabe",
-      "placeholder": "neue Aufgabe beschreiben (incl. :tag[,tag] @assignee //dueDate)",
+      "placeholder": "text :tag[,tag] @assignee //dueDate",
       "helper": "Ermöglicht die schnelle Erstellung einer Aufgabe mit Beschreibung, Tags, Zuweisung und Fälligkeitsdatum. Beispiel: 'Bericht schreiben :arbeit @max //25.12.2024' "
     },
     "taskState": {
@@ -1512,6 +1518,12 @@
       "label": "Titel",
       "placeholder": "text..."
     },
+    "topic": {
+      "label": "Thema",
+      "placeholder": "Thema",
+      "helper": "Das Thema einer Nachricht, eines Ereignisses oder einer Diskussion, z.B. 'Sommerfest 2024', 'Trainingslager', etc.",
+      "error": "Das Thema ist obligatorisch und muss aus alphanumerischen Zeichen bestehen."
+    },
     "transferState": {
       "label": "Status",
       "helper": "Der Status des Transfers, z.B. in Bearbeitung, abgeschlossen, etc."
@@ -1522,6 +1534,11 @@
     },
     "type": {
       "label": "Typ"
+    },
+    "unreadCount": {
+      "label": "Anzahl ungelesener Nachrichten",
+      "helper": "Die Anzahl ungelesener Nachrichten in einem Chat oder Posteingang.",
+      "placeholder": "n"
     },
     "url": {
       "label": "URL",
@@ -1745,7 +1762,8 @@
       "view": "Gruppenkonfiguration anzeigen",
       "show": "Gruppe anzeigen",
       "edit": "Gruppe bearbeiten",
-      "delete": "Gruppe löschen"
+      "delete": "Gruppe löschen",
+      "addPage": "Webseite hinzufügen"
     },
     "menu": {
       "view": "Menü anzeigen",
@@ -1793,7 +1811,8 @@
       "edit": "Mitgliedschaft bearbeiten",
       "delete": "Mitgliedschaft löschen",
       "end": "Mitgliedschaft beenden",
-      "changecat": "Mitgliederkategorie ändern"
+      "changecat": "Mitgliederkategorie ändern",
+      "invite": "Zum Gruppenchat einladen"
     },
     "ownership": {
       "view": "Nutzung anzeigen",
@@ -1926,6 +1945,10 @@
     "isCc": {
       "label": "CC:-Addresse",
       "helperText": "Bei Versänden per E-Mails wird eine Kopie an diese Email Adresse gesendet. z.B. für die Eltern eines Jugendlichen."
+    },
+    "isDirect": {
+      "label": "Direkt-Kanal",
+      "helperText": "Direkter Kanal zu einem Empfänger."
     },
     "isFavorite": {
       "label": "Hauptadresse",
@@ -3797,6 +3820,10 @@
         "searchResults": {
           "label": "Such-Resultate",
           "description": ""
+        },
+        "chat": {
+          "label": "Chat",
+          "description": "Chat-Übersicht mit Chat-Fenstern für direkte oder Gruppen-Kommunikation"
         }
       }
     },
