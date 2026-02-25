@@ -87,7 +87,9 @@ export const appConfig: ApplicationConfig = {
         const matrixInit = inject(MatrixInitializationService);
         return () => {
           if (isPlatformBrowser(platformId)) {
-            matrixInit.startEarlyInitialization();
+            // Delay Matrix init so the app renders and loads critical resources first.
+            // matrix-js-sdk opens a long-poll sync connection that competes with startup traffic.
+            setTimeout(() => matrixInit.startEarlyInitialization(), 10000);
           }
         };
       },
