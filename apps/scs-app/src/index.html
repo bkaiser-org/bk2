@@ -14,7 +14,47 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   </head>
   <body>
-    <bk-root ngSkipHydration></bk-root>
+    <bk-root ngSkipHydration>
+      <!-- App shell: visible instantly while Angular bootstraps; replaced by the app on mount. -->
+      <style>
+        .bk-shell {
+          position: fixed;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: #ffffff;
+          gap: 24px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+        }
+        .bk-shell__logo {
+          width: 96px;
+          height: 96px;
+        }
+        .bk-shell__spinner {
+          width: 36px;
+          height: 36px;
+          border: 3px solid #e0e0e0;
+          border-top-color: #3880ff;
+          border-radius: 50%;
+          animation: bk-spin 0.75s linear infinite;
+        }
+        @keyframes bk-spin { to { transform: rotate(360deg); } }
+        .bk-shell__label {
+          font-size: 0.875rem;
+          color: #92949c;
+          margin: 0;
+        }
+      </style>
+      <div class="bk-shell">
+        <img class="bk-shell__logo"
+             src="https://bkaiser.imgix.net/tenant/scs/logo/favicon.svg"
+             alt="SCS" />
+        <div class="bk-shell__spinner"></div>
+        <p class="bk-shell__label">Bitte warten…</p>
+      </div>
+    </bk-root>
     <noscript>Please enable JavaScript to continue using this application.</noscript>
     <script defer type="module" src="https://static.imgix.net/ix-player/@latest/dist/ix-player.mjs"></script>
   </body>
