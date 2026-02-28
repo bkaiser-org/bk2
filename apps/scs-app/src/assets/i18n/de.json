@@ -1720,6 +1720,13 @@
       "edit": "Kategorie bearbeiten",
       "delete": "Kategorie löschen"
     },
+    "chat": {
+      "attachment": {
+        "image": "Photo oder Video",
+        "file": "Datei",
+        "position": "Position senden"
+      }
+    },
     "invitation": {
       "view": "Einladung anzeigen",
       "edit": "Einladung bearbeiten",
@@ -1740,7 +1747,8 @@
       "edit": "Person bearbeiten",
       "delete": "Person löschen",
       "sendemail": "E-Mail senden",
-      "sendsms": "SMS senden"
+      "sendsms": "SMS senden",
+      "chat": "Direkt-Chat"
     },
     "message": {
       "view": "Mitteilung anzeigen",
@@ -1812,7 +1820,8 @@
       "delete": "Mitgliedschaft löschen",
       "end": "Mitgliedschaft beenden",
       "changecat": "Mitgliederkategorie ändern",
-      "invite": "Zum Gruppenchat einladen"
+      "invite": "Zum Gruppenchat einladen",
+      "chat": "Direkt-Chat"
     },
     "ownership": {
       "view": "Nutzung anzeigen",
@@ -2152,6 +2161,41 @@
         "error": "Die Änderungen konnten nicht gespeichert werden",
         "conf": "Die Änderungen wurden gespeichert."
       }
+    }
+  },
+  "chat": {
+    "label": "Chat",
+    "room": "Chat-Raum",
+    "rooms": "Chat-Räume",
+    "message": "Chat-Message",
+    "messages": "Chat-Messages",
+    "operation": {
+      "create": {
+        "label": "Chat-Raum erstellen",
+        "conf": "Neuer Chat-Raum wurde erstellt.",
+        "error": "Der Chat-Raum konnte nicht erstellt werden."
+      },
+      "update": {
+        "label": "Chat-Raum ändern",
+        "conf": "Der Chat-Raum wurde geändert",
+        "error": "Der Chat-Raum konnte nicht geändert werden."
+      }
+    },
+    "fields": {
+      "selectRoom": "Wähle einen Chat-Raum, um den Chat zu starten",
+      "reconnecting": "Wieder verbinden...",
+      "connectionError": "Verbindungsfehler",
+      "connecting": "verbinden...",
+      "noRoomsError": "Keine Chat-Räume vorhanden. Erstelle einen Raum oder nimm in einem Raum teil um zu starten.",
+      "createTestRoom": "Test Raum erstellen",
+      "typeMessage": "Schreibe eine Nachricht...",
+      "isTypeing": "tippt...",
+      "areTypeing": "tippen...",
+      "othersTypeing": "andere tippen...",
+      "severalTypeing": "Mehrere Personen tippen...",
+      "addAttachment": "Anhang hinzufügen",
+      "and": "und",
+      "noMessagesStartConversation": "Es gibt noch keine Nachrichten. Starte die Konversation."
     }
   },
   "tag": {
