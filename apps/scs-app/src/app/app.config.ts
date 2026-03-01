@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
-import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, inject, isDevMode, PLATFORM_ID, provideZonelessChangeDetection } from '@angular/core';
-import { PreloadAllModules, provideRouter, RouteReuseStrategy, withComponentInputBinding, withPreloading } from '@angular/router';
+import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, inject, Injector, isDevMode, PLATFORM_ID, provideZonelessChangeDetection } from '@angular/core';
+import { provideRouter, RouteReuseStrategy, withComponentInputBinding } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
 import { ENV } from '@bk2/shared-config';
@@ -18,7 +18,6 @@ import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-ch
 import { I18nService, TranslocoHttpLoader } from '@bk2/shared-i18n';
 import { provideTransloco } from '@jsverse/transloco';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatrixInitializationService } from '@bk2/chat-feature';
 
 // Initialize Firebase. This is safe to run on the server.
 try {
@@ -35,7 +34,7 @@ export const appConfig: ApplicationConfig = {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular({ useSetInputAPI: true, innerHTMLTemplatesEnabled: true }),
     // provideClientHydration disabled - Ionic doesn't fully support SSR hydration yet
-    provideRouter(appRoutes, withComponentInputBinding(), withPreloading(PreloadAllModules)),
+    provideRouter(appRoutes, withComponentInputBinding()),
 
     importProvidersFrom(TranslateModule.forRoot()),
     provideHttpClient(),
@@ -80,20 +79,24 @@ export const appConfig: ApplicationConfig = {
       multi: true,
     },
 
-    // Initialize Matrix chat early (non-blocking, after user authentication)
+    // Initialize Matrix chat early (non-blocking, after user authentication).
+    // Dynamic import ensures matrix-js-sdk is NOT in the initial bundle.
     {
       provide: APP_BOOTSTRAP_LISTENER,
-      useFactory: (platformId: object) => {
-        const matrixInit = inject(MatrixInitializationService);
+      useFactory: (platformId: object, injector: Injector) => {
         return () => {
           if (isPlatformBrowser(platformId)) {
             // Delay Matrix init so the app renders and loads critical resources first.
             // matrix-js-sdk opens a long-poll sync connection that competes with startup traffic.
-            setTimeout(() => matrixInit.startEarlyInitialization(), 10000);
+            setTimeout(async () => {
+              const { MatrixInitializationService } = await import('@bk2/chat-feature');
+              const service = injector.get(MatrixInitializationService);
+              service.startEarlyInitialization();
+            }, 10000);
           }
         };
       },
-      deps: [PLATFORM_ID],
+      deps: [PLATFORM_ID, Injector],
       multi: true,
     },
   ],
