@@ -54,6 +54,11 @@
             "glob": "manifest.webmanifest",
             "input": "apps/scs-app/src",
             "output": "."
+          },
+          {
+            "glob": "robots.txt",
+            "input": "apps/scs-app/src",
+            "output": "."
           }
         ],
         "styles": [
