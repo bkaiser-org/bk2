@@ -1,8 +1,6 @@
 
 import { Route } from '@angular/router';
-import { isAdminGuard, isAuthenticatedGuard, isPrivilegedGuard, LoginPageComponent, PasswordResetPageComponent, MatrixOidcCallbackComponent } from '@bk2/auth-feature';
-import { MenuListComponent } from '@bk2/cms-menu-feature';
-import { QuizPageComponent } from '@bk2/quiz-feature';
+import { isAdminGuard, isAuthenticatedGuard, isPrivilegedGuard } from '@bk2/auth-feature';
 
 export const appRoutes: Route[] = [
   { 
@@ -43,14 +41,14 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'quiz',
-    component: QuizPageComponent,
+    loadComponent: () => import('@bk2/quiz-feature').then(m => m.QuizPageComponent),
   },
   {
     path: 'auth',
     children: [
-      { path: 'login', component: LoginPageComponent },
-      { path: 'pwdreset', component: PasswordResetPageComponent },
-      { path: 'matrix-callback', component: MatrixOidcCallbackComponent },
+      { path: 'login', loadComponent: () => import('@bk2/auth-feature').then(m => m.LoginPageComponent) },
+      { path: 'pwdreset', loadComponent: () => import('@bk2/auth-feature').then(m => m.PasswordResetPageComponent) },
+      { path: 'matrix-callback', loadComponent: () => import('@bk2/auth-feature').then(m => m.MatrixOidcCallbackComponent) },
     ],
   },
   {
@@ -78,7 +76,7 @@ export const appRoutes: Route[] = [
     path: 'menu',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: 'all', canActivate: [isPrivilegedGuard], component: MenuListComponent }
+      { path: 'all', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/cms-menu-feature').then(m => m.MenuListComponent) }
     ],
   },
   {
