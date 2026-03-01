@@ -2195,7 +2195,9 @@
       "severalTypeing": "Mehrere Personen tippen...",
       "addAttachment": "Anhang hinzufügen",
       "and": "und",
-      "noMessagesStartConversation": "Es gibt noch keine Nachrichten. Starte die Konversation."
+      "noMessagesStartConversation": "Es gibt noch keine Nachrichten. Starte die Konversation.",
+      "needsHelp": "{{name}} braucht Hilfe an diesem Ort: ",
+      "needsHelpUnknownLocation": "{{name}} braucht Hilfe (Ort unbekannt)"
     }
   },
   "tag": {
@@ -3535,7 +3537,7 @@
       },
       "links": {
         "title": "Verweise und Links",
-        "description": "Verweise und Links auf Webseiten Dritter liegen ausserhalb des Verantwortungsbereichs des Betreibers {{ operatorName }}. Es wird jegliche Verantwortung f&uuml;r derartige Webseiten abgelehnt. Der Zugriff und die Nutzung dieser Webseiten erfolgen auf eigene Gefahr der Nutzer. {{ operatorName }} bem&uuml;ht sich, die Links auf Webseiten Dritter aktuell zu halten. Es kann aber keine Garantie daf&uuml;r &uuml;bernommen werden, dass die Verweise immer funktionieren. Bitte melde fehlerhafte Links dem <a href='mailto:{{ operatorEmail }}'>Admin</a>."
+        "description": "Verweise und Links auf Webseiten Dritter liegen ausserhalb des Verantwortungsbereichs des Betreibers {{operatorName}}. Es wird jegliche Verantwortung f&uuml;r derartige Webseiten abgelehnt. Der Zugriff und die Nutzung dieser Webseiten erfolgen auf eigene Gefahr der Nutzer. {{ operatorName }} bem&uuml;ht sich, die Links auf Webseiten Dritter aktuell zu halten. Es kann aber keine Garantie daf&uuml;r &uuml;bernommen werden, dass die Verweise immer funktionieren. Bitte melde fehlerhafte Links dem <a href='mailto:{{ operatorEmail }}'>Admin</a>."
       },
       "ipr": {
         "title": "Rechte an Geistigem Eigentum"
