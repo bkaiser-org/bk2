@@ -95,6 +95,8 @@ export const appConfig: ApplicationConfig = {
       useFactory: (platformId: object, injector: Injector) => {
         return () => {
           if (isPlatformBrowser(platformId)) {
+            // Skip Matrix init on public routes — matrix-js-sdk is ~700KB and not needed there.
+            if (window.location.pathname.startsWith('/public')) return;
             // Delay Matrix init so the app renders and loads critical resources first.
             // matrix-js-sdk opens a long-poll sync connection that competes with startup traffic.
             setTimeout(async () => {
