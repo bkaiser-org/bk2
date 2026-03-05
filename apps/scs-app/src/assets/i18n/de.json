@@ -1750,6 +1750,20 @@
       "sendsms": "SMS senden",
       "chat": "Direkt-Chat"
     },
+    "room": {
+      "showMembers": "Mitglieder anzeigen",
+      "showDetails": "Raum-Details anzeigen",
+      "rename": "Raum umbenennen",
+      "addAlias": "Alias hinzufügen",
+      "invite": "Person einladen",
+      "provision": "Matrix-User anlegen",
+      "delete": "Raum löschen"
+    },
+    "member": {
+      "showDetails": "User-Details anzeigen",
+      "kick": "Aus Raum entfernen",
+      "deactivate": "Matrix-User deaktivieren"
+    },
     "message": {
       "view": "Mitteilung anzeigen",
       "edit": "Mitteilung bearbeiten",
@@ -2189,6 +2203,9 @@
       "noRoomsError": "Keine Chat-Räume vorhanden. Erstelle einen Raum oder nimm in einem Raum teil um zu starten.",
       "createTestRoom": "Test Raum erstellen",
       "typeMessage": "Schreibe eine Nachricht...",
+      "recordAudio": "Sprachnachricht aufnehmen",
+      "recording": "Aufnahme läuft...",
+      "videoCall": "Video-Chat starten",
       "isTypeing": "tippt...",
       "areTypeing": "tippen...",
       "othersTypeing": "andere tippen...",
@@ -6263,6 +6280,17 @@
         }
       }
     },
+    "chat": {
+      "title": "Chat Admin (Matrix)",
+      "operation": {
+        "select": {
+          "roomMember": {
+            "label": "Person wählen",
+            "description": "Wenn das Feld leer ist, werden alle Chat Räume angezeigt. Mit der Auswahl einer Person begränzst du die Auswahl auf alle Räume, wo diese Person Member ist."
+          }
+        }
+      }
+    },
     "roles": {
       "title": "Autorisierung und Rollen",
       "personSelect": {
@@ -7444,6 +7472,7 @@
     "addressCountryLength": "Das Länderkürzel muss genau 2 Zeichen lang sein.",
     "addressSwissZipCodeNumeric": "Schweizer PLZ müssen numerisch sein.",
     "addressSwissZipCodeLength": "Schweizer PLZ müssen genau 4 Zeichen lang sein.",
+    "avatarNotUndefined": "Avatar darf nicht undefined sein",
     "commentModelType": "Der ModelType muss CommentModel sein.",
     "commentNotEmpty": "Ein Kommentar darf nicht leer sein.",
     "commentShouldMakeSense": "Ein Kommentar sollte einen Sinn ergeben 'Neuer Kommentar wurde erstellt' ist nichtssagend.",
