@@ -127,6 +127,14 @@ export const appRoutes: Route[] = [
     }],
   },
   {
+    path: 'address',
+    canActivate: [isAuthenticatedGuard],
+    children: [{ 
+      path: ':contextMenuName', 
+      canActivate: [isAdminGuard], 
+      loadComponent: () => import('@bk2/subject-address-feature').then(m => m.AddressesList)}],
+  },
+  {
     path: 'membership',
     canActivate: [isAuthenticatedGuard],
     children: [{ 

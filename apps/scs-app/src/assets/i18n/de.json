@@ -1898,6 +1898,9 @@
       "edit": "Benutzer bearbeiten",
       "delete": "Benutzer löschen",
       "deactivate": "Benutzer sperren"
+    },
+    "subject": {
+      "edit": "Subjekt anzeigen (in Console)"
     }
   },
   "checkbox": {
@@ -2529,6 +2532,9 @@
       "singular": "Adresse",
       "plural": "Adressen",
       "description": "Kontaktinformation zu einer Person oder Organisation",
+      "field": {
+        "empty": "Keine solche Adressen gefunden"
+      },
       "operation": {
         "create": {
           "label": "Adresse hinzufügen",
