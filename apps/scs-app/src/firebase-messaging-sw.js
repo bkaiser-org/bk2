@@ -16,18 +16,22 @@ const messaging = firebase.messaging();
 messaging.onBackgroundMessage(payload => {
   console.log('[firebase-messaging-sw.js] Received background message:', payload);
 
+  // Set the app icon badge (PWA Badging API — supported on iOS 16.4+ and Android Chrome)
+  if (self.navigator?.setAppBadge) {
+    self.navigator.setAppBadge(1).catch(() => {});
+  }
+
   const notificationTitle = payload.notification?.title || 'New Message';
   const notificationOptions = {
     body: payload.notification?.body || 'You have unread messages',
     icon: payload.notification?.icon || '/assets/icons/icon-192x192.png',
     badge: '/assets/icons/badge-72x72.png',
     data: payload.data,
-    tag: payload.data?.channelId || 'default',
-    requireInteraction: true,
-    actions: [
-      { action: 'open', title: 'Open Chat' },
-      { action: 'dismiss', title: 'Dismiss' },
-    ]
+    tag: payload.data?.type === 'video-call' ? 'video-call' : (payload.data?.channelId || 'default'),
+    requireInteraction: payload.data?.type === 'video-call',
+    actions: payload.data?.type === 'video-call'
+      ? [{ action: 'open', title: 'Anruf öffnen' }, { action: 'dismiss', title: 'Ablehnen' }]
+      : [{ action: 'open', title: 'Open Chat' }, { action: 'dismiss', title: 'Dismiss' }],
   };
 
   return self.registration.showNotification(notificationTitle, notificationOptions);
@@ -35,8 +39,13 @@ messaging.onBackgroundMessage(payload => {
 
 // Handle notification click
 self.addEventListener('notificationclick', event => {
-  console.log('[firebase-messaging-sw.js] Notification click:', event);  
+  console.log('[firebase-messaging-sw.js] Notification click:', event);
   event.notification.close();
+
+  // Clear the app icon badge
+  if (self.navigator?.clearAppBadge) {
+    self.navigator.clearAppBadge().catch(() => {});
+  }
 
   if (event.action === 'open' || !event.action) {
     // Open the app and navigate to the chat
