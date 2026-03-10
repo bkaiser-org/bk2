@@ -21,10 +21,11 @@ messaging.onBackgroundMessage(payload => {
     self.navigator.setAppBadge(1).catch(() => {});
   }
 
-  const notificationTitle = payload.notification?.title || 'New Message';
+  // Title and body come from data (data-only message) or fall back to notification field
+  const notificationTitle = payload.data?.title || payload.notification?.title || 'New Message';
   const notificationOptions = {
-    body: payload.notification?.body || 'You have unread messages',
-    icon: payload.notification?.icon || '/assets/icons/icon-192x192.png',
+    body: payload.data?.body || payload.notification?.body || 'You have unread messages',
+    icon: '/assets/icons/icon-192x192.png',
     badge: '/assets/icons/badge-72x72.png',
     data: payload.data,
     tag: payload.data?.type === 'video-call' ? 'video-call' : (payload.data?.channelId || 'default'),
