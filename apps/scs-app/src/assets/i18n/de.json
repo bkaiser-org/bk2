@@ -1669,8 +1669,17 @@
     },
     "album": "Album anzeigen",
     "cancel": "Abbrechen",
+    "image": {
+      "edit": "Bild bearbeiten",
+      "delete": "Bild löschen"
+    },
+    "menuItem": {
+      "edit": "Menüpunkt bearbeiten",
+      "delete": "Menüpunkt löschen"
+    },
     "call": "Anrufen",
     "copy": "Kopieren",
+    "copy.bkey": "Key kopieren",
     "delete": "Löschen",
     "edit": "Ändern",
     "send": "Senden",
@@ -3939,6 +3948,17 @@
         },
         "state": {
           "title": "Publikations-Status"
+        }
+      },
+      "images": {
+        "title": "Bilder",
+        "empty": "Noch keine Bilder konfiguriert.",
+        "upload": "Bilder hochladen"
+      },
+      "image": {
+        "edit": {
+          "header": "Bild bearbeiten",
+          "title": "Bild Eigenschaften"
         }
       },
       "field": {

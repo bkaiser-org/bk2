@@ -1589,8 +1589,17 @@
     },
     "album": "Album anzeigen",
     "cancel": "Abbrechen",
+    "image": {
+      "edit": "Bild bearbeiten",
+      "delete": "Bild löschen"
+    },
+    "menuItem": {
+      "edit": "Menüpunkt bearbeiten",
+      "delete": "Menüpunkt löschen"
+    },
     "call": "Anrufen",
     "copy": "Kopieren",
+    "copy.bkey": "Key kopieren",
     "delete": "Löschen",
     "edit": "Ändern",
     "send": "Senden",
