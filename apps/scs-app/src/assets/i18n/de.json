@@ -1675,17 +1675,26 @@
     },
     "menuItem": {
       "edit": "Menüpunkt bearbeiten",
-      "delete": "Menüpunkt löschen"
+      "delete": "Menüpunkt löschen",
+      "create": "Menüpunkt erstellen",
+      "removeRef": "Referenz vom übergeordneten Menü entfernen"
     },
     "call": "Anrufen",
     "copy": "Kopieren",
     "copy.bkey": "Key kopieren",
+    "copy.path": "Speicherpfad kopieren",
+    "copy.url": "Download-URL kopieren",
     "delete": "Löschen",
     "edit": "Ändern",
     "send": "Senden",
     "show": "Anzeigen",
     "view": "Anzeigen",
     "upload": "Hochladen",
+    "account": {
+      "copyemail": "LoginEmail kopieren",
+      "copyuid": "Firebase UID kopieren",
+      "copypkey": "Person ID kopieren"
+    },
     "address": {
       "view": "Adresse anzeigen",
       "edit": "Adresse bearbeiten",
@@ -1735,6 +1744,9 @@
         "file": "Datei",
         "position": "Position senden"
       }
+    },
+    "fbuser": {
+      "delete": "Firebase User löschen"
     },
     "invitation": {
       "view": "Einladung anzeigen",
@@ -1811,6 +1823,8 @@
     "section": {
       "edit": "Sektion bearbeiten",
       "delete": "Sektion löschen",
+      "create": "Sektion erstellen",
+      "removeRef": "Referenz von Seite entfernen",
       "view": "Sektionskonfiguration anzeigen",
       "image": {
         "upload": "Bild hochladen"
@@ -1828,7 +1842,8 @@
       "update": "Neue Version hochladen",
       "delete": "Dokument löschen",
       "edit": "Dokument bearbeiten",
-      "showRevisions": "Versionsverlauf anzeigen"
+      "showRevisions": "Versionsverlauf anzeigen",
+      "create": "DB-Eintrag erstellen"
     },
     "location": {
       "view": "Standortdaten anzeigen",
@@ -1910,6 +1925,15 @@
     },
     "subject": {
       "edit": "Subjekt anzeigen (in Console)"
+    },
+    "tag": {
+      "edit": "Tags anzeigen",
+      "addString": "TagList hinzufügen",
+      "delete": "TagList archivieren",
+      "string": {
+        "edit": "Tag bearbeiten",
+        "remove": "Tag entfernen"
+      }
     }
   },
   "checkbox": {
@@ -6211,6 +6235,25 @@
     "result": {
       "title": "Resultat"
     },
+    "account": {
+      "title": "User Accounts",
+      "user": {
+        "delete": {
+          "label": "User löschen",
+          "error": "Der User konnte nicht gelöscht werden.",
+          "conf": "Der User wurde gelöscht.",
+          "confirm": "Soll der User wirklich gelöscht werden ?"
+        }
+      },
+      "fbuser": {
+        "delete": {
+          "label": "Firebase User löschen",
+          "error": "Der Firebase User konnte nicht gelöscht werden.",
+          "conf": "Der Firebase User wurde gelöscht.",
+          "confirm": "Soll der Firebase User wirklich gelöscht werden ?"
+        }
+      }
+    },
     "adminops": {
       "title": "Admin Operationen",
       "iban": {
@@ -6254,27 +6297,32 @@
       "orphanedSections": {
         "title": "Verwaiste Sektionen",
         "content": "Liste Sektionen, welche von keiner Page verwendet werden.",
-        "button": "Anzeigen"
+        "show": "Anzeigen",
+        "hide": "Ausblenden"
       },
       "missingSections": {
         "title": "Fehlende Sektionen",
         "content": "Liste nicht existierende Sektionsnamen, welche von einer Page referenziert werden.",
-        "button": "Anzeigen"
+        "show": "Anzeigen",
+        "hide": "Ausblenden"
       },
       "orphanedMenus": {
         "title": "Verwaiste Menüs",
         "content": "Liste Menüs, welche nicht verwendet werden.",
-        "button": "Anzeigen"
+        "show": "Anzeigen",
+        "hide": "Ausblenden"
       },
       "missingMenus": {
         "title": "Fehlende Menüs",
         "content": "Liste nicht existierende Menüs, welche von einem anderen Menü referenziert werden.",
-        "button": "Anzeigen"
+        "show": "Anzeigen",
+        "hide": "Ausblenden"
       },
       "checkLinks": {
         "title": "Links prüfen",
         "content": "Prüfe alle Links in allen Pages und Sektionen auf Funktionsfähigkeit.",
-        "button": "Anzeigen"
+        "show": "Anzeigen",
+        "hide": "Ausblenden"
       }
     },
     "data": {
@@ -6399,6 +6447,60 @@
         "button": "Ausführen"
       }
     },
+    "doc": {
+      "title": "Dokumente prüfen",
+      "content": "Prüft ob alle Dateien in Firebase Storage einen entsprechenden Eintrag in der Datenbank haben.",
+      "checkFiles": {
+        "title": "Dateien ohne DB-Eintrag",
+        "content": "Listet alle Dateien in Firebase Storage auf, für die kein Eintrag in der Firestore docs-Kollektion existiert.",
+        "button": "Prüfen"
+      },
+      "delete": {
+        "confirm": "Soll diese Datei aus dem Firebase Storage gelöscht werden?"
+      }
+    },
+    "tag": {
+      "title": "Tag-Verwaltung",
+      "search": {
+        "placeholder": "TagList suchen..."
+      },
+      "list": {
+        "title": "TagList"
+      },
+      "strings": {
+        "title": "Tag",
+        "empty": "Keine TagList ausgewählt"
+      },
+      "create": {
+        "header": "Neue TagList",
+        "placeholder": "Model-Typ (z.B. person, org, section)"
+      },
+      "delete": {
+        "confirm": "Soll dieses Tag-Dokument wirklich archiviert werden?"
+      },
+      "string": {
+        "add": {
+          "button": "Tag hinzufügen",
+          "header": "Tag hinzufügen",
+          "placeholder": "@tag.beispiel"
+        },
+        "edit": {
+          "header": "Tag bearbeiten",
+          "placeholder": "@tag.beispiel"
+        }
+      },
+      "operation": {
+        "update": {
+          "conf": "Der Tag wurde geändert."
+        },
+        "delete": {
+          "conf": "Der Tag wurde gelöscht"
+        },
+        "create": {
+          "conf": "Der Tag wurde gespeichert"
+        }
+      }
+    },
     "storage": {
       "title": "Firebase Storage",
       "content": "Operationen, um die Dateien und Bilder im Firebase Storage zu verwalten.",
@@ -6428,7 +6530,8 @@
       "personKey": "Person Key",
       "accessLevel": "Zugriffsebene",
       "role": "Rolle",
-      "name": "Name"
+      "name": "Name",
+      "empty": "Keine User gefunden"
     },
     "notification": {
       "title": "Notifizierungen",
