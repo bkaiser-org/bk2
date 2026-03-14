@@ -4373,6 +4373,7 @@
     "singular": "Dokument",
     "plural": "Dokumente",
     "description": "Informationen in schriftlicher Form, z.B als Datei oder Website.",
+    "empty": "Keine Dokumente gefunden",
     "type": {
       "name": "Dokumentenart",
       "all": {
