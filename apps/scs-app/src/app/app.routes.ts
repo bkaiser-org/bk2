@@ -221,7 +221,11 @@ export const appRoutes: Route[] = [
     path: 'document',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: ':listId/:contextMenuName', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/document-feature').then(m => m.DocumentListComponent) },
+      { path: ':listId/:contextMenuName', 
+        canActivate: [isPrivilegedGuard],
+        loadComponent: () => import('@bk2/document-feature').then(m => m.DocumentListComponent),
+        data: { color: 'secondary', view: 'list', showMainMenu: true }
+      },
       { path: ':documentKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/document-feature').then(m => m.DocumentEditPageComponent) }
     ],
   },
