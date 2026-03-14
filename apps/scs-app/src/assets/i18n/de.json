@@ -402,6 +402,11 @@
       "placeholder": "bkey",
       "helper": "Der bkey ist der Schlüssel eines Elements, bestehend aus dem Präfix der Kategorie und einer fortlaufenden Nummer, z.B. boat-001 für das erste Boot."
     },
+    "blogType": {
+      "label": "Blog-Typ",
+      "placeholder": "ssss",
+      "helper": "Definiert das Layout der Beiträge auf dem Blog."
+    },
     "boatName": {
       "label": "Bootsname",
       "placeholder": "Name des Bootes",
@@ -3506,6 +3511,9 @@
     }
   },
   "cms": {
+    "blog": {
+      "search": "Artikel suchen"
+    },
     "welcome": {
       "title": "Seeclub Stäfa",
       "subTitle": "Rudern auf dem Zürichsee",
@@ -3897,35 +3905,45 @@
         },
         "accordion": {
           "label": "Akkordeon",
-          "description": ""
+          "description": "Ein Akkordeon (GUI) ist ein grafisches Benutzeroberflächenelement, das gestapelte Inhaltsbereiche durch Klicken auf eine Überschrift auf- und zuklappt. Es dient dazu, große Mengen an Informationen, wie in FAQ-Bereichen, platzsparend zu organisieren, indem nur der relevante Inhalt angezeigt wird, während andere Bereiche kompakt bleiben."
         },
         "album": {
           "label": "Album",
-          "description": ""
+          "description": "Ein Album zeigt eine Übersicht über eine Anzahl Fotos."
         },
         "blog": {
           "label": "Blog",
-          "description": ""
+          "description": "Ein Blog (Kurzform für Weblog) ist ein regelmäßig aktualisiertes, meist chronologisch geordnetes Online-Tagebuch oder Journal auf einer Website. Es dient dem Teilen von Inhalten wie Texten, Fotos oder Videos zu spezifischen Themen, oft aus der subjektiven Sicht des Autors (Blogger). Blogs ermöglichen Interaktion durch Kommentare."
         },
         "content": {
           "label": "Content",
-          "description": ""
+          "description": "Eine Content Page kann beliebige Sektionen enthalten. Sie ist die allgemeinste Form einer Page."
         },
         "dashboard": {
           "label": "Dashboard",
-          "description": ""
+          "description": "Das Dashboard gibt eine personalisierte Übersicht über aktuellste Neuigkeiten, unbeantwortete Chat Messages, offene Aufgaben und nächste Termine."
         },
         "shop": {
           "label": "Shop",
-          "description": ""
+          "description": "Im Shop können Produkte verkauft werden. Bestandteile des Shops sind eine Übersicht mit Suche, Detailansichten der Produkte. Im Einkaufswagen (Cart) werden die ausgewählten Produkte mit Preisen zusammengefasst und zur Bestellung mit Zahlung freigegeben."
         },
         "searchResults": {
           "label": "Such-Resultate",
-          "description": ""
+          "description": "Eine Website, die aus einem Suchfeld und den Suchresultaten in Listenform besteht."
         },
         "chat": {
           "label": "Chat",
           "description": "Chat-Übersicht mit Chat-Fenstern für direkte oder Gruppen-Kommunikation"
+        },
+        "graph": {
+          "label": "Sitemap",
+          "nomain": "Kein Hauptmenu gefunden.",
+          "description": "Die Sitemap gibt einen graphischen Überblick über die Struktur der App. Sie listet alle konfigurierten Menu, Seiten und Sektionen und zeigt ihre Abhängigkeiten.",
+          "description2": "Die Elemente in diesem Graph können selektiert und editiert werden."
+        },
+        "files": {
+          "label": "Files",
+          "description": "Diese Seite zeigt Dateien auf grafische Art. Sie entspricht einer einfachen Form einer Dateisystem-Sicht und besteht aus Files und Folders."
         }
       }
     },
