@@ -865,6 +865,9 @@
       "placeholder": "start | end | top | bottom",
       "helper": "Die Position des Icons im Bezug zum Text, z.B. links, rechts, oben, unten. Bei none wird nur das Icon angezeigt."
     },
+    "iconSet": {
+      "label": "Iconset"
+    },
     "id": {
       "label": "ID",
       "placeholder": "ssssss",
@@ -4223,6 +4226,13 @@
           "name": "Name",
           "type": "Typ"
         }
+      }
+    }
+  },
+  "icon": {
+    "operation": {
+      "select": {
+        "label": "Icon auswählen"
       }
     }
   },
