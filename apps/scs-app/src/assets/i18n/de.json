@@ -480,7 +480,8 @@
       "placeholder": "Name des Kalenders",
       "description": "Die ID des Kalenders, indem das Ereignis eingetragen wird.",
       "error": "Bitte einen anderen Namen wählen.",
-      "addLabel": "Kalendername hinzufügen"
+      "addLabel": "Kalendername hinzufügen",
+      "select": "Kalender wählen"
     },
     "categoryItems": {
       "title": "Elemente",
