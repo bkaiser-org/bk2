@@ -3535,6 +3535,9 @@
     "blog": {
       "search": "Artikel suchen"
     },
+    "rag": {
+      "placeholder": "Frage irgendetwas über den Seeclub Stäfa"
+    },
     "welcome": {
       "title": "Seeclub Stäfa",
       "subTitle": "Rudern auf dem Zürichsee",
