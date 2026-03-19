@@ -250,5 +250,5 @@ export const appRoutes: Route[] = [
       { path: 'tag', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocTagComponent) },
     ],
   },
-  { path: '**', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageDispatcher) },
+  { path: '**', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ErrorPage), data: { errorName: 'pageNotFound' } },
 ];
