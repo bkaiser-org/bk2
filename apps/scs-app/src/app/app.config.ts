@@ -1,8 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, inject, Injector, isDevMode, PLATFORM_ID, provideZonelessChangeDetection } from '@angular/core';
-import { NavigationStart, provideRouter, Router, RouteReuseStrategy, withComponentInputBinding } from '@angular/router';
-import { filter, take } from 'rxjs';
+import { provideRouter, RouteReuseStrategy, withComponentInputBinding } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
 import { ENV } from '@bk2/shared-config';
@@ -12,8 +11,7 @@ import { environment } from '../environments/environment';
 import { appRoutes } from './app.routes';
 
 // plain firebase with rxfire
-import { getApp, initializeApp } from 'firebase/app';
-import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
+import { initializeApp } from 'firebase/app';
 
 // i18n with transloco
 import { I18nService, TranslocoHttpLoader } from '@bk2/shared-i18n';
@@ -55,33 +53,10 @@ export const appConfig: ApplicationConfig = {
       provide: APP_BOOTSTRAP_LISTENER,
       useFactory: (platformId: object) => {
         const versionCheck = inject(VersionCheckService);
-        const router = inject(Router);
         return () => {
           if (!isPlatformBrowser(platformId)) return;
-
-          if (isDevMode()) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (<any>window).FIREBASE_APPCHECK_DEBUG_TOKEN = true;
-          }
-
-          const doInit = () => {
-            initializeAppCheck(getApp(), {
-              provider: new ReCaptchaEnterpriseProvider(environment.services.appcheckRecaptchaEnterpriseKey),
-              isTokenAutoRefreshEnabled: true,
-            });
-            versionCheck.checkVersion();
-          };
-
-          if (window.location.pathname.startsWith('/public')) {
-            // On public pages skip reCAPTCHA to improve page load.
-            // Initialize App Check on the first navigation to a non-public route.
-            router.events.pipe(
-              filter(e => e instanceof NavigationStart && !e.url.startsWith('/public')),
-              take(1),
-            ).subscribe(() => doInit());
-          } else {
-            doInit();
-          }
+          // AppCheck is initialized in main.ts before bootstrapping — do not re-initialize here.
+          versionCheck.checkVersion();
         };
       },
       deps: [PLATFORM_ID],
