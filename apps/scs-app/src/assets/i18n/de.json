@@ -3536,7 +3536,8 @@
       "search": "Artikel suchen"
     },
     "rag": {
-      "placeholder": "Frage irgendetwas über den Seeclub Stäfa"
+      "placeholder": "Frage irgendetwas über den Seeclub Stäfa",
+      "upload": "Dokumente in den RAG-Store hochladen"
     },
     "welcome": {
       "title": "Seeclub Stäfa",
