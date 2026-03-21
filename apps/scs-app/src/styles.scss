@@ -106,6 +106,18 @@ ion-modal ion-toolbar {
     0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
+.list-modal-wide {
+  --height: 66%;
+  --width: 600px;
+  z-index: 101;
+  --border-radius: 10px;
+  --border-color: black;
+  --border-style: solid;
+  --border-width: 1px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
 .zoom-modal {
   --height: 600px;
   --width: 600px;

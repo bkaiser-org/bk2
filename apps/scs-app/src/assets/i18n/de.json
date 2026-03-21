@@ -232,6 +232,10 @@
       },
       "delete": "Löschen",
       "deleteContent": "Inhalt löschen",
+      "email": {
+        "error": "Email(s) konnte(n) nicht verschickt werden.",
+        "conf": "Email(s) wurde(n) abgeschickt."
+      },
       "search": {
         "placeholder": "Suchen...",
         "byTag": "Tag"
@@ -1833,6 +1837,7 @@
     "section": {
       "edit": "Sektion bearbeiten",
       "delete": "Sektion löschen",
+      "send": "Artikel versenden",
       "create": "Sektion erstellen",
       "removeRef": "Referenz von Seite entfernen",
       "view": "Sektionskonfiguration anzeigen",
@@ -4200,6 +4205,9 @@
           "conf": "Sektion wurde gelöscht.",
           "error": "Sektion konnte nicht gelöscht werden.",
           "confirm": "Soll diese Sektion wirklich gelöscht werden ?"
+        },
+        "send": {
+          "confirm": "Sollen wirklich {{ amount }} emails verschickt werden ?"
         },
         "select": {
           "label": "Sektion wählen"
