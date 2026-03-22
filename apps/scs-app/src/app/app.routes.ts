@@ -48,6 +48,7 @@ export const appRoutes: Route[] = [
     children: [
       { path: 'login', loadComponent: () => import('@bk2/auth-feature').then(m => m.LoginPageComponent) },
       { path: 'pwdreset', loadComponent: () => import('@bk2/auth-feature').then(m => m.PasswordResetPageComponent) },
+      { path: 'confirm', loadComponent: () => import('@bk2/auth-feature').then(m => m.ConfirmPasswordResetPage) },
       { path: 'matrix-callback', loadComponent: () => import('@bk2/auth-feature').then(m => m.MatrixOidcCallbackComponent) },
     ],
   },
@@ -248,6 +249,7 @@ export const appRoutes: Route[] = [
       { path: 'storage', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocStorageComponent) },
       { path: 'doc', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocDocComponent) },
       { path: 'tag', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocTagComponent) },
+      { path: 'email', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocEmailComponent) },
     ],
   },
   { path: '**', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ErrorPage), data: { errorName: 'pageNotFound' } },
