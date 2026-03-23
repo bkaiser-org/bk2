@@ -268,7 +268,7 @@
     "color": {
       "label": "Color"
     },
-    "channelLabel": {
+    "addressChannelLabel": {
       "label": "Label of the channel",
       "placeholder": "e.g. Handy"
     },
@@ -466,7 +466,7 @@
     "usage": {
       "label": "Verwendung"
     },
-    "usageLabel": {
+    "addressUsageLabel": {
       "label": "Verwendungsname",
       "placeholder": "Bezeichnung der eigenen Verwendung",
       "helper": "Ein Name dafür, wie die Adresse verwendet wird, z.B. Oma, Mutter, Notfall."

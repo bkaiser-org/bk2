@@ -517,12 +517,12 @@
       "placeholder": "nnpx",
       "helper": "Der Abstand zwischen dem Text und dem Rand der Tabellenfelder in Pixel, z.B. 10, 20 etc."
     },
-    "channelType": {
+    "address_channel": {
       "label": "Adressart",
       "placeholder": "Art der Adresse, z.B. Telefon oder E-Mail",
       "helper": "Art der Adresse, z.B. Telefon oder Email."
     },
-    "channelLabel": {
+    "addressChannelLabel": {
       "label": "Bezeichnung",
       "placeholder": "Eigener Name",
       "helper": "Eigene Bezeichnung einer Adressart.",
@@ -1582,13 +1582,13 @@
     "usageName": {
       "label": "Verwendung deines Namens"
     },
-    "usageLabel": {
+    "addressUsageLabel": {
       "label": "Verwendungsname",
       "placeholder": "z.B. Notfall, Vater, Mutter",
       "helper": "Eine eigene Bezeichnung dafür, wie die Adresse verwendet wird",
       "error": "Bei Wahl einer eigenen Adressenverwendung ist eine Bezeichnung obligatorisch."
     },
-    "usageType": {
+    "address_usage": {
       "label": "Verwendungsart",
       "placeholder": "Verwendungsart der Adresse",
       "helper": "Eine Bezeichnung dafür, wie die Adresse verwendet wird, z.B. Privat, Geschäft"
@@ -2683,6 +2683,9 @@
       },
       "channel": {
         "label": "Bezeichnung",
+        "all": {
+          "label": "Alle Arten"
+        },
         "phone": {
           "label": "Telefon",
           "placeholder": "+41 nn nnn nnnn",
@@ -2725,6 +2728,11 @@
           "label": "Facebook",
           "placeholder": "z.B: https://www.facebook.com/user123",
           "description": "Facebook URL"
+        },
+        "matrix": {
+          "label": "Matrix (MXID)",
+          "placeholder": "@username:domain.com",
+          "description": "Die Matrix User ID (MXID) besteht aus deinem lokalen usernamen und der Domain deines Matrix Servers."
         },
         "xing": {
           "label": "Xing",

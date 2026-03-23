@@ -500,12 +500,12 @@
       "placeholder": "nnpx",
       "helper": "Der Abstand zwischen dem Text und dem Rand der Tabellenfelder in Pixel, z.B. 10, 20 etc."
     },
-    "channelType": {
+    "addressChannel": {
       "label": "Adressart",
       "placeholder": "Art der Adresse, z.B. Telefon oder E-Mail",
       "helper": "Art der Adresse, z.B. Telefon oder Email."
     },
-    "channelLabel": {
+    "addressChannelLabel": {
       "label": "Bezeichnung",
       "placeholder": "Eigener Name",
       "helper": "Eigene Bezeichnung einer Adressart.",
@@ -1492,13 +1492,13 @@
     "usageName": {
       "label": "Verwendung deines Namens"
     },
-    "usageLabel": {
+    "addressUsageLabel": {
       "label": "Verwendungsname",
       "placeholder": "z.B. Notfall, Vater, Mutter",
       "helper": "Eine eigene Bezeichnung dafür, wie die Adresse verwendet wird",
       "error": "Bei Wahl einer eigenen Adressenverwendung ist eine Bezeichnung obligatorisch."
     },
-    "usageType": {
+    "addressUsage": {
       "label": "Verwendungsart",
       "placeholder": "Verwendungsart der Adresse",
       "helper": "Eine Bezeichnung dafür, wie die Adresse verwendet wird, z.B. Privat, Geschäft"
