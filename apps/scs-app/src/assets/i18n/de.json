@@ -1717,6 +1717,10 @@
         "send": "E-Mail senden",
         "copy": "E-Mail Adresse kopieren"
       },
+      "file": {
+        "upload": "Datei hochladen",
+        "view": "Datei anzeigen"
+      },
       "phone": {
         "call": "Anrufen",
         "copy": "Telefonnummer kopieren",
@@ -1730,7 +1734,7 @@
       },
       "iban": {
         "view": "QR EZS anzeigen",
-        "upload": "QR EZS hochladen"
+        "generateQr": "QR EZS generieren"
       },
       "web": {
         "open": "Webseite öffnen",
@@ -2794,6 +2798,11 @@
           "placeholder": "IBAN Nummer",
           "description": "Bankkonto Nummer",
           "description-placeholder": "Bankinformationen: Name, Kontakt, Adresse, Tel, Email etc."
+        },
+        "twint": {
+          "label": "Twint",
+          "placeholder": "Touchpoint name",
+          "description": "Twint QRCode"
         }
       },
       "usage": {
@@ -6757,6 +6766,9 @@
         "confirmation": "Ein E-Mail mit Instruktionen zum zurücksetzen des Passworts wurde an die folgende E-Mail Adresse verschickt: ",
         "error": "Das Zurücksetzen des Passworts war nicht erfolgreich",
         "note": "Es wird dir eine Email auf die angegebene Email-Adresse geschickt mit Instruktionen, wie du dein Passwort neu setzen oder ändern kannst. Die Email-Adresse muss deiner Login ID entsprechen. Normalerweise ist es die Email-Adresse, unter der du die Informationen erhälst."
+      },
+      "pwdconfirm": {
+        "title": "Passwort setzen"
       },
       "logout": {
         "label": "Abmelden",
