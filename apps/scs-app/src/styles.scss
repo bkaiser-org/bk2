@@ -213,6 +213,19 @@ ion-modal.stack-modal {
 }
 
 /* Force hover & activated states in ALL popovers, e.g. bk-cat-select */
+.raw-message-alert .alert-message {
+  text-align: left;
+}
+
+.bk-prompt-alert {
+  --width: min(92vw, 560px);
+
+  .alert-input-group textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+}
+
 ion-popover ion-item {
   --ion-item-background-hover: var(--ion-color-light) !important;
   --ion-item-color-hover: var(--ion-color-primary) !important;
