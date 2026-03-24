@@ -174,7 +174,7 @@ export const oidcAuthorize = onRequest(
   <script>
     // Initialize Firebase (will be replaced with actual config)
     const firebaseConfig = {
-      apiKey: "${process.env.FIREBASE_API_KEY || 'AIzaSyCrHhhgiAb-QYLbbjmSG4Fo9IdeRrt0Bz4'}",
+      apiKey: "${process.env.FIREBASE_API_KEY}",
       authDomain: "${process.env.FIREBASE_AUTH_DOMAIN || 'bkaiser-org.firebaseapp.com'}",
       projectId: "${process.env.FIREBASE_PROJECT_ID || 'bkaiser-org'}",
     };
