@@ -174,6 +174,11 @@ export const appRoutes: Route[] = [
     path: 'transfer',
     canActivate: [isAuthenticatedGuard],
     children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship-transfer-feature').then(m => m.TransferListComponent) }],
+  },  
+  {
+    path: 'responsibility',
+    canActivate: [isAuthenticatedGuard],
+    children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship-responsibility-feature').then(m => m.ResponsibilityList) }],
   },
   {
     path: 'resource',

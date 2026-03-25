@@ -670,6 +670,16 @@
       "helper": "Das Datum, an dem die Resource übertragen wird.",
       "error": "Das Datumsformat ist nicht korrekt."
     },
+    "delegateValidFrom": {
+      "label": "Gültig ab",
+      "helper": "Das Startdatum der Stellvertretung.",
+      "placeholder": "tt.mm.jjjj"
+    },
+    "delegateValidTo": {
+      "label": "Gültig bis",
+      "helper": "Das Enddatum der Stellvertretung.",
+      "placeholder": "tt.mm.jjjj"
+    },
     "description": {
       "label": "Beschreibung",
       "placeholder": "Ein längerer, mehrzeiliger Text."
@@ -1322,6 +1332,11 @@
       "helper": "Das Datum, bis zu dem das Ereignis wiederholt wird.",
       "error": "Das Datumsformat ist nicht korrekt."
     },
+    "respId": {
+      "label": "ID",
+      "placeholder": "sss_sss",
+      "helper": "Eine eindeutige ID für diese Verantwortlichkeit. Sie muss aus einem Wort bestehen, darf _ enthalten und sollte human-readable sein."
+    },
     "resref": {
       "label": "Reservations-Referenz",
       "placeholder": "z.B. Email: Datum",
@@ -1931,6 +1946,10 @@
       "edit": "Transfer bearbeiten",
       "delete": "Transfer löschen",
       "end": "Transfer beenden"
+    },
+    "responsibility": {
+      "edit": "Verantwortlichkeit ändern",
+      "delete": "Verantwortlichkeit löschen"
     },
     "resource": {
       "view": "Resource anzeigen",
@@ -6187,6 +6206,81 @@
       },
       "view": {
         "label": "Reservation anzeigen"
+      }
+    }
+  },
+  "responsibility": {
+    "singular": "Verantwortung",
+    "plural": "Verantwortungen",
+    "field": {
+      "empty": "Keine Verantwortungen gefunden.",
+      "name": "Name",
+      "validFrom": "Gültig ab",
+      "validTo": "Gültig bis",
+      "duration": "Dauer",
+      "resource": "Resource",
+      "state": "Status",
+      "category": "Kategorie",
+      "comment": "Kommentar"
+    },
+    "list": {
+      "title": "Verantwortlichkeiten",
+      "header": {
+        "responsible": "Verantwortliche Person",
+        "delegate": "Stellvertretende Person",
+        "validFrom": "Gültig ab",
+        "validTo": "Gültig bis",
+        "category": "Typ"
+      }
+    },
+    "event": {
+      "all": {
+        "label": "Alle Events"
+      },
+      "apply": {
+        "label": "beantragen",
+        "noun": "Antrag"
+      },
+      "change": {
+        "label": "ändern",
+        "noun": "Änderung"
+      },
+      "end": {
+        "label": "beenden",
+        "noun": "Ende"
+      },
+      "delete": {
+        "label": "löschen",
+        "noun": "Löschung"
+      },
+      "order": {
+        "label": "bestellen",
+        "noun": "Bestellung"
+      },
+      "pay": {
+        "label": "bezahlen",
+        "noun": "Zahlung"
+      }
+    },
+    "operation": {
+      "create": {
+        "label": "Verantwortlichkeit hinzufügen",
+        "conf": "Verantwortlichkeit wurde erstellt.",
+        "error": "Verantwortlichkeit konnte nicht erstellt werden."
+      },
+      "update": {
+        "label": "Verantwortlichkeit ändern",
+        "conf": "Verantwortlichkeit wurde geändert.",
+        "error": "Verantwortlichkeit konnte nicht geändert werden."
+      },
+      "delete": {
+        "label": "Verantwortlichkeit löschen",
+        "conf": "Verantwortlichkeit wurde gelöscht.",
+        "error": "Verantwortlichkeit konnte nicht gelöscht werden.",
+        "confirm": "Möchtest du die Verantwortlichkeit wirklich löschen?"
+      },
+      "export": {
+        "raw": "Rohdaten exportieren"
       }
     }
   },
