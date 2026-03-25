@@ -401,6 +401,15 @@
       "helper": "ID zum Synchronisieren mit einem Kontakt in Bexio.",
       "error": "Bexio ID ist eine sechsstellige Zahl."
     },
+    "bhcomp": {
+      "label": "Involvierte Firma",
+      "placeholder": "Firmenname",
+      "helper": "Falls du einen Firmenanlass organisieren möchtest, gib hier bitte an, für welche Firma du das tust."
+    },
+    "bhdesc": {
+      "label": "Beschreibung des Anlasses",
+      "placeholder": "Was willst du uns zu deinem Anlass sonst noch sagen (Motivation, Organisation, Spezialwünsche etc.) ?"
+    },
     "bkey": {
       "label": "bkey",
       "placeholder": "bkey",
@@ -516,6 +525,9 @@
       "label": "Textausrichtung",
       "placeholder": "nnpx",
       "helper": "Der Abstand zwischen dem Text und dem Rand der Tabellenfelder in Pixel, z.B. 10, 20 etc."
+    },
+    "confirmation": {
+      "label": "Ich habe die Vertragsbedingungen und das Nutzungsreglement gelesen und werde mich an diese Bestimmungen halten."
     },
     "address_channel": {
       "label": "Adressart",
@@ -1970,6 +1982,9 @@
       "label": "Autostart",
       "helperText": "Das Video startet automatisch, sobald die Seite geladen wird."
     },
+    "bhresconf": {
+      "label": "Ich habe das Nutzungsreglement und die Bestimmungen zum Mietvertrag gelesen und werde mich daran halten."
+    },
     "confirmed": {
       "label": "Hiermit bestätige ich, die obigen Bestimmungen gelesen zu haben und mich daran zu halten.",
       "helperText": "Die Vermietung der Clubanlagen erfolgt nur, wenn die obigen Bestimmungen eingehalten werden. Der Club behält sich vor, bei Missachtung der Bestimmungen die Veranstaltung abzusagen oder dem Mieter allfällige Schäden oder Mehraufwände zu verrechnen."
@@ -2157,6 +2172,10 @@
     "useTouchId": {
       "label": "Touch ID verwenden",
       "helperText": "Authentisierung mittels Fingerabdruck (sofern auf deinem Gerät möglich)."
+    },
+    "usesTent": {
+      "label": "Zelt wird aufgestellt",
+      "helperText": "Gib hier an, ob du ein Zelt aufstellen möchtest."
     }
   },
   "category": {
@@ -6897,6 +6916,9 @@
       "none": {
         "label": "Keine",
         "description": "Keine Aktion wird ausgeführt"
+      },
+      "notify": {
+        "label": "Reservieren"
       }
     },
     "color": {
