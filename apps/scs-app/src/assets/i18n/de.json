@@ -4206,6 +4206,10 @@
           "edit": "Chat Konfiguration ändern",
           "description": "Chat-Fenster für direkte oder Gruppen-Kommunikation"
         },
+        "context": {
+          "label": "Kontextdiagramm",
+          "description": "Zeigt die Beziehungen einer Person, Gruppe oder Organisation."
+        },
         "gallery": {
           "label": "Gallerie",
           "edit": "Gallerie Konfiguration ändern",
