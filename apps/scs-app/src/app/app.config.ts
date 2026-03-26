@@ -6,6 +6,8 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 
 import { ENV } from '@bk2/shared-config';
 import { VersionCheckService } from '@bk2/shared-util-angular';
+import { GroupEditModalComponent } from '@bk2/subject-group-feature';
+import { GROUP_EDIT_MODAL } from '@bk2/subject-group-ui';
 import { environment } from '../environments/environment';
 
 import { appRoutes } from './app.routes';
@@ -30,6 +32,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
     { provide: ENV, useValue: environment },
+    { provide: GROUP_EDIT_MODAL, useValue: GroupEditModalComponent },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular({ useSetInputAPI: true, innerHTMLTemplatesEnabled: true }),
     // provideClientHydration disabled - Ionic doesn't fully support SSR hydration yet
