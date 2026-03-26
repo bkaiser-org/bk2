@@ -1803,6 +1803,12 @@
     "fbuser": {
       "delete": "Firebase User löschen"
     },
+    "orgchart": {
+      "addNewGroup": "Neue Gruppe erstellen",
+      "addExistingGroup": "Bestehende Gruppe hinzufügen",
+      "editGroup": "Gruppe bearbeiten",
+      "removeGroup": "Gruppe entfernen"
+    },
     "invitation": {
       "view": "Einladung anzeigen",
       "edit": "Einladung bearbeiten",
@@ -2682,6 +2688,9 @@
         },
         "select": {
           "label": "Gruppe wählen"
+        },
+        "detach": {
+          "confirm": "Soll die Gruppe wirklich entfernt werden ?"
         }
       }
     },
@@ -3790,6 +3799,12 @@
       "subTitle": "Aktuelle Neuigkeiten",
       "empty": "Es gibt keine Neuigkeiten."
     },
+    "orgchart": {
+      "view": {
+        "accordion": "Liste",
+        "chart": "Organigramm"
+      }
+    },
     "notfound": {
       "title": "im Schilf gelandet ?",
       "subTitle": "404 - Page Not Found",
@@ -4209,6 +4224,10 @@
         "model": {
           "label": "Modell",
           "description": "3D Modell, z.B. Boot, Haus, Auto"
+        },
+        "orgchart": {
+          "label": "Organigramm",
+          "description": "Zeigt eine hierarchische Organisation grafisch als Organigramm oder als Liste."
         },
         "people": {
           "label": "Personen",
