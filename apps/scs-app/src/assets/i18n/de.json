@@ -1800,6 +1800,11 @@
         "copy": "Kopieren"
       }
     },
+    "contextDiagram": {
+      "edit": "Knoten ändern",
+      "center": "Zentrieren",
+      "displayConfig": "Darstellung ändern"
+    },
     "fbuser": {
       "delete": "Firebase User löschen"
     },
@@ -3831,6 +3836,19 @@
           "label": "Release Note löschen",
           "askConfirmation": "Soll diese Release Notes tatsächlich gelöscht werden ?"
         }
+      }
+    },
+    "contextDiagram": {
+      "config": {
+        "title": "Anzeigeoptionen",
+        "showAvatar": "Avatar anzeigen",
+        "showName": "Name anzeigen",
+        "showMembers": "Mitglieder anzeigen",
+        "showMemberships": "Mitgliedschaften anzeigen",
+        "showResponsibilities": "Verantwortlichkeiten anzeigen",
+        "showPersonalRels": "Persönliche Beziehungen anzeigen",
+        "showWorkRels": "Beschäftigungen anzeigen",
+        "saveChanges": "Änderungen speichern"
       }
     },
     "tenu": {
