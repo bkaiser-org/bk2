@@ -2119,6 +2119,10 @@
       "label": "Archivierte Daten anzeigen",
       "helperText": "Zeigt archivierte Daten ebenfalls an. Kann nur von Admin im Profil eingeschaltet werden oder direkt in der Datenbank für einen anderen Benutzer."
     },
+    "showAvatar": {
+      "label": "Avatar anzeigen",
+      "helperText": "Zeigt ein Avatar Bild der Person, Gruppe oder Organisation an."
+    },
     "showChannelList": {
       "label": "Kanal-Liste anzeigen",
       "helperText": "Zeigt die Liste der verfügbaren Chat-Kanäle an."
@@ -2126,6 +2130,10 @@
     "showDebugInfo": {
       "label": "Debug Informationen anzeigen",
       "helperText": "Zeigt Debug-Informationen der Forms und Menus an. Kann nur von Admin im Profil eingeschaltet werden oder direkt in der Datenbank für einen anderen Benutzer."
+    },
+    "showDescription": {
+      "label": "Beschreibung anzeigen",
+      "helperText": "Zeigt eine kurze Beschreibung der Zuständigkeiten an."
     },
     "showDocs": {
       "label": "Dokumente anzeigen",
@@ -4262,6 +4270,11 @@
             "label": "Name",
             "placeholder": "Text, der zusätzlich zum Namen angezeigt wird, z.B. Abkürzung, Funktion"
           }
+        },
+        "responsibility": {
+          "label": "Verantwortlichkeiten",
+          "edit": "Konfiguration",
+          "description": "Eine Visualisierung einer Rolle mit einer verantwortlichen Person oder Gruppe."
         },
         "slider": {
           "label": "Slider",
