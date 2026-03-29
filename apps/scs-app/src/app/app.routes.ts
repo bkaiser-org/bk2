@@ -241,6 +241,11 @@ export const appRoutes: Route[] = [
     children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/task-feature').then(m => m.TaskListComponent) }],
   },
   {
+    path: 'icon',
+    canActivate: [isAuthenticatedGuard],
+    children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/icon-feature').then(m => m.IconListComponent) }],
+  },
+  {
     path: 'aoc',
     canActivate: [isAdminGuard],
     children: [
@@ -255,6 +260,7 @@ export const appRoutes: Route[] = [
       { path: 'doc', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocDocComponent) },
       { path: 'tag', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocTagComponent) },
       { path: 'email', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocEmailComponent) },
+      { path: 'bexio', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocBexio) },
     ],
   },
   { path: '**', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ErrorPage), data: { errorName: 'pageNotFound' } },

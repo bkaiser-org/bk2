@@ -255,6 +255,7 @@
       "insert": {
         "password": "Passwort eingeben"
       },
+      "loading": "Wird geladen...",
       "nyi": "Diese Funktion ist noch nicht implementiert.",
       "inspect": "Untersuchen"
     },
@@ -4408,6 +4409,9 @@
     }
   },
   "icon": {
+    "singular": "Icon",
+    "plural": "Icons",
+    "empty": "Keine Icons gefunden.",
     "operation": {
       "select": {
         "label": "Icon auswählen"
@@ -6603,6 +6607,14 @@
         "label": "Junioren-Eintritte prüfen",
         "button": "Prüfen",
         "description": "Die unten aufgelisteten Mitglieder sind in der Datenbank mit Eintritt als Aktivmitglied geführt, sie sollten anfänglich auf Jugendliche umgeteilt werden."
+      }
+    },
+    "bexio": {
+      "title": "Verwaltung der Bexio Integration",
+      "index": {
+        "title": "Bexio Kontakte synchronisieren",
+        "content": "Es werden alle Personen, Organisationen und ihre Mitgliedschaften mit der Default Organisation geladen. Die BexioID in diesen Entitäten wird abgeglichen. Dann werden alle Kontakte von Bexio geladen und in die gleiche Liste eingefügt und geprüft. Bei fehlenden Einträgen erscheint ein add Button für den Abgleich.",
+        "button": "Sync"
       }
     },
     "content": {
