@@ -930,6 +930,10 @@
       "label": "Wichtigkeit",
       "helper": "Die Wichtigkeit einer Aufgabe, z.B. niedrig, mittel, hoch. Wird normalerweise verwendet, um Aufgaben zu priorisieren (Filter in einer Liste)."
     },
+    "index": {
+      "label": "Index",
+      "helper": "Der Index enthält die Werte nach denen in der Liste gesucht werden kann."
+    },
     "intervalInSeconds": {
       "label": "Intervall in Sekunden",
       "placeholder": "nnn",
@@ -1857,6 +1861,12 @@
       "edit": "Mitteilung bearbeiten",
       "answer": "Mitteilung beantworten",
       "delete": "Mitteilung löschen"
+    },
+    "icon": {
+      "view": "Icon anzeigen",
+      "edit": "Icon bearbeiten",
+      "delete": "Icon löschen",
+      "copy": "Iconname kopieren"
     },
     "news": {
       "view": "News-Artikel anzeigen",
@@ -4412,9 +4422,39 @@
     "singular": "Icon",
     "plural": "Icons",
     "empty": "Keine Icons gefunden.",
+    "field": {
+      "name": {
+        "label": "Icon Name"
+      },
+      "type": {
+        "label": "Icon Set"
+      },
+      "fullPath": {
+        "label": "Storage Path"
+      },
+      "index": {
+        "label": "Index"
+      }
+    },
     "operation": {
       "select": {
         "label": "Icon auswählen"
+      },
+      "create": {
+        "label": "Icon hinzufügen",
+        "conf": "Das Icon wurde hinzugefügt.",
+        "error": "Das Icon konnte nicht hinzugefügt werden."
+      },
+      "update": {
+        "label": "Icon ändern",
+        "conf": "Das Icon wurde geändert.",
+        "error": "Das Icon konnte nicht geändert werden."
+      },
+      "delete": {
+        "label": "Icon löschen",
+        "conf": "Das Icon wurde gelöscht.",
+        "error": "Das Icon konnte nicht gelöscht werden.",
+        "confirm": "Soll das Icon wirklich gelöscht werden ?"
       }
     }
   },
