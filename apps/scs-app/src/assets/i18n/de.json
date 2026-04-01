@@ -1827,8 +1827,8 @@
       "accept": "Einladung annehmen",
       "decline": "Einladung ablehnen",
       "maybe": "Teilnahme unsicher",
-      "subscribe":"Ich nehme teil",
-      "unsubscribe":"Ich kann nicht teilnehmen"
+      "subscribe": "Ich nehme teil",
+      "unsubscribe": "Ich kann nicht teilnehmen"
     },
     "person": {
       "call": "Person anrufen",
@@ -2081,7 +2081,7 @@
     "hasPriority": {
       "label": "hasPriority",
       "helperText": "Definiert höhere Priorität beim Laden von Bildern."
-    },  
+    },
     "isArchived": {
       "label": "Archiviert",
       "helperText": "Archivierte Daten werden nicht mehr in Listen oder Suchresultaten angezeigt."
@@ -3040,7 +3040,7 @@
             "askConfirmation": "Soll das Boot wirklich gelöscht werden ?"
           },
           "view": {
-            "label": "Boot anzeigen" 
+            "label": "Boot anzeigen"
           }
         }
       },
@@ -3067,7 +3067,7 @@
             "askConfirmation": "Soll das Ruderboot wirklich gelöscht werden ?"
           },
           "view": {
-            "label": "Ruderboot anzeigen" 
+            "label": "Ruderboot anzeigen"
           }
         }
       },
@@ -3094,7 +3094,7 @@
             "askConfirmation": "Soll das Fahrzeug wirklich gelöscht werden ?"
           },
           "view": {
-            "label": "Fahrzeug anzeigen" 
+            "label": "Fahrzeug anzeigen"
           }
         }
       },
@@ -3935,29 +3935,29 @@
       "empty": "Es sind noch keine Inhalte erfasst worden."
     },
     "state": {
-        "all": {
-          "label": "Alle Stati"
-        },
-        "draft": {
-          "label": "Entwurf",
-          "description": "Die Webseite ist in Arbeit."
-        },
-        "inReview": {
-          "label": "In Review",
-          "description": "Die Webseite ist in Überprüfung."
-        },
-        "published": {
-          "label": "Veröffentlicht",
-          "description": "Die Webseite ist veröffentlicht."
-        },
-        "decommitted": {
-          "label": "Zurückgezogen",
-          "description": "Die Webseite ist abgekündigt, dh. sie ist noch sichtbar, wird aber bald entfernt."
-        },
-        "archived": {
-          "label": "Archiviert",
-          "description": "Die Webseite ist archiviert und nicht mehr sichtbar."
-        }
+      "all": {
+        "label": "Alle Stati"
+      },
+      "draft": {
+        "label": "Entwurf",
+        "description": "Die Webseite ist in Arbeit."
+      },
+      "inReview": {
+        "label": "In Review",
+        "description": "Die Webseite ist in Überprüfung."
+      },
+      "published": {
+        "label": "Veröffentlicht",
+        "description": "Die Webseite ist veröffentlicht."
+      },
+      "decommitted": {
+        "label": "Zurückgezogen",
+        "description": "Die Webseite ist abgekündigt, dh. sie ist noch sichtbar, wird aber bald entfernt."
+      },
+      "archived": {
+        "label": "Archiviert",
+        "description": "Die Webseite ist archiviert und nicht mehr sichtbar."
+      }
     },
     "menuItem": {
       "singular": "Menüpunkt",
@@ -4204,7 +4204,7 @@
       },
       "type": {
         "all": {
-            "label": "Alle Sektionsarten"
+          "label": "Alle Sektionsarten"
         },
         "album": {
           "label": "Album",
@@ -4455,6 +4455,12 @@
         "conf": "Das Icon wurde gelöscht.",
         "error": "Das Icon konnte nicht gelöscht werden.",
         "confirm": "Soll das Icon wirklich gelöscht werden ?"
+      },
+      "exportRaw": {
+        "label": "Icons exportieren"
+      },
+      "sync": {
+        "label": "Icons synchronisieren"
       }
     }
   },
@@ -7942,7 +7948,6 @@
         "label": "Bedeckt",
         "description": "Stark bewölkt, ca. 50-100% bedeckt."
       },
-
       "wind": {
         "label": "Wind",
         "description": "Wind"
