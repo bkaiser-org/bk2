@@ -1,4 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 import { IonApp, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonMenu, IonRouterOutlet, IonSplitPane, IonToolbar } from '@ionic/angular/standalone';
 
 import { AuthInfoComponent } from '@bk2/auth-ui';
@@ -6,7 +8,7 @@ import { MenuComponent } from '@bk2/cms-menu-feature';
 import { AppStore } from '@bk2/shared-feature';
 import { RoleName } from '@bk2/shared-models';
 import { ConnectionStatusButtonComponent, SpinnerComponent, AvatarUserComponent } from '@bk2/shared-ui';
-import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
+import { coerceBoolean, getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
 
 @Component({
   imports: [
@@ -85,7 +87,8 @@ import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
         use MenuController with this.menu.enable(true, menuId) to switch the menus
       -->
     <ion-app>
-      <ion-split-pane contentId="main">
+      <ion-split-pane contentId="main" [disabled]="!showMenu()">
+        @if(showMenu()) {
         <ion-menu side="start" menuId="main" contentId="main" type="overlay">
           <ion-header>
             <ion-toolbar color="secondary">
@@ -107,6 +110,7 @@ import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
             }
           </ion-content>
         </ion-menu>
+        }
         <ion-router-outlet id="main" />
       </ion-split-pane>
     </ion-app>
@@ -123,6 +127,9 @@ import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
 })
 export class AppComponent {
   protected appStore = inject(AppStore);
+  private readonly route = inject(ActivatedRoute);
+  private readonly queryParamMap = toSignal(this.route.queryParamMap);
+  protected readonly showMenu = computed(() => coerceBoolean(this.queryParamMap()?.get('showMenu') ?? 'true'));
 
   protected showDebugInfo = computed(() => this.appStore.showDebugInfo());
   protected mainMenuName = computed(() => `main_${this.appStore.tenantId()}`);
