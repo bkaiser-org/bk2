@@ -3984,7 +3984,8 @@
         },
         "logout": {
           "label": "Logout",
-          "description": "Die aktuelle Sitzung beenden und sich abmelden."
+          "description": "Die aktuelle Sitzung beenden und sich abmelden.",
+          "confirm": "Bist du sicher ? Du musst dann wieder mit Passwort einloggen."
         },
         "sub": {
           "label": "Submenu",
