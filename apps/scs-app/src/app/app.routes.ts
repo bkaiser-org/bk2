@@ -220,7 +220,7 @@ export const appRoutes: Route[] = [
       path: ':listId/:contextMenuName', 
       canActivate: [isPrivilegedGuard], 
       loadComponent: () => import('@bk2/calevent-feature').then(m => m.CalEventListComponent),
-      data: { color: 'secondary', view: 'list', showMainMenu: true }
+      data: { color: 'secondary', view: 'grid', showMainMenu: true }
     }],
   },
   {
