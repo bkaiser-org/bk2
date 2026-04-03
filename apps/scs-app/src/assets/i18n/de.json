@@ -1032,11 +1032,23 @@
       "error": "Bitte eine gültige Email Adresse eingeben.",
       "helper": "Bitte verwende die gleiche E-Mail Adresse, auf der du die Vereinsinformationen erhälst."
     },
+    "emailEmail": {
+      "label": "E-Mail",
+      "placeholder": "ssss@ssssssss.sss",
+      "error": "Bitte eine gültige Email Adresse eingeben.",
+      "helper": "Bitte verwende die gleiche E-Mail Adresse, auf der du die Vereinsinformationen erhälst. Wir senden dir dann eine Email an diese Adresse mit einem Link, wo du dein Passwort neu setzen kannst. Falls du das Email nicht findest, schaue bitte auch in deinem Spam-Ordner nach."
+    },    
     "loginPassword": {
       "label": "Passwort",
       "placeholder": "Passwort",
       "error": "Das Passwort muss mindestens 6 Zeichen lang sein.",
       "helper": "Falls du noch kein Passwort hast oder dieses nicht kennst, kannst du unten auf den Button 'Passwort zurücksetzen' klicken und ein neues Passwort setzen."
+    },
+    "passwordPassword": {
+      "label": "Neues Passwort",
+      "placeholder": "Passwort",
+      "error": "Das Passwort muss mindestens 6 Zeichen lang sein.",
+      "helper": "Setze hier dein neues Passwort. Beachte, dass der Link aus Sicherheitsgründen nur kurze Zeit gültig ist. Wenn der Link abgelaufen ist, machst du einfach nochmals einen Passwort Reset."
     },
     "hash": {
       "label": "Hash",
@@ -6896,7 +6908,13 @@
     "intro": "Ein User entspricht 1:1 einem authentisierten Konto (Firebase UID = User.bkey) und genau einer Person (User.personKey = Person.bkey).",
     "auth": {
       "title": "Authentifizierung",
-      "description": "Einstellungen zur Authentifizierung des Users. Diese Einstellungen gelten nur für den selektierten User."
+      "description": "Einstellungen zur Authentifizierung des Users. Diese Einstellungen gelten nur für den selektierten User.",
+      "pwdreset": {
+        "newpwd": "Neues Passwort festlegen",
+        "invalidLink": "Dieser Link ist ungültig oder bereits abgelaufen. Bitte fordere einen neuen Reset-Link an.",
+        "success": "Passwort erfolgreich geändert. Du wirst zur Anmeldeseite weitergeleitet.",
+        "savepwd": "Passwort speichern"
+      }
     },
     "field": {
       "loginEmail": "Login E-Mail",
