@@ -1037,11 +1037,11 @@
       "placeholder": "ssss@ssssssss.sss",
       "error": "Bitte eine gültige Email Adresse eingeben.",
       "helper": "Bitte verwende die gleiche E-Mail Adresse, auf der du die Vereinsinformationen erhälst. Wir senden dir dann eine Email an diese Adresse mit einem Link, wo du dein Passwort neu setzen kannst. Falls du das Email nicht findest, schaue bitte auch in deinem Spam-Ordner nach."
-    },    
+    },
     "loginPassword": {
       "label": "Passwort",
       "placeholder": "Passwort",
-      "error": "Das Passwort muss mindestens 6 Zeichen lang sein.",
+      "error": "Das Passwort muss mindestens 6 Zeichen lang sein und darf die folgenden Sonderzeichen enthalten: -_!@?:;äüö$*+&()=.,£$%",
       "helper": "Falls du noch kein Passwort hast oder dieses nicht kennst, kannst du unten auf den Button 'Passwort zurücksetzen' klicken und ein neues Passwort setzen."
     },
     "passwordPassword": {
@@ -1718,6 +1718,15 @@
       "placeholder": "n",
       "helper": "Der Zoomfaktor wird verwendet, um die Darstellung zu vergrössern oder zu verkleinern, default = 2x.",
       "error": "Der Zoomfaktor muss eine Ganzzahl aus lauter Ziffern sein."
+    },
+    "visibility": {
+      "label": "Sichtbarkeit (Rollen)",
+      "placeholder": "Rolle[,Rolle]",
+      "helper": "Komma-getrennte Rollennamen (z.B. registered,privileged). Nutzer mit einer dieser Rollen sehen Kalender und Chat der Gruppe, auch ohne Mitglied zu sein. Leer = nur Mitglieder."
+    },
+    "notifyType": {
+      "label": "Benachrichtigungstyp",
+      "helper": "memberOnly: nur Mitglieder erhalten Benachrichtigungen. membersAndMatchingVisibility: Mitglieder und Nutzer mit passender Sichtbarkeitsrolle."
     }
   },
   "actionsheet": {
@@ -2687,7 +2696,8 @@
         "empty": "Keine Gruppen gefunden.",
         "attributes": "Gruppen-Eigenschaften",
         "display": "Darstellung",
-        "groupId": "Gruppen ID"
+        "groupId": "Gruppen ID",
+        "access": "Zugang & Benachrichtigungen"
       },
       "segment": {
         "content": "Inhalt",
@@ -7494,6 +7504,11 @@
         "label": "Resource",
         "description": "Etwas, das man benützen, reservieren, besitzen kann (Boot, Auto, Immobilie, Schlüssel, Chäschtli etc.).",
         "placeholder": "Name oder ID der Resource"
+      },
+      "responsibility": {
+        "label": "Verantwortung",
+        "description": "Eine Zuständigkeit einer Person für etwas.",
+        "placeholder": "ssss"
       },
       "section": {
         "label": "Sektion",
