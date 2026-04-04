@@ -4878,6 +4878,10 @@
         "description": "Personen, die für den Anlass verantwortlich sind.",
         "addLabel": "Organisierende hinzufügen"
       },
+      "date": "Datum",
+      "periodicity": "periodisch",
+      "location": "Ort",
+      "responsiblePersons": "Verantwortlich",
       "attendance": {
         "label": "Teilnehmende",
         "plural": "Teilnehmende",
