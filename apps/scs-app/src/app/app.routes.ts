@@ -241,6 +241,11 @@ export const appRoutes: Route[] = [
     children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/task-feature').then(m => m.TaskListComponent) }],
   },
   {
+    path: 'activity',
+    canActivate: [isAdminGuard],
+    loadComponent: () => import('@bk2/activity-feature').then(m => m.ActivityListComponent),
+  },
+  {
     path: 'icon',
     canActivate: [isAuthenticatedGuard],
     children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/icon-feature').then(m => m.IconListComponent) }],

@@ -6621,6 +6621,54 @@
       }
     }
   },
+  "activity": {
+    "list": {
+      "title": "Aktivitäten"
+    },
+    "field": {
+      "empty": "Keine Aktivitäten vorhanden.",
+      "timestamp": "Zeitstempel",
+      "scope": "Bereich",
+      "action": "Aktion",
+      "author": "Autor",
+      "payload": "Inhalt",
+      "roleNeeded": "Rolle"
+    },
+    "operation": {
+      "create": "Aktivität erstellt.",
+      "delete": "Aktivität gelöscht."
+    },
+    "scope": {
+      "auth": "Anmeldung",
+      "person": "Person",
+      "org": "Organisation",
+      "group": "Gruppe",
+      "membership": "Mitgliedschaft",
+      "calevent": "Termin",
+      "task": "Aufgabe",
+      "resource": "Ressource",
+      "chat": "Chat",
+      "rag": "KI-Suche",
+      "address": "Adresse",
+      "folder": "Ordner",
+      "calendar": "Kalender",
+      "user": "Benutzer",
+      "ownership": "Eigentum",
+      "transfer": "Transfer",
+      "reservation": "Reservation",
+      "responsibility": "Verantwortung"
+    },
+    "action": {
+      "login": "Anmeldung",
+      "logout": "Abmeldung",
+      "create": "Erstellt",
+      "update": "Geändert",
+      "delete": "Gelöscht",
+      "join": "Beigetreten",
+      "leave": "Verlassen",
+      "ask": "Anfrage"
+    }
+  },
   "aoc": {
     "title": "AOC - Application Operation Center",
     "result": {
