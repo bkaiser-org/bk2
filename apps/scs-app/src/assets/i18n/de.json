@@ -1761,6 +1761,10 @@
       "copyuid": "Firebase UID kopieren",
       "copypkey": "Person ID kopieren"
     },
+    "activity": {
+      "view": "Aktivität anzeigen",
+      "delete": "Aktivität löschen"
+    },
     "address": {
       "view": "Adresse anzeigen",
       "edit": "Adresse bearbeiten",
@@ -6624,6 +6628,9 @@
   "activity": {
     "list": {
       "title": "Aktivitäten"
+    },
+    "view": {
+      "title": "Aktivität anzeigen"
     },
     "field": {
       "empty": "Keine Aktivitäten vorhanden.",
