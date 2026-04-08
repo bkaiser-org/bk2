@@ -226,6 +226,22 @@ ion-modal.stack-modal {
   }
 }
 
+.custom-action-sheet {
+  .action-sheet-divider {
+    height: 4px !important;           // or 1px for thin line
+    background: var(--ion-color-light) !important;
+    pointer-events: none;
+    min-height: 4px !important;
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+
+  .action-sheet-group button.action-sheet-divider {
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+}
+
 ion-popover ion-item {
   --ion-item-background-hover: var(--ion-color-light) !important;
   --ion-item-color-hover: var(--ion-color-primary) !important;
