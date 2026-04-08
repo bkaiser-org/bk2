@@ -8142,6 +8142,7 @@
     "booleanMandatory": "Wert muss ein Boolean sein",
     "numberMandatory": "Wert muss eine Zahl sein",
     "integerMandatory": "Wert muss eine ganze Zahl sein",
+    "streetNameNotNull": "Strassenname ist obligatorisch",
     "stringMandatory": "Wert muss ein String sein",
     "enumValue": "Der Wert muss einer der Enum-Werte sein",
     "validDate": "Das Datum muss ein gültiges Format haben",
