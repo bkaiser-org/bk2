@@ -940,6 +940,14 @@
       "helper": "Das Zeitintervall in Sekunden, z.B. 60 für eine Minute, 3600 für eine Stunde etc.",
       "error": "Es muss eine Ganzzahl aus lauter Ziffern eingegeben werden."
     },
+    "invoiceDate": {
+      "label": "Rechnungsdatum",
+      "placeholder": "dd.mm.yyyy"
+    },
+    "invoiceId": {
+      "label": "Rechnungsnummer",
+      "placeholder": "nnnn"
+    },
     "invoiceDelivery": {
       "label": "Rechnungsversand",
       "placeholder": "zB. Email, InApp, Post",
@@ -1274,6 +1282,10 @@
       "placeholder": "Anzahl und Art Teilnehmer",
       "helper": "Beschreibung der Anzahl und der Art Teilnehmer am Event",
       "error": "Beliebigen Text eingeben."
+    },
+    "paymentDate": {
+      "label": "Bezahlt am",
+      "placeholder": "dd.mm.yyyy"
     },
     "periodicity": {
       "label": "Wiederholung",
@@ -1626,6 +1638,9 @@
     "usageName": {
       "label": "Verwendung deines Namens"
     },
+    "vatType": {
+      "label": "MwSt Art"
+    },
     "addressUsageLabel": {
       "label": "Verwendungsname",
       "placeholder": "z.B. Notfall, Vater, Mutter",
@@ -1854,6 +1869,11 @@
       "maybe": "Teilnahme unsicher",
       "subscribe": "Ich nehme teil",
       "unsubscribe": "Ich kann nicht teilnehmen"
+    },
+    "invoice": {
+      "view": "Rechnung anzeigen",
+      "edit": "Rechnung bearbeiten",
+      "delete": "Rechnung löschen"
     },
     "person": {
       "call": "Person anrufen",
@@ -5173,6 +5193,38 @@
     "plural": "Finanzen",
     "invoice": {
       "name": "Rechnung",
+      "list": {
+        "title": "Rechnungsübersicht"
+      },
+      "field": {
+        "title": {
+          "label": "Betreff"
+        },
+        "invoiceId": {
+          "label": "Rechnungsnummer"
+        },
+        "invoiceDate": {
+          "label": "Rechnungsdatum"
+        },
+        "dueDate": {
+          "label": "Zahlbar bis"
+        },
+        "amount": {
+          "label": "Betrag"
+        },
+        "vatType": {
+          "label": "MwSt Art"
+        },
+        "state": {
+          "label": "Rechnungsstatus"
+        },
+        "paymentDate": {
+          "label": "Bezahlt am"
+        },
+        "notes": {
+          "label": "Notizen"
+        }
+      },
       "state": {
         "name": "Rechnungsstatus",
         "created": {
@@ -6604,6 +6656,7 @@
       },
       "membership": {
         "created": "Mitgliedschaft erstellt",
+        "scsCreated": "SCS Mitgliedschaft erstellt",
         "changed": "Mitgliedschaft geändert",
         "deleted": "Mitgliedschaft beendet"
       },

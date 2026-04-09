@@ -251,6 +251,11 @@ export const appRoutes: Route[] = [
     children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/icon-feature').then(m => m.IconListComponent) }],
   },
   {
+    path: 'invoice',
+    canActivate: [isAuthenticatedGuard],
+    children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/finance-invoice-feature').then(m => m.InvoiceList) }],
+  },
+  {
     path: 'aoc',
     canActivate: [isAdminGuard],
     children: [
