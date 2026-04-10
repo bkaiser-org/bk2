@@ -1873,7 +1873,8 @@
     "invoice": {
       "view": "Rechnung anzeigen",
       "edit": "Rechnung bearbeiten",
-      "delete": "Rechnung löschen"
+      "delete": "Rechnung löschen",
+      "showpdf": "Rechnung download (PDF)"
     },
     "person": {
       "call": "Person anrufen",
@@ -5197,6 +5198,7 @@
         "title": "Rechnungsübersicht"
       },
       "field": {
+        "empty": "Keine Rechnungen gefunden",
         "title": {
           "label": "Betreff"
         },
