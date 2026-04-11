@@ -256,6 +256,11 @@ export const appRoutes: Route[] = [
     children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/finance-invoice-feature').then(m => m.InvoiceList) }],
   },
   {
+    path: 'bill',
+    canActivate: [isAuthenticatedGuard],
+    children: [{ path: ':listId', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/finance-bill-feature').then(m => m.BillList) }],
+  },
+  {
     path: 'aoc',
     canActivate: [isAdminGuard],
     children: [

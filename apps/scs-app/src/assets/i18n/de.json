@@ -1870,6 +1870,10 @@
       "subscribe": "Ich nehme teil",
       "unsubscribe": "Ich kann nicht teilnehmen"
     },
+    "bill": {
+      "view": "Lieferanten-Rechnung anzeigen",
+      "download": "Lieferanten-Rechnung herunterladen (PDF)"
+    },
     "invoice": {
       "view": "Rechnung anzeigen",
       "edit": "Rechnung bearbeiten",
@@ -5192,6 +5196,40 @@
   "finance": {
     "singular": "Finanzielles",
     "plural": "Finanzen",
+    "bill": {
+      "name": "Rechnung",
+      "list": {
+        "title": "Kreditoren-Rechnungen"
+      },
+      "accordion": {
+        "title": "Lieferanten-Rechnungen"
+      },
+      "field": {
+        "billId": {
+          "label": "Rechnungs-Nr."
+        },
+        "title": {
+          "label": "Betreff"
+        },
+        "billDate": {
+          "label": "Rechnungsdatum"
+        },
+        "dueDate": {
+          "label": "zu zahlen bis"
+        },
+        "amount": {
+          "label": "Rechnungsbetrag"
+        },
+        "state": {
+          "label": "Status"
+        }
+      },
+      "operation": {
+        "view": {
+          "label": "Rechnung anzeigen"
+        }
+      }
+    },
     "invoice": {
       "name": "Rechnung",
       "list": {
