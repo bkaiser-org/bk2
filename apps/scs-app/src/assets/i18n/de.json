@@ -326,6 +326,10 @@
       "value": "Accordion-ID (value)",
       "valueHelper": "Die ID des Akkordeons, das aufgeklappt werden soll."
     },
+    "accountId": {
+      "label": "Konto Nr",
+      "placeholder": "nnn"
+    },
     "actionUrl": {
       "label": "Aktions-URL",
       "placeholder": "URL, die bei der Aktion aufgerufen wird.",
@@ -671,6 +675,9 @@
       "helper": "Das Datum, an dem die Resource übertragen wird.",
       "error": "Das Datumsformat ist nicht korrekt."
     },
+    "defaultPosition": {
+      "label": "Rechnungsposition"
+    },
     "delegateValidFrom": {
       "label": "Gültig ab",
       "helper": "Das Startdatum der Stellvertretung.",
@@ -785,6 +792,10 @@
       "placeholder": "Vorname(n)",
       "error": "Es sind nur Buchstaben ohne Sonderzeichen oder Zahlen erlaubt."
     },
+    "footer": {
+      "label": "Fusszeile",
+      "placeholder": "text"
+    },
     "fullPath": {
       "label": "Pfad",
       "placeholder": "relativer Pfad in Firebase Storage",
@@ -826,6 +837,10 @@
       "label": "Gap",
       "placeholder": "nn",
       "helper": "Der Zwischenraum zwischen den Zellen in der Tabelle in Pixel, z.B. 10px"
+    },
+    "header": {
+      "label": "Kopfzeile",
+      "placeholder": "text"
     },
     "padding": {
       "label": "Padding",
@@ -1565,6 +1580,9 @@
       "helper": "Mehrwertsteuer ID (oder Unternehmens-ID UID)",
       "error": "Die MwSt-Nummber besteht aus CHE gefolgt von 9 Ziffern."
     },
+    "template_slug": {
+      "placeholder": "581a8010821e01426b8b456b"
+    },
     "tenants": {
       "label": "Mandanten",
       "placeholder": "id{, id}",
@@ -1576,6 +1594,9 @@
       "placeholder": "Placeholder",
       "helper": "helper text: Ssss",
       "error": "error text: Eingabe muss aus mind. 4 Chars, startend mit S bestehen."
+    },
+    "text": {
+      "placeholder": "sssss"
     },
     "textColor": {
       "label": "Textfarbe",
@@ -1603,6 +1624,10 @@
     },
     "type": {
       "label": "Typ"
+    },
+    "unitPrice": {
+      "label": "Preis",
+      "placeholder": "nnn.nn"
     },
     "unreadCount": {
       "label": "Anzahl ungelesener Nachrichten",
@@ -1877,6 +1902,7 @@
     "invoice": {
       "view": "Rechnung anzeigen",
       "edit": "Rechnung bearbeiten",
+      "create": "Neue Rechnung erstellen",
       "delete": "Rechnung löschen",
       "showpdf": "Rechnung download (PDF)"
     },
@@ -5241,8 +5267,14 @@
         "title": {
           "label": "Betreff"
         },
+        "bexioId": {
+          "label": "BexioID"
+        },
         "invoiceId": {
           "label": "Rechnungsnummer"
+        },
+        "templateSlug": {
+          "label": "Template"
         },
         "invoiceDate": {
           "label": "Rechnungsdatum"
@@ -5264,6 +5296,17 @@
         },
         "notes": {
           "label": "Notizen"
+        },
+        "position": {
+          "text": {
+            "label": "Text"
+          }
+        },
+        "header": {
+          "label": "Kopfzeile"
+        },
+        "footer": {
+          "label": "Fusszeile"
         }
       },
       "state": {
@@ -5302,6 +5345,9 @@
         }
       },
       "operation": {
+        "addPosition": {
+          "label": "Rechnungsposition hinzufügen"
+        },
         "create": {
           "label": "Rechnung hinzufügen",
           "error": "Die Rechnung konnte nicht erstellt werden.",
