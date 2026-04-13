@@ -261,6 +261,11 @@ export const appRoutes: Route[] = [
     children: [{ path: ':listId', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/finance-bill-feature').then(m => m.BillList) }],
   },
   {
+    path: 'journal',
+    canActivate: [isAuthenticatedGuard],
+    loadComponent: () => import('@bk2/finance-journal-feature').then(m => m.JournalList),
+  },
+  {
     path: 'aoc',
     canActivate: [isAdminGuard],
     children: [

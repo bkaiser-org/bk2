@@ -5205,6 +5205,7 @@
         "title": "Lieferanten-Rechnungen"
       },
       "field": {
+        "empty": "Keine Rechnungen gefunden",
         "billId": {
           "label": "Rechnungs-Nr."
         },
@@ -5318,6 +5319,44 @@
         },
         "view": {
           "label": "Rechnung anzeigen"
+        }
+      }
+    },
+    "journal": {
+      "name": "Buchungsjournal",
+      "list": {
+        "title": "Buchungsjournal"
+      },
+      "field": {
+        "empty": "Keine Buchungen gefunden",
+        "date": {
+          "label": "Buchungsdatum"
+        },
+        "title": {
+          "label": "Beschreibung"
+        },
+        "debitAccount": {
+          "label": "Sollkonto"
+        },
+        "creditAccount": {
+          "label": "Habenkonto"
+        },
+        "amount": {
+          "label": "Betrag"
+        },
+        "notes": {
+          "label": "Notizen"
+        }
+      },
+      "operation": {
+        "view": {
+          "label": "Buchung anzeigen"
+        },
+        "showDebitAccount": {
+          "label": "Sollkonto anzeigen"
+        },
+        "showCreditAccount": {
+          "label": "Habenkonto anzeigen"
         }
       }
     },
