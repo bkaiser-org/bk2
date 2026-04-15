@@ -930,11 +930,29 @@
       "helper": "Der Titel des Bildes.",
       "error": "Der Titel des Bildes ist obligatorisch."
     },
+    "imageAltText": {
+      "label": "Alt Text",
+      "placeholder": "text",
+      "helper": "Eine Beschreibung, die z.B. blinden Anwendern hilft zu verstehen, was das Bild zeigt."
+    },
     "imageOverlay": {
       "label": "Bild-Overlay",
       "placeholder": "Text",
       "helper": "Ein Text, der auf dem Bild als Overlay angezeigt werden soll.",
       "error": ""
+    },
+    "imageType": {
+      "label": "Bilder-Typ"
+    },
+    "imageUrl": {
+      "label": "Bild-URL",
+      "placeholder": "storage path",
+      "helper": "Die URL, welche zum Bild zeigt. Normalerweise liegen die Bilder im Storage der App. Die URL ist dann eine relative URL /tenant/scs..."
+    },
+    "imageActionUrl": {
+      "label": "Aktions-URL",
+      "placeholder": "storage path",
+      "helper": "Die URL, welche beim Auslösen einer Aktion benutzt wird. Normalerweise liegen die Bilder im Storage der App. Die URL ist dann eine relative URL /tenant/scs..."
     },
     "imgIxParams": {
       "label": "ImgIX Parameter",
@@ -1364,6 +1382,36 @@
     "content": {
       "label": "HTML-Inhalt",
       "placeholder": "Text des Artikels in HTML Format."
+    },
+    "jb": {
+      "label": "Jahresbeitrag"
+    },
+    "srv": {
+      "label": "SRV-Beitrag"
+    },
+    "rebate": {
+      "label": "Rabatt"
+    },
+    "rebateReason": {
+      "label": "Rabattgrund"
+    },
+    "bev": {
+      "label": "Getränke"
+    },
+    "entryFee": {
+      "label": "Eintrittsgebühr"
+    },
+    "locker": {
+      "label": "Garderobe"
+    },
+    "skiff": {
+      "label": "Skifflagergebühr"
+    },
+    "invoiceState": {
+      "label": "Rechnungs-Status"
+    },
+    "skiffInsurance": {
+      "label": "Skiff Versicherungsanteil"
     },
     "reference": {
       "label": "Referenz",
@@ -1904,7 +1952,9 @@
       "edit": "Rechnung bearbeiten",
       "create": "Neue Rechnung erstellen",
       "delete": "Rechnung löschen",
-      "showpdf": "Rechnung download (PDF)"
+      "showpdf": "Rechnung download (PDF)",
+      "upload": "Zu Bexio senden",
+      "download": "Download PDF"
     },
     "person": {
       "call": "Person anrufen",
@@ -1930,7 +1980,8 @@
     "member": {
       "showDetails": "User-Details anzeigen",
       "kick": "Aus Raum entfernen",
-      "deactivate": "Matrix-User deaktivieren"
+      "deactivate": "Matrix-User deaktivieren",
+      "edit": "Mitglied bearbeiten"
     },
     "message": {
       "view": "Mitteilung anzeigen",
@@ -5403,6 +5454,39 @@
         },
         "showCreditAccount": {
           "label": "Habenkonto anzeigen"
+        }
+      }
+    },
+    "scsMemberFee": {
+      "list": {
+        "title": "Mitgliedergebühren",
+        "empty": "Keine Einträge gefunden"
+      },
+      "field": {
+        "total": {
+          "label": "Total"
+        }
+      },
+      "operation": {
+        "create": {
+          "label": "Rechnung hinzufügen",
+          "error": "Die Rechnung konnte nicht erstellt werden.",
+          "conf": "Die Rechnung wurde erstellt."
+        },
+        "update": {
+          "label": "Rechnung ändern",
+          "error": "Die Aenderungen konnten nicht gespeichert werden",
+          "conf": "Die Aenderungen wurden gespeichert."
+        },
+        "delete": {
+          "label": "Rechnung löschen",
+          "error": "Die Rechnung konnte nicht gelöscht werden",
+          "conf": "Die Rechnung wurde gelöscht"
+        },
+        "generate": {
+          "label": "Rechnungsdaten generieren",
+          "confirm": "ACHTUNG: Alle Rechnungen werden neu generiert. Lokale Aenderungen werden überschrieben. Normalerweise wird diese Operation einmal beim Starten eines Rechnungslaufs ausgeführt. Soll die Operation ausgeführt werden ?",
+          "conf": "Die Rechnungsdaten wurden generiert."
         }
       }
     },
