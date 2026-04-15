@@ -1384,34 +1384,43 @@
       "placeholder": "Text des Artikels in HTML Format."
     },
     "jb": {
-      "label": "Jahresbeitrag"
+      "label": "Jahresbeitrag",
+      "placeholder": "n.nn"
     },
     "srv": {
-      "label": "SRV-Beitrag"
+      "label": "SRV-Beitrag",
+      "placeholder": "n.nn"
     },
     "rebate": {
-      "label": "Rabatt"
+      "label": "Rabatt",
+      "placeholder": "n.nn"
     },
     "rebateReason": {
-      "label": "Rabattgrund"
+      "label": "Rabattgrund",
+      "placeholder": "n.nn"
     },
     "bev": {
-      "label": "Getränke"
+      "label": "Getränke",
+      "placeholder": "n.nn"
     },
     "entryFee": {
-      "label": "Eintrittsgebühr"
+      "label": "Eintrittsgebühr",
+      "placeholder": "n.nn"
     },
     "locker": {
-      "label": "Garderobe"
+      "label": "Garderobe",
+      "placeholder": "n.nn"
     },
     "skiff": {
-      "label": "Skifflagergebühr"
+      "label": "Skifflagergebühr",
+      "placeholder": "n.nn"
     },
     "invoiceState": {
       "label": "Rechnungs-Status"
     },
     "skiffInsurance": {
-      "label": "Skiff Versicherungsanteil"
+      "label": "Skiff Versicherungsanteil",
+      "placeholder": "n.nn"
     },
     "reference": {
       "label": "Referenz",
@@ -5460,11 +5469,36 @@
     "scsMemberFee": {
       "list": {
         "title": "Mitgliedergebühren",
-        "empty": "Keine Einträge gefunden"
+        "empty": "Keine Einträge gefunden",
+        "count": "Anzahl"
       },
       "field": {
         "total": {
           "label": "Total"
+        },
+        "jb": {
+          "label": "Jahresbeitrag"
+        },
+        "srv": {
+          "label": "SRV Beitrag"
+        },
+        "entryFee": {
+          "label": "Eintrittsgebühr"
+        },
+        "locker": {
+          "label": "Garderoben Miete"
+        },
+        "skiff": {
+          "label": "Skiff Lagerplatz Miete"
+        },
+        "skiffInsurance": {
+          "label": "Skiff Versicherungsanteil"
+        },
+        "bev": {
+          "label": "Getränke 2025"
+        },
+        "rebate": {
+          "label": "Rabatt"
         }
       },
       "operation": {
@@ -5487,6 +5521,12 @@
           "label": "Rechnungsdaten generieren",
           "confirm": "ACHTUNG: Alle Rechnungen werden neu generiert. Lokale Aenderungen werden überschrieben. Normalerweise wird diese Operation einmal beim Starten eines Rechnungslaufs ausgeführt. Soll die Operation ausgeführt werden ?",
           "conf": "Die Rechnungsdaten wurden generiert."
+        },
+        "totals": {
+          "label": "Gebühren-Übersicht"
+        },
+        "upload": {
+          "label": "Rechnungsprüfung"
         }
       }
     },
