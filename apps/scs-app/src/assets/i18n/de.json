@@ -5526,7 +5526,11 @@
           "label": "Gebühren-Übersicht"
         },
         "upload": {
-          "label": "Rechnungsprüfung"
+          "label": "Rechnungsprüfung",
+          "conf": "Rechnung wurde zu Bexio hochgeladen."
+        },
+        "download": {
+          "enterInvoiceId": "Rechnungs-ID eingeben:"
         }
       }
     },
