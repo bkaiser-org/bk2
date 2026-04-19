@@ -400,6 +400,9 @@
       "placeholder": "Verwendungsart des Avatars",
       "helper": "Definiere, welches Bild für deinen Avatar verwendet werden soll. Du kannst wählen zwischen einem Avatar (dh. ein Portrait Bild, welches du hochlädst), einem Gravatar (ein Portrait-Fotos, welches du bei gravatar.com für alle Verwendungen deiner Email Adresse hochlädst) oder keinem Foto wählen."
     },
+    "bexioContactFilter": {
+      "label": "Filter"
+    },
     "bexioId": {
       "label": "Bexio ID",
       "placeholder": "nnnnnn",
@@ -1297,6 +1300,10 @@
       "label": "Typ",
       "helper": "Die Art der Seite, z.B. Info, Event, etc."
     },
+    "parentId": {
+      "label": "Hauptkonto",
+      "placeholder": "nnnn"
+    },
     "password": {
       "label": "Passwort",
       "placeholder": "Passwort",
@@ -1856,7 +1863,10 @@
     "account": {
       "copyemail": "LoginEmail kopieren",
       "copyuid": "Firebase UID kopieren",
-      "copypkey": "Person ID kopieren"
+      "copypkey": "Person ID kopieren",
+      "edit": "Konto bearbeiten",
+      "add": "Konto hinzufügen",
+      "delete": "Konto löschen"
     },
     "activity": {
       "view": "Aktivität anzeigen",
@@ -5282,6 +5292,67 @@
   "finance": {
     "singular": "Finanzielles",
     "plural": "Finanzen",
+    "account": {
+      "name": "Konto",
+      "list": {
+        "title": "Kontoplan",
+        "header": {
+          "id": "Konto Nr",
+          "name": "Konto Name"
+        }
+      },
+      "field": {
+        "empty": "Keine Konti gefunden.",
+        "selectRoot": "Kontoplan wählen",
+        "selectRootHint": "Bitte zuerst einen Kontoplan wählen."
+      },
+      "type": {
+        "bank": {
+          "label": "Bank Konto"
+        },
+        "user": {
+          "label": "Benutzer Konto"
+        },
+        "twint": {
+          "label": "Twint Konto"
+        },
+        "paypal": {
+          "label": "Paypal Konto"
+        },
+        "root": {
+          "label": "Wurzelkonto"
+        },
+        "group": {
+           "label": "Gruppenkonto"
+        },
+        "leaf": {
+          "label": "Endkonto"
+        },
+        "other": {
+          "label": "Eigenes Konto"
+        }
+      },
+      "operation": {
+       "create": {
+          "label": "Konto hinzufügen",
+          "error": "Das Konto konnte nicht erstellt werden.",
+          "conf": "Das Konto wurde erstellt."
+        },
+        "update": {
+          "label": "Konto ändern",
+          "error": "Die Aenderungen konnten nicht gespeichert werden",
+          "conf": "Die Aenderungen wurden gespeichert."
+        },
+        "delete": {
+          "label": "Konto löschen",
+          "error": "Das Konto konnte nicht gelöscht werden",
+          "conf": "Das Konto wurde gelöscht"
+        },
+        "view": {
+          "label": "Konto anzeigen"
+        }
+      }
+    },
     "bill": {
       "name": "Rechnung",
       "list": {
