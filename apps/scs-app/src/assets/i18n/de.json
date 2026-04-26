@@ -1558,6 +1558,9 @@
     "srvEmail": {
       "label": "Willst du die SRV News erhalten ?"
     },
+    "srvFilter": {
+      "label": "Filter"
+    },
     "ssnId": {
       "label": "AHV-Nummer",
       "placeholder": "756.xxxx.xxxx.xc",
@@ -1973,7 +1976,13 @@
       "delete": "Rechnung löschen",
       "showpdf": "Rechnung download (PDF)",
       "upload": "Zu Bexio senden",
-      "download": "Download PDF"
+      "download": "Download PDF",
+      "paid": "Bezahlt"
+    },
+    "journal": {
+      "view": "Journal anzeigen",
+      "showDebitAccount": "Soll Konto anzeigen",
+      "showCreditAccount": "Haben Konto anzeigen"
     },
     "person": {
       "call": "Person anrufen",
@@ -2043,6 +2052,11 @@
       "delete": "Webseite löschen",
       "removesection": "Sektion entfernen"
     },
+    "regasoft": {
+      "view": "Datenabgleich anzeigen",
+      "add": "Regasoft hinzufügen",
+      "update": "Regasoft aktualisieren"
+    },
     "section": {
       "edit": "Sektion bearbeiten",
       "delete": "Sektion löschen",
@@ -2069,6 +2083,10 @@
       "showRevisions": "Versionsverlauf anzeigen",
       "create": "DB-Eintrag erstellen"
     },
+    "license": {
+      "create": "Lizenz speichern",
+      "download": "Lizenz-Photo herunterladen"
+    },
     "location": {
       "view": "Standortdaten anzeigen",
       "edit": "Standort bearbeiten",
@@ -2083,7 +2101,11 @@
       "end": "Mitgliedschaft beenden",
       "changecat": "Mitgliederkategorie ändern",
       "invite": "Zum Gruppenchat einladen",
-      "chat": "Direkt-Chat"
+      "chat": "Direkt-Chat",
+      "create": "Mitgliedschaft erstellen"
+    },
+    "parentMembership": {
+      "edit": "Verbands-Mitgliedschaft bearbeiten"
     },
     "ownership": {
       "view": "Nutzung anzeigen",
@@ -3191,6 +3213,12 @@
           }
         }
       },
+      "legaldoc": {
+        "label": "Ausweis",
+        "title": "Ausweise",
+        "formTitle": "",
+        "description": "Eine Bestätigung in Form eines offiziellen Dokumentes."
+      },
       "rboat": {
         "label": "Ruderboot",
         "title": "Ruderboote",
@@ -3751,6 +3779,54 @@
         },
         "view": {
           "label": "Immobilie anzeigen"
+        }
+      }
+    },
+    "legaldoc": {
+      "type": {
+        "license": {
+          "label": "Lizenz",
+          "description": "Ein Nutzungsrecht"
+        },
+        "permit": {
+          "label": "Erlaubnis",
+          "description": "Die Erlaubnis einer autorisierten Partei, dass die betroffene Partei etwas tun darf."
+        },
+        "certification": {
+          "label": "Zertifikat",
+          "description": "Eine schriftliche Bestätigung einer autorisierten Partei."
+        },
+        "passport": {
+          "label": "Pass",
+          "description": "Ausweis in Form eines Reisepasses"
+        },
+        "idcard": {
+          "label": "ID",
+          "description": "Ausweis in Form einer Identitätskarte"
+        },
+        "confirmation": {
+          "label": "Bestätigung",
+          "description": "Ein von einer autorisierten Partei herausgegebenes schriftliches Dokument, das für die Korrektheit und Existenz eines Fakts bürgt."
+        },
+        "diploma": {
+          "label": "Diplom",
+          "description": "Eine Bestätigung für einen Ausbildungs-Abschluss."
+        },
+        "contract": {
+          "label": "Vertrag",
+          "description": "Eine Vereinbarung zwischen mind. 2 Parteien."
+        },
+        "visa": {
+          "label": "Visum",
+          "description": "z.B. ein Reise-Visum für die Einreise in ein bestimmtes Land"
+        },
+        "policy": {
+          "label": "Police",
+          "description": "zB eine Versicherungspolice"
+        },
+        "other": {
+          "label": "Andere",
+          "description": "Eine andere Form eines Rechts-Dokumentes."
         }
       }
     },
@@ -7112,6 +7188,15 @@
         "label": "Junioren-Eintritte prüfen",
         "button": "Prüfen",
         "description": "Die unten aufgelisteten Mitglieder sind in der Datenbank mit Eintritt als Aktivmitglied geführt, sie sollten anfänglich auf Jugendliche umgeteilt werden."
+      }
+    },
+    "srv": {
+      "title": "Verwaltung der SRV / Regasoft Integration",
+      "index": {
+        "title": "SRV Mitglieder synchronisieren",
+        "subtitle": "Vergleicht die aktuellen SRV-Mitgliedschaften (orgKey=srv) mit den Mitgliedern im Regasoft-Portal. Primärer Abgleich via memberId = serviceId, Fallback via Name.",
+        "button": "Index aufbauen",
+        "reset": "Index zurücksetzen"
       }
     },
     "bexio": {
