@@ -1,0 +1,34 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:4201",
+      "localStorage": [
+        {
+          "name": "firebase:authUser:AIzaSyCrHhhgiAb-QYLbbjmSG4Fo9IdeRrt0Bz4:[DEFAULT]",
+          "value": "{\"uid\":\"owner_test\",\"email\":\"bruno@test.ch\",\"emailVerified\":true,\"displayName\":\"bruno@test\",\"isAnonymous\":false,\"providerData\":[{\"providerId\":\"password\",\"uid\":\"bruno@test.ch\",\"displayName\":\"bruno@test\",\"email\":\"bruno@test.ch\",\"phoneNumber\":null,\"photoURL\":null}],\"stsTokenManager\":{\"refreshToken\":\"AMf-vBwDD3acd4SAGud7eG0w0MUBq0sHpTPc5psisfG936s3wsVeBDzthbMPLZOgJaRWKJsFGMkeQU8K1pQ6e70ia78GlyF3rx0yMB4Xlyk3BdNQvk5ZfE6qix7ty3HF4JGe2xzU6UJcYrSZpgw8sK5ubCjzz6TnIE8Fz3SS508iGhUiIWXNovUXlfTVas_WiA82Jc2U-oVO\",\"accessToken\":\"eyJhbGciOiJSUzI1NiIsImtpZCI6IjJiMzZhYjQxYTczOTJlMTRlNjM1ZmRlM2M2YWYwOWZlYmFhM2YyZDYiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiYnJ1bm9AdGVzdCIsImFkbWluIjp0cnVlLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYmthaXNlci1vcmciLCJhdWQiOiJia2Fpc2VyLW9yZyIsImF1dGhfdGltZSI6MTc3NzI5MjI0NiwidXNlcl9pZCI6Im93bmVyX3Rlc3QiLCJzdWIiOiJvd25lcl90ZXN0IiwiaWF0IjoxNzc3MjkyMjQ2LCJleHAiOjE3NzcyOTU4NDYsImVtYWlsIjoiYnJ1bm9AdGVzdC5jaCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImJydW5vQHRlc3QuY2giXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.MFHp72-U7JigrETuVCyN369CjuaKSCP3i-xbr0HPUljkosGRZfZbwEr2M1xzl910VyqgpUFZB7tkIkGr3gYiUCEc65xOw48BKhEL9hVOeYyO5h2-7uBUaHr4fkt4dyRHnC5mS6JqiSBGYuHFg02W1HH6vlpp_BZDdCg0dBB-tfLxFydKWgT7eH5h83XlJ2Pw1ZXC7tgG_FthN1D4eu7dhRENJs18UvNzEM5L92eNAsey3uc8y28AIgAPPPiIfeoBkG8VjANasrdflqzrrw2Hm5Hy_2OnzQpEQks_anwL5E13VDWoIyP0iOv3CHC_Zp6xUPW1-YBktplR_HBNC5pNpw\",\"expirationTime\":1777295846157},\"createdAt\":\"1750709740341\",\"lastLoginAt\":\"1777292246109\",\"apiKey\":\"AIzaSyCrHhhgiAb-QYLbbjmSG4Fo9IdeRrt0Bz4\",\"appName\":\"[DEFAULT]\"}"
+        },
+        {
+          "name": "matrix_access_token",
+          "value": "syt_ZGVxc2h0cTZpZzV4bjJ5ZHRrcHQ_SNSXnpMmXHxzdyksNIJN_3rLYN5"
+        },
+        {
+          "name": "matrix_user_id",
+          "value": "@deqshtq6ig5xn2ydtkpt:bkchat.etke.host"
+        },
+        {
+          "name": "matrix_device_id",
+          "value": "firebase_owner_test"
+        },
+        {
+          "name": "matrix_homeserver",
+          "value": "https://matrix.bkchat.etke.host"
+        },
+        {
+          "name": "mxjssdk_memory_filter_FILTER_SYNC_@deqshtq6ig5xn2ydtkpt:bkchat.etke.host",
+          "value": "0"
+        }
+      ]
+    }
+  ]
+}
