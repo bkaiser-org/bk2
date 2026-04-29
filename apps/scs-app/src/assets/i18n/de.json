@@ -2055,7 +2055,8 @@
     "regasoft": {
       "view": "Datenabgleich anzeigen",
       "add": "Regasoft hinzufügen",
-      "update": "Regasoft aktualisieren"
+      "update": "Regasoft aktualisieren",
+      "copy": "SRV ID kopieren"
     },
     "section": {
       "edit": "Sektion bearbeiten",
@@ -2105,7 +2106,8 @@
       "create": "Mitgliedschaft erstellen"
     },
     "parentMembership": {
-      "edit": "Verbands-Mitgliedschaft bearbeiten"
+      "edit": "Verbands-Mitgliedschaft bearbeiten",
+      "create": "Verbands-Mitgliedschaft erstellen"
     },
     "ownership": {
       "view": "Nutzung anzeigen",

@@ -4,7 +4,6 @@ import { appConfig } from './app/app.config';
 import { getApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaEnterpriseProvider, getToken } from 'firebase/app-check';
 import { environment } from './environments/environment';
-import { isDevMode } from '@angular/core';
 
 // Initialize App Check and wait for token BEFORE bootstrapping the app
 async function initializeApp() {
