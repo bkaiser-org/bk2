@@ -2547,16 +2547,15 @@
     },
     "survey": {
       "title": "Umfrage erstellen",
-      "kind": "Abstimmungsart",
-      "open": "Offene Umfrage",
-      "closed": "Geheime Umfrage",
-      "openDescription": "Abstimmende können die Ergebnisse nach Stimmabgabe sehen",
-      "closedDescription": "Die Ergebnisse werden erst nach Abschluss der Umfrage sichtbar",
       "questionLabel": "Frage oder Thema",
       "questionPlaceholder": "Schreibe etwas ...",
       "answers": "Antwortmöglichkeiten erstellen",
       "addAnswer": "Antwortmöglichkeit verfassen",
-      "create": "Umfrage erstellen"
+      "create": "Umfrage erstellen",
+      "totalVotes": "Stimmen gesamt",
+      "voted": "Du hast abgestimmt",
+      "ended": "Umfrage beendet",
+      "end": "Umfrage beenden"
     },
     "fields": {
       "selectRoom": "Wähle einen Chat-Raum, um den Chat zu starten",
