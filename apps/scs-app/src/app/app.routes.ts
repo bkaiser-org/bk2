@@ -11,6 +11,16 @@ export const appRoutes: Route[] = [
   {
     path: 'public',
     children: [
+      {
+        path: 'calendar',
+        loadComponent: () => import('@bk2/calevent-feature').then(m => m.CalEventListComponent),
+        data: { view: 'list', showMenu: false }
+      },
+      { 
+        path: 'news', 
+        loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageDispatcher),
+        data: { id: 'news', showMenu: false }
+      },
       { 
         path: ':id/:contextMenuName', 
         loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageDispatcher),
@@ -20,7 +30,7 @@ export const appRoutes: Route[] = [
         path: ':id', 
         loadComponent: () => import('@bk2/cms-page-feature').then(m => m.PageDispatcher),
         data: { color: 'secondary' }
-      }
+      },
     ],
   },
   {
@@ -220,7 +230,7 @@ export const appRoutes: Route[] = [
       path: ':listId/:contextMenuName', 
       canActivate: [isPrivilegedGuard], 
       loadComponent: () => import('@bk2/calevent-feature').then(m => m.CalEventListComponent),
-      data: { color: 'secondary', view: 'grid', showMainMenu: true }
+      data: { color: 'secondary', view: 'grid', showMenu: true }
     }],
   },
   {
@@ -230,7 +240,7 @@ export const appRoutes: Route[] = [
       { path: ':listId/:contextMenuName', 
         canActivate: [isPrivilegedGuard],
         loadComponent: () => import('@bk2/document-feature').then(m => m.DocumentListComponent),
-        data: { color: 'secondary', view: 'list', showMainMenu: true }
+        data: { color: 'secondary', view: 'list', showMenu: true }
       },
       { path: ':documentKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/document-feature').then(m => m.DocumentEditPageComponent) }
     ],
