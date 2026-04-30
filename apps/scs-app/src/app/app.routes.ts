@@ -14,7 +14,7 @@ export const appRoutes: Route[] = [
       {
         path: 'calendar',
         loadComponent: () => import('@bk2/calevent-feature').then(m => m.CalEventListComponent),
-        data: { view: 'list', showMenu: false }
+        data: { listId: 'public', view: 'list', showMenu: false }
       },
       { 
         path: 'news', 
