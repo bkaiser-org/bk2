@@ -1,6 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
+import { filter, map, startWith } from 'rxjs/operators';
 import { IonApp, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonMenu, IonRouterOutlet, IonSplitPane, IonToolbar } from '@ionic/angular/standalone';
 
 import { AuthInfoComponent } from '@bk2/auth-ui';
@@ -128,8 +129,31 @@ import { coerceBoolean, getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-u
 export class AppComponent {
   protected appStore = inject(AppStore);
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly queryParamMap = toSignal(this.route.queryParamMap);
-  protected readonly showMenu = computed(() => coerceBoolean(this.queryParamMap()?.get('showMenu') ?? 'true'));
+  private readonly showMenuFromRoute = toSignal(
+    this.router.events.pipe(
+      filter(e => e instanceof NavigationEnd),
+      startWith(null),
+      map(() => this.findRouteData('showMenu'))
+    ),
+    { initialValue: undefined as boolean | undefined }
+  );
+  protected readonly showMenu = computed(() => {
+    const qp = this.queryParamMap()?.get('showMenu');
+    if (qp != null) return coerceBoolean(qp);
+    return this.showMenuFromRoute() ?? true;
+  });
+
+  private findRouteData(key: string): boolean | undefined {
+    let snapshot: ActivatedRouteSnapshot | null = this.router.routerState.snapshot.root;
+    let result: boolean | undefined;
+    while (snapshot) {
+      if (snapshot.data?.[key] !== undefined) result = coerceBoolean(snapshot.data[key]);
+      snapshot = snapshot.firstChild;
+    }
+    return result;
+  }
 
   protected showDebugInfo = computed(() => this.appStore.showDebugInfo());
   protected mainMenuName = computed(() => `main_${this.appStore.tenantId()}`);
