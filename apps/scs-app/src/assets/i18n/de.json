@@ -6075,7 +6075,8 @@
       "create": {
         "label": "Mitgliedschaft hinzufügen",
         "error": "Die Mitgliedschaft konnte nicht erstellt werden.",
-        "conf": "Die Mitgliedschaft wurde erstellt."
+        "conf": "Die Mitgliedschaft wurde erstellt.",
+        "alreadyMember": "Dieses Mitglied ist bereits vorhanden."
       },
       "createMember": {
         "label": "Mitglied hinzufügen",
