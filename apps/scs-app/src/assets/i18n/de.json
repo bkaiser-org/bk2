@@ -497,9 +497,9 @@
       "helper": "Call: ein Click auf den Button navigiert zu der URL. \nDownload: ein Click auf den Button startet den Download der Datei"
     },
     "calendarName": {
-      "label": "Kalendername",
+      "label": "Kalender",
       "placeholder": "Name des Kalenders",
-      "description": "Die ID des Kalenders, indem das Ereignis eingetragen wird.",
+      "description": "In diesen Kalendern wird das Ereignis eingetragen.",
       "error": "Bitte einen anderen Namen wählen.",
       "addLabel": "Kalendername hinzufügen",
       "select": "Kalender wählen"
@@ -2037,7 +2037,7 @@
     "group": {
       "view": "Gruppenkonfiguration anzeigen",
       "show": "Gruppe anzeigen",
-      "edit": "Gruppe bearbeiten",
+      "edit": "Gruppe konfigurieren",
       "delete": "Gruppe löschen",
       "addPage": "Webseite hinzufügen"
     },
