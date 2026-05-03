@@ -717,6 +717,12 @@
       "label": "Angezeigter Name",
       "placeholder": "ssssssss"
     },
+    "distance": {
+      "label": "Distanz",
+      "placeholder": "n[nnnnn]",
+      "helper": "Die Distanz (normalerweise in km) von einem gegebenen Punkt",
+      "error": "Die Distanz muss eine Ganzzahl aus bis zu 6 Ziffern sein."
+    },
     "dueDate": {
       "label": "Fällig am",
       "placeholder": "tt.mm.jjjj",
