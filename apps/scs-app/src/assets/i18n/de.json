@@ -4905,6 +4905,11 @@
         "description": "Video, Audio, Graphics, Comics, Visual, Illustration, Design, Icon, Font."
       }
     },
+    "revision": {
+      "list": {
+        "title": "Versionsverlauf"
+      }
+    },
     "source": {
       "name": "Dokumentenherkunft",
       "all": {
