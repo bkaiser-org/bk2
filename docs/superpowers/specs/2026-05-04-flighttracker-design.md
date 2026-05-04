@@ -39,8 +39,14 @@ interface FlightInfoRequest {
 
 **Processing:**
 1. Call `https://api.aviationstack.com/v1/flights?access_key=KEY&flight_iata={flightNumber}&flight_date={date}`
-2. If a result is found, call `/v1/airports?access_key=KEY&search={departureIata}` and `/v1/airports?access_key=KEY&search={arrivalIata}` in parallel to resolve airport coordinates
+2. For each airport IATA (departure + arrival), resolve coordinates using a **Firestore-first cache**:
+   - Read `locations/{IATA}` from Firestore Admin SDK
+   - If the document exists and has `type = 'airport'`: use its `latitude`/`longitude` directly
+   - If not found: call `/v1/airports?access_key=KEY&search={IATA}`, then write the result to `locations/{IATA}` with `type = 'airport'`, `tenants: ['_global']`, `name = airport name`, `latitude`, `longitude` (stripping `bkey` before write, per project convention)
+   - Both airports are resolved in parallel (`Promise.all`)
 3. Assemble and return `FlightInfoResponse`
+
+This means the aviationstack airports endpoint is only called once per IATA code, ever. Subsequent flight searches reuse the cached Firestore document.
 
 **Output:**
 ```ts
