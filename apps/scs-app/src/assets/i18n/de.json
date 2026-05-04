@@ -5832,6 +5832,10 @@
         "label": "Geomarker",
         "description": "Ort ist ein pin auf einer Karte."
       },
+      "airport": {
+        "label": "Flughafen",
+        "description": "Internationale Flughäfen für Flighttracking."
+      },
       "other": {
         "label": "Anderer Ort",
         "description": "Ort repräsentatiert eine andere Orts-Information."
