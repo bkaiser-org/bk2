@@ -219,6 +219,12 @@ export const appRoutes: Route[] = [
     children: [{ path: ':listId/:contextMenuName', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/location-feature').then(m => m.LocationListComponent) }],
   },
   {
+    path: 'flighttracker',
+    canActivate: [isAuthenticatedGuard],
+    loadComponent: () =>
+      import('@bk2/flighttracker-feature').then(m => m.FlightTrackerSearchComponent),
+  },
+  {
     path: 'yearlyevents',
     canActivate: [isAuthenticatedGuard],
     children: [{ path: ':listId/:contextMenuName', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/calevent-feature').then(m => m.YearlyEventsComponent) }],

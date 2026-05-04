@@ -2100,7 +2100,8 @@
       "edit": "Standort bearbeiten",
       "delete": "Standort löschen",
       "showOnMap": "Standort auf Karte anzeigen",
-      "copy": "Koordinaten kopieren"
+      "copy": "Koordinaten kopieren",
+      "convert": "In alle Geoformate konvertieren"
     },
     "membership": {
       "view": "Mitgliedschaft anzeigen",
@@ -5868,6 +5869,43 @@
       "view": {
         "label": "Ort anzeigen"
       }
+    }
+  },
+  "flighttracker": {
+    "title": "Flugradar",
+    "search": {
+      "placeholder": "Flugnummer (z.B. LX1234)",
+      "button": "Suchen",
+      "prompt": "Flugnummer eingeben und auf Suchen drücken."
+    },
+    "reload": "Aktualisieren",
+    "status": {
+      "active": "Aktiv",
+      "scheduled": "Geplant",
+      "landed": "Gelandet",
+      "cancelled": "Annulliert",
+      "unknown": "Unbekannt"
+    },
+    "detail": {
+      "title": "Flugdetails",
+      "departure": "Abflug",
+      "arrival": "Ankunft",
+      "aircraft": "Flugzeug",
+      "live": "Live Position",
+      "airport": "Flughafen",
+      "terminal": "Terminal",
+      "gate": "Gate",
+      "delay": "Verspätung",
+      "scheduled": "Geplant",
+      "estimated": "Erwartet",
+      "registration": "Kennzeichen",
+      "altitude": "Höhe",
+      "direction": "Kurs",
+      "speed": "Geschwindigkeit"
+    },
+    "error": {
+      "notFound": "Flug nicht gefunden.",
+      "generic": "Fehler beim Abrufen der Flugdaten."
     }
   },
   "competitionLevel": {
