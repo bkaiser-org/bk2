@@ -1,11 +1,10 @@
-import { isPlatformBrowser } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, inject, isDevMode, PLATFORM_ID, provideZonelessChangeDetection } from '@angular/core';
 import { PreloadAllModules, provideRouter, RouteReuseStrategy, withComponentInputBinding, withPreloading } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
 import { ENV } from '@bk2/shared-config';
-import { VersionCheckService } from '@bk2/shared-util-angular';
+import { isBrowser, VersionCheckService } from '@bk2/shared-util-angular';
 import { environment } from '../environments/environment';
 
 import { appRoutes } from './app.routes';
@@ -58,7 +57,7 @@ export const appConfig: ApplicationConfig = {
           // This factory returns a function that runs after the app is bootstrapped.
           // It checks if the platform is a browser and initializes App Check.
           // This is necessary because App Check should only be initialized in the browser environment.
-          if (isPlatformBrowser(platformId)) {
+          if (isBrowser(platformId)) {
             if (isDevMode()) {
               // in development, set the debug token
               // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,11 +1,10 @@
-import { isPlatformBrowser } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, inject, Injector, isDevMode, PLATFORM_ID, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter, RouteReuseStrategy, withComponentInputBinding } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
 import { ENV } from '@bk2/shared-config';
-import { VersionCheckService } from '@bk2/shared-util-angular';
+import { isBrowser, VersionCheckService } from '@bk2/shared-util-angular';
 import { GroupEditModalComponent } from '@bk2/subject-group-feature';
 import { GROUP_EDIT_MODAL } from '@bk2/subject-group-ui';
 import { environment } from '../environments/environment';
@@ -57,7 +56,7 @@ export const appConfig: ApplicationConfig = {
       useFactory: (platformId: object) => {
         const versionCheck = inject(VersionCheckService);
         return () => {
-          if (!isPlatformBrowser(platformId)) return;
+          if (!isBrowser(platformId)) return;
           // AppCheck is initialized in main.ts before bootstrapping — do not re-initialize here.
           versionCheck.checkVersion();
         };
@@ -72,7 +71,7 @@ export const appConfig: ApplicationConfig = {
       provide: APP_BOOTSTRAP_LISTENER,
       useFactory: (platformId: object, injector: Injector) => {
         return () => {
-          if (isPlatformBrowser(platformId)) {
+          if (isBrowser(platformId)) {
             // Skip Matrix init on public routes — matrix-js-sdk is ~700KB and not needed there.
             if (window.location.pathname.startsWith('/public')) return;
             // Delay Matrix init so the app renders and loads critical resources first.
