@@ -162,7 +162,7 @@ import { TranslatePipe } from '@bk2/shared-i18n';
       background: rgba(0, 0, 0, 0.08);
     }
     
-    ion-icon { color: var(--ion-color-dark); }
+    ion-icon { color: var(--ion-color-dark); margin-inline-end: 8px; margin-inline-end: 8px; }
     .letter { color: black; }
     
     @media (prefers-color-scheme: dark) {
@@ -170,7 +170,7 @@ import { TranslatePipe } from '@bk2/shared-i18n';
         background: rgba(255, 255, 255, 0.12);
       }
       
-      ion-icon { color: var(--ion-color-white); }
+      ion-icon { color: var(--ion-color-white); margin-inline-end: 8px; }
       .letter { color: white; }
     }
     
