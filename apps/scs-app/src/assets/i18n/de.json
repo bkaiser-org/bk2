@@ -2,7 +2,8 @@
   "menu": {
     "main": {
       "title": "Hauptmenü",
-      "home": "Dashboard",
+      "home": "Home",
+      "dashboard": "Dashboard",
       "profile": "Profil",
       "userSettings": "Einstellungen",
       "login": "Anmelden",
