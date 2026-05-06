@@ -6,7 +6,7 @@ export const appRoutes: Route[] = [
   { 
     path: '', 
     pathMatch: 'full',
-    redirectTo: 'private/welcome/c-contentpage'
+    redirectTo: 'private/dashboard/c-contentpage'
   },
   {
     path: 'public',
