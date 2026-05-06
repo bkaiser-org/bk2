@@ -118,6 +118,7 @@
         "training": "Trainings-Infos",
         "regattas": "Regatten"
       },
+      "schedule": "Terminabstimmung starten",
       "misc": {
         "title": "Verschiedenes",
         "impressum": "Impressum",
@@ -1923,7 +1924,9 @@
       "invitePerson": "Person einladen",
       "subscribe": "Ich nehme teil",
       "unsubscribe": "Ich kann nicht teilnehmen",
-      "downloadIcs": "ICS download"
+      "downloadIcs": "ICS download",
+      "viewSchedule": "Abstimmung anzeigen",
+      "closeSchedule": "Diesen Termin wählen & Abstimmung schliessen"
     },
     "category": {
       "view": "Kategorie anzeigen",
@@ -6940,6 +6943,21 @@
         "raw": "Rohdaten exportieren"
       }
     }
+  },
+  "schedule": {
+    "title": "Termin finden",
+    "topic": "Thema / Titel",
+    "description": "Beschreibung (optional)",
+    "dates": "Terminvorschläge",
+    "addDate": "+ Termin",
+    "confirmDates": "{{count}} Tage übernehmen",
+    "invite": "Mitglieder einladen",
+    "tableTitle": "Terminabstimmung",
+    "pendingCount": "{{count}} noch nicht geantwortet",
+    "closeTitle": "Abstimmung schliessen",
+    "closeMessage": "{{date}} wird als definitiver Termin gewählt. Alle anderen Vorschläge werden entfernt.",
+    "optionalMessage": "Optionale Nachricht an die Gruppe...",
+    "confirm": "Bestätigen"
   },
   "task": {
     "singular": "Todo",
