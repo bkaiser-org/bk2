@@ -4362,6 +4362,10 @@
           "label": "Content",
           "description": "Eine Content Page kann beliebige Sektionen enthalten. Sie ist die allgemeinste Form einer Page."
         },
+        "people": {
+          "label": "Personen",
+          "description": "Die hier aufgeführten Personen werden in der Sektion als Avatar angezeigt."
+        },
         "dashboard": {
           "label": "Dashboard",
           "description": "Das Dashboard gibt eine personalisierte Übersicht über aktuellste Neuigkeiten, unbeantwortete Chat Messages, offene Aufgaben und nächste Termine."
