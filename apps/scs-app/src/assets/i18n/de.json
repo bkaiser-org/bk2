@@ -1914,7 +1914,8 @@
       "web": {
         "open": "Webseite öffnen",
         "copy": "URL kopieren"
-      }
+      },
+      "hide": "Ausblenden"
     },
     "calevent": {
       "view": "Ereignis anzeigen",
@@ -6161,6 +6162,11 @@
       },
       "copyEmail": {
         "conf": "Emails wurden ins Clipboard kopiert."
+      },
+      "emailAddresses": {
+        "title": "E-Mail Adressen",
+        "copy": "Kopieren",
+        "empty": "Keine E-Mail Adressen"
       },
       "catChange": {
         "label": "Mitglieder-Kategorie ändern",
