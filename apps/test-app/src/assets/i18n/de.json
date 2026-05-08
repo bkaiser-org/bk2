@@ -1636,6 +1636,10 @@
       },
       "hide": "Ausblenden"
     },
+    "poll": {
+      "end": "Umfrage beenden",
+      "viewVotes": "Stimmen ansehen"
+    },
     "calevent": {
       "view": "Ereignis anzeigen",
       "edit": "Ereignis bearbeiten",
@@ -1785,6 +1789,9 @@
     }
   },
   "checkbox": {
+    "allowMultipleAnswers": {
+      "label": "Erlaube mehrere Antworten"
+    },
     "autostart": {
       "label": "Autostart",
       "helperText": "Das Video startet automatisch, sobald die Seite geladen wird."
