@@ -1335,6 +1335,10 @@
       "label": "Bezahlt am",
       "placeholder": "dd.mm.yyyy"
     },
+    "peopleType": {
+      "label": "Quelle der Personen",
+      "helper": "persons = explizite Personen-Selektion\ngroup = Mitglieder einer Gruppe\nresponsibility: verantwortliche Person"
+    },
     "periodicity": {
       "label": "Wiederholung",
       "helper": "Wie oft wird das Ereignis wiederholt, z.B. täglich, wöchentlich, monatlich etc."
@@ -4541,6 +4545,10 @@
         "people": {
           "label": "Personen",
           "addLabel": "Person auswählen",
+          "select": {
+            "group": "Gruppe auswählen",
+            "responsibility": "Verantwortliche wählen"
+          },
           "edit": "Personen Konfiguration ändern",
           "editorLabel": "Optionale Beschreibung",
           "configLabel": "Avatar Konfiguration",
