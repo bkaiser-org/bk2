@@ -16,9 +16,13 @@ const messaging = firebase.messaging();
 messaging.onBackgroundMessage(payload => {
   console.log('[firebase-messaging-sw.js] Received background message:', payload);
 
-  // Set the app icon badge (PWA Badging API — supported on iOS 16.4+ and Android Chrome)
+  // Set the app icon badge (PWA Badging API — supported on iOS 16.4+ and Android Chrome).
+  // badgeCount is sent by the Cloud Function as the total number of pending items
+  // (unread chat messages + open tasks, etc.). Falls back to 1 if not provided.
   if (self.navigator?.setAppBadge) {
-    self.navigator.setAppBadge(1).catch(() => {});
+    const raw = payload.data?.badgeCount;
+    const count = raw !== undefined ? Math.max(1, parseInt(raw, 10) || 1) : 1;
+    self.navigator.setAppBadge(count).catch(() => {});
   }
 
   // Title and body come from data (data-only message) or fall back to notification field

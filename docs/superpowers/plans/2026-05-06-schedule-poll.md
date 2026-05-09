@@ -307,7 +307,7 @@
           @for (date of selectedDates(); track date) {
             <ion-chip (click)="removeDate(date)">
               {{ formatDate(date) }}
-              <ion-icon src="{{ 'close-circle' | svgIcon }}" />
+              <ion-icon src="{{ 'cancel-circle' | svgIcon }}" />
             </ion-chip>
           }
           <ion-chip id="open-date-picker" color="primary" outline>
