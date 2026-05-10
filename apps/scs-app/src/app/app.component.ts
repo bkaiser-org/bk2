@@ -2,12 +2,12 @@ import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { filter, map, startWith } from 'rxjs/operators';
-import { IonApp, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonMenu, IonRouterOutlet, IonSplitPane, IonToolbar } from '@ionic/angular/standalone';
+import { IonApp, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonMenu, IonRouterOutlet, IonSplitPane, IonToolbar, ModalController } from '@ionic/angular/standalone';
 
 import { AuthInfoComponent } from '@bk2/auth-ui';
 import { MenuComponent } from '@bk2/cms-menu-feature';
 import { AppStore } from '@bk2/shared-feature';
-import { RoleName } from '@bk2/shared-models';
+import { PersonModelName, RoleName } from '@bk2/shared-models';
 import { ConnectionStatusButtonComponent, SpinnerComponent, AvatarUserComponent } from '@bk2/shared-ui';
 import { coerceBoolean, getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
 
@@ -97,7 +97,7 @@ import { coerceBoolean, getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-u
               <ion-item lines="none" color="secondary">
                 <ion-label>{{ appStore.appConfig().appName }}</ion-label>
               </ion-item>
-              <ion-buttons slot="end"><bk-avatar-user [currentUser]="appStore.currentUser()" /></ion-buttons>
+              <ion-buttons slot="end"><bk-avatar-user [currentUser]="appStore.currentUser()" (profileClicked)="openPersonProfile()" /></ion-buttons>
             </ion-toolbar>
           </ion-header>
           <ion-content>
@@ -128,6 +128,7 @@ import { coerceBoolean, getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-u
 })
 export class AppComponent {
   protected appStore = inject(AppStore);
+  private readonly modalController = inject(ModalController);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly queryParamMap = toSignal(this.route.queryParamMap);
@@ -180,5 +181,24 @@ export class AppComponent {
 
   protected hasRole(role: RoleName | undefined): boolean {
     return hasRole(role, this.appStore.currentUser());
+  }
+
+  protected async openPersonProfile(): Promise<void> {
+    const person = this.appStore.currentPerson();
+    if (!person) return;
+    const { PersonEditModal } = await import('@bk2/subject-person-feature');
+    const modal = await this.modalController.create({
+      component: PersonEditModal,
+      componentProps: {
+        person,
+        currentUser: this.appStore.currentUser(),
+        tags: this.appStore.getTags(PersonModelName),
+        tenantId: this.appStore.tenantId(),
+        genders: this.appStore.getCategory('gender'),
+        readOnly: false,
+      }
+    });
+    modal.present();
+    await modal.onDidDismiss();
   }
 }

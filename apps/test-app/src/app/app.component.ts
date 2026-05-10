@@ -1,10 +1,10 @@
 import { Component, computed, inject } from '@angular/core';
-import { IonApp, IonButtons, IonContent, IonHeader, IonMenu, IonRouterOutlet, IonSplitPane, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonApp, IonButtons, IonContent, IonHeader, IonMenu, IonRouterOutlet, IonSplitPane, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 
 import { AuthInfoComponent } from '@bk2/auth-ui';
 import { MenuComponent } from '@bk2/cms-menu-feature';
 import { AppStore } from '@bk2/shared-feature';
-import { RoleName } from '@bk2/shared-models';
+import { PersonModelName, RoleName } from '@bk2/shared-models';
 import { ConnectionStatusButtonComponent, SpinnerComponent, AvatarUserComponent } from '@bk2/shared-ui';
 import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
 
@@ -89,7 +89,7 @@ import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
           <ion-header>
             <ion-toolbar color="secondary">
               <ion-buttons slot="start"><bk-connection-status-button /></ion-buttons>
-              <ion-buttons slot="end"><bk-avatar-user [currentUser]="appStore.currentUser()" /></ion-buttons>
+              <ion-buttons slot="end"><bk-avatar-user [currentUser]="appStore.currentUser()" (profileClicked)="openPersonProfile()" /></ion-buttons>
             </ion-toolbar>
           </ion-header>
           <ion-content>
@@ -119,6 +119,7 @@ import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
 })
 export class AppComponent {
   protected appStore = inject(AppStore);
+  private readonly modalController = inject(ModalController);
 
   protected showDebugInfo = computed(() => this.appStore.showDebugInfo());
   protected mainMenuName = computed(() => `main_${this.appStore.tenantId()}`);
@@ -145,5 +146,24 @@ export class AppComponent {
 
   protected hasRole(role: RoleName | undefined): boolean {
     return hasRole(role, this.appStore.currentUser());
+  }
+
+  protected async openPersonProfile(): Promise<void> {
+    const person = this.appStore.currentPerson();
+    if (!person) return;
+    const { PersonEditModal } = await import('@bk2/subject-person-feature');
+    const modal = await this.modalController.create({
+      component: PersonEditModal,
+      componentProps: {
+        person,
+        currentUser: this.appStore.currentUser(),
+        tags: this.appStore.getTags(PersonModelName),
+        tenantId: this.appStore.tenantId(),
+        genders: this.appStore.getCategory('gender'),
+        readOnly: false,
+      }
+    });
+    modal.present();
+    await modal.onDidDismiss();
   }
 }
