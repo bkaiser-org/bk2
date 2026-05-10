@@ -6964,6 +6964,9 @@
         "conf": "Verantwortlichkeit wurde geändert.",
         "error": "Verantwortlichkeit konnte nicht geändert werden."
       },
+      "select": {
+        "label": "Verantwortliche wählen"
+      },
       "delete": {
         "label": "Verantwortlichkeit löschen",
         "conf": "Verantwortlichkeit wurde gelöscht.",
@@ -8762,5 +8765,12 @@
     "urlHost": "Die URL muss einen gültigen Hostnamen haben.",
     "urlNotUndefined": "Die URL muss definiert sein.",
     "urlParts": "Die URL darf keine _ oder . enthalten."
+  },
+  "shared": {
+    "operation": {
+      "select": {
+        "label": "Auswählen"
+      }
+    }
   }
 }
