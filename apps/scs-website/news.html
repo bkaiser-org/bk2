@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News – Seeclub Stäfa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'media', theme: { extend: {
+      colors: { scs: { green: '#009D53', greenDark: '#007a40', blue: '#014da2', blueDark: '#013a7c' } },
+      fontFamily: { sans: ['Inter','system-ui','sans-serif'], display: ['"Plus Jakarta Sans"','Inter','sans-serif'] }
+    }}};
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-200 antialiased">
+
+  <div id="site-header"></div>
+
+  <!-- Hero -->
+  <section class="py-16 md:py-20 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="text-xs font-semibold tracking-wider uppercase text-scs-green" data-i18n="news.kicker">Aktuell</span>
+      <h1 class="font-display text-4xl md:text-5xl font-bold mt-2 mb-3" data-i18n="news.title">News & Erfolge</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl" data-i18n="news.lead">Aktuelles aus dem Vereinsleben, Erfolge an Regatten und Hintergründe zu unseren Projekten.</p>
+    </div>
+  </section>
+
+  <!-- Tag filter -->
+  <div class="sticky top-16 z-30 bg-white/90 dark:bg-slate-950/90 backdrop-blur border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex gap-2 overflow-x-auto scrollbar-hide" id="tag-bar">
+      <button data-tag="" class="tag-btn shrink-0 px-3 py-1 rounded-full text-sm font-medium bg-scs-green text-white" data-i18n="news.allTags">Alle</button>
+    </div>
+  </div>
+
+  <!-- News grid -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div id="news-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      <div id="news-empty" class="hidden py-20 text-center text-slate-500" data-i18n="common.error">Inhalte konnten nicht geladen werden.</div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/shared.js"></script>
+  <script src="assets/api.js"></script>
+  <script>
+    let _allNews = [];
+    let _activeTag = '';
+
+    function newsCard(n) {
+      const img = n.coverImage && n.coverImage.url;
+      const alt = (n.coverImage && scs.localized(n.coverImage.alt)) || '';
+      const tags = (n.tags || []).map(t =>
+        `<span class="px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-xs text-slate-600 dark:text-slate-400">${t}</span>`
+      ).join('');
+      return `
+        <a href="news-artikel.html?slug=${encodeURIComponent(n.slug)}"
+           class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-scs-green hover:shadow-lg transition flex flex-col">
+          ${img
+            ? `<img src="${img}" alt="${alt}" class="w-full h-48 object-cover" loading="lazy">`
+            : `<div class="h-48 bg-gradient-to-br from-scs-green/10 to-scs-blue/10"></div>`}
+          <div class="p-5 flex flex-col flex-1">
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <span class="text-xs font-semibold text-scs-green">${scs.fmtDate(n.date)}</span>
+              ${tags}
+            </div>
+            <h2 class="font-display font-bold text-lg mb-2 group-hover:text-scs-green transition leading-snug">${scs.localized(n.title)}</h2>
+            <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 flex-1">${scs.localized(n.excerpt)}</p>
+            <span class="mt-4 text-sm font-semibold text-scs-green" data-i18n="common.readMore">Weiterlesen →</span>
+          </div>
+        </a>`;
+    }
+
+    function renderGrid() {
+      const filtered = _activeTag
+        ? _allNews.filter(n => (n.tags || []).includes(_activeTag))
+        : _allNews;
+      const grid = document.getElementById('news-grid');
+      const empty = document.getElementById('news-empty');
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+      } else {
+        empty.classList.add('hidden');
+        grid.innerHTML = filtered.map(newsCard).join('');
+      }
+    }
+
+    function buildTagBar() {
+      const tags = [...new Set(_allNews.flatMap(n => n.tags || []))].sort();
+      const bar = document.getElementById('tag-bar');
+      tags.forEach(tag => {
+        const btn = document.createElement('button');
+        btn.dataset.tag = tag;
+        btn.className = 'tag-btn shrink-0 px-3 py-1 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-scs-green hover:text-scs-green transition';
+        btn.textContent = tag;
+        bar.appendChild(btn);
+      });
+      bar.addEventListener('click', e => {
+        const btn = e.target.closest('.tag-btn');
+        if (!btn) return;
+        _activeTag = btn.dataset.tag;
+        bar.querySelectorAll('.tag-btn').forEach(b => {
+          const active = b.dataset.tag === _activeTag;
+          b.className = 'tag-btn shrink-0 px-3 py-1 rounded-full text-sm font-medium transition ' +
+            (active
+              ? 'bg-scs-green text-white'
+              : 'border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-scs-green hover:text-scs-green');
+        });
+        renderGrid();
+      });
+    }
+
+    window.scsPageInit = async () => {
+      _allNews = await SCS_API.news({ format: 'json' });
+      buildTagBar();
+      renderGrid();
+    };
+    window.scsReRender = renderGrid;
+  </script>
+</body>
+</html>

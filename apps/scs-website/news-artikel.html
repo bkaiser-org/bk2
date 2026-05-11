@@ -20,9 +20,26 @@
 
   <div id="site-header"></div>
 
+  <!-- Lightbox -->
+  <div id="lightbox" class="fixed inset-0 z-50 hidden flex-col bg-black/95" role="dialog" aria-modal="true">
+    <div class="flex items-center justify-between px-4 py-2 bg-black text-white shrink-0">
+      <button id="lb-prev" onclick="lbStep(-1)" class="p-2 rounded hover:bg-white/10 disabled:opacity-30 text-2xl leading-none">&#8249;</button>
+      <span id="lb-title" class="text-sm truncate max-w-xs"></span>
+      <div class="flex items-center gap-1">
+        <button id="lb-next" onclick="lbStep(1)" class="p-2 rounded hover:bg-white/10 disabled:opacity-30 text-2xl leading-none">&#8250;</button>
+        <a id="lb-download" href="#" download class="p-2 rounded hover:bg-white/10 text-sm">&#8659;</a>
+        <button onclick="lbClose()" class="p-2 rounded hover:bg-white/10 text-lg leading-none">&#x2715;</button>
+      </div>
+    </div>
+    <div class="flex-1 flex items-center justify-center overflow-hidden">
+      <img id="lb-img" src="" alt="" class="max-w-full max-h-full object-contain" />
+    </div>
+    <div id="lb-dots" class="flex justify-center gap-2 py-3 shrink-0"></div>
+  </div>
+
   <article id="article" class="py-12 md:py-16">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <a href="/public/news" class="inline-flex items-center gap-1 text-sm font-semibold text-scs-green hover:underline mb-6" data-i18n="common.back">← Zurück</a>
+      <a href="news.html" class="inline-flex items-center gap-1 text-sm font-semibold text-scs-green hover:underline mb-6" data-i18n="common.back">← Zurück</a>
       <div id="article-body"></div>
     </div>
   </article>
@@ -64,19 +81,24 @@
         <h1 class="font-display text-3xl md:text-5xl font-bold mb-3 leading-tight">${scs.localized(article.title)}</h1>
         ${article.subTitle ? `<p class="font-display text-xl text-slate-500 dark:text-slate-400 mb-6">${scs.localized(article.subTitle)}</p>` : ''}
         <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">${scs.localized(article.excerpt)}</p>
-        ${cover ? `<img src="${cover.url}" alt="${coverAlt}" class="w-full aspect-[16/9] object-cover rounded-xl mb-8" />` : ''}
+        ${(article.images && article.images.length) ? `
+          <div id="slideshow" class="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-8 bg-slate-100 dark:bg-slate-800">
+            ${article.images.map((img, i) => `
+              <img src="${img.url}" alt="${scs.localized(img.alt) || ''}"
+                   class="slideshow-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-500 cursor-zoom-in ${i === 0 ? 'opacity-100' : 'opacity-0'}"
+                   data-index="${i}" loading="${i === 0 ? 'eager' : 'lazy'}"
+                   onclick="lbOpen(${i})" />`).join('')}
+            ${article.images.length > 1 ? `
+              <button onclick="slideshowStep(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full w-9 h-9 flex items-center justify-center text-lg">&#8249;</button>
+              <button onclick="slideshowStep(1)"  class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full w-9 h-9 flex items-center justify-center text-lg">&#8250;</button>
+              <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                ${article.images.map((_, i) => `<button onclick="slideshowGo(${i})" class="slideshow-dot w-2 h-2 rounded-full ${i === 0 ? 'bg-white' : 'bg-white/40'}" data-index="${i}"></button>`).join('')}
+              </div>` : ''}
+          </div>` : cover ? `<img src="${cover.url}" alt="${coverAlt}" class="w-full aspect-[16/9] object-cover rounded-xl mb-8" />` : ''}
         <div class="prose-scs text-slate-700 dark:text-slate-300">${scs.localized(article.content) || ''}</div>
         ${article.author ? `
           <div class="mt-10 pt-6 border-t border-slate-200 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400">
             <span class="font-semibold">${article.author.name}</span>${article.author.role ? ' · ' + scs.localized(article.author.role) : ''}
-          </div>` : ''}
-        ${(article.images && article.images.length) ? `
-          <div class="mt-10 grid sm:grid-cols-2 gap-4">
-            ${article.images.map(img => `
-              <figure>
-                <img src="${img.url}" alt="${scs.localized(img.alt) || ''}" class="w-full aspect-[4/3] object-cover rounded-lg" loading="lazy" />
-                ${(img.caption || img.credit) ? `<figcaption class="text-xs text-slate-500 mt-1">${scs.localized(img.caption) || ''}${img.credit ? ' · ' + img.credit : ''}</figcaption>` : ''}
-              </figure>`).join('')}
           </div>` : ''}`;
     }
 
@@ -109,6 +131,66 @@
 
     window.scsPageInit = loadAndRender;
     window.scsReRender = loadAndRender;
+
+    // ── Slideshow ──────────────────────────────────────────────
+    let _slideIndex = 0;
+    function slideshowGo(i) {
+      const slides = document.querySelectorAll('.slideshow-slide');
+      const dots   = document.querySelectorAll('.slideshow-dot');
+      if (!slides.length) return;
+      slides[_slideIndex].classList.replace('opacity-100', 'opacity-0');
+      dots[_slideIndex]?.classList.replace('bg-white', 'bg-white/40');
+      _slideIndex = (i + slides.length) % slides.length;
+      slides[_slideIndex].classList.replace('opacity-0', 'opacity-100');
+      dots[_slideIndex]?.classList.replace('bg-white/40', 'bg-white');
+    }
+    function slideshowStep(dir) { slideshowGo(_slideIndex + dir); }
+
+    // ── Lightbox ───────────────────────────────────────────────
+    let _lbImages = [];
+    let _lbIndex  = 0;
+    function lbOpen(i) {
+      const box = document.getElementById('lightbox');
+      const slides = document.querySelectorAll('.slideshow-slide');
+      _lbImages = Array.from(slides).map(el => ({ url: el.src, alt: el.alt }));
+      if (!_lbImages.length) return;
+      box.classList.remove('hidden');
+      box.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      const dots = document.getElementById('lb-dots');
+      dots.innerHTML = _lbImages.length > 1
+        ? _lbImages.map((_, idx) => `<button onclick="lbGo(${idx})" class="lb-dot w-2 h-2 rounded-full transition-colors" data-index="${idx}"></button>`).join('')
+        : '';
+      document.getElementById('lb-prev').style.visibility = _lbImages.length > 1 ? '' : 'hidden';
+      document.getElementById('lb-next').style.visibility = _lbImages.length > 1 ? '' : 'hidden';
+      lbGo(i);
+    }
+    function lbGo(i) {
+      _lbIndex = (i + _lbImages.length) % _lbImages.length;
+      const img = _lbImages[_lbIndex];
+      document.getElementById('lb-img').src = img.url;
+      document.getElementById('lb-img').alt = img.alt;
+      document.getElementById('lb-title').textContent = `${_lbIndex + 1} / ${_lbImages.length}`;
+      document.getElementById('lb-download').href = img.url;
+      document.querySelectorAll('.lb-dot').forEach((d, idx) => {
+        d.className = 'lb-dot w-2 h-2 rounded-full transition-colors ' + (idx === _lbIndex ? 'bg-white' : 'bg-white/40');
+      });
+      document.getElementById('lb-prev').disabled = _lbIndex === 0;
+      document.getElementById('lb-next').disabled = _lbIndex === _lbImages.length - 1;
+    }
+    function lbStep(dir) { lbGo(_lbIndex + dir); }
+    function lbClose() {
+      document.getElementById('lightbox').classList.add('hidden');
+      document.getElementById('lightbox').classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => {
+      const box = document.getElementById('lightbox');
+      if (box?.classList.contains('hidden')) return;
+      if (e.key === 'ArrowLeft')  lbStep(-1);
+      if (e.key === 'ArrowRight') lbStep(1);
+      if (e.key === 'Escape')     lbClose();
+    });
   </script>
 </body>
 </html>

@@ -36,6 +36,7 @@ const SCS_API = {
     const q = new URLSearchParams({ tenantId: SCS_TENANT, ...(params || {}) }).toString();
     return (await this._get('/calendar?' + q)) || SCS_FALLBACK.calendar;
   },
+  async page(pageKey)   { return (await this._get(`/pages/${encodeURIComponent(pageKey)}?tenantId=${SCS_TENANT}`)) || null; },
   async courses()       { return (await this._get(`/courses?tenantId=${SCS_TENANT}`))   || SCS_FALLBACK.courses; },
   async results(params) {
     const q = new URLSearchParams({ tenantId: SCS_TENANT, ...(params || {}) }).toString();

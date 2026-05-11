@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Termine – Seeclub Stäfa</title>
+  <meta name="description" content="Alle Anlässe, Regatten und Vereinstermine des Seeclub Stäfa im Überblick." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'media', theme: { extend: {
+      colors: { scs: { green: '#009D53', greenDark: '#007a40', blue: '#014da2', blueDark: '#013a7c' } },
+      fontFamily: { sans: ['Inter','system-ui','sans-serif'], display: ['"Plus Jakarta Sans"','Inter','sans-serif'] }
+    }}};
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-200 antialiased">
+
+  <div id="site-header"></div>
+
+  <section class="py-16 md:py-20 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="text-xs font-semibold tracking-wider uppercase text-scs-green">Agenda</span>
+      <h1 class="font-display text-4xl md:text-5xl font-bold mt-2 mb-3" data-i18n="calendar.title">Termine</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 max-w-2xl" data-i18n="calendar.lead">Anlässe, Regatten und Vereinstermine im Überblick.</p>
+    </div>
+  </section>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-2">
+    <div class="flex gap-2 flex-wrap" id="filter-tabs">
+      <button data-cat="" class="filter-btn">Alle</button>
+      <button data-cat="regatta" class="filter-btn">Regatten</button>
+      <button data-cat="club" class="filter-btn">Vereinsanlässe</button>
+      <button data-cat="course" class="filter-btn">Kurse</button>
+    </div>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8" id="events-container">
+    <div class="animate-pulse space-y-3">
+      <div class="h-12 bg-slate-100 dark:bg-slate-800 rounded-lg"></div>
+      <div class="h-12 bg-slate-100 dark:bg-slate-800 rounded-lg"></div>
+      <div class="h-12 bg-slate-100 dark:bg-slate-800 rounded-lg"></div>
+    </div>
+  </div>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/shared.js"></script>
+  <script src="assets/api.js"></script>
+  <script>
+    const CAT_STYLE = {
+      regatta: 'bg-scs-blue/10 text-scs-blue dark:bg-blue-950 dark:text-blue-300',
+      club:    'bg-scs-green/10 text-scs-green dark:bg-green-950 dark:text-green-300',
+      course:  'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
+    };
+
+    let _allEvents = [];
+    let _activeFilter = '';
+
+    function renderEvents(events) {
+      const container = document.getElementById('events-container');
+      if (!events.length) {
+        container.innerHTML = `<p class="text-slate-500 py-8 text-center">${scs.t('calendar.empty')}</p>`;
+        return;
+      }
+
+      const grouped = {};
+      for (const ev of events) {
+        const key = ev.date.slice(0, 7);
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(ev);
+      }
+
+      const locale = scs.lang === 'de' ? 'de-CH' : 'en-GB';
+
+      container.innerHTML = Object.entries(grouped).map(([month, evs]) => {
+        const [y, m] = month.split('-');
+        const monthLabel = new Date(+y, +m - 1, 1)
+          .toLocaleString(locale, { month: 'long', year: 'numeric' });
+
+        const rows = evs.map(ev => {
+          const d = new Date(ev.date + 'T12:00:00');
+          const dayName = d.toLocaleString(locale, { weekday: 'short' });
+          const dayNum  = d.getDate();
+          const cat     = ev.category || '';
+          const badge   = CAT_STYLE[cat] || 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400';
+          const catLabel = scs.t('calendar.filter.' + cat) || cat;
+          const timeStr  = ev.time ? (scs.lang === 'de' ? ev.time + ' Uhr' : ev.time) : '';
+
+          const inner = `
+            <div class="flex items-start gap-4 py-4 px-5">
+              <div class="text-center shrink-0 w-11">
+                <div class="text-xs text-slate-400 uppercase">${dayName}</div>
+                <div class="text-2xl font-bold font-display text-scs-blue dark:text-blue-300 leading-none mt-0.5">${dayNum}</div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-start justify-between gap-2 flex-wrap">
+                  <span class="font-semibold leading-snug">${scs.localized(ev.topic)}</span>
+                  <span class="shrink-0 text-xs px-2 py-0.5 rounded-full font-medium ${badge}">${catLabel}</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-0.5 mt-1 text-sm text-slate-500 dark:text-slate-400">
+                  ${timeStr ? `<span>${timeStr}</span>` : ''}
+                  ${ev.location ? `<span>${ev.location}</span>` : ''}
+                </div>
+              </div>
+            </div>`;
+
+          return ev.url
+            ? `<a href="${ev.url}" target="_blank" rel="noopener" class="block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg hover:border-scs-green hover:shadow-sm transition">${inner}</a>`
+            : `<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">${inner}</div>`;
+        }).join('');
+
+        return `
+          <div class="mb-10">
+            <h2 class="font-display font-semibold text-base uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 capitalize">${monthLabel}</h2>
+            <div class="space-y-2">${rows}</div>
+          </div>`;
+      }).join('');
+    }
+
+    function setFilter(cat) {
+      _activeFilter = cat;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        const active = btn.dataset.cat === cat;
+        btn.className = 'filter-btn px-4 py-2 rounded-full text-sm font-semibold border transition ' +
+          (active
+            ? 'bg-scs-green text-white border-scs-green'
+            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:border-scs-green hover:text-scs-green');
+      });
+      renderEvents(cat ? _allEvents.filter(e => e.category === cat) : _allEvents);
+    }
+
+    window.scsPageInit = async () => {
+      _allEvents = await SCS_API.calendar();
+      setFilter('');
+      document.getElementById('filter-tabs').addEventListener('click', e => {
+        const btn = e.target.closest('.filter-btn');
+        if (btn) setFilter(btn.dataset.cat);
+      });
+    };
+    window.scsReRender = () => setFilter(_activeFilter);
+  </script>
+</body>
+</html>
