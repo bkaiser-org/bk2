@@ -43,6 +43,11 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/scs-app/src/assets",
+          {
+            "glob": "**/*",
+            "input": "apps/scs-website",
+            "output": "./web"
+          },
           "apps/scs-app/src/firebase-messaging-sw.js",
           "apps/scs-app/src/firebase-config.js",
           {
