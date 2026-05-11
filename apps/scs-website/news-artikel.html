@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artikel – Seeclub Stäfa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'media', theme: { extend: {
+      colors: { scs: { green: '#009D53', greenDark: '#007a40', blue: '#014da2', blueDark: '#013a7c' } },
+      fontFamily: { sans: ['Inter','system-ui','sans-serif'], display: ['"Plus Jakarta Sans"','Inter','sans-serif'] }
+    }}};
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-200 antialiased">
+
+  <div id="site-header"></div>
+
+  <article id="article" class="py-12 md:py-16">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <a href="news.html" class="inline-flex items-center gap-1 text-sm font-semibold text-scs-green hover:underline mb-6" data-i18n="common.back">← Zurück</a>
+      <div id="article-body"></div>
+    </div>
+  </article>
+
+  <!-- Weitere Artikel -->
+  <section class="py-16 bg-slate-50 dark:bg-slate-900/50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-2xl md:text-3xl font-bold mb-8" data-i18n="news.more">Weitere News</h2>
+      <div id="more-news" class="grid md:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/shared.js"></script>
+  <script src="assets/api.js"></script>
+  <script>
+    Object.assign(scs.i18n.de, { 'news.more': 'Weitere News', 'news.notFound': 'Artikel nicht gefunden.' });
+    Object.assign(scs.i18n.en, { 'news.more': 'More news',   'news.notFound': 'Article not found.' });
+
+    function getSlug() {
+      return new URLSearchParams(location.search).get('slug');
+    }
+
+    function renderArticle(article) {
+      const body = document.getElementById('article-body');
+      if (!article) {
+        body.innerHTML = `<div class="py-20 text-center text-slate-500">${scs.t('news.notFound')}</div>`;
+        return;
+      }
+      document.title = `${scs.localized(article.title)} – Seeclub Stäfa`;
+      const cover = article.coverImage;
+      const coverAlt = (cover && scs.localized(cover.alt)) || '';
+      body.innerHTML = `
+        <div class="flex items-center gap-3 mb-4 text-sm">
+          <span class="font-semibold text-scs-green">${scs.fmtDate(article.date, true)}</span>
+          ${(article.tags || []).map(t => `<span class="px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-xs text-slate-600 dark:text-slate-400">${t}</span>`).join('')}
+        </div>
+        <h1 class="font-display text-3xl md:text-5xl font-bold mb-3 leading-tight">${scs.localized(article.title)}</h1>
+        ${article.subTitle ? `<p class="font-display text-xl text-slate-500 dark:text-slate-400 mb-6">${scs.localized(article.subTitle)}</p>` : ''}
+        <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">${scs.localized(article.excerpt)}</p>
+        ${cover ? `<img src="${cover.url}" alt="${coverAlt}" class="w-full aspect-[16/9] object-cover rounded-xl mb-8" />` : ''}
+        <div class="prose-scs text-slate-700 dark:text-slate-300">${scs.localized(article.content) || ''}</div>
+        ${article.author ? `
+          <div class="mt-10 pt-6 border-t border-slate-200 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400">
+            <span class="font-semibold">${article.author.name}</span>${article.author.role ? ' · ' + scs.localized(article.author.role) : ''}
+          </div>` : ''}
+        ${(article.images && article.images.length) ? `
+          <div class="mt-10 grid sm:grid-cols-2 gap-4">
+            ${article.images.map(img => `
+              <figure>
+                <img src="${img.url}" alt="${scs.localized(img.alt) || ''}" class="w-full aspect-[4/3] object-cover rounded-lg" loading="lazy" />
+                ${(img.caption || img.credit) ? `<figcaption class="text-xs text-slate-500 mt-1">${scs.localized(img.caption) || ''}${img.credit ? ' · ' + img.credit : ''}</figcaption>` : ''}
+              </figure>`).join('')}
+          </div>` : ''}`;
+    }
+
+    async function renderMore(currentSlug) {
+      const list = (await SCS_API.news())
+        .filter(n => n.slug !== currentSlug)
+        .slice(0, 3);
+      const grid = document.getElementById('more-news');
+      grid.innerHTML = list.map(n => {
+        const img = n.coverImage && n.coverImage.url;
+        return `
+        <a href="news-artikel.html?slug=${encodeURIComponent(n.slug)}" class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-scs-green hover:shadow-lg transition block">
+          ${img ? `<img src="${img}" alt="" class="w-full h-40 object-cover" loading="lazy">` : `<div class="h-40 bg-gradient-to-br from-scs-green/10 to-scs-blue/10"></div>`}
+          <div class="p-5">
+            <div class="text-xs font-semibold text-scs-green mb-1">${scs.fmtDate(n.date)}</div>
+            <h3 class="font-display font-bold mb-1 group-hover:text-scs-green transition">${scs.localized(n.title)}</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">${scs.localized(n.excerpt)}</p>
+          </div>
+        </a>`;
+      }).join('');
+    }
+
+    async function loadAndRender() {
+      const slug = getSlug();
+      if (!slug) { renderArticle(null); return; }
+      const article = await SCS_API.newsBySlug(slug);
+      renderArticle(article);
+      renderMore(slug);
+    }
+
+    window.scsPageInit = loadAndRender;
+    window.scsReRender = loadAndRender;
+  </script>
+</body>
+</html>

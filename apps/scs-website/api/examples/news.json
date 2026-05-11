@@ -1,0 +1,80 @@
+[
+  {
+    "slug": "saisonstart-2026",
+    "date": "2026-04-28",
+    "title": {
+      "de": "Erfolgreicher Saisonstart 2026",
+      "en": "Successful start to the 2026 season"
+    },
+    "subTitle": {
+      "de": "Starke Resultate in Sarnen und am Rotsee",
+      "en": "Strong results at Sarnen and the Rotsee"
+    },
+    "excerpt": {
+      "de": "Unsere Athletinnen und Athleten überzeugen mit starken Leistungen an den ersten Frühjahrsregatten.",
+      "en": "Our athletes deliver strong performances at the first spring regattas."
+    },
+    "coverImage": {
+      "url": "https://cdn.seeclub.org/news/saisonstart-2026/cover.jpg",
+      "alt": {
+        "de": "Vierer beim Sonnenaufgang auf dem Zürichsee",
+        "en": "Quad sculls at sunrise on Lake Zürich"
+      },
+      "width": 2048,
+      "height": 1365
+    },
+    "tags": ["regatta", "erfolg"]
+  },
+  {
+    "slug": "bootshaus-update-april-2026",
+    "date": "2026-04-10",
+    "title": {
+      "de": "Neubau Bootshaus – Update April",
+      "en": "New boathouse – April update"
+    },
+    "subTitle": {
+      "de": "Detailprojektierung kurz vor Abschluss",
+      "en": "Detailed planning nearing completion"
+    },
+    "excerpt": {
+      "de": "Das Bauprojekt nimmt Form an. Wir blicken auf den nächsten Meilenstein.",
+      "en": "The construction project is taking shape. A look at the next milestone."
+    },
+    "coverImage": {
+      "url": "https://cdn.seeclub.org/news/bootshaus-update/cover.png",
+      "alt": {
+        "de": "Visualisierung des neuen Bootshauses",
+        "en": "Visualisation of the new boathouse"
+      },
+      "width": 2280,
+      "height": 1380
+    },
+    "tags": ["bootshaus", "projekt"]
+  },
+  {
+    "slug": "einsteigerkurs-anmeldung-offen",
+    "date": "2026-03-22",
+    "title": {
+      "de": "Anmeldung Einsteigerkurs offen",
+      "en": "Beginner course registration open"
+    },
+    "excerpt": {
+      "de": "Die Plätze für den Einsteigerkurs sind ab sofort online buchbar.",
+      "en": "Spots for our beginner course are now bookable online."
+    },
+    "tags": ["kurs", "einstieg"]
+  },
+  {
+    "slug": "jugend-trainingslager-2026",
+    "date": "2026-02-15",
+    "title": {
+      "de": "Jugendabteilung im Trainingslager",
+      "en": "Youth team at training camp"
+    },
+    "excerpt": {
+      "de": "Unsere Jugendlichen verbringen eine intensive Woche am Lago di Caldonazzo.",
+      "en": "Our youth team spends an intensive week at Lago di Caldonazzo."
+    },
+    "tags": ["jugend", "training"]
+  }
+]

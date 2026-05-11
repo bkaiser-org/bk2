@@ -1,0 +1,31 @@
+{
+  "name": "Seeclub Stäfa",
+  "shortName": "SCS",
+  "foundedYear": 1917,
+  "tagline": {
+    "de": "Rudern auf dem Zürichsee seit 1917.",
+    "en": "Rowing on Lake Zürich since 1917."
+  },
+  "description": {
+    "de": "Traditionsreicher Ruderclub am Zürichsee. Wir vereinen Breitensport, ambitionierten Leistungssport und engagierte Jugendförderung unter einem Dach.",
+    "en": "Traditional rowing club on Lake Zürich, uniting recreational rowing, ambitious competitive sport, and dedicated youth development under one roof."
+  },
+  "memberCount": 120,
+  "address": {
+    "street": "Seestrasse 123",
+    "postalCode": "8712",
+    "city": "Stäfa",
+    "country": "CH",
+    "latitude": 47.2386,
+    "longitude": 8.7232
+  },
+  "contact": {
+    "email": "info@seeclub-staefa.ch",
+    "phone": "+41 44 123 45 67"
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/seeclub_staefa/"
+  },
+  "memberLoginUrl": "https://seeclub.org/",
+  "logoUrl": "https://bkaiser.imgix.net/tenant/scs/logo/logo.svg"
+}

@@ -1,0 +1,73 @@
+[
+  {
+    "id": "evt_001",
+    "date": "2026-05-24",
+    "topic": { "de": "Saisoneröffnung", "en": "Season opening" },
+    "location": "Bootshaus Stäfa",
+    "category": "club"
+  },
+  {
+    "id": "evt_002",
+    "date": "2026-06-07",
+    "time": "10:00",
+    "topic": { "de": "Schnuppertag für Einsteiger", "en": "Open day for beginners" },
+    "location": "Bootshaus Stäfa",
+    "category": "course",
+    "description": {
+      "de": "Komm vorbei, probiere das Rudern aus und lerne den Verein kennen.",
+      "en": "Come visit, try rowing, and get to know the club."
+    },
+    "url": "https://seeclub.org/public/calendar/evt_002"
+  },
+  {
+    "id": "evt_003",
+    "date": "2026-06-14",
+    "topic": { "de": "Start Einsteigerkurs", "en": "Beginner course starts" },
+    "location": "Bootshaus Stäfa",
+    "category": "course"
+  },
+  {
+    "id": "evt_004",
+    "date": "2026-06-21",
+    "time": "08:30",
+    "topic": { "de": "Ruderregatta Sarnen", "en": "Regatta Sarnen" },
+    "location": "Sarnersee, Sarnen",
+    "category": "regatta"
+  },
+  {
+    "id": "evt_005",
+    "date": "2026-07-05",
+    "topic": { "de": "Clubrennen", "en": "Club race" },
+    "location": "Zürichsee",
+    "category": "club"
+  },
+  {
+    "id": "evt_006",
+    "date": "2026-08-23",
+    "topic": { "de": "Seeclub-Regatta Zürich", "en": "Seeclub regatta Zürich" },
+    "location": "Zürichsee",
+    "category": "regatta"
+  },
+  {
+    "id": "evt_007",
+    "date": "2026-09-13",
+    "topic": { "de": "SM Rotsee", "en": "Swiss Championships Rotsee" },
+    "location": "Luzern, Rotsee",
+    "category": "regatta"
+  },
+  {
+    "id": "evt_008",
+    "date": "2026-10-04",
+    "topic": { "de": "Herbst-Wanderfahrt", "en": "Autumn tour" },
+    "location": "Zürichsee",
+    "category": "club"
+  },
+  {
+    "id": "evt_009",
+    "date": "2026-11-15",
+    "time": "19:00",
+    "topic": { "de": "Generalversammlung", "en": "General assembly" },
+    "location": "Bootshaus Stäfa",
+    "category": "club"
+  }
+]

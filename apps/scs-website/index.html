@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seeclub Stäfa – Rudern auf dem Zürichsee</title>
+  <meta name="description" content="Seeclub Stäfa – Rudersport auf dem Zürichsee seit 1917. Ruderkurse für Jugendliche, Einsteiger und Quereinsteiger." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'media',
+      theme: { extend: {
+        colors: { scs: { green: '#009D53', greenDark: '#007a40', blue: '#014da2', blueDark: '#013a7c' } },
+        fontFamily: { sans: ['Inter','system-ui','sans-serif'], display: ['"Plus Jakarta Sans"','Inter','sans-serif'] }
+      }}
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-200 antialiased">
+
+  <div id="site-header"></div>
+
+  <!-- HERO -->
+  <section id="top" class="hero-bg">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-28 md:py-44 lg:py-52">
+      <div class="max-w-3xl">
+        <span class="hero-kicker inline-block text-xs font-semibold tracking-wider uppercase mb-4" data-i18n="hero.kicker">Seit 1917 am Zürichsee</span>
+        <h1 class="font-display text-5xl sm:text-6xl md:text-7xl font-extrabold leading-[1.05] mb-6 drop-shadow-lg" data-i18n="hero.title">Seeclub Stäfa</h1>
+        <p class="hero-sub text-xl md:text-2xl mb-8 drop-shadow" data-i18n="hero.subtitle">Rudern auf dem Zürichsee.</p>
+        <p class="hero-lead text-base md:text-lg mb-10 max-w-2xl" data-i18n="hero.lead">Breitensport, Leistungssport und Jugendförderung – seit über 100 Jahren. Komm vorbei, lern uns kennen und entdecke einen der schönsten Sportarten der Welt.</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="#kurse" class="inline-flex items-center gap-2 bg-scs-green hover:bg-scs-greenDark text-white px-6 py-3 rounded-lg font-semibold transition shadow-lg shadow-black/30" data-i18n="hero.cta1">Kurs entdecken</a>
+          <a href="#ueber-uns" class="btn-secondary inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition" data-i18n="hero.cta2">Verein kennenlernen</a>
+        </div>
+      </div>
+    </div>
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" class="fill-white dark:fill-slate-950"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ÜBER UNS -->
+  <section id="ueber-uns" class="py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-12 items-start">
+        <div class="reveal">
+          <span class="text-xs font-semibold tracking-wider uppercase text-scs-green" data-i18n="about.kicker">Über uns</span>
+          <h2 class="font-display text-3xl md:text-4xl font-bold mt-2 mb-6" data-i18n="about.title">Ein Verein mit Geschichte und Zukunft</h2>
+          <p class="text-slate-600 dark:text-slate-300 mb-4" data-i18n="about.p1">Der Seeclub Stäfa wurde 1917 gegründet und gehört zu den traditionsreichsten Ruderclubs am Zürichsee. Wir vereinen Breitensport, ambitionierten Leistungssport und engagierte Jugendförderung unter einem Dach.</p>
+          <p class="text-slate-600 dark:text-slate-300" data-i18n="about.p2">Ob du das erste Mal in ein Boot steigst oder bereits an Regatten startest – bei uns findest du das passende Umfeld, erfahrene Trainerinnen und Trainer und eine Community, die den Sport und den See liebt.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-4 reveal">
+          <div class="bg-gradient-to-br from-scs-green/10 to-scs-green/5 dark:from-scs-green/20 dark:to-transparent rounded-xl p-6 border border-scs-green/20">
+            <div class="font-display text-4xl font-bold text-scs-green">1917</div>
+            <div class="text-sm text-slate-600 dark:text-slate-400 mt-1" data-i18n="about.stat1">Gegründet</div>
+          </div>
+          <div class="bg-gradient-to-br from-scs-blue/10 to-scs-blue/5 dark:from-scs-blue/20 dark:to-transparent rounded-xl p-6 border border-scs-blue/20">
+            <div class="font-display text-4xl font-bold text-scs-blue dark:text-blue-300">100+</div>
+            <div class="text-sm text-slate-600 dark:text-slate-400 mt-1" data-i18n="about.stat2">Aktive Mitglieder</div>
+          </div>
+          <div class="bg-gradient-to-br from-scs-blue/10 to-scs-blue/5 dark:from-scs-blue/20 dark:to-transparent rounded-xl p-6 border border-scs-blue/20">
+            <div class="font-display text-4xl font-bold text-scs-blue dark:text-blue-300">3</div>
+            <div class="text-sm text-slate-600 dark:text-slate-400 mt-1" data-i18n="about.stat3">Sparten: Breite, Jugend, Leistung</div>
+          </div>
+          <div class="bg-gradient-to-br from-scs-green/10 to-scs-green/5 dark:from-scs-green/20 dark:to-transparent rounded-xl p-6 border border-scs-green/20">
+            <div class="font-display text-4xl font-bold text-scs-green">365</div>
+            <div class="text-sm text-slate-600 dark:text-slate-400 mt-1" data-i18n="about.stat4">Tage Seeluft pro Jahr</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANGEBOTE -->
+  <section id="kurse" class="py-20 md:py-28 bg-slate-50 dark:bg-slate-900/50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl mb-12 reveal">
+        <span class="text-xs font-semibold tracking-wider uppercase text-scs-green" data-i18n="offers.kicker">Mitmachen</span>
+        <h2 class="font-display text-3xl md:text-4xl font-bold mt-2 mb-4" data-i18n="offers.title">So findest du den Einstieg</h2>
+        <p class="text-slate-600 dark:text-slate-300" data-i18n="offers.lead">Vier Wege ins Boot – wähle deinen.</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <a href="https://seeclub.org/public/courses" class="group reveal bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 hover:border-scs-green hover:shadow-lg transition">
+          <div class="w-12 h-12 rounded-lg bg-scs-green/10 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-scs-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg mb-2" data-i18n="offers.course.title">Einsteigerkurs</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-4" data-i18n="offers.course.desc">Der direkte Weg ins Boot. Lerne in wenigen Wochen die Grundlagen des Ruderns.</p>
+          <span class="text-sm font-semibold text-scs-green group-hover:underline" data-i18n="offers.cta">Mehr erfahren →</span>
+        </a>
+        <a href="https://seeclub.org/public/youth" id="jugend" class="group reveal bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 hover:border-scs-green hover:shadow-lg transition">
+          <div class="w-12 h-12 rounded-lg bg-scs-green/10 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-scs-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-5.13a4 4 0 11-8 0 4 4 0 018 0zm6 4a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg mb-2" data-i18n="offers.youth.title">Jugendrudern</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-4" data-i18n="offers.youth.desc">Für Jugendliche ab ca. 12 Jahren. Spass, Teamgeist und sportliche Entwicklung.</p>
+          <span class="text-sm font-semibold text-scs-green group-hover:underline" data-i18n="offers.cta">Mehr erfahren →</span>
+        </a>
+        <a href="https://seeclub.org/public/competitive" id="leistungssport" class="group reveal bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 hover:border-scs-blue hover:shadow-lg transition">
+          <div class="w-12 h-12 rounded-lg bg-scs-blue/10 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-scs-blue dark:text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg mb-2" data-i18n="offers.competitive.title">Leistungssport</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-4" data-i18n="offers.competitive.desc">Trainiere ambitioniert und starte für den Seeclub Stäfa an nationalen und internationalen Regatten.</p>
+          <span class="text-sm font-semibold text-scs-blue dark:text-blue-300 group-hover:underline" data-i18n="offers.cta">Mehr erfahren →</span>
+        </a>
+        <a href="https://seeclub.org/public/lateral" id="quereinstieg" class="group reveal bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 hover:border-scs-blue hover:shadow-lg transition">
+          <div class="w-12 h-12 rounded-lg bg-scs-blue/10 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-scs-blue dark:text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg mb-2" data-i18n="offers.lateral.title">Quereinstieg</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-4" data-i18n="offers.lateral.desc">Du hast bereits Rudererfahrung? Bewirb dich direkt für einen Quereinstieg.</p>
+          <span class="text-sm font-semibold text-scs-blue dark:text-blue-300 group-hover:underline" data-i18n="offers.cta">Mehr erfahren →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOTSHAUS-PROJEKT -->
+  <section id="bootshaus" class="py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="relative bg-gradient-to-br from-scs-blue to-scs-blueDark rounded-2xl overflow-hidden text-white reveal">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-scs-green/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" aria-hidden="true"></div>
+        <div class="relative grid lg:grid-cols-2 gap-0 items-stretch">
+          <div class="p-8 md:p-12 lg:p-14 flex flex-col justify-center">
+            <span class="self-start inline-block text-xs font-semibold tracking-wider uppercase text-scs-green bg-white/10 px-3 py-1 rounded-full mb-4" data-i18n="boathouse.kicker">Grossprojekt</span>
+            <h2 class="font-display text-3xl md:text-4xl font-bold mb-4" data-i18n="boathouse.title">Neubau Bootshaus</h2>
+            <p class="text-blue-100 text-lg mb-6" data-i18n="boathouse.lead">Wir bauen ein neues Zuhause für unseren Sport. Modern, nachhaltig und offen für die nächsten Generationen am Zürichsee.</p>
+            <a href="bootshaus.html" class="self-start inline-flex items-center gap-2 bg-white text-scs-blue px-5 py-3 rounded-lg font-semibold hover:bg-blue-50 transition" data-i18n="boathouse.cta">Projekt entdecken →</a>
+          </div>
+          <figure class="relative min-h-[260px] sm:min-h-[340px] lg:min-h-full">
+            <img src="assets/bootshaus-neubau.png" alt="Visualisierung des geplanten neuen Bootshauses des Seeclub Stäfa" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-r from-scs-blue/40 via-transparent to-transparent hidden lg:block" aria-hidden="true"></div>
+            <div class="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-scs-blue/50 to-transparent lg:hidden" aria-hidden="true"></div>
+            <figcaption class="absolute bottom-3 right-3 text-[11px] text-white/80 bg-black/30 backdrop-blur px-2 py-1 rounded" data-i18n="boathouse.caption">Visualisierung Neubau</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TERMINE -->
+  <section id="termine" class="py-20 md:py-28 bg-slate-50 dark:bg-slate-900/50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-end justify-between mb-10 reveal">
+        <div>
+          <span class="text-xs font-semibold tracking-wider uppercase text-scs-green" data-i18n="events.kicker">Agenda</span>
+          <h2 class="font-display text-3xl md:text-4xl font-bold mt-2" data-i18n="events.title">Nächste Termine</h2>
+        </div>
+        <a href="termine.html" class="text-sm font-semibold text-scs-green hover:underline hidden sm:inline" data-i18n="events.all">Alle Termine →</a>
+      </div>
+      <div id="events-list" class="space-y-3"></div>
+      <a href="termine.html" class="text-sm font-semibold text-scs-green hover:underline mt-6 inline-block sm:hidden" data-i18n="events.all">Alle Termine →</a>
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <section id="news" class="py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-end justify-between mb-10 reveal">
+        <div>
+          <span class="text-xs font-semibold tracking-wider uppercase text-scs-green" data-i18n="news.kicker">Aktuell</span>
+          <h2 class="font-display text-3xl md:text-4xl font-bold mt-2" data-i18n="news.titleHome">News & Erfolge</h2>
+        </div>
+        <a href="news.html" class="text-sm font-semibold text-scs-green hover:underline hidden sm:inline" data-i18n="news.all">Alle News →</a>
+      </div>
+      <div id="news-list" class="grid md:grid-cols-3 gap-6"></div>
+      <a href="news.html" class="text-sm font-semibold text-scs-green hover:underline mt-6 inline-block sm:hidden" data-i18n="news.all">Alle News →</a>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <!-- Seitenspezifische Strings für Hero/About/Offers/Home-Sektionen ergänzen -->
+  <script>
+    const homeStrings = {
+      de: {
+        'hero.kicker': 'Seit 1917 am Zürichsee', 'hero.title': 'Seeclub Stäfa', 'hero.subtitle': 'Rudern auf dem Zürichsee.',
+        'hero.lead': 'Breitensport, Leistungssport und Jugendförderung – seit über 100 Jahren. Komm vorbei, lern uns kennen und entdecke eine der schönsten Sportarten der Welt.',
+        'hero.cta1': 'Kurs entdecken', 'hero.cta2': 'Verein kennenlernen',
+        'about.kicker': 'Über uns', 'about.title': 'Ein Verein mit Geschichte und Zukunft',
+        'about.p1': 'Der Seeclub Stäfa wurde 1917 gegründet und gehört zu den traditionsreichsten Ruderclubs am Zürichsee. Wir vereinen Breitensport, ambitionierten Leistungssport und engagierte Jugendförderung unter einem Dach.',
+        'about.p2': 'Ob du das erste Mal in ein Boot steigst oder bereits an Regatten startest – bei uns findest du das passende Umfeld, erfahrene Trainerinnen und Trainer und eine Community, die den Sport und den See liebt.',
+        'about.stat1': 'Gegründet', 'about.stat2': 'Aktive Mitglieder', 'about.stat3': 'Sparten: Breite, Jugend, Leistung', 'about.stat4': 'Tage Seeluft pro Jahr',
+        'offers.kicker': 'Mitmachen', 'offers.title': 'So findest du den Einstieg', 'offers.lead': 'Vier Wege ins Boot – wähle deinen.',
+        'offers.course.title': 'Einsteigerkurs', 'offers.course.desc': 'Der direkte Weg ins Boot. Lerne in wenigen Wochen die Grundlagen des Ruderns.',
+        'offers.youth.title': 'Jugendrudern', 'offers.youth.desc': 'Für Jugendliche ab ca. 12 Jahren. Spass, Teamgeist und sportliche Entwicklung.',
+        'offers.competitive.title': 'Leistungssport', 'offers.competitive.desc': 'Trainiere ambitioniert und starte für den Seeclub Stäfa an nationalen und internationalen Regatten.',
+        'offers.lateral.title': 'Quereinstieg', 'offers.lateral.desc': 'Du hast bereits Rudererfahrung? Bewirb dich direkt für einen Quereinstieg.',
+        'offers.cta': 'Mehr erfahren →',
+        'boathouse.kicker': 'Grossprojekt', 'boathouse.title': 'Neubau Bootshaus',
+        'boathouse.lead': 'Wir bauen ein neues Zuhause für unseren Sport. Modern, nachhaltig und offen für die nächsten Generationen am Zürichsee.',
+        'boathouse.cta': 'Projekt entdecken →', 'boathouse.caption': 'Visualisierung Neubau',
+        'events.kicker': 'Agenda', 'events.title': 'Nächste Termine', 'events.all': 'Alle Termine →',
+        'news.kicker': 'Aktuell', 'news.titleHome': 'News & Erfolge', 'news.all': 'Alle News →',
+      },
+      en: {
+        'hero.kicker': 'On Lake Zürich since 1917', 'hero.title': 'Seeclub Stäfa', 'hero.subtitle': 'Rowing on Lake Zürich.',
+        'hero.lead': 'Recreational rowing, competitive sport and youth development – for more than 100 years.',
+        'hero.cta1': 'Discover courses', 'hero.cta2': 'About the club',
+        'about.kicker': 'About us', 'about.title': 'A club with history and future',
+        'about.p1': 'Founded in 1917, Seeclub Stäfa is one of the most traditional rowing clubs on Lake Zürich.',
+        'about.p2': 'Whether it is your first time in a boat or you already race regattas – you will find the right setting and a community that loves the sport.',
+        'about.stat1': 'Founded', 'about.stat2': 'Active members', 'about.stat3': 'Branches: recreational, youth, competitive', 'about.stat4': 'Days of lake air per year',
+        'offers.kicker': 'Get involved', 'offers.title': 'Find your way in', 'offers.lead': 'Four ways into the boat – pick yours.',
+        'offers.course.title': 'Beginner course', 'offers.course.desc': 'The direct path into the boat.',
+        'offers.youth.title': 'Youth rowing', 'offers.youth.desc': 'For young people from about 12 years.',
+        'offers.competitive.title': 'Competitive', 'offers.competitive.desc': 'Train ambitiously and race for Seeclub Stäfa.',
+        'offers.lateral.title': 'Experienced rowers', 'offers.lateral.desc': 'Already have rowing experience? Apply directly to join us.',
+        'offers.cta': 'Learn more →',
+        'boathouse.kicker': 'Major project', 'boathouse.title': 'New boathouse',
+        'boathouse.lead': 'A new home for our sport. Modern, sustainable, open for the next generations.',
+        'boathouse.cta': 'Discover the project →', 'boathouse.caption': 'New boathouse – visualisation',
+        'events.kicker': 'Agenda', 'events.title': 'Upcoming events', 'events.all': 'All events →',
+        'news.kicker': 'Latest', 'news.titleHome': 'News & results', 'news.all': 'All news →',
+      }
+    };
+  </script>
+  <script src="assets/shared.js"></script>
+  <script src="assets/api.js"></script>
+  <script>
+    // Lokale Strings ins globale i18n mergen
+    Object.assign(scs.i18n.de, homeStrings.de);
+    Object.assign(scs.i18n.en, homeStrings.en);
+    scs.applyLang(scs.lang);
+
+    function renderEventsHome(list) {
+      const c = document.getElementById('events-list');
+      const data = list.slice(0, 4);
+      c.innerHTML = data.map(ev => `
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-5 py-4">
+          <div class="text-sm font-semibold text-scs-blue dark:text-blue-300 sm:w-32 shrink-0">${scs.fmtDate(ev.date)}</div>
+          <div class="flex-1 font-medium">${scs.localized(ev.topic)}</div>
+          <div class="text-sm text-slate-500 dark:text-slate-400">${ev.location || ''}</div>
+        </div>`).join('');
+    }
+    function renderNewsHome(list) {
+      const c = document.getElementById('news-list');
+      const data = list.slice(0, 3);
+      c.innerHTML = data.map(n => {
+        const img = n.coverImage && n.coverImage.url;
+        const alt = (n.coverImage && scs.localized(n.coverImage.alt)) || '';
+        return `
+          <a href="news-artikel.html?slug=${encodeURIComponent(n.slug)}" class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-scs-green hover:shadow-lg transition block">
+            ${img ? `<img src="${img}" alt="${alt}" class="w-full h-44 object-cover" loading="lazy">` : ''}
+            <div class="p-6">
+              <div class="text-xs font-semibold text-scs-green mb-2">${scs.fmtDate(n.date)}</div>
+              <h3 class="font-display font-bold text-lg mb-2 group-hover:text-scs-green transition">${scs.localized(n.title)}</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400">${scs.localized(n.excerpt)}</p>
+            </div>
+          </a>`;
+      }).join('');
+    }
+
+    let _events = [], _news = [];
+    window.scsPageInit = async () => {
+      _events = await SCS_API.calendar();
+      _news = await SCS_API.news();
+      renderEventsHome(_events);
+      renderNewsHome(_news);
+    };
+    window.scsReRender = () => { renderEventsHome(_events); renderNewsHome(_news); };
+  </script>
+</body>
+</html>

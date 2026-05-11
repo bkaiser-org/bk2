@@ -1,0 +1,31 @@
+// POST https://seeclub.org/public/api/v1/contact
+// Content-Type: application/json
+
+// --- Request Body ---
+{
+  "name": "Anna Beispiel",
+  "email": "anna@example.com",
+  "phone": "+41 79 123 45 67",
+  "subject": "course",
+  "message": "Ich interessiere mich für den Einsteigerkurs im Juni und möchte gerne wissen, ob noch Plätze frei sind.",
+  "language": "de",
+  "honeypot": "",
+  "captchaToken": "0.5XlRG..."
+}
+
+// --- Response 202 Accepted ---
+{
+  "status": "accepted",
+  "reference": "msg_8f2a1b"
+}
+
+// --- Response 400 Bad Request ---
+{
+  "error": {
+    "code": "validation_error",
+    "message": "Validation failed",
+    "details": {
+      "email": "must be a valid email address"
+    }
+  }
+}

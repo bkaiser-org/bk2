@@ -1,0 +1,386 @@
+openapi: 3.1.0
+info:
+  title: Seeclub Stäfa – Public API
+  version: 1.0.0
+  description: |
+    Öffentliche, anonyme Read-Only-API für die Landing Page des Seeclub Stäfa.
+    Die Webapp auf seeclub.org ist Master sämtlicher Daten und liefert über
+    diese Endpunkte einen kondensierten, für Gäste sichtbaren Auszug aus.
+
+    ## Konventionen
+
+    - **Sprachen**: Mehrsprachige Felder sind Objekte mit Sprach-Codes als Keys, z. B. `{"de": "...", "en": "..."}`.
+      Default-Sprache ist Deutsch. Englisch ist empfohlen, aber nicht zwingend; fehlt eine Sprache, fällt der Client auf Deutsch zurück.
+    - **Datumsformate**: Datumsangaben als ISO-8601-Date (`YYYY-MM-DD`), Zeitstempel mit Zeit als ISO-8601-DateTime (`YYYY-MM-DDTHH:MM:SS±HH:MM`). Zeitzone Europe/Zurich.
+    - **Slugs**: URL-sichere, stabile Identifikatoren in Kleinschreibung mit Bindestrichen (`saisonstart-2026`).
+    - **Bilder**: Absolute URLs (https). Wenn möglich mit `width`/`height` für Layout-Stabilität.
+    - **HTML-Inhalt**: Im Feld `content` als sanitiziertes HTML (zugelassen: `<p>`, `<h2>`, `<h3>`, `<ul>`, `<ol>`, `<li>`, `<a>`, `<strong>`, `<em>`, `<blockquote>`, `<br>`, `<img>`).
+    - **Caching**: Antworten sind für Gäste cacheable. Empfehlung: `Cache-Control: public, max-age=300, stale-while-revalidate=600`.
+    - **CORS**: `Access-Control-Allow-Origin: *` für alle GET-Endpunkte. Andernfalls kann die statische Landing Page die Daten nicht laden.
+    - **Authentifizierung**: Nicht erforderlich. Die API liefert nur öffentliche Inhalte.
+
+servers:
+  - url: https://seeclub.org/public/api/v1
+    description: Produktion
+
+paths:
+  /org:
+    get:
+      summary: Stammdaten des Vereins
+      description: Liefert statische Vereins-Metadaten für Footer, Kontakt und Strukturierte Daten (Schema.org).
+      tags: [Org]
+      responses:
+        '200':
+          description: Vereins-Stammdaten
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Org' }
+              example: { $ref: 'examples/org.json' }
+
+  /news:
+    get:
+      summary: News-Übersicht
+      description: |
+        Liefert eine sortierte Liste aller veröffentlichten News-Artikel. Neueste zuerst.
+        Für die Landing Page reichen die ersten drei Einträge; die News-Übersichtsseite zeigt alle.
+      tags: [News]
+      parameters:
+        - name: limit
+          in: query
+          description: Maximale Anzahl Einträge (Default 50, Maximum 200).
+          required: false
+          schema: { type: integer, minimum: 1, maximum: 200, default: 50 }
+        - name: tag
+          in: query
+          description: Filtert nach einem Tag (z. B. `regatta`, `bootshaus`).
+          required: false
+          schema: { type: string }
+      responses:
+        '200':
+          description: Liste von News-Artikeln (ohne `content`-Feld – das gibt es nur am Detail-Endpunkt).
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/NewsSummary' }
+
+  /news/{slug}:
+    get:
+      summary: Einzelner News-Artikel
+      tags: [News]
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string, example: saisonstart-2026 }
+      responses:
+        '200':
+          description: Voller Artikel inkl. `content`.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/NewsArticle' }
+        '404':
+          description: Artikel nicht gefunden.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /calendar:
+    get:
+      summary: Termine
+      description: |
+        Liefert die kommenden (und optional vergangene) Termine. Voreinstellung: ab heute.
+      tags: [Calendar]
+      parameters:
+        - name: from
+          in: query
+          description: Frühestes Datum (inkl.), ISO-8601 (`YYYY-MM-DD`). Default = heute.
+          required: false
+          schema: { type: string, format: date }
+        - name: to
+          in: query
+          description: Spätestes Datum (inkl.), ISO-8601.
+          required: false
+          schema: { type: string, format: date }
+        - name: category
+          in: query
+          description: Kategoriefilter.
+          required: false
+          schema:
+            type: string
+            enum: [regatta, club, course, training]
+        - name: limit
+          in: query
+          schema: { type: integer, minimum: 1, maximum: 500, default: 100 }
+      responses:
+        '200':
+          description: Liste von Terminen, aufsteigend sortiert nach `date`.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/CalendarEntry' }
+
+  /courses:
+    get:
+      summary: Aktuell ausgeschriebene Kurse
+      description: |
+        Liefert die öffentlich beworbenen Kurse (Einsteiger, Jugend, Quereinstieg).
+        Anmeldungen laufen über die Webapp via `registrationUrl`.
+      tags: [Courses]
+      responses:
+        '200':
+          description: Liste von Kursen.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Course' }
+
+  /results:
+    get:
+      summary: Regattaergebnisse
+      description: |
+        Liefert öffentliche Regatta-Resultate. Für die "Erfolge"-Sektion auf der Landing Page.
+      tags: [Results]
+      parameters:
+        - name: year
+          in: query
+          schema: { type: integer, example: 2026 }
+        - name: limit
+          in: query
+          schema: { type: integer, default: 20, maximum: 200 }
+      responses:
+        '200':
+          description: Liste von Resultaten, neueste zuerst.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/RegattaResult' }
+
+  /contact:
+    post:
+      summary: Kontaktanfrage senden
+      description: |
+        Nimmt eine Kontaktanfrage entgegen und stellt sie an die Vereins-Mailbox zu.
+        Server-seitig wird Spam-Schutz (Honeypot, optionales Turnstile/Captcha-Token) empfohlen.
+      tags: [Contact]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ContactRequest' }
+      responses:
+        '202':
+          description: Nachricht akzeptiert.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: accepted }
+                  reference: { type: string, example: msg_8f2a1b }
+        '400':
+          description: Validierungsfehler.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '429':
+          description: Rate-Limit erreicht.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+components:
+  schemas:
+
+    LocalizedString:
+      description: Mehrsprachiger Text. Mindestens `de` muss vorhanden sein.
+      type: object
+      required: [de]
+      additionalProperties: { type: string }
+      properties:
+        de: { type: string }
+        en: { type: string }
+      example: { de: "Saisoneröffnung", en: "Season opening" }
+
+    LocalizedHtml:
+      description: Mehrsprachiger HTML-Inhalt (sanitiziert).
+      type: object
+      required: [de]
+      additionalProperties: { type: string, format: html }
+      properties:
+        de: { type: string }
+        en: { type: string }
+
+    Image:
+      type: object
+      required: [url]
+      properties:
+        url:       { type: string, format: uri, description: 'Absolute Bild-URL (https).' }
+        alt:       { $ref: '#/components/schemas/LocalizedString' }
+        width:     { type: integer, description: 'Originalbreite in Pixeln.' }
+        height:    { type: integer, description: 'Originalhöhe in Pixeln.' }
+        caption:   { $ref: '#/components/schemas/LocalizedString' }
+        credit:    { type: string, description: 'Bildnachweis (Fotografin, Quelle).' }
+      example:
+        url: "https://cdn.seeclub.org/news/saisonstart-2026/cover.jpg"
+        alt: { de: "Vierer beim Sonnenaufgang", en: "Quad sculls at sunrise" }
+        width: 2048
+        height: 1365
+
+    Org:
+      description: Stammdaten des Vereins.
+      type: object
+      required: [name, foundedYear, address, contact]
+      properties:
+        name:        { type: string, example: "Seeclub Stäfa" }
+        shortName:   { type: string, example: "SCS" }
+        foundedYear: { type: integer, example: 1917 }
+        tagline:     { $ref: '#/components/schemas/LocalizedString' }
+        description: { $ref: '#/components/schemas/LocalizedString' }
+        memberCount: { type: integer, example: 120 }
+        address:
+          type: object
+          required: [street, postalCode, city, country]
+          properties:
+            street:     { type: string, example: "Seestrasse 123" }
+            postalCode: { type: string, example: "8712" }
+            city:       { type: string, example: "Stäfa" }
+            country:    { type: string, example: "CH" }
+            latitude:   { type: number, example: 47.2386 }
+            longitude:  { type: number, example: 8.7232 }
+        contact:
+          type: object
+          required: [email]
+          properties:
+            email:   { type: string, format: email, example: "info@seeclub-staefa.ch" }
+            phone:   { type: string, example: "+41 44 123 45 67" }
+        social:
+          type: object
+          properties:
+            instagram: { type: string, format: uri }
+            facebook:  { type: string, format: uri }
+            youtube:   { type: string, format: uri }
+        memberLoginUrl: { type: string, format: uri, example: "https://seeclub.org/" }
+        logoUrl:        { type: string, format: uri, example: "https://bkaiser.imgix.net/tenant/scs/logo/logo.svg" }
+
+    NewsSummary:
+      type: object
+      required: [slug, date, title, excerpt]
+      properties:
+        slug:     { type: string, example: "saisonstart-2026" }
+        date:     { type: string, format: date, example: "2026-04-28" }
+        title:    { $ref: '#/components/schemas/LocalizedString' }
+        subTitle: { $ref: '#/components/schemas/LocalizedString' }
+        excerpt:  { $ref: '#/components/schemas/LocalizedString' }
+        coverImage: { $ref: '#/components/schemas/Image' }
+        tags:
+          type: array
+          items: { type: string }
+          example: [regatta, erfolg]
+        author:
+          type: object
+          properties:
+            name: { type: string }
+            role: { $ref: '#/components/schemas/LocalizedString' }
+
+    NewsArticle:
+      description: Voller News-Artikel inklusive HTML-Inhalt und Galerie.
+      allOf:
+        - $ref: '#/components/schemas/NewsSummary'
+        - type: object
+          required: [content]
+          properties:
+            content: { $ref: '#/components/schemas/LocalizedHtml' }
+            images:
+              type: array
+              description: Zusätzliche Bilder, optional für Galerie unter dem Artikel.
+              items: { $ref: '#/components/schemas/Image' }
+
+    CalendarEntry:
+      type: object
+      required: [date, topic, location]
+      properties:
+        id:       { type: string, description: 'Stabiler Identifier, z. B. UUID.' }
+        date:     { type: string, format: date, example: "2026-06-21" }
+        endDate:  { type: string, format: date, description: 'Optional bei mehrtägigen Anlässen.' }
+        time:     { type: string, example: "08:30", description: 'Optional, Format HH:MM (24h).' }
+        topic:    { $ref: '#/components/schemas/LocalizedString' }
+        location: { type: string, example: "Sarnersee, Sarnen" }
+        category:
+          type: string
+          enum: [regatta, club, course, training]
+          example: regatta
+        description: { $ref: '#/components/schemas/LocalizedString' }
+        url:         { type: string, format: uri, description: 'Optionaler Link in die Webapp (Anmeldung/Details).' }
+
+    Course:
+      type: object
+      required: [slug, title, startDate, audience]
+      properties:
+        slug:      { type: string, example: "einsteigerkurs-2026" }
+        title:     { $ref: '#/components/schemas/LocalizedString' }
+        audience:
+          type: string
+          enum: [beginner, youth, lateral, competitive]
+          example: beginner
+        startDate: { type: string, format: date }
+        endDate:   { type: string, format: date }
+        weekdays:
+          type: array
+          items: { type: string, enum: [mon, tue, wed, thu, fri, sat, sun] }
+          example: [tue, thu]
+        time:      { type: string, example: "18:30–20:00" }
+        location:  { type: string, example: "Bootshaus Stäfa" }
+        priceCHF:  { type: number, example: 350 }
+        spotsTotal: { type: integer, example: 12 }
+        spotsAvailable: { type: integer, example: 4 }
+        description: { $ref: '#/components/schemas/LocalizedString' }
+        registrationUrl: { type: string, format: uri }
+
+    RegattaResult:
+      type: object
+      required: [date, regatta, boatClass, position]
+      properties:
+        date:      { type: string, format: date, example: "2026-04-21" }
+        regatta:   { type: string, example: "Frühjahrsregatta Sarnen" }
+        location:  { type: string, example: "Sarnersee" }
+        boatClass: { type: string, example: "M2x leicht" }
+        position:  { type: integer, example: 1 }
+        crew:
+          type: array
+          items: { type: string }
+          example: ["Lara Müller", "Sophie Keller"]
+        time:      { type: string, example: "07:12.43", description: 'Optional. Format MM:SS.ms' }
+        category:  { type: string, example: "U23" }
+
+    ContactRequest:
+      type: object
+      required: [name, email, subject, message]
+      properties:
+        name:    { type: string, minLength: 2, maxLength: 100 }
+        email:   { type: string, format: email }
+        phone:   { type: string }
+        subject:
+          type: string
+          enum: [general, course, lateral, youth, boathouse]
+          example: course
+        message: { type: string, minLength: 10, maxLength: 5000 }
+        language: { type: string, enum: [de, en], default: de }
+        # Anti-Spam
+        honeypot: { type: string, description: 'Muss leer bleiben.' }
+        captchaToken: { type: string, description: 'Optional, z. B. Cloudflare Turnstile.' }
+
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:    { type: string, example: not_found }
+            message: { type: string, example: "Article not found." }
+            details: { type: object, additionalProperties: true }

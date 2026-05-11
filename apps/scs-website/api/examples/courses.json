@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "einsteigerkurs-sommer-2026",
+    "audience": "beginner",
+    "title": {
+      "de": "Einsteigerkurs Sommer 2026",
+      "en": "Beginner course summer 2026"
+    },
+    "startDate": "2026-06-14",
+    "endDate": "2026-08-09",
+    "weekdays": ["tue", "thu"],
+    "time": "18:30–20:00",
+    "location": "Bootshaus Stäfa",
+    "priceCHF": 350,
+    "spotsTotal": 12,
+    "spotsAvailable": 4,
+    "description": {
+      "de": "In acht Wochen lernst du die Grundlagen des Ruderns im Einer, Doppelzweier und Vierer.",
+      "en": "In eight weeks you will learn the basics of rowing in the single, double, and quad."
+    },
+    "registrationUrl": "https://seeclub.org/public/courses/einsteigerkurs-sommer-2026/register"
+  },
+  {
+    "slug": "jugendrudern-2026",
+    "audience": "youth",
+    "title": {
+      "de": "Jugendrudern 2026",
+      "en": "Youth rowing 2026"
+    },
+    "startDate": "2026-04-01",
+    "endDate": "2026-10-31",
+    "weekdays": ["wed", "sat"],
+    "time": "17:00–19:00",
+    "location": "Bootshaus Stäfa",
+    "priceCHF": 480,
+    "description": {
+      "de": "Regelmässiges Training für Jugendliche ab ca. 12 Jahren. Spass, Teamgeist und sportliche Entwicklung.",
+      "en": "Regular training for young people from about 12 years. Fun, team spirit, and athletic development."
+    },
+    "registrationUrl": "https://seeclub.org/public/courses/jugendrudern-2026/register"
+  },
+  {
+    "slug": "quereinstieg-2026",
+    "audience": "lateral",
+    "title": {
+      "de": "Quereinstieg 2026",
+      "en": "Lateral entry 2026"
+    },
+    "startDate": "2026-05-01",
+    "endDate": "2026-10-31",
+    "location": "Bootshaus Stäfa",
+    "description": {
+      "de": "Für erfahrene Ruderinnen und Ruderer aus anderen Vereinen oder mit längerer Pause. Individuelles Onboarding.",
+      "en": "For experienced rowers from other clubs or returning after a longer break. Individual onboarding."
+    },
+    "registrationUrl": "https://seeclub.org/public/courses/quereinstieg-2026/register"
+  }
+]

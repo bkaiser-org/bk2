@@ -1,0 +1,46 @@
+{
+  "slug": "saisonstart-2026",
+  "date": "2026-04-28",
+  "title": {
+    "de": "Erfolgreicher Saisonstart 2026",
+    "en": "Successful start to the 2026 season"
+  },
+  "subTitle": {
+    "de": "Starke Resultate in Sarnen und am Rotsee",
+    "en": "Strong results at Sarnen and the Rotsee"
+  },
+  "excerpt": {
+    "de": "Unsere Athletinnen und Athleten überzeugen mit starken Leistungen an den ersten Frühjahrsregatten.",
+    "en": "Our athletes deliver strong performances at the first spring regattas."
+  },
+  "coverImage": {
+    "url": "https://cdn.seeclub.org/news/saisonstart-2026/cover.jpg",
+    "alt": {
+      "de": "Vierer beim Sonnenaufgang auf dem Zürichsee",
+      "en": "Quad sculls at sunrise on Lake Zürich"
+    },
+    "width": 2048,
+    "height": 1365
+  },
+  "tags": ["regatta", "erfolg"],
+  "author": {
+    "name": "Marco Keller",
+    "role": { "de": "Cheftrainer", "en": "Head coach" }
+  },
+  "content": {
+    "de": "<p>Mit der Frühjahrsregatta in Sarnen und dem klassischen Auftakt am Rotsee ist die Rudersaison 2026 für den Seeclub Stäfa erfolgreich angelaufen.</p><h2>Höhepunkte</h2><ul><li>Erster Platz im leichten Doppelzweier in Sarnen</li><li>Drei Finalteilnahmen am Rotsee</li><li>Starkes Debüt unserer Jugend-Crew</li></ul><p>Trainer Marco Keller spricht von einem <em>sehr soliden Trainingswinter</em>, der sich jetzt auszahlt.</p><blockquote>Die Stimmung im Kader ist hervorragend. Wir freuen uns auf die nächsten Wochen.</blockquote>",
+    "en": "<p>With the spring regatta in Sarnen and the traditional opener on the Rotsee, the 2026 season has started successfully for Seeclub Stäfa.</p><h2>Highlights</h2><ul><li>First place in lightweight double sculls at Sarnen</li><li>Three final appearances at the Rotsee</li><li>Strong debut for our youth crew</li></ul><p>Coach Marco Keller speaks of a <em>very solid winter of training</em> that is now paying off.</p><blockquote>The mood in the squad is excellent. We are looking forward to the coming weeks.</blockquote>"
+  },
+  "images": [
+    {
+      "url": "https://cdn.seeclub.org/news/saisonstart-2026/img-01.jpg",
+      "alt": { "de": "Siegerehrung in Sarnen", "en": "Award ceremony at Sarnen" },
+      "credit": "Foto: Lara Müller"
+    },
+    {
+      "url": "https://cdn.seeclub.org/news/saisonstart-2026/img-02.jpg",
+      "alt": { "de": "Mannschaftsboot beim Aufwärmen", "en": "Crew warming up" },
+      "credit": "Foto: Sophie Keller"
+    }
+  ]
+}

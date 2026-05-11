@@ -1,0 +1,72 @@
+/* Seeclub Stäfa – geteilte Styles für alle Seiten */
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', system-ui, sans-serif; }
+.font-display { font-family: 'Plus Jakarta Sans', Inter, sans-serif; letter-spacing: -0.02em; }
+
+/* Hero-Foto der Startseite */
+.hero-bg {
+  position: relative;
+  background-image:
+    linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.65) 100%),
+    linear-gradient(90deg, rgba(1,77,162,0.35) 0%, rgba(0,157,83,0.18) 60%, transparent 100%),
+    url('hero-sunset.jpg');
+  background-size: cover;
+  background-position: center 40%;
+  background-repeat: no-repeat;
+  color: #ffffff;
+}
+.hero-bg .hero-kicker { color: #c9e3ff; }
+.hero-bg .hero-lead   { color: rgba(255,255,255,0.85); }
+.hero-bg .hero-sub    { color: rgba(255,255,255,0.92); }
+.hero-bg .btn-secondary {
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: #ffffff;
+}
+.hero-bg .btn-secondary:hover { background: rgba(255,255,255,0.20); }
+@media (prefers-color-scheme: dark) {
+  .hero-bg {
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 40%, rgba(0,0,0,0.80) 100%),
+      linear-gradient(90deg, rgba(1,77,162,0.45) 0%, rgba(0,157,83,0.22) 60%, transparent 100%),
+      url('hero-sunset.jpg');
+  }
+}
+
+/* Page-Hero für Unterseiten (kompakter, ohne Foto) */
+.page-hero {
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(0,157,83,0.18), transparent 55%),
+    radial-gradient(ellipse at 80% 30%, rgba(1,77,162,0.20), transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, #f6f9fb 100%);
+}
+@media (prefers-color-scheme: dark) {
+  .page-hero {
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(0,157,83,0.22), transparent 55%),
+      radial-gradient(ellipse at 80% 30%, rgba(1,77,162,0.30), transparent 60%),
+      linear-gradient(180deg, #0b1220 0%, #0a0f1a 100%);
+  }
+}
+
+/* Reveal-Animation beim Scrollen */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s ease-out, transform .7s ease-out; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Wellen-Divider */
+.wave-divider svg { display: block; width: 100%; height: 60px; }
+
+/* Prose-Styles für News-Artikel */
+.prose-scs h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 1.5rem; margin-top: 2rem; margin-bottom: 0.75rem; }
+.prose-scs h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+.prose-scs p { margin-bottom: 1rem; line-height: 1.7; }
+.prose-scs a { color: #009D53; text-decoration: underline; text-underline-offset: 3px; }
+.prose-scs a:hover { color: #007a40; }
+.prose-scs ul { list-style: disc; padding-left: 1.25rem; margin-bottom: 1rem; }
+.prose-scs li { margin-bottom: 0.25rem; }
+.prose-scs blockquote { border-left: 3px solid #009D53; padding-left: 1rem; font-style: italic; margin: 1rem 0; color: #475569; }
+@media (prefers-color-scheme: dark) {
+  .prose-scs blockquote { color: #cbd5e1; }
+}

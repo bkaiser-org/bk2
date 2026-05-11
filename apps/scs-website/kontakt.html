@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontakt – Seeclub Stäfa</title>
+  <meta name="description" content="Kontakt zum Seeclub Stäfa – Adresse, E-Mail und Kontaktformular." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'media', theme: { extend: {
+      colors: { scs: { green: '#009D53', greenDark: '#007a40', blue: '#014da2', blueDark: '#013a7c' } },
+      fontFamily: { sans: ['Inter','system-ui','sans-serif'], display: ['"Plus Jakarta Sans"','Inter','sans-serif'] }
+    }}};
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-200 antialiased">
+
+  <div id="site-header"></div>
+
+  <!-- Page Hero -->
+  <section class="page-hero py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block text-xs font-semibold tracking-wider uppercase text-scs-green mb-3" data-i18n="nav.contact">Kontakt</span>
+      <h1 class="font-display text-4xl md:text-5xl font-bold mb-4" data-i18n="contact.title">Kontakt</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 max-w-2xl" data-i18n="contact.lead">Du hast Fragen zum Verein, zu Kursen oder zum Bootshaus-Projekt? Wir freuen uns auf deine Nachricht.</p>
+    </div>
+  </section>
+
+  <section class="py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-5 gap-12">
+
+      <!-- Info -->
+      <aside class="lg:col-span-2 space-y-8 reveal">
+        <div>
+          <h3 class="font-display font-semibold text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2" data-i18n="contact.address">Adresse</h3>
+          <p class="text-slate-700 dark:text-slate-300">
+            Seeclub Stäfa<br>
+            Seestrasse<br>
+            8712 Stäfa<br>
+            Schweiz
+          </p>
+        </div>
+        <div>
+          <h3 class="font-display font-semibold text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2" data-i18n="contact.email">E-Mail</h3>
+          <a href="mailto:info@seeclub-staefa.ch" class="text-scs-green hover:underline">info@seeclub-staefa.ch</a>
+        </div>
+        <div>
+          <h3 class="font-display font-semibold text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2" data-i18n="contact.social">Social</h3>
+          <a href="https://www.instagram.com/seeclub_staefa/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-slate-700 dark:text-slate-300 hover:text-scs-green">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            @seeclub_staefa
+          </a>
+        </div>
+
+        <!-- Karte: einfacher Link, da OSM/Maps Embedding hier nicht zwingend nötig -->
+        <a href="https://www.openstreetmap.org/?mlat=47.2386&mlon=8.7232#map=15/47.2386/8.7232" target="_blank" rel="noopener"
+           class="block aspect-[4/3] rounded-xl bg-gradient-to-br from-scs-green/15 via-scs-blue/15 to-scs-blue/30 border border-slate-200 dark:border-slate-800 relative overflow-hidden hover:shadow-lg transition">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+              <svg class="w-10 h-10 mx-auto mb-2 text-scs-blue dark:text-blue-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <div class="font-semibold text-sm" data-i18n="contact.mapHint">Stäfa am Zürichsee – auf der Karte ansehen</div>
+            </div>
+          </div>
+        </a>
+      </aside>
+
+      <!-- Formular -->
+      <div class="lg:col-span-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 md:p-8 reveal">
+        <h2 class="font-display font-bold text-xl mb-2" data-i18n="contact.form.title">Nachricht senden</h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400 mb-6" data-i18n="contact.form.hint">Formularversand erfolgt über den Mitgliederbereich. Du wirst weitergeleitet.</p>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-4">
+          <label class="block">
+            <span class="text-sm font-medium" data-i18n="contact.form.name">Name</span>
+            <input id="f-name" type="text" autocomplete="name" class="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 focus:border-scs-green focus:ring-2 focus:ring-scs-green/30 outline-none">
+          </label>
+          <label class="block">
+            <span class="text-sm font-medium" data-i18n="contact.form.email">E-Mail</span>
+            <input id="f-email" type="email" autocomplete="email" class="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 focus:border-scs-green focus:ring-2 focus:ring-scs-green/30 outline-none">
+          </label>
+        </div>
+
+        <label class="block mb-4">
+          <span class="text-sm font-medium" data-i18n="contact.form.subject">Betreff</span>
+          <select id="f-subject" class="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 focus:border-scs-green focus:ring-2 focus:ring-scs-green/30 outline-none">
+            <option value="general" data-i18n="contact.form.subject.general">Allgemeine Anfrage</option>
+            <option value="course" data-i18n="contact.form.subject.course">Kursanmeldung</option>
+            <option value="lateral" data-i18n="contact.form.subject.lateral">Quereinstieg</option>
+            <option value="youth" data-i18n="contact.form.subject.youth">Jugendrudern</option>
+            <option value="boathouse" data-i18n="contact.form.subject.boathouse">Bootshaus-Projekt</option>
+          </select>
+        </label>
+
+        <label class="block mb-6">
+          <span class="text-sm font-medium" data-i18n="contact.form.message">Nachricht</span>
+          <textarea id="f-message" rows="6" class="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 focus:border-scs-green focus:ring-2 focus:ring-scs-green/30 outline-none resize-y"></textarea>
+        </label>
+
+        <button id="f-submit" type="button" class="inline-flex items-center gap-2 bg-scs-green hover:bg-scs-greenDark text-white px-6 py-3 rounded-lg font-semibold transition shadow-lg shadow-scs-green/20" data-i18n="contact.form.submit">Nachricht senden</button>
+        <div id="f-status" class="mt-4 text-sm" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/shared.js"></script>
+  <script src="assets/api.js"></script>
+  <script>
+    Object.assign(scs.i18n.de, {
+      'contact.mapHint': 'Stäfa am Zürichsee – auf der Karte ansehen',
+      'contact.status.sending': 'Wird gesendet …',
+      'contact.status.ok': 'Danke! Deine Nachricht ist bei uns angekommen. Wir melden uns in Kürze.',
+      'contact.status.err': 'Etwas ist schiefgelaufen. Bitte versuche es erneut oder schreib uns direkt an info@seeclub-staefa.ch.',
+      'contact.status.validation': 'Bitte fülle alle Pflichtfelder aus.',
+    });
+    Object.assign(scs.i18n.en, {
+      'contact.mapHint': 'Stäfa on Lake Zürich – view on map',
+      'contact.status.sending': 'Sending …',
+      'contact.status.ok': 'Thank you! Your message has reached us. We will get back to you shortly.',
+      'contact.status.err': 'Something went wrong. Please try again or email us at info@seeclub-staefa.ch.',
+      'contact.status.validation': 'Please fill in all required fields.',
+    });
+
+    window.scsPageInit = () => {
+      const btn = document.getElementById('f-submit');
+      const status = document.getElementById('f-status');
+      btn.addEventListener('click', async () => {
+        const payload = {
+          name: document.getElementById('f-name').value.trim(),
+          email: document.getElementById('f-email').value.trim(),
+          subject: document.getElementById('f-subject').value,
+          message: document.getElementById('f-message').value.trim(),
+          language: scs.lang,
+          honeypot: '',
+        };
+        if (!payload.name || !payload.email || !payload.message) {
+          status.className = 'mt-4 text-sm text-amber-600 dark:text-amber-400';
+          status.textContent = scs.t('contact.status.validation');
+          return;
+        }
+        status.className = 'mt-4 text-sm text-slate-500';
+        status.textContent = scs.t('contact.status.sending');
+        btn.disabled = true;
+        try {
+          const res = await fetch(SCS_API.baseUrl + '/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (res.ok) {
+            status.className = 'mt-4 text-sm text-scs-green';
+            status.textContent = scs.t('contact.status.ok');
+            ['f-name','f-email','f-message'].forEach(id => document.getElementById(id).value = '');
+          } else {
+            throw new Error('Status ' + res.status);
+          }
+        } catch (err) {
+          status.className = 'mt-4 text-sm text-rose-600 dark:text-rose-400';
+          status.textContent = scs.t('contact.status.err');
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    };
+  </script>
+</body>
+</html>

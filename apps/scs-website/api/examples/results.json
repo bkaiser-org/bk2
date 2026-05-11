@@ -1,0 +1,32 @@
+[
+  {
+    "date": "2026-04-21",
+    "regatta": "Frühjahrsregatta Sarnen",
+    "location": "Sarnersee",
+    "boatClass": "M2x leicht",
+    "position": 1,
+    "crew": ["Lara Müller", "Sophie Keller"],
+    "time": "07:12.43",
+    "category": "U23"
+  },
+  {
+    "date": "2026-04-21",
+    "regatta": "Frühjahrsregatta Sarnen",
+    "location": "Sarnersee",
+    "boatClass": "M4x",
+    "position": 3,
+    "crew": ["Tim Schaffner", "Jonas Brunner", "David Egger", "Lukas Maier"],
+    "time": "06:48.12",
+    "category": "Open"
+  },
+  {
+    "date": "2026-05-12",
+    "regatta": "Internationale Rotsee Regatta",
+    "location": "Luzern, Rotsee",
+    "boatClass": "M1x",
+    "position": 5,
+    "crew": ["David Egger"],
+    "time": "07:34.21",
+    "category": "Elite"
+  }
+]

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neubau Bootshaus – Seeclub Stäfa</title>
+  <meta name="description" content="Ein neues Zuhause für den Rudersport in Stäfa. Modern, nachhaltig und für die nächsten Generationen." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'media', theme: { extend: {
+      colors: { scs: { green: '#009D53', greenDark: '#007a40', blue: '#014da2', blueDark: '#013a7c' } },
+      fontFamily: { sans: ['Inter','system-ui','sans-serif'], display: ['"Plus Jakarta Sans"','Inter','sans-serif'] }
+    }}};
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-200 antialiased">
+
+  <div id="site-header"></div>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <img src="assets/bootshaus-neubau.png" alt="" class="absolute inset-0 w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-44 text-white">
+      <span class="inline-block text-xs font-semibold tracking-wider uppercase text-scs-green bg-white/10 backdrop-blur px-3 py-1 rounded-full mb-4" data-i18n="boathouse.kicker">Grossprojekt</span>
+      <h1 class="font-display text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg" data-i18n="boathouse.page.title">Neubau Bootshaus</h1>
+      <p class="text-xl md:text-2xl max-w-2xl text-white/90" data-i18n="boathouse.page.lead">Ein neues Zuhause für den Rudersport in Stäfa.</p>
+    </div>
+  </section>
+
+  <!-- Eckdaten -->
+  <section class="py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-2xl md:text-3xl font-bold mb-8 reveal" data-i18n="boathouse.facts.title">Eckdaten</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="reveal bg-gradient-to-br from-scs-green/10 to-scs-green/5 dark:from-scs-green/20 dark:to-transparent rounded-xl p-6 border border-scs-green/20">
+          <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2" data-i18n="boathouse.facts.year">Geplante Eröffnung</div>
+          <div class="font-display text-3xl font-bold text-scs-green">2028</div>
+        </div>
+        <div class="reveal bg-gradient-to-br from-scs-blue/10 to-scs-blue/5 dark:from-scs-blue/20 dark:to-transparent rounded-xl p-6 border border-scs-blue/20">
+          <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2" data-i18n="boathouse.facts.material">Hauptmaterial</div>
+          <div class="font-display text-3xl font-bold text-scs-blue dark:text-blue-300" data-i18n="boathouse.facts.materialValue">Schweizer Holz</div>
+        </div>
+        <div class="reveal bg-gradient-to-br from-scs-green/10 to-scs-green/5 dark:from-scs-green/20 dark:to-transparent rounded-xl p-6 border border-scs-green/20">
+          <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2" data-i18n="boathouse.facts.boats">Bootskapazität</div>
+          <div class="font-display text-3xl font-bold text-scs-green">40+</div>
+        </div>
+        <div class="reveal bg-gradient-to-br from-scs-blue/10 to-scs-blue/5 dark:from-scs-blue/20 dark:to-transparent rounded-xl p-6 border border-scs-blue/20">
+          <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2" data-i18n="boathouse.facts.area">Nutzfläche</div>
+          <div class="font-display text-3xl font-bold text-scs-blue dark:text-blue-300">~1'200 m²</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="py-16 bg-slate-50 dark:bg-slate-900/50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+      <h2 class="font-display text-2xl md:text-3xl font-bold mb-6" data-i18n="boathouse.story.title">Warum wir bauen</h2>
+      <div class="prose-scs text-slate-700 dark:text-slate-300">
+        <p data-i18n="boathouse.story.p1">Das heutige Bootshaus stammt aus einer Zeit, in der unser Verein deutlich kleiner war. Mit über 100 aktiven Mitgliedern, einer wachsenden Jugendabteilung und ambitionierten Leistungssportlern stossen wir an räumliche Grenzen.</p>
+        <p data-i18n="boathouse.story.p2">Der Neubau ist nachhaltig konzipiert, fügt sich in die Uferlandschaft ein und schafft Platz für die nächsten Generationen am Zürichsee.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Unterstützen -->
+  <section class="py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-br from-scs-blue to-scs-blueDark text-white rounded-2xl p-8 md:p-12 reveal">
+        <h2 class="font-display text-2xl md:text-3xl font-bold mb-3" data-i18n="boathouse.support.title">Projekt unterstützen</h2>
+        <p class="text-blue-100 mb-6 max-w-2xl" data-i18n="boathouse.support.lead">Der Neubau wird durch Mitgliederbeiträge, Stiftungen und private Gönnerinnen und Gönner finanziert.</p>
+        <a href="https://seeclub.org/public/boathouse" class="inline-flex items-center gap-2 bg-white text-scs-blue px-5 py-3 rounded-lg font-semibold hover:bg-blue-50 transition" data-i18n="boathouse.support.cta">Im Mitgliederbereich mehr erfahren →</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/shared.js"></script>
+  <script>
+    Object.assign(scs.i18n.de, { 'boathouse.facts.materialValue': 'Schweizer Holz' });
+    Object.assign(scs.i18n.en, { 'boathouse.facts.materialValue': 'Swiss timber' });
+  </script>
+</body>
+</html>
