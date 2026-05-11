@@ -223,6 +223,7 @@
       }
     },
     "operation": {
+      "cancel": "Abbrechen",
       "copy": {
         "label": "Kopieren",
         "conf": "Der Wert wurde kopiert."
@@ -238,6 +239,7 @@
         "error": "Email(s) konnte(n) nicht verschickt werden.",
         "conf": "Email(s) wurde(n) abgeschickt."
       },
+      "save": "Speichern",
       "search": {
         "placeholder": "Suchen...",
         "byTag": "Tag"
@@ -2091,6 +2093,10 @@
       "file": {
         "upload": "Datei hochladen"
       }
+    },
+    "website": {
+      "edit": "Text editieren",
+      "delete": "Text löschen"
     },
     "document": {
       "download": "Dokument herunterladen",
@@ -7319,6 +7325,21 @@
         "subtitle": "Vergleicht die aktuellen SRV-Mitgliedschaften (orgKey=srv) mit den Mitgliedern im Regasoft-Portal. Primärer Abgleich via memberId = serviceId, Fallback via Name.",
         "button": "Index aufbauen",
         "reset": "Index zurücksetzen"
+      }
+    },
+    "website": {
+      "title": "Website Texte",
+      "list": {
+        "title": "Texte"
+      },
+      "edit": {
+        "title": "Texte ändern"
+      },
+      "key": {
+        "label": "ID"
+      },
+      "isHtml": {
+        "label": "Inhalt ist HTML"
       }
     },
     "bexio": {
