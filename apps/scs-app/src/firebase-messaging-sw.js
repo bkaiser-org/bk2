@@ -27,16 +27,25 @@ messaging.onBackgroundMessage(payload => {
 
   // Title and body come from data (data-only message) or fall back to notification field
   const notificationTitle = payload.data?.title || payload.notification?.title || 'New Message';
+
+  // iOS PWA silently drops showNotification() when requireInteraction or actions are present
+  // (these options are not supported on iOS and cause a silent failure, not a no-op).
+  const isVideoCall = payload.data?.type === 'video-call';
+  const isIOS = /iP(ad|hone|od)/.test(self.navigator?.userAgent || '');
+  const supportsActions = !isIOS && typeof Notification !== 'undefined' && (Notification.maxActions ?? 0) > 0;
+
   const notificationOptions = {
     body: payload.data?.body || payload.notification?.body || 'You have unread messages',
     icon: '/assets/icons/icon-192x192.png',
     badge: '/assets/icons/badge-72x72.png',
     data: payload.data,
-    tag: payload.data?.type === 'video-call' ? 'video-call' : (payload.data?.channelId || 'default'),
-    requireInteraction: payload.data?.type === 'video-call',
-    actions: payload.data?.type === 'video-call'
-      ? [{ action: 'open', title: 'Anruf öffnen' }, { action: 'dismiss', title: 'Ablehnen' }]
-      : [{ action: 'open', title: 'Open Chat' }, { action: 'dismiss', title: 'Dismiss' }],
+    tag: isVideoCall ? 'video-call' : (payload.data?.channelId || 'default'),
+    ...(supportsActions && {
+      requireInteraction: isVideoCall,
+      actions: isVideoCall
+        ? [{ action: 'open', title: 'Anruf öffnen' }, { action: 'dismiss', title: 'Ablehnen' }]
+        : [{ action: 'open', title: 'Open Chat' }, { action: 'dismiss', title: 'Dismiss' }],
+    }),
   };
 
   return self.registration.showNotification(notificationTitle, notificationOptions);
