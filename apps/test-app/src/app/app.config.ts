@@ -5,6 +5,8 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 
 import { ENV } from '@bk2/shared-config';
 import { isBrowser, VersionCheckService } from '@bk2/shared-util-angular';
+import { PersonEditModal } from '@bk2/subject-person-feature';
+import { PERSON_EDIT_MODAL } from '@bk2/subject-person-ui';
 import { environment } from '../environments/environment';
 
 import { appRoutes } from './app.routes';
@@ -30,6 +32,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
     { provide: ENV, useValue: environment },
+    { provide: PERSON_EDIT_MODAL, useValue: PersonEditModal },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular({ useSetInputAPI: true, innerHTMLTemplatesEnabled: true }),
     // provideClientHydration disabled - Ionic doesn't fully support SSR hydration yet

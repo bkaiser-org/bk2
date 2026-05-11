@@ -7,6 +7,8 @@ import { ENV } from '@bk2/shared-config';
 import { isBrowser, VersionCheckService } from '@bk2/shared-util-angular';
 import { GroupEditModalComponent } from '@bk2/subject-group-feature';
 import { GROUP_EDIT_MODAL } from '@bk2/subject-group-ui';
+import { PersonEditModal } from '@bk2/subject-person-feature';
+import { PERSON_EDIT_MODAL } from '@bk2/subject-person-ui';
 import { environment } from '../environments/environment';
 
 import { appRoutes } from './app.routes';
@@ -32,6 +34,7 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     { provide: ENV, useValue: environment },
     { provide: GROUP_EDIT_MODAL, useValue: GroupEditModalComponent },
+    { provide: PERSON_EDIT_MODAL, useValue: PersonEditModal },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular({ useSetInputAPI: true, innerHTMLTemplatesEnabled: true }),
     // provideClientHydration disabled - Ionic doesn't fully support SSR hydration yet
