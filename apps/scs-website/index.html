@@ -153,10 +153,10 @@
           <span class="text-xs font-semibold tracking-wider uppercase text-scs-green" data-i18n="events.kicker">Agenda</span>
           <h2 class="font-display text-3xl md:text-4xl font-bold mt-2" data-i18n="events.title">Nächste Termine</h2>
         </div>
-        <a href="termine.html" class="text-sm font-semibold text-scs-green hover:underline hidden sm:inline" data-i18n="events.all">Alle Termine →</a>
+        <a href="/public/calendar" class="text-sm font-semibold text-scs-green hover:underline hidden sm:inline" data-i18n="events.all">Alle Termine →</a>
       </div>
       <div id="events-list" class="space-y-3"></div>
-      <a href="termine.html" class="text-sm font-semibold text-scs-green hover:underline mt-6 inline-block sm:hidden" data-i18n="events.all">Alle Termine →</a>
+      <a href="/public/calendar" class="text-sm font-semibold text-scs-green hover:underline mt-6 inline-block sm:hidden" data-i18n="events.all">Alle Termine →</a>
     </div>
   </section>
 
@@ -168,10 +168,10 @@
           <span class="text-xs font-semibold tracking-wider uppercase text-scs-green" data-i18n="news.kicker">Aktuell</span>
           <h2 class="font-display text-3xl md:text-4xl font-bold mt-2" data-i18n="news.titleHome">News & Erfolge</h2>
         </div>
-        <a href="news.html" class="text-sm font-semibold text-scs-green hover:underline hidden sm:inline" data-i18n="news.all">Alle News →</a>
+        <a href="/public/news" class="text-sm font-semibold text-scs-green hover:underline hidden sm:inline" data-i18n="news.all">Alle News →</a>
       </div>
       <div id="news-list" class="grid md:grid-cols-3 gap-6"></div>
-      <a href="news.html" class="text-sm font-semibold text-scs-green hover:underline mt-6 inline-block sm:hidden" data-i18n="news.all">Alle News →</a>
+      <a href="/public/news" class="text-sm font-semibold text-scs-green hover:underline mt-6 inline-block sm:hidden" data-i18n="news.all">Alle News →</a>
     </div>
   </section>
 
@@ -260,6 +260,12 @@
 
     let _events = [], _news = [];
     window.scsPageInit = async () => {
+      const content = await SCS_API.content();
+      if (content) {
+        Object.assign(scs.i18n.de, content.de || {});
+        Object.assign(scs.i18n.en, content.en || {});
+        scs.applyLang(scs.lang);
+      }
       _events = await SCS_API.calendar();
       _news = await SCS_API.news();
       renderEventsHome(_events);

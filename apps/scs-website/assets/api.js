@@ -6,8 +6,10 @@
  * SCS_API.baseUrl.
  */
 
+const SCS_TENANT = 'scs';
+
 const SCS_API = {
-  baseUrl: 'https://seeclub.org/public/api/v1',
+  baseUrl: 'https://europe-west6-bkaiser-org.cloudfunctions.net/publicApi/public/api/v1',
 
   async _get(path) {
     try {
@@ -19,21 +21,25 @@ const SCS_API = {
     } catch { return null; }
   },
 
-  async org()           { return (await this._get('/org'))      || SCS_FALLBACK.org; },
-  async news(params)    {
-    const q = new URLSearchParams(params || {}).toString();
-    return (await this._get('/news' + (q ? '?' + q : ''))) || SCS_FALLBACK.news;
+  async content() {
+    return (await this._get(`/content?tenantId=${SCS_TENANT}`)) || null;
   },
-  async newsBySlug(slug){ return (await this._get('/news/' + encodeURIComponent(slug)))
+
+  async org()           { return (await this._get(`/org?tenantId=${SCS_TENANT}`))       || SCS_FALLBACK.org; },
+  async news(params)    {
+    const q = new URLSearchParams({ tenantId: SCS_TENANT, ...(params || {}) }).toString();
+    return (await this._get('/news?' + q)) || SCS_FALLBACK.news;
+  },
+  async newsBySlug(slug){ return (await this._get(`/news/${encodeURIComponent(slug)}?tenantId=${SCS_TENANT}`))
                               || SCS_FALLBACK.news.find(n => n.slug === slug) || null; },
   async calendar(params){
-    const q = new URLSearchParams(params || {}).toString();
-    return (await this._get('/calendar' + (q ? '?' + q : ''))) || SCS_FALLBACK.calendar;
+    const q = new URLSearchParams({ tenantId: SCS_TENANT, ...(params || {}) }).toString();
+    return (await this._get('/calendar?' + q)) || SCS_FALLBACK.calendar;
   },
-  async courses()       { return (await this._get('/courses'))  || SCS_FALLBACK.courses; },
+  async courses()       { return (await this._get(`/courses?tenantId=${SCS_TENANT}`))   || SCS_FALLBACK.courses; },
   async results(params) {
-    const q = new URLSearchParams(params || {}).toString();
-    return (await this._get('/results' + (q ? '?' + q : '')))   || SCS_FALLBACK.results;
+    const q = new URLSearchParams({ tenantId: SCS_TENANT, ...(params || {}) }).toString();
+    return (await this._get('/results?' + q))   || SCS_FALLBACK.results;
   },
 };
 

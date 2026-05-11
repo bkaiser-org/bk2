@@ -146,7 +146,7 @@ function renderHeader() {
   slot.innerHTML = `
     <header class="sticky top-0 z-40 backdrop-blur bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/60 dark:border-slate-800/60">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a href="index.html" class="flex items-center gap-3" aria-label="Seeclub Stäfa">
+        <a href="/public" class="flex items-center gap-3" aria-label="Seeclub Stäfa">
           <img src="https://bkaiser.imgix.net/tenant/scs/logo/logo.svg" alt="Logo Seeclub Stäfa" class="h-9 w-auto" />
           <span class="font-display font-bold text-lg hidden sm:inline">Seeclub Stäfa</span>
         </a>
@@ -155,7 +155,7 @@ function renderHeader() {
             <button class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.club">Verein</button>
             <div class="absolute left-0 top-full pt-2 hidden group-hover:block">
               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-lg py-2 min-w-[200px]">
-                <a href="index.html#ueber-uns" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.about">Über uns</a>
+                <a href="/public#ueber-uns" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.about">Über uns</a>
                 <a href="bootshaus.html" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.boathouse">Neues Bootshaus</a>
               </div>
             </div>
@@ -164,15 +164,15 @@ function renderHeader() {
             <button class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.rowing">Rudern</button>
             <div class="absolute left-0 top-full pt-2 hidden group-hover:block">
               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-lg py-2 min-w-[220px]">
-                <a href="index.html#kurse" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.courses">Kurse für Einsteiger</a>
-                <a href="index.html#jugend" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.youth">Jugendrudern</a>
-                <a href="index.html#leistungssport" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.competitive">Leistungssport</a>
-                <a href="index.html#quereinstieg" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.lateral">Quereinstieg</a>
+                <a href="/public#kurse" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.courses">Kurse für Einsteiger</a>
+                <a href="/public#jugend" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.youth">Jugendrudern</a>
+                <a href="/public#leistungssport" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.competitive">Leistungssport</a>
+                <a href="/public#quereinstieg" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.lateral">Quereinstieg</a>
               </div>
             </div>
           </div>
-          <a href="termine.html" class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.events">Termine</a>
-          <a href="news.html" class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.news">News</a>
+          <a href="/public/calendar" class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.events">Termine</a>
+          <a href="/public/news" class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.news">News</a>
           <a href="kontakt.html" class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.contact">Kontakt</a>
         </nav>
         <div class="flex items-center gap-2">
@@ -189,10 +189,10 @@ function renderHeader() {
       </div>
       <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
         <div class="px-4 py-3 space-y-1">
-          <a href="index.html#ueber-uns" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.about">Über uns</a>
-          <a href="index.html#kurse" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.courses">Kurse</a>
-          <a href="termine.html" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.events">Termine</a>
-          <a href="news.html" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.news">News</a>
+          <a href="/public#ueber-uns" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.about">Über uns</a>
+          <a href="/public#kurse" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.courses">Kurse</a>
+          <a href="/public/calendar" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.events">Termine</a>
+          <a href="/public/news" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.news">News</a>
           <a href="kontakt.html" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.contact">Kontakt</a>
           <a href="bootshaus.html" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.boathouse">Bootshaus</a>
           <a href="https://seeclub.org/" class="block px-3 py-2 rounded bg-scs-green text-white text-center font-semibold" data-i18n="nav.login">Mitgliederbereich</a>
@@ -224,8 +224,8 @@ function renderFooter() {
             <h4 class="font-semibold mb-3 text-sm" data-i18n="footer.links">Links</h4>
             <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
               <li><a href="https://seeclub.org/" class="hover:text-scs-green" data-i18n="footer.member">Mitgliederbereich</a></li>
-              <li><a href="termine.html" class="hover:text-scs-green" data-i18n="footer.calendar">Kalender</a></li>
-              <li><a href="news.html" class="hover:text-scs-green" data-i18n="footer.newsLink">News</a></li>
+              <li><a href="/public/calendar" class="hover:text-scs-green" data-i18n="footer.calendar">Kalender</a></li>
+              <li><a href="/public/news" class="hover:text-scs-green" data-i18n="footer.newsLink">News</a></li>
               <li><a href="kontakt.html" class="hover:text-scs-green" data-i18n="footer.contact">Kontakt</a></li>
             </ul>
           </div>
