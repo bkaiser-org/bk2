@@ -312,5 +312,21 @@ export const appRoutes: Route[] = [
       { path: 'website', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocWebsite) },
     ],
   },
+  {
+    path: 'i18n',
+    canActivate: [isAdminGuard],
+    children: [
+      {
+        path: 'defaults',
+        canActivate: [isAdminGuard],
+        loadComponent: () => import('@bk2/i18n-feature').then(m => m.I18nDefaultList),
+      },
+      {
+        path: 'overrides',
+        canActivate: [isPrivilegedGuard],
+        loadComponent: () => import('@bk2/i18n-feature').then(m => m.I18nOverrideList),
+      },
+    ],
+  },
   { path: '**', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ErrorPage), data: { errorName: 'pageNotFound' } },
 ];
