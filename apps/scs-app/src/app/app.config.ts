@@ -17,7 +17,8 @@ import { appRoutes } from './app.routes';
 import { initializeApp } from 'firebase/app';
 
 // i18n with transloco
-import { I18nService, TranslocoHttpLoader } from '@bk2/shared-i18n';
+import { APP_STORE_MIN, I18nOverrideService, I18nService, TranslocoHttpLoader } from '@bk2/shared-i18n';
+import { AppStore } from '@bk2/shared-feature';
 import { provideTransloco } from '@jsverse/transloco';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -52,6 +53,21 @@ export const appConfig: ApplicationConfig = {
       loader: TranslocoHttpLoader,
     }),
     I18nService,
+    { provide: APP_STORE_MIN, useExisting: AppStore },
+
+    // Initialize I18n tenant overrides after the app has bootstrapped.
+    {
+      provide: APP_BOOTSTRAP_LISTENER,
+      useFactory: (platformId: object) => {
+        const overrideService = inject(I18nOverrideService);
+        return () => {
+          if (!isBrowser(platformId)) return;
+          overrideService.init();
+        };
+      },
+      deps: [PLATFORM_ID],
+      multi: true,
+    },
 
     // this provider is to safely initialize browser-only services AFTER the app has rendered.
     {
