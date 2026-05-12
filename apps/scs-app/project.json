@@ -49,6 +49,11 @@
             "input": "apps/scs-website",
             "output": "./web"
           },
+          {
+            "glob": "*.json",
+            "input": "libs/chat/feature/src/i18n",
+            "output": "./i18n/chat/feature"
+          },
           "apps/scs-app/src/firebase-messaging-sw.js",
           "apps/scs-app/src/firebase-config.js",
           {
