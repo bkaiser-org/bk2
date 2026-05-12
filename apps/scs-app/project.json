@@ -4,7 +4,11 @@
   "projectType": "application",
   "prefix": "bk",
   "sourceRoot": "apps/scs-app/src",
-  "tags": ["type:app", "platform:mobile", "platform:web"],
+  "tags": [
+    "type:app",
+    "platform:mobile",
+    "platform:web"
+  ],
   "targets": {
     "format": {
       "executor": "nx:run-commands",
@@ -31,10 +35,19 @@
       }
     },
     "build": {
-      "dependsOn": ["config", "^build"],
+      "dependsOn": [
+        "config",
+        "^build"
+      ],
       "executor": "@angular/build:application",
-      "inputs": ["production", "^production", "{workspaceRoot}/apps/scs-website/**/*"],
-      "outputs": ["{options.outputPath}"],
+      "inputs": [
+        "production",
+        "^production",
+        "{workspaceRoot}/apps/scs-website/**/*"
+      ],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/scs-app",
         "index": "apps/scs-app/src/index.html",
@@ -53,6 +66,196 @@
             "glob": "*.json",
             "input": "libs/chat/feature/src/i18n",
             "output": "./i18n/chat/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/activity/data-access/src/i18n",
+            "output": "./i18n/activity/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/activity/feature/src/i18n",
+            "output": "./i18n/activity/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/aoc/feature/src/i18n",
+            "output": "./i18n/aoc/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/aoc/util/src/i18n",
+            "output": "./i18n/aoc/util"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/auth/data-access/src/i18n",
+            "output": "./i18n/auth/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/auth/feature/src/i18n",
+            "output": "./i18n/auth/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/auth/ui/src/i18n",
+            "output": "./i18n/auth/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/auth/util/src/i18n",
+            "output": "./i18n/auth/util"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/avatar/data-access/src/i18n",
+            "output": "./i18n/avatar/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/avatar/ui/src/i18n",
+            "output": "./i18n/avatar/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/calevent/feature/src/i18n",
+            "output": "./i18n/calevent/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/calevent/ui/src/i18n",
+            "output": "./i18n/calevent/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/category/feature/src/i18n",
+            "output": "./i18n/category/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/chat/ui/src/i18n",
+            "output": "./i18n/chat/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/chat/util/src/i18n",
+            "output": "./i18n/chat/util"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/comment/feature/src/i18n",
+            "output": "./i18n/comment/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/comment/ui/src/i18n",
+            "output": "./i18n/comment/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/document/feature/src/i18n",
+            "output": "./i18n/document/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/document/ui/src/i18n",
+            "output": "./i18n/document/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/document/util/src/i18n",
+            "output": "./i18n/document/util"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/folder/feature/src/i18n",
+            "output": "./i18n/folder/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/i18n/feature/src/i18n",
+            "output": "./i18n/i18n/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/icon/feature/src/i18n",
+            "output": "./i18n/icon/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/icon/ui/src/i18n",
+            "output": "./i18n/icon/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/profile/feature/src/i18n",
+            "output": "./i18n/profile/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/profile/ui/src/i18n",
+            "output": "./i18n/profile/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/resource/feature/src/i18n",
+            "output": "./i18n/resource/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/shared/categories/src/i18n",
+            "output": "./i18n/shared/categories"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/shared/data-access/src/i18n",
+            "output": "./i18n/shared/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/shared/feature/src/i18n",
+            "output": "./i18n/shared/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/shared/i18n/src/i18n",
+            "output": "./i18n/shared/i18n"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/shared/ui/src/i18n",
+            "output": "./i18n/shared/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/shared/util-angular/src/i18n",
+            "output": "./i18n/shared/util-angular"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/shared/util-core/src/i18n",
+            "output": "./i18n/shared/util-core"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/task/feature/src/i18n",
+            "output": "./i18n/task/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/task/ui/src/i18n",
+            "output": "./i18n/task/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/user/feature/src/i18n",
+            "output": "./i18n/user/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/user/ui/src/i18n",
+            "output": "./i18n/user/ui"
           },
           "apps/scs-app/src/firebase-messaging-sw.js",
           "apps/scs-app/src/firebase-config.js",
