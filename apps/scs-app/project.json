@@ -33,6 +33,7 @@
     "build": {
       "dependsOn": ["config", "^build"],
       "executor": "@angular/build:application",
+      "inputs": ["production", "^production", "{workspaceRoot}/apps/scs-website/**/*"],
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/scs-app",
