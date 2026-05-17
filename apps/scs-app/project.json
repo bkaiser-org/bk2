@@ -64,198 +64,493 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/chat/feature/src/i18n",
-            "output": "./i18n/chat/feature"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/activity/data-access/src/i18n",
-            "output": "./i18n/activity/data-access"
+            "output": "./assets/i18n/activity/data-access"
           },
           {
             "glob": "*.json",
             "input": "libs/activity/feature/src/i18n",
-            "output": "./i18n/activity/feature"
+            "output": "./assets/i18n/activity/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/aoc/feature/src/i18n",
-            "output": "./i18n/aoc/feature"
+            "output": "./assets/i18n/aoc/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/aoc/util/src/i18n",
-            "output": "./i18n/aoc/util"
+            "output": "./assets/i18n/aoc/util"
           },
           {
             "glob": "*.json",
             "input": "libs/auth/data-access/src/i18n",
-            "output": "./i18n/auth/data-access"
+            "output": "./assets/i18n/auth/data-access"
           },
           {
             "glob": "*.json",
             "input": "libs/auth/feature/src/i18n",
-            "output": "./i18n/auth/feature"
+            "output": "./assets/i18n/auth/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/auth/ui/src/i18n",
-            "output": "./i18n/auth/ui"
+            "output": "./assets/i18n/auth/ui"
           },
           {
             "glob": "*.json",
             "input": "libs/auth/util/src/i18n",
-            "output": "./i18n/auth/util"
+            "output": "./assets/i18n/auth/util"
           },
           {
             "glob": "*.json",
             "input": "libs/avatar/data-access/src/i18n",
-            "output": "./i18n/avatar/data-access"
+            "output": "./assets/i18n/avatar/data-access"
           },
           {
             "glob": "*.json",
             "input": "libs/avatar/ui/src/i18n",
-            "output": "./i18n/avatar/ui"
+            "output": "./assets/i18n/avatar/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/calevent/data-access/src/i18n",
+            "output": "./assets/i18n/calevent/data-access"
           },
           {
             "glob": "*.json",
             "input": "libs/calevent/feature/src/i18n",
-            "output": "./i18n/calevent/feature"
+            "output": "./assets/i18n/calevent/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/calevent/ui/src/i18n",
-            "output": "./i18n/calevent/ui"
+            "output": "./assets/i18n/calevent/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/category/data-access/src/i18n",
+            "output": "./assets/i18n/category/data-access"
           },
           {
             "glob": "*.json",
             "input": "libs/category/feature/src/i18n",
-            "output": "./i18n/category/feature"
+            "output": "./assets/i18n/category/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/chat/feature/src/i18n",
+            "output": "./assets/i18n/chat/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/chat/ui/src/i18n",
-            "output": "./i18n/chat/ui"
+            "output": "./assets/i18n/chat/ui"
           },
           {
             "glob": "*.json",
             "input": "libs/chat/util/src/i18n",
-            "output": "./i18n/chat/util"
+            "output": "./assets/i18n/chat/util"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/cms/menu/data-access/src/i18n",
+            "output": "./assets/i18n/cms/menu/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/cms/menu/feature/src/i18n",
+            "output": "./assets/i18n/cms/menu/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/cms/menu/ui/src/i18n",
+            "output": "./assets/i18n/cms/menu/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/cms/page/data-access/src/i18n",
+            "output": "./assets/i18n/cms/page/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/cms/page/feature/src/i18n",
+            "output": "./assets/i18n/cms/page/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/cms/page/ui/src/i18n",
+            "output": "./assets/i18n/cms/page/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/cms/section/data-access/src/i18n",
+            "output": "./assets/i18n/cms/section/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/cms/section/feature/src/i18n",
+            "output": "./assets/i18n/cms/section/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/cms/section/ui/src/i18n",
+            "output": "./assets/i18n/cms/section/ui"
           },
           {
             "glob": "*.json",
             "input": "libs/comment/feature/src/i18n",
-            "output": "./i18n/comment/feature"
+            "output": "./assets/i18n/comment/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/comment/ui/src/i18n",
-            "output": "./i18n/comment/ui"
+            "output": "./assets/i18n/comment/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/document/data-access/src/i18n",
+            "output": "./assets/i18n/document/data-access"
           },
           {
             "glob": "*.json",
             "input": "libs/document/feature/src/i18n",
-            "output": "./i18n/document/feature"
+            "output": "./assets/i18n/document/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/document/ui/src/i18n",
-            "output": "./i18n/document/ui"
+            "output": "./assets/i18n/document/ui"
           },
           {
             "glob": "*.json",
             "input": "libs/document/util/src/i18n",
-            "output": "./i18n/document/util"
+            "output": "./assets/i18n/document/util"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/finance/account/data-access/src/i18n",
+            "output": "./assets/i18n/finance/account/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/finance/account/feature/src/i18n",
+            "output": "./assets/i18n/finance/account/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/finance/bill/feature/src/i18n",
+            "output": "./assets/i18n/finance/bill/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/finance/invoice/feature/src/i18n",
+            "output": "./assets/i18n/finance/invoice/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/finance/invoice/ui/src/i18n",
+            "output": "./assets/i18n/finance/invoice/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/finance/journal/feature/src/i18n",
+            "output": "./assets/i18n/finance/journal/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/folder/data-access/src/i18n",
+            "output": "./assets/i18n/folder/data-access"
           },
           {
             "glob": "*.json",
             "input": "libs/folder/feature/src/i18n",
-            "output": "./i18n/folder/feature"
+            "output": "./assets/i18n/folder/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/geo/flighttracker/feature/src/i18n",
+            "output": "./assets/i18n/geo/flighttracker/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/geo/location/data-access/src/i18n",
+            "output": "./assets/i18n/geo/location/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/geo/location/feature/src/i18n",
+            "output": "./assets/i18n/geo/location/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/i18n/feature/src/i18n",
-            "output": "./i18n/i18n/feature"
+            "output": "./assets/i18n/i18n/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/icon/data-access/src/i18n",
+            "output": "./assets/i18n/icon/data-access"
           },
           {
             "glob": "*.json",
             "input": "libs/icon/feature/src/i18n",
-            "output": "./i18n/icon/feature"
+            "output": "./assets/i18n/icon/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/icon/ui/src/i18n",
-            "output": "./i18n/icon/ui"
+            "output": "./assets/i18n/icon/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/profile/data-access/src/i18n",
+            "output": "./assets/i18n/profile/data-access"
           },
           {
             "glob": "*.json",
             "input": "libs/profile/feature/src/i18n",
-            "output": "./i18n/profile/feature"
+            "output": "./assets/i18n/profile/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/profile/ui/src/i18n",
-            "output": "./i18n/profile/ui"
+            "output": "./assets/i18n/profile/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/invitation/data-access/src/i18n",
+            "output": "./assets/i18n/relationship/invitation/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/invitation/feature/src/i18n",
+            "output": "./assets/i18n/relationship/invitation/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/membership/data-access/src/i18n",
+            "output": "./assets/i18n/relationship/membership/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/membership/feature/src/i18n",
+            "output": "./assets/i18n/relationship/membership/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/membership/ui/src/i18n",
+            "output": "./assets/i18n/relationship/membership/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/ownership/data-access/src/i18n",
+            "output": "./assets/i18n/relationship/ownership/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/ownership/feature/src/i18n",
+            "output": "./assets/i18n/relationship/ownership/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/personal-rel/data-access/src/i18n",
+            "output": "./assets/i18n/relationship/personal-rel/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/personal-rel/feature/src/i18n",
+            "output": "./assets/i18n/relationship/personal-rel/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/personal-rel/ui/src/i18n",
+            "output": "./assets/i18n/relationship/personal-rel/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/reservation/data-access/src/i18n",
+            "output": "./assets/i18n/relationship/reservation/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/reservation/feature/src/i18n",
+            "output": "./assets/i18n/relationship/reservation/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/reservation/ui/src/i18n",
+            "output": "./assets/i18n/relationship/reservation/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/responsibility/data-access/src/i18n",
+            "output": "./assets/i18n/relationship/responsibility/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/responsibility/feature/src/i18n",
+            "output": "./assets/i18n/relationship/responsibility/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/transfer/data-access/src/i18n",
+            "output": "./assets/i18n/relationship/transfer/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/transfer/feature/src/i18n",
+            "output": "./assets/i18n/relationship/transfer/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/transfer/ui/src/i18n",
+            "output": "./assets/i18n/relationship/transfer/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/workrel/data-access/src/i18n",
+            "output": "./assets/i18n/relationship/workrel/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/workrel/feature/src/i18n",
+            "output": "./assets/i18n/relationship/workrel/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/workrel/ui/src/i18n",
+            "output": "./assets/i18n/relationship/workrel/ui"
           },
           {
             "glob": "*.json",
             "input": "libs/resource/feature/src/i18n",
-            "output": "./i18n/resource/feature"
+            "output": "./assets/i18n/resource/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/shared/categories/src/i18n",
-            "output": "./i18n/shared/categories"
+            "output": "./assets/i18n/shared/categories"
           },
           {
             "glob": "*.json",
             "input": "libs/shared/data-access/src/i18n",
-            "output": "./i18n/shared/data-access"
+            "output": "./assets/i18n/shared/data-access"
           },
           {
             "glob": "*.json",
             "input": "libs/shared/feature/src/i18n",
-            "output": "./i18n/shared/feature"
+            "output": "./assets/i18n/shared/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/shared/i18n/src/i18n",
-            "output": "./i18n/shared/i18n"
+            "output": "./assets/i18n/shared/i18n"
           },
           {
             "glob": "*.json",
             "input": "libs/shared/ui/src/i18n",
-            "output": "./i18n/shared/ui"
+            "output": "./assets/i18n/shared/ui"
           },
           {
             "glob": "*.json",
             "input": "libs/shared/util-angular/src/i18n",
-            "output": "./i18n/shared/util-angular"
+            "output": "./assets/i18n/shared/util-angular"
           },
           {
             "glob": "*.json",
             "input": "libs/shared/util-core/src/i18n",
-            "output": "./i18n/shared/util-core"
+            "output": "./assets/i18n/shared/util-core"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/subject/address/data-access/src/i18n",
+            "output": "./assets/i18n/subject/address/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/subject/address/feature/src/i18n",
+            "output": "./assets/i18n/subject/address/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/subject/address/util/src/i18n",
+            "output": "./assets/i18n/subject/address/util"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/subject/group/data-access/src/i18n",
+            "output": "./assets/i18n/subject/group/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/subject/group/feature/src/i18n",
+            "output": "./assets/i18n/subject/group/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/subject/group/ui/src/i18n",
+            "output": "./assets/i18n/subject/group/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/subject/org/data-access/src/i18n",
+            "output": "./assets/i18n/subject/org/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/subject/org/feature/src/i18n",
+            "output": "./assets/i18n/subject/org/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/subject/person/data-access/src/i18n",
+            "output": "./assets/i18n/subject/person/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/subject/person/feature/src/i18n",
+            "output": "./assets/i18n/subject/person/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/subject/person/ui/src/i18n",
+            "output": "./assets/i18n/subject/person/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/subject/person/util/src/i18n",
+            "output": "./assets/i18n/subject/person/util"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/task/data-access/src/i18n",
+            "output": "./assets/i18n/task/data-access"
           },
           {
             "glob": "*.json",
             "input": "libs/task/feature/src/i18n",
-            "output": "./i18n/task/feature"
+            "output": "./assets/i18n/task/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/task/ui/src/i18n",
-            "output": "./i18n/task/ui"
+            "output": "./assets/i18n/task/ui"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/user/data-access/src/i18n",
+            "output": "./assets/i18n/user/data-access"
           },
           {
             "glob": "*.json",
             "input": "libs/user/feature/src/i18n",
-            "output": "./i18n/user/feature"
+            "output": "./assets/i18n/user/feature"
           },
           {
             "glob": "*.json",
             "input": "libs/user/ui/src/i18n",
-            "output": "./i18n/user/ui"
+            "output": "./assets/i18n/user/ui"
           },
           "apps/scs-app/src/firebase-messaging-sw.js",
           "apps/scs-app/src/firebase-config.js",
@@ -273,496 +568,6 @@
             "glob": "robots.txt",
             "input": "apps/scs-app/src",
             "output": "."
-          },
-          {
-            "glob": "*.json",
-            "input": "libs//src/i18n",
-            "output": "./i18n/"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/activity/data-access/src/src/i18n",
-            "output": "./i18n/activity/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/activity/feature/src/src/i18n",
-            "output": "./i18n/activity/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/aoc/feature/src/src/i18n",
-            "output": "./i18n/aoc/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/aoc/util/src/src/i18n",
-            "output": "./i18n/aoc/util/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/auth/data-access/src/src/i18n",
-            "output": "./i18n/auth/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/auth/feature/src/src/i18n",
-            "output": "./i18n/auth/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/auth/ui/src/src/i18n",
-            "output": "./i18n/auth/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/auth/util/src/src/i18n",
-            "output": "./i18n/auth/util/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/avatar/data-access/src/src/i18n",
-            "output": "./i18n/avatar/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/avatar/ui/src/src/i18n",
-            "output": "./i18n/avatar/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/calevent/data-access/src/src/i18n",
-            "output": "./i18n/calevent/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/calevent/feature/src/src/i18n",
-            "output": "./i18n/calevent/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/calevent/ui/src/src/i18n",
-            "output": "./i18n/calevent/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/category/data-access/src/src/i18n",
-            "output": "./i18n/category/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/category/feature/src/src/i18n",
-            "output": "./i18n/category/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/chat/feature/src/src/i18n",
-            "output": "./i18n/chat/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/chat/ui/src/src/i18n",
-            "output": "./i18n/chat/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/chat/util/src/src/i18n",
-            "output": "./i18n/chat/util/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/cms/menu/data-access/src/src/i18n",
-            "output": "./i18n/cms/menu/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/cms/menu/feature/src/src/i18n",
-            "output": "./i18n/cms/menu/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/cms/menu/ui/src/src/i18n",
-            "output": "./i18n/cms/menu/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/cms/page/data-access/src/src/i18n",
-            "output": "./i18n/cms/page/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/cms/page/feature/src/src/i18n",
-            "output": "./i18n/cms/page/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/cms/page/ui/src/src/i18n",
-            "output": "./i18n/cms/page/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/cms/section/data-access/src/src/i18n",
-            "output": "./i18n/cms/section/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/cms/section/feature/src/src/i18n",
-            "output": "./i18n/cms/section/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/cms/section/ui/src/src/i18n",
-            "output": "./i18n/cms/section/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/comment/feature/src/src/i18n",
-            "output": "./i18n/comment/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/comment/ui/src/src/i18n",
-            "output": "./i18n/comment/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/document/data-access/src/src/i18n",
-            "output": "./i18n/document/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/document/feature/src/src/i18n",
-            "output": "./i18n/document/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/document/ui/src/src/i18n",
-            "output": "./i18n/document/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/document/util/src/src/i18n",
-            "output": "./i18n/document/util/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/finance/account/data-access/src/src/i18n",
-            "output": "./i18n/finance/account/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/finance/account/feature/src/src/i18n",
-            "output": "./i18n/finance/account/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/finance/bill/feature/src/src/i18n",
-            "output": "./i18n/finance/bill/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/finance/invoice/feature/src/src/i18n",
-            "output": "./i18n/finance/invoice/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/finance/invoice/ui/src/src/i18n",
-            "output": "./i18n/finance/invoice/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/finance/journal/feature/src/src/i18n",
-            "output": "./i18n/finance/journal/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/folder/data-access/src/src/i18n",
-            "output": "./i18n/folder/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/folder/feature/src/src/i18n",
-            "output": "./i18n/folder/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/geo/flighttracker/feature/src/src/i18n",
-            "output": "./i18n/geo/flighttracker/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/geo/location/data-access/src/src/i18n",
-            "output": "./i18n/geo/location/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/geo/location/feature/src/src/i18n",
-            "output": "./i18n/geo/location/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/icon/data-access/src/src/i18n",
-            "output": "./i18n/icon/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/icon/feature/src/src/i18n",
-            "output": "./i18n/icon/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/icon/ui/src/src/i18n",
-            "output": "./i18n/icon/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/profile/data-access/src/src/i18n",
-            "output": "./i18n/profile/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/profile/feature/src/src/i18n",
-            "output": "./i18n/profile/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/profile/ui/src/src/i18n",
-            "output": "./i18n/profile/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/invitation/data-access/src/src/i18n",
-            "output": "./i18n/relationship/invitation/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/invitation/feature/src/src/i18n",
-            "output": "./i18n/relationship/invitation/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/membership/data-access/src/src/i18n",
-            "output": "./i18n/relationship/membership/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/membership/feature/src/src/i18n",
-            "output": "./i18n/relationship/membership/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/membership/ui/src/src/i18n",
-            "output": "./i18n/relationship/membership/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/ownership/data-access/src/src/i18n",
-            "output": "./i18n/relationship/ownership/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/ownership/feature/src/src/i18n",
-            "output": "./i18n/relationship/ownership/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/personal-rel/data-access/src/src/i18n",
-            "output": "./i18n/relationship/personal-rel/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/personal-rel/feature/src/src/i18n",
-            "output": "./i18n/relationship/personal-rel/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/personal-rel/ui/src/src/i18n",
-            "output": "./i18n/relationship/personal-rel/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/reservation/data-access/src/src/i18n",
-            "output": "./i18n/relationship/reservation/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/reservation/feature/src/src/i18n",
-            "output": "./i18n/relationship/reservation/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/reservation/ui/src/src/i18n",
-            "output": "./i18n/relationship/reservation/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/responsibility/data-access/src/src/i18n",
-            "output": "./i18n/relationship/responsibility/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/responsibility/feature/src/src/i18n",
-            "output": "./i18n/relationship/responsibility/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/transfer/data-access/src/src/i18n",
-            "output": "./i18n/relationship/transfer/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/transfer/feature/src/src/i18n",
-            "output": "./i18n/relationship/transfer/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/transfer/ui/src/src/i18n",
-            "output": "./i18n/relationship/transfer/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/workrel/data-access/src/src/i18n",
-            "output": "./i18n/relationship/workrel/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/workrel/feature/src/src/i18n",
-            "output": "./i18n/relationship/workrel/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/workrel/ui/src/src/i18n",
-            "output": "./i18n/relationship/workrel/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/resource/feature/src/src/i18n",
-            "output": "./i18n/resource/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/shared/src/i18n",
-            "output": "./i18n/shared"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/shared/categories/src/src/i18n",
-            "output": "./i18n/shared/categories/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/shared/data-access/src/src/i18n",
-            "output": "./i18n/shared/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/shared/feature/src/src/i18n",
-            "output": "./i18n/shared/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/shared/ui/src/src/i18n",
-            "output": "./i18n/shared/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/shared/util-angular/src/src/i18n",
-            "output": "./i18n/shared/util-angular/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/shared/util-core/src/src/i18n",
-            "output": "./i18n/shared/util-core/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/address/data-access/src/src/i18n",
-            "output": "./i18n/subject/address/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/address/feature/src/src/i18n",
-            "output": "./i18n/subject/address/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/address/util/src/src/i18n",
-            "output": "./i18n/subject/address/util/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/group/data-access/src/src/i18n",
-            "output": "./i18n/subject/group/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/group/feature/src/src/i18n",
-            "output": "./i18n/subject/group/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/group/ui/src/src/i18n",
-            "output": "./i18n/subject/group/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/org/data-access/src/src/i18n",
-            "output": "./i18n/subject/org/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/org/feature/src/src/i18n",
-            "output": "./i18n/subject/org/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/person/data-access/src/src/i18n",
-            "output": "./i18n/subject/person/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/person/feature/src/src/i18n",
-            "output": "./i18n/subject/person/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/person/ui/src/src/i18n",
-            "output": "./i18n/subject/person/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/person/util/src/src/i18n",
-            "output": "./i18n/subject/person/util/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/task/data-access/src/src/i18n",
-            "output": "./i18n/task/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/task/feature/src/src/i18n",
-            "output": "./i18n/task/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/task/ui/src/src/i18n",
-            "output": "./i18n/task/ui/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/user/data-access/src/src/i18n",
-            "output": "./i18n/user/data-access/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/user/feature/src/src/i18n",
-            "output": "./i18n/user/feature/src"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/user/ui/src/src/i18n",
-            "output": "./i18n/user/ui/src"
           }
         ],
         "styles": [

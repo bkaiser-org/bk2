@@ -1,18 +1,17 @@
 import { Component, computed, inject } from '@angular/core';
 import { IonApp, IonButtons, IonContent, IonHeader, IonMenu, IonRouterOutlet, IonSplitPane, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 
-import { AuthInfoComponent } from '@bk2/auth-ui';
-import { MenuComponent } from '@bk2/cms-menu-feature';
+import { AuthInfo } from '@bk2/auth-ui';
+import { Menu } from '@bk2/cms-menu-feature';
 import { AppStore } from '@bk2/shared-feature';
 import { PersonModelName, RoleName } from '@bk2/shared-models';
-import { ConnectionStatusButtonComponent, SpinnerComponent, AvatarUserComponent } from '@bk2/shared-ui';
+import { ConnectionStatusButton, AvatarUser, Spinner } from '@bk2/shared-ui';
 import { getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
 
 @Component({
   imports: [
-    MenuComponent, AuthInfoComponent, SpinnerComponent, ConnectionStatusButtonComponent, AvatarUserComponent,
-    IonApp, IonSplitPane, IonMenu, IonHeader, IonContent, IonToolbar, IonRouterOutlet, IonButtons,
-    AvatarUserComponent
+    Menu, AuthInfo, Spinner, ConnectionStatusButton, AvatarUser,
+    IonApp, IonSplitPane, IonMenu, IonHeader, IonContent, IonToolbar, IonRouterOutlet, IonButtons
 ],
   selector: 'bk-root',
   standalone: true,

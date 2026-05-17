@@ -1,5 +1,5 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { AppComponent } from './app/app.component';
+import { BkRoot } from './app/bk-root';
 import { appConfig } from './app/app.config';
 import { getApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaEnterpriseProvider, getToken } from 'firebase/app-check';
@@ -35,7 +35,7 @@ async function initializeApp() {
   }
 
   // Bootstrap the app after App Check initialization (even if it failed)
-  bootstrapApplication(AppComponent, appConfig).catch(err => console.error(err));
+  bootstrapApplication(BkRoot, appConfig).catch(err => console.error(err));
 }
 
 initializeApp();
