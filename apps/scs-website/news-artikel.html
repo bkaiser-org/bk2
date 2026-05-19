@@ -80,7 +80,6 @@
         </div>
         <h1 class="font-display text-3xl md:text-5xl font-bold mb-3 leading-tight">${scs.localized(article.title)}</h1>
         ${article.subTitle ? `<p class="font-display text-xl text-slate-500 dark:text-slate-400 mb-6">${scs.localized(article.subTitle)}</p>` : ''}
-        <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">${scs.localized(article.excerpt)}</p>
         ${(article.images && article.images.length) ? `
           <div id="slideshow" class="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-8 bg-slate-100 dark:bg-slate-800">
             ${article.images.map((img, i) => `
