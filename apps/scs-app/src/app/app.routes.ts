@@ -117,14 +117,14 @@ export const appRoutes: Route[] = [
   {
     path: 'group-view',
     canActivate: [isAuthenticatedGuard],
-    children: [{ path: ':groupKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject-group-feature').then(m => m.GroupViewPageComponent) }],
+    children: [{ path: ':groupKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject-group-feature').then(m => m.GroupViewPage) }],
   },
   {
     path: 'group',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject-group-feature').then(m => m.GroupListComponent) },
-      { path: ':groupKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject-group-feature').then(m => m.GroupViewPageComponent) },
+      { path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject-group-feature').then(m => m.GroupList) },
+      { path: ':groupKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/subject-group-feature').then(m => m.GroupViewPage) },
     ],
   },
   {
@@ -183,7 +183,7 @@ export const appRoutes: Route[] = [
   {
     path: 'transfer',
     canActivate: [isAuthenticatedGuard],
-    children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship-transfer-feature').then(m => m.TransferListComponent) }],
+    children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/relationship-transfer-feature').then(m => m.TransferList) }],
   },  
   {
     path: 'responsibility',
@@ -248,18 +248,18 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('@bk2/document-feature').then(m => m.DocumentList),
         data: { color: 'secondary', view: 'list', showMenu: true }
       },
-      { path: ':documentKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/document-feature').then(m => m.DocumentEditPageComponent) }
+      { path: ':documentKey', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/document-feature').then(m => m.DocumentEditPage) }
     ],
   },
   {
     path: 'task',
     canActivate: [isAuthenticatedGuard],
-    children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/task-feature').then(m => m.TaskListComponent) }],
+    children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/task-feature').then(m => m.TaskList) }],
   },
   {
     path: 'activity',
     canActivate: [isAdminGuard],
-    loadComponent: () => import('@bk2/activity-feature').then(m => m.ActivityListComponent),
+    loadComponent: () => import('@bk2/activity-feature').then(m => m.ActivityList),
   },
   {
     path: 'icon',
@@ -295,7 +295,7 @@ export const appRoutes: Route[] = [
     path: 'aoc',
     canActivate: [isAdminGuard],
     children: [
-      { path: 'adminops', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocAdminOpsComponent) },
+      { path: 'adminops', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocAdminOps) },
       { path: 'roles', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocRoles) },
       { path: 'content', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocContent) },
       { path: 'data', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocData) },
