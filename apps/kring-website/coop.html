@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Kring für Vereine — Vereinsplattform für Schweizer Vereine</title>
-<meta name="description" content="Mitglieder, Anlässe, Finanzen, Chat und Aufgaben in einer Plattform. Open Source, gehostet in der Schweiz. Ab CHF 12/Monat, gratis bis 10 Nutzer." />
-<meta property="og:title" content="Kring für Vereine — Vereinsplattform für Schweizer Vereine" />
-<meta property="og:description" content="Mitglieder, Anlässe, Finanzen, Chat und Aufgaben in einer Plattform. Open Source, gehostet in der Schweiz. Ab CHF 12/Monat, gratis bis 10 Nutzer." />
+<title>Kring für Gemeinschaften — miteinander etwas erreichen</title>
+<meta name="description" content="Für Genossenschaften, Quartiervereine, Energiegemeinschaften und Parteien. GV, Mitwirkung, Anlässe, Finanzen. Open Source, gehostet in der Schweiz." />
+<meta property="og:title" content="Kring für Gemeinschaften — miteinander etwas erreichen" />
+<meta property="og:description" content="Für Genossenschaften, Quartiervereine, Energiegemeinschaften und Parteien. GV, Mitwirkung, Anlässe, Finanzen. Open Source, gehostet in der Schweiz." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
-<link rel="icon" type="image/svg+xml" href="assets/openkring-favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="assets/kring-favicon.svg" />
 <style>
 :root {
-  --c-bg: #FAFAF7;
-  --c-bg-soft: #F1F0EA;
+  --c-bg: #F3F6FA;
+  --c-bg-soft: #E8EEF6;
   --c-bg-card: #FFFFFF;
   --c-border: #E5E3DA;
   --c-border-strong: #C9C5B7;
@@ -38,7 +38,12 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   padding: 0;
-  background: var(--c-bg);
+  background-color: var(--c-bg);
+  background-image:
+    radial-gradient(circle, rgba(24, 95, 165, 0.06) 1px, transparent 1px),
+    linear-gradient(180deg, #DCE6F3 0%, rgba(220, 230, 243, 0) 600px);
+  background-repeat: repeat, no-repeat;
+  background-size: 22px 22px, 100% 600px;
   color: var(--c-text);
   font-family: 'Inter Tight', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   font-size: 16px;
@@ -125,7 +130,7 @@ button.primary:hover { background: #2F2C28; }
 .hero .lede { margin-bottom: 1.5rem; }
 .cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
 
-.section { margin: 0 0 3rem; }
+.section { margin: 0 0 1.5rem; background: var(--c-bg-soft); border-radius: var(--radius-lg); padding: 1.75rem 1.5rem; }
 .section-title { margin: 0 0 1.5rem; }
 .section-intro { font-size: 14px; color: var(--c-text-soft); margin: 0 0 1.5rem; }
 
@@ -351,13 +356,19 @@ footer {
   border-top: 0.5px solid var(--c-border);
   flex-wrap: wrap;
 }
-footer p {
+.cobrand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
   font-size: 12px;
   color: var(--c-text-muted);
-  margin: 0;
-  text-align: left;
 }
-footer p a { color: inherit; text-decoration: underline; text-decoration-color: var(--c-border-strong); text-underline-offset: 2px; }
+.cobrand-item { display: inline-flex; align-items: center; gap: 5px; }
+.cobrand-item svg { width: 16px; height: 16px; display: block; }
+.cobrand-item strong { color: var(--c-text); font-weight: 500; }
+.cobrand-sep { color: var(--c-text-muted); }
+.ok-open { color: #6F95C0; }
 footer .swiss-made { flex-shrink: 0; display: inline-block; }
 footer .swiss-made img { height: 24px; width: auto; display: block; }
 
@@ -365,55 +376,66 @@ footer .swiss-made img { height: 24px; width: auto; display: block; }
 </head>
 <body>
 <main>
-<div class="header"><div style="display:flex;align-items:center;gap:10px;"><a class="brand" href="https://kring.ch" aria-label="openkring"><svg class="brand-logo" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 14 L10 14 L10 66 L18 66"/><path d="M62 14 L70 14 L70 66 L62 66"/><circle cx="40" cy="40" r="18"/></g><text x="92" y="49" font-family="'Inter Tight', system-ui, sans-serif" font-size="26" font-weight="500" letter-spacing="-0.4"><tspan fill="#6F95C0" font-weight="400">open</tspan><tspan fill="#1A1815">kring</tspan></text></svg></a><span class="brand-path">/ club</span></div><nav class="nav">
+<div class="header"><div style="display:flex;align-items:center;gap:10px;"><a class="brand" href="https://kring.ch" aria-label="Kring"><svg class="brand-logo" viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2"/><circle cx="40" cy="40" r="9" fill="#185FA5"/><text x="92" y="49" font-family="'Inter Tight', system-ui, sans-serif" font-size="28" font-weight="500" letter-spacing="-0.4" fill="#1A1815">Kring</text></svg></a><span class="brand-path">/ coop</span></div><nav class="nav">
       <a href="#funktionen">Funktionen</a>
       <a href="#referenzen">Referenzen</a>
       <a href="#preise">Preise</a>
       <a href="#open-source">Open Source</a>
     </nav></div>
     <section class="hero">
-      <p class="eyebrow">Für Schweizer Vereine</p>
-      <h1>Die Vereinsplattform, die mehr kann als verwalten.</h1>
-      <p class="lede">Mitglieder, Anlässe, Finanzen — und endlich auch Chat und Aufgaben. Kring bringt zusammen, was dein Verein heute braucht. Schluss mit WhatsApp-Gruppen, Excel-Listen und verlorenen E-Mails. Alles an einem Ort, ohne Medienbrüche.</p>
+      <p class="eyebrow">Für alle, die zusammen etwas bewegen</p>
+      <h1>Miteinander etwas erreichen — gemeinsam gestalten, gemeinsam entscheiden.</h1>
+      <p class="lede">Genossenschaft, Quartierverein, Energiegemeinschaft, Ortspartei — die Rechtsform ist offen. Was zählt: Menschen, die zusammen entscheiden, mitwirken, etwas bewegen wollen. Kring ist die digitale Plattform dafür. Ohne Medienbrüche, ohne Tool-Salat.</p>
       <div class="cta-row">
         <button class="primary">Demo vereinbaren</button>
         <button>30 Tage testen</button>
       </div>
     </section>
 
+    <section class="section">
+      <p class="eyebrow">Für wen</p>
+      <h2 class="section-title">Vier Welten — eine Software.</h2>
+      <div class="grid">
+        <div class="card"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2zM9 22V12h6v10"/></svg><h3 class="card-title">Wohnbaugenossenschaften</h3><p class="card-text">GV, Anteilscheine, Mitwirkung, gemeinsame Räume.</p></div>
+        <div class="card"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><h3 class="card-title">Quartiervereine</h3><p class="card-text">Anlässe, Mitglieder, lokale Kommunikation, Anliegen.</p></div>
+        <div class="card"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><h3 class="card-title">Energiegemeinschaften</h3><p class="card-text">Mitglieder, Beteiligungen, Abrechnungen, Beschlüsse.</p></div>
+        <div class="card"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22V15"/></svg><h3 class="card-title">Ortsparteien</h3><p class="card-text">Mitglieder, Kampagnen, Versammlungen, Beiträge.</p></div>
+      </div>
+    </section>
+
     <section class="section" id="funktionen">
       <p class="eyebrow">Was Kring kann</p>
-      <h2 class="section-title">Alles, was deinen Verein am Laufen hält.</h2>
+      <h2 class="section-title">Was eine lebendige Gemeinschaft täglich braucht.</h2>
       <div class="grid">
         <div class="card">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11a4 4 0 100-8 4 4 0 000 8zM3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2M16 11a4 4 0 100-8M21 21v-2a4 4 0 00-3-3.87"/></svg>
-      <h3 class="card-title">Mitglieder & Beiträge</h3>
-      <p class="card-text">Verzeichnis, Riegen, Funktionen. Beiträge per QR-Rechnung, Buchhaltung inklusive.</p>
+      <h3 class="card-title">Mitglieder & Rollen</h3>
+      <p class="card-text">Wer macht mit, wer entscheidet, wer trägt was bei. Auch Anteilscheine, Spenden, Beiträge.</p>
     </div>
         <div class="card">
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-      <h3 class="card-title">Anlässe & Anmeldungen</h3>
-      <p class="card-text">Vom Training bis zur GV. Anmelden, einteilen, erinnern — automatisch.</p>
-    </div>
-        <div class="card"><span class="badge">neu im Markt</span>
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-      <h3 class="card-title">Vereinschat</h3>
-      <p class="card-text">Echtzeit-Kommunikation in Gruppen. Vorstand, Riege, Mannschaft — getrennt und sicher.</p>
-    </div>
-        <div class="card"><span class="badge">neu im Markt</span>
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-      <h3 class="card-title">Aufgaben</h3>
-      <p class="card-text">Verteilen, erinnern, erledigen. Verbunden mit Anlässen, Personen, Dokumenten.</p>
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><path d="M9 14l2 2 4-4"/></svg>
+      <h3 class="card-title">Versammlung & Beschlüsse</h3>
+      <p class="card-text">Einladung, Traktanden, Abstimmungen, Protokoll. Vor Ort oder hybrid.</p>
     </div>
         <div class="card">
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
-      <h3 class="card-title">Dokumente</h3>
-      <p class="card-text">Protokolle, Statuten, Fotos. Pro Gruppe freigegeben, versioniert.</p>
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><path d="M8 9h8M8 13h6"/></svg>
+      <h3 class="card-title">Mitwirkung & Foren</h3>
+      <p class="card-text">Anliegen sammeln, Vorschläge diskutieren, Arbeitsgruppen koordinieren.</p>
     </div>
         <div class="card">
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-      <h3 class="card-title">Vereinswebseite</h3>
-      <p class="card-text">Öffentlicher Auftritt und interner Bereich, aus einer Quelle gepflegt.</p>
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16v2M12 14v4M15 12v6"/></svg>
+      <h3 class="card-title">Anlässe & Räume</h3>
+      <p class="card-text">Versammlungen, Quartierfeste, Kampagnenanlässe. Gemeinschaftsräume buchen, abrechnen.</p>
+    </div>
+        <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 22V4a2 2 0 00-2-2H7a2 2 0 00-2 2v18l3.5-2 3.5 2 3.5-2 3.5 2zM9 7h6M9 11h6M9 15h4"/></svg>
+      <h3 class="card-title">Finanzen & Beiträge</h3>
+      <p class="card-text">Mitgliederbeiträge, Spenden, Sonderaktionen. QR-Rechnung, Buchhaltung, Übersicht.</p>
+    </div>
+        <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+      <h3 class="card-title">Aufgaben & Eigenleistungen</h3>
+      <p class="card-text">Wer macht was bis wann. Mit Verantwortlichen, Fristen, Eigenleistungs-Erfassung.</p>
     </div>
       </div>
     </section>
@@ -428,107 +450,86 @@ footer .swiss-made img { height: 24px; width: auto; display: block; }
 
     <section class="section" id="referenzen">
       <div class="quote">
-        <p class="label">Referenz</p>
-        <p class="text">Seit Jahren das digitale Zuhause des Seeclub Stäfa. Über 200 Mitglieder, vier Riegen, ein Bootshaus-Projekt — alles in Kring.</p>
-        <div class="cite">
-          <div class="avatar">SC</div>
-          <div>
-            <p class="cite-name">Seeclub Stäfa</p>
-            <p class="cite-role">Ruderclub am Zürichsee</p>
-          </div>
-        </div>
+        <p class="label">Pilotprojekte gesucht</p>
+        <p class="text">Wir suchen Genossenschaften, Quartiervereine, Energiegemeinschaften und Ortsparteien, die Kring als Erste einsetzen. Vergünstigte Konditionen im Austausch für gemeinsame Weiterentwicklung.</p>
+        <button>Pilot werden</button>
       </div>
     </section>
 
-    <section class="section" id="preise">
-      <p class="eyebrow">Preise</p>
-      <h2 class="section-title">Was kostet Kring für deinen Verein?</h2>
-      <p class="section-intro">Ein fairer Preis, der mit deinem Verein wächst. Verschiebe den Regler.</p>
 
-      <div class="calc">
-        <div class="calc-row">
-          <label class="calc-label" for="members">Nutzer</label>
-          <input class="calc-slider" type="range" min="5" max="3000" value="200" step="5" id="members" />
-          <span class="calc-value" id="members-out">200</span>
-        </div>
-        <p class="calc-hint">Vorstand und Funktionäre zählen doppelt. Über 3'000 Nutzer: individuelles Angebot.</p>
-      </div>
+<section class="section" id="preise">
+  <p class="eyebrow">Preise</p>
+  <h2 class="section-title">Was kostet Kring für deine Gemeinschaft?</h2>
+  <p class="section-intro">Eine Plattform, ein Preis. Verschiebe den Regler.</p>
 
-      <div class="price-box">
-        <div class="price-head">
-          <div>
-            <p class="price-label">Dein Kring-Abo</p>
-            <p class="price-amount"><span id="price-kring">CHF 19</span><span class="suffix"> / Monat</span></p>
-          </div>
-          <p class="price-year" id="price-kring-yearly">entspricht CHF 228 / Jahr</p>
-        </div>
-        <div class="price-features">
-          <p class="price-features-label">Volle Funktionalität, im Preis enthalten:</p>
-          <div class="chips">
-            <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Vereinschat</span>
-            <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Aufgaben</span>
-            <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 5a7 7 0 014 12.7M12 5a7 7 0 00-4 12.7M10 14l-2 4M14 14l2 4"/></svg>Open Source</span>
-            <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>Hosting Schweiz</span>
-          </div>
-        </div>
-      </div>
+  <div class="calc">
+    <div class="calc-row">
+      <label class="calc-label" for="members">Nutzer</label>
+      <input class="calc-slider" type="range" min="5" max="1000" value="80" step="5" id="members" />
+      <span class="calc-value" id="members-out">80</span>
+    </div>
+    <p class="calc-hint">Vorstand und Funktionäre zählen doppelt. Über 1'000 Nutzer: individuelles Angebot.</p>
+  </div>
 
-      <div class="compare-grid">
-        <div class="compare-card">
-          <p class="compare-label">Konkurrent 1 im Vergleich</p>
-          <p class="compare-amount" id="price-c1">CHF 20 / Monat</p>
-          <p class="compare-note" id="price-c1-note">ohne Chat, ohne Aufgaben</p>
-        </div>
-        <div class="compare-card">
-          <p class="compare-label">Konkurrent 2 im Vergleich</p>
-          <p class="compare-amount" id="price-c2">CHF 21 / Monat</p>
-          <p class="compare-note" id="price-c2-note">ohne Chat, ohne Aufgaben</p>
-        </div>
-      </div>
-
-      <div style="margin:0 0 0.75rem;">
-        <p style="font-size:13px;color:var(--c-text-soft);margin:0 0 8px;">Preisverlauf nach Vereinsgrösse</p>
-        <div class="chart-wrap">
-          <canvas id="chart" role="img" aria-label="Liniendiagramm vergleicht den Monatspreis von Kring mit zwei anonymisierten Wettbewerbern.">Kring bleibt durchgehend günstiger als die beiden Wettbewerber.</canvas>
-        </div>
-      </div>
-      <div class="chart-legend">
-        <span><span class="dot-solid"></span>Kring</span>
-        <span><span class="dot-dash"></span>Konkurrent 1</span>
-        <span><span class="dot-dot"></span>Konkurrent 2</span>
-      </div>
-
-      <div class="note">
-        <p class="label">Gratis bis 10 Nutzer</p>
-        <p>Kleine Riegen, neue Vereine, Pilotprojekte: leg kostenlos los. Ohne Kreditkarte, ohne Zeitlimit. Vorstand und Funktionäre zählen doppelt — wer mehr Rechte hat, hat mehr Gewicht.</p>
-      </div>
-    </section>
-
-    <div id="open-source" style="margin-bottom:3rem;"><div class="info-block">
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 5a7 7 0 014 12.7M12 5a7 7 0 00-4 12.7M10 14l-2 4M14 14l2 4"/></svg>
+  <div class="price-box">
+    <div class="price-head">
       <div>
-        <h3>Open Source. Daten in der Schweiz.</h3>
-        <p>Kring basiert auf dem Open-Source-Projekt <span style="font-family:'JetBrains Mono',monospace;color:var(--c-text);">openkring</span>. Deine Daten gehören dir. Kein Lock-in. Gehostet in der Schweiz.</p>
+        <p class="price-label">Dein Kring-Abo</p>
+        <p class="price-amount"><span id="price-kring">CHF 13</span><span class="suffix"> / Monat</span></p>
       </div>
-    </div></div>
+      <p class="price-year" id="price-kring-yearly">entspricht CHF 156 / Jahr</p>
+    </div>
+    <div class="price-features">
+      <p class="price-features-label">Volle Funktionalität, im Preis enthalten:</p>
+      <div class="chips">
+        <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><path d="M8 9h8M8 13h6"/></svg>Mitwirkung & Foren</span>
+        <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16v2M12 14v4M15 12v6"/></svg>Räume & Anlässe</span>
+        <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 5a7 7 0 014 12.7M12 5a7 7 0 00-4 12.7M10 14l-2 4M14 14l2 4"/></svg>Open Source</span>
+        <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>Hosting Schweiz</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <p class="label">Gratis bis 10 Nutzer</p>
+    <p>Für die kleine Gruppe, die loslegen will: kostenlos. Ohne Kreditkarte, ohne Zeitlimit. Vorstand und Funktionäre zählen doppelt — wer Verantwortung trägt, hat mehr Gewicht.</p>
+  </div>
+</section>
+
+
+    <div id="open-source" style="margin-bottom:3rem;">
+      <div class="info-block">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 5a7 7 0 014 12.7M12 5a7 7 0 00-4 12.7M10 14l-2 4M14 14l2 4"/></svg>
+        <div>
+          <h3>Open Source. Werte, die wir teilen.</h3>
+          <p>Software, die zur Sache passt: Quelltext offen, Daten in der Schweiz, keine Lock-ins, kein Profit auf deinen Daten. Werte, die selbstorganisierte Gemeinschaften ohnehin leben.</p>
+        </div>
+      </div>
+    </div>
 
     <div class="cta-box">
       <h2>30 Tage unverbindlich testen.</h2>
-      <p>Mit deinen echten Mitgliederdaten. Ohne Kreditkarte. Auf Wunsch mit persönlicher Einrichtung.</p>
+      <p>Mit deiner echten Gemeinschaft. Ohne Kreditkarte. Auf Wunsch mit persönlicher Einrichtung.</p>
       <div class="cta-buttons">
-        <button class="primary">Verein registrieren</button>
+        <button class="primary">Gemeinschaft anmelden</button>
         <button>Demo vereinbaren</button>
       </div>
     </div>
 
     <footer>
-  <p>Kring ist eine Marke der bkaiser GmbH · <a href="https://kring.ch">kring.ch</a> · <a href="https://openkring.org">openkring.org</a></p>
+  <div class="cobrand">
+    <span class="cobrand-item"><svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="3"/><circle cx="40" cy="40" r="9" fill="#185FA5"/></svg><strong>Kring</strong></span>
+    <span class="cobrand-sep">·</span>
+    <span>basierend auf</span>
+    <span class="cobrand-item"><svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#185FA5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 14 L10 14 L10 66 L18 66"/><path d="M62 14 L70 14 L70 66 L62 66"/><circle cx="40" cy="40" r="18"/></g></svg><span><span class="ok-open">open</span><strong>kring</strong></span></span>
+    <span class="cobrand-sep">·</span>
+    <span>eine Marke der bkaiser GmbH</span>
+  </div>
   <a href="https://www.swissmadesoftware.org/" target="_blank" rel="noopener" aria-label="Swiss Made Software" class="swiss-made">
     <img src="https://bkaiser.imgix.net/logo/general/swissMadeSoftware.svg" alt="Swiss Made Software" />
   </a>
 </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script>
     (function() {
 
@@ -546,62 +547,22 @@ function fmtYr(v) {
   return 'entspricht CHF ' + (v * 12).toLocaleString('de-CH') + ' / Jahr';
 }
 
-      function competitor1(n) {
-        if (n <= 50) return 0;
-        if (n <= 100) return 13;
-        if (n <= 250) return 20;
-        if (n <= 500) return 36;
-        if (n <= 1000) return 41;
-        return null;
-      }
-      function competitor2(n) {
-        if (n <= 50) return 0;
-        if (n <= 100) return 10;
-        if (n <= 250) return 21;
-        if (n <= 500) return 37;
-        if (n <= 1000) return 62;
-        return null;
-      }
       var slider = document.getElementById('members');
       var membersOut = document.getElementById('members-out');
       var pKring = document.getElementById('price-kring');
       var pKringY = document.getElementById('price-kring-yearly');
-      var pC1 = document.getElementById('price-c1');
-      var pC1Note = document.getElementById('price-c1-note');
-      var pC2 = document.getElementById('price-c2');
-      var pC2Note = document.getElementById('price-c2-note');
-      function fmtMo(v) { if (v === null) return 'individuell'; if (v === 0) return 'gratis'; return 'CHF ' + v + ' / Monat'; }
       function update() {
         var n = parseInt(slider.value, 10);
         membersOut.textContent = n.toLocaleString('de-CH');
         var k = kring(n);
-        pKring.textContent = k === 0 ? 'gratis' : 'CHF ' + k;
-        pKringY.textContent = fmtYr(k);
-        pC1.textContent = fmtMo(competitor1(n));
-        pC2.textContent = fmtMo(competitor2(n));
-        var c1v = competitor1(n), c2v = competitor2(n);
-        pC1Note.textContent = c1v === null ? 'nur auf Anfrage' : (k > 0 && c1v > k ? 'CHF ' + (c1v - k) + ' teurer, ohne Chat & Aufgaben' : 'ohne Chat, ohne Aufgaben');
-        pC2Note.textContent = c2v === null ? 'nur auf Anfrage' : (k > 0 && c2v > k ? 'CHF ' + (c2v - k) + ' teurer, ohne Chat & Aufgaben' : 'ohne Chat, ohne Aufgaben');
+        if (k === 0) { pKring.textContent = 'gratis'; pKringY.textContent = 'CHF 0 / Jahr'; }
+        else { pKring.textContent = 'CHF ' + k; pKringY.textContent = fmtYr(k); }
       }
       slider.addEventListener('input', update);
       update();
-      var labels = [10, 25, 50, 100, 250, 500, 1000, 1500, 2000, 3000];
-      new Chart(document.getElementById('chart'), {
-        type: 'line',
-        data: { labels: labels, datasets: [
-          { label: 'Kring', data: labels.map(kring), borderColor: '#185FA5', backgroundColor: '#185FA5', borderWidth: 2, tension: 0.3, pointRadius: 3 },
-          { label: 'Konkurrent 1', data: labels.map(competitor1), borderColor: '#888780', backgroundColor: '#888780', borderWidth: 1.5, borderDash: [5,4], tension: 0.3, pointRadius: 3 },
-          { label: 'Konkurrent 2', data: labels.map(competitor2), borderColor: '#5F5E5A', backgroundColor: '#5F5E5A', borderWidth: 1.5, borderDash: [2,3], tension: 0.3, pointRadius: 3 }
-        ]},
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
-          scales: {
-            x: { title: { display: true, text: 'Nutzer', color: '#888780', font: { size: 11 } }, ticks: { color: '#888780', font: { size: 11 } } },
-            y: { title: { display: true, text: 'CHF / Monat', color: '#888780', font: { size: 11 } }, ticks: { color: '#888780', font: { size: 11 }, callback: function(v) { return 'CHF ' + v; } }, beginAtZero: true }
-          }
-        }
-      });
     })();
     </script>
+
 
 </main>
 </body>

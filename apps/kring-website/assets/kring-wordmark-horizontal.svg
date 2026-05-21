@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 80" role="img" aria-label="Kring Wortmarke horizontal">
+  <title>Kring</title>
+  <desc>Kring-Logo und Schriftzug nebeneinander.</desc>
+  <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2"/>
+  <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+  <text x="92" y="49" font-family="'Inter Tight', system-ui, sans-serif" font-size="28" font-weight="500" letter-spacing="-0.4" fill="#1A1815">Kring</text>
+</svg>
