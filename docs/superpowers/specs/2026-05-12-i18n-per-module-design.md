@@ -263,6 +263,123 @@ scripts/
 
 ---
 
+---
+
+## Section 7 — Form Field i18n (`*/ui` layer)
+
+### Ownership by layer
+
+| Layer | Owns |
+| --- | --- |
+| Feature store | Page/modal-level strings: titles, descriptions, action labels, confirmations |
+| `*/ui` form component | Field-level strings: `label`, `placeholder`, `helper` for every `bk-text-input` |
+| `shared/ui` component | Nothing — receives resolved `TextInputI18n` structs as inputs |
+
+### Pattern in `*/ui` form components
+
+Form components in `*/ui` inject `I18nService` directly (not via a store) and resolve all text-input field strings in one `translateAll` call:
+
+```typescript
+import { computed, inject } from '@angular/core';
+import { I18nService } from '@bk2/shared-i18n';
+import { TextInputI18n } from '@bk2/shared-ui';
+import { PFX } from './scope';       // e.g. '@subject/person/ui.'
+
+export class PersonForm {
+  private readonly i18nService = inject(I18nService);
+
+  // One translateAll covers ALL text-input fields in this form
+  protected readonly fieldI18n = this.i18nService.translateAll({
+    firstName_label:       PFX + 'firstName.label',
+    firstName_placeholder: PFX + 'firstName.placeholder',
+    firstName_helper:      PFX + 'firstName.helper',
+    lastName_label:        PFX + 'lastName.label',
+    lastName_placeholder:  PFX + 'lastName.placeholder',
+    lastName_helper:       PFX + 'lastName.helper',
+  });
+
+  // One computed TextInputI18n signal per bk-text-input field
+  protected firstNameI18n = computed(() => ({
+    name: 'firstName',
+    label: this.fieldI18n.firstName_label(),
+    placeholder: this.fieldI18n.firstName_placeholder(),
+    helper: this.fieldI18n.firstName_helper()
+  } as TextInputI18n));
+
+  protected lastNameI18n = computed(() => ({
+    name: 'lastName',
+    label: this.fieldI18n.lastName_label(),
+    placeholder: this.fieldI18n.lastName_placeholder(),
+    helper: this.fieldI18n.lastName_helper()
+  } as TextInputI18n));
+}
+```
+
+Template:
+
+```html
+<bk-text-input [i18n]="firstNameI18n()" [value]="firstName()" ... />
+<bk-text-input [i18n]="lastNameI18n()"  [value]="lastName()"  ... />
+```
+
+### Key naming convention
+
+Within the module scope (i.e. within `de.json`):
+
+```
+{fieldName}.label       → human-readable German label
+{fieldName}.placeholder → short hint or "" if not needed
+{fieldName}.helper      → longer explanation or "" if not needed
+```
+
+Keys in the translateAll map use `{fieldName}_{attr}` (underscore) to avoid dot-conflicts at the TypeScript level.
+
+### `de.json` structure
+
+```json
+{
+  "firstName": { "label": "Vorname",  "placeholder": "Vorname eingeben", "helper": "" },
+  "lastName":  { "label": "Nachname", "placeholder": "Nachname eingeben", "helper": "" }
+}
+```
+
+The file lives in `libs/{domain}/{layer}/src/i18n/de.json` and is registered in `apps/scs-app/project.json` as:
+
+```json
+{ "glob": "*.json", "input": "libs/{domain}/{layer}/src/i18n", "output": "./assets/i18n/{domain}/{layer}" }
+```
+
+### `scope.ts` convention
+
+Every `*/ui` lib that has i18n strings has a `scope.ts`:
+
+```typescript
+// libs/subject/person/ui/src/lib/scope.ts
+export const PFX = '@subject/person/ui.';
+```
+
+The PFX format is `@{domain}/{layer}.` — note the trailing dot.
+
+### `shared/ui` components remain pure
+
+`shared/ui` components that wrap `bk-text-input` (e.g. `bk-icon-input`, `bk-image-config`) accept resolved i18n structs as Angular inputs — they never inject `I18nService`:
+
+```typescript
+// icon-input.ts — accepts resolved i18n from caller
+public i18n = input.required<TextInputI18n>();
+
+// image-config.ts — accepts one TextInputI18n per field
+public i18n = input.required<ImageConfigI18n>();
+```
+
+The caller (a `*/ui` form) supplies the resolved strings using its own `translateAll`.
+
+### Feature stores: no field-level strings
+
+Feature stores (e.g. `ProfileStore`) only supply page/modal-level strings. Field-level labels are not threaded through the store — they are resolved independently in the form component.
+
+---
+
 ## Open Questions / Future Work
 
 - `test-app` uses the same monolithic pattern; apply the same export step when `test-app` needs scoped translations

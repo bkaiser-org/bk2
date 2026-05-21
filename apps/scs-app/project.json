@@ -139,6 +139,11 @@
           },
           {
             "glob": "*.json",
+            "input": "libs/category/ui/src/i18n",
+            "output": "./assets/i18n/category/ui"
+          },
+          {
+            "glob": "*.json",
             "input": "libs/chat/feature/src/i18n",
             "output": "./assets/i18n/chat/feature"
           },
@@ -239,6 +244,11 @@
           },
           {
             "glob": "*.json",
+            "input": "libs/finance/account/ui/src/i18n",
+            "output": "./assets/i18n/finance/account/ui"
+          },
+          {
+            "glob": "*.json",
             "input": "libs/finance/bill/feature/src/i18n",
             "output": "./assets/i18n/finance/bill/feature"
           },
@@ -264,6 +274,11 @@
           },
           {
             "glob": "*.json",
+            "input": "libs/folder/ui/src/i18n",
+            "output": "./assets/i18n/folder/ui"
+          },
+          {
+            "glob": "*.json",
             "input": "libs/folder/feature/src/i18n",
             "output": "./assets/i18n/folder/feature"
           },
@@ -276,6 +291,11 @@
             "glob": "*.json",
             "input": "libs/geo/location/data-access/src/i18n",
             "output": "./assets/i18n/geo/location/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/geo/location/ui/src/i18n",
+            "output": "./assets/i18n/geo/location/ui"
           },
           {
             "glob": "*.json",
@@ -324,6 +344,11 @@
           },
           {
             "glob": "*.json",
+            "input": "libs/relationship/invitation/ui/src/i18n",
+            "output": "./assets/i18n/relationship/invitation/ui"
+          },
+          {
+            "glob": "*.json",
             "input": "libs/relationship/invitation/feature/src/i18n",
             "output": "./assets/i18n/relationship/invitation/feature"
           },
@@ -346,6 +371,11 @@
             "glob": "*.json",
             "input": "libs/relationship/ownership/data-access/src/i18n",
             "output": "./assets/i18n/relationship/ownership/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/relationship/ownership/ui/src/i18n",
+            "output": "./assets/i18n/relationship/ownership/ui"
           },
           {
             "glob": "*.json",
@@ -389,6 +419,11 @@
           },
           {
             "glob": "*.json",
+            "input": "libs/relationship/responsibility/ui/src/i18n",
+            "output": "./assets/i18n/relationship/responsibility/ui"
+          },
+          {
+            "glob": "*.json",
             "input": "libs/relationship/responsibility/feature/src/i18n",
             "output": "./assets/i18n/relationship/responsibility/feature"
           },
@@ -426,6 +461,11 @@
             "glob": "*.json",
             "input": "libs/resource/feature/src/i18n",
             "output": "./assets/i18n/resource/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/resource/ui/src/i18n",
+            "output": "./assets/i18n/resource/ui"
           },
           {
             "glob": "*.json",
@@ -469,6 +509,11 @@
           },
           {
             "glob": "*.json",
+            "input": "libs/subject/address/ui/src/i18n",
+            "output": "./assets/i18n/subject/address/ui"
+          },
+          {
+            "glob": "*.json",
             "input": "libs/subject/address/feature/src/i18n",
             "output": "./assets/i18n/subject/address/feature"
           },
@@ -496,6 +541,11 @@
             "glob": "*.json",
             "input": "libs/subject/org/data-access/src/i18n",
             "output": "./assets/i18n/subject/org/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/subject/org/ui/src/i18n",
+            "output": "./assets/i18n/subject/org/ui"
           },
           {
             "glob": "*.json",

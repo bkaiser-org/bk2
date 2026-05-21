@@ -4,12 +4,14 @@ import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from '@
 import { filter, map, startWith } from 'rxjs/operators';
 import { IonApp, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonMenu, IonRouterOutlet, IonSplitPane, IonToolbar, ModalController } from '@ionic/angular/standalone';
 
-import { AuthInfo } from '@bk2/auth-ui';
-import { Menu } from '@bk2/cms-menu-feature';
 import { AppStore } from '@bk2/shared-feature';
-import { PersonModelName, RoleName } from '@bk2/shared-models';
+import { RoleName } from '@bk2/shared-models';
 import { Spinner, ConnectionStatusButton, AvatarUser } from '@bk2/shared-ui';
 import { coerceBoolean, getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-util-core';
+
+import { AuthInfo } from '@bk2/auth-ui';
+import { Menu } from '@bk2/cms-menu-feature';
+import { ProfileEditModal } from '@bk2/profile-feature';
 
 @Component({
   imports: [
@@ -92,11 +94,17 @@ import { coerceBoolean, getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-u
         <ion-menu side="start" menuId="main" contentId="main" type="overlay">
           <ion-header>
             <ion-toolbar color="secondary">
-              <ion-buttons slot="start"><bk-connection-status-button /></ion-buttons>
+              <ion-buttons slot="start">
+                <bk-connection-status-button />
+              </ion-buttons>
               <ion-item lines="none" color="secondary">
                 <ion-label>{{ appStore.appConfig().appName }}</ion-label>
               </ion-item>
-              <ion-buttons slot="end"><bk-avatar-user [currentUser]="appStore.currentUser()" (profileClicked)="openPersonProfile()" /></ion-buttons>
+              @if(appStore.currentUser(); as currentUser) {
+                <ion-buttons slot="end">
+                  <bk-avatar-user [currentUser]="currentUser" (profileClicked)="openProfile()" />
+                </ion-buttons>
+              }
             </ion-toolbar>
           </ion-header>
           <ion-content>
@@ -182,20 +190,9 @@ export class BkRoot {
     return hasRole(role, this.appStore.currentUser());
   }
 
-  protected async openPersonProfile(): Promise<void> {
-    const person = this.appStore.currentPerson();
-    if (!person) return;
-    const { PersonEditModal } = await import('@bk2/subject-person-feature');
+  protected async openProfile(): Promise<void> {
     const modal = await this.modalController.create({
-      component: PersonEditModal,
-      componentProps: {
-        person,
-        currentUser: this.appStore.currentUser(),
-        tags: this.appStore.getTags(PersonModelName),
-        tenantId: this.appStore.tenantId(),
-        genders: this.appStore.getCategory('gender'),
-        readOnly: false,
-      }
+      component: ProfileEditModal,
     });
     modal.present();
     await modal.onDidDismiss();
