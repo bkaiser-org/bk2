@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kring für Vereine — Vereinsplattform für Schweizer Vereine</title>
+<meta name="description" content="Mitglieder, Anlässe, Finanzen, Chat und Aufgaben in einer Plattform. Open Source, gehostet in der Schweiz. Ab CHF 12/Monat, gratis bis 10 Nutzer." />
+<meta property="og:title" content="Kring für Vereine — Vereinsplattform für Schweizer Vereine" />
+<meta property="og:description" content="Mitglieder, Anlässe, Finanzen, Chat und Aufgaben in einer Plattform. Open Source, gehostet in der Schweiz. Ab CHF 12/Monat, gratis bis 10 Nutzer." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="assets/openkring-favicon.svg" />
+<style>
+:root {
+  --c-bg: #FAFAF7;
+  --c-bg-soft: #F1F0EA;
+  --c-bg-card: #FFFFFF;
+  --c-border: #E5E3DA;
+  --c-border-strong: #C9C5B7;
+  --c-text: #1A1815;
+  --c-text-soft: #5F5E5A;
+  --c-text-muted: #8E8C86;
+  --c-accent: #185FA5;
+  --c-accent-soft: #E7EEF6;
+  --c-accent-border: #BFD0E4;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --max-w: 880px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: 'Inter Tight', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+main {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+a { color: inherit; }
+
+h1, h2, h3 { font-weight: 500; letter-spacing: -0.01em; margin: 0; }
+h1 { font-size: clamp(28px, 4vw, 34px); line-height: 1.15; }
+h2 { font-size: 22px; line-height: 1.25; }
+h3 { font-size: 16px; line-height: 1.4; }
+
+p { margin: 0; }
+
+.eyebrow {
+  font-size: 11px;
+  color: var(--c-text-soft);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+}
+
+.lede {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--c-text-soft);
+  max-width: 560px;
+}
+
+button {
+  font: inherit;
+  border: 0.5px solid var(--c-border-strong);
+  background: var(--c-bg-card);
+  color: var(--c-text);
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+button:hover { background: var(--c-bg-soft); }
+
+button.primary {
+  background: var(--c-text);
+  color: var(--c-bg-card);
+  border-color: var(--c-text);
+}
+button.primary:hover { background: #2F2C28; }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.5px solid var(--c-border);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+.brand-logo { height: 26px; width: auto; display: block; }
+.brand-path { font-size: 13px; color: var(--c-text-soft); margin-left: 4px; }
+.nav { display: flex; gap: 1.25rem; font-size: 13px; color: var(--c-text-soft); }
+.nav a { text-decoration: none; }
+.nav a:hover { color: var(--c-text); }
+
+.hero { margin: 0 0 3rem; }
+.hero h1 { margin: 0 0 1.25rem; max-width: 580px; }
+.hero .lede { margin-bottom: 1.5rem; }
+.cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.section { margin: 0 0 3rem; }
+.section-title { margin: 0 0 1.5rem; }
+.section-intro { font-size: 14px; color: var(--c-text-soft); margin: 0 0 1.5rem; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+.grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid.compact { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+
+.card {
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  position: relative;
+}
+.card.link { text-decoration: none; color: inherit; display: block; }
+.card.link:hover { border-color: var(--c-border-strong); }
+.card.soft { background: var(--c-bg-soft); border: none; }
+.card .icon {
+  width: 22px;
+  height: 22px;
+  color: var(--c-accent);
+  margin-bottom: 10px;
+  display: block;
+  stroke-width: 1.5;
+}
+.card-title { font-size: 15px; font-weight: 500; margin: 0 0 6px; }
+.card-text { font-size: 13px; line-height: 1.6; color: var(--c-text-soft); margin: 0; }
+.card-mono { font-size: 12px; color: var(--c-text-muted); margin: 0 0 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.card-cta { font-size: 12px; color: var(--c-accent); margin: 10px 0 0; }
+.card-cta svg { width: 13px; height: 13px; vertical-align: -2px; }
+
+.badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 11px;
+  padding: 2px 8px;
+  background: var(--c-accent-soft);
+  color: var(--c-accent);
+  border-radius: var(--radius-md);
+}
+
+.feature-mini {
+  padding: 0.5rem 0;
+}
+.feature-mini .icon {
+  width: 20px;
+  height: 20px;
+  color: var(--c-text-soft);
+  margin-bottom: 6px;
+  display: block;
+  stroke-width: 1.5;
+}
+.feature-mini h3 { font-size: 14px; margin: 0 0 2px; }
+.feature-mini p { font-size: 12px; color: var(--c-text-soft); }
+
+.info-block {
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.info-block.soft {
+  background: var(--c-bg-soft);
+  border: none;
+}
+.info-block .icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--c-text-soft);
+  stroke-width: 1.5;
+}
+.info-block.lg .icon { width: 28px; height: 28px; }
+.info-block h3 { font-size: 15px; margin: 0 0 4px; }
+.info-block p { font-size: 13px; line-height: 1.6; color: var(--c-text-soft); }
+
+.note {
+  background: var(--c-bg-soft);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+}
+.note p { font-size: 13px; line-height: 1.6; margin: 0; }
+.note p + p { margin-top: 6px; }
+.note .label { color: var(--c-text-soft); margin-bottom: 6px; }
+
+.quote {
+  background: var(--c-bg-soft);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+.quote .label { font-size: 11px; color: var(--c-text-soft); letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 0.75rem; }
+.quote .text {
+  font-family: 'IBM Plex Serif', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+  font-weight: 400;
+}
+.quote .cite { display: flex; align-items: center; gap: 10px; }
+.quote .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--c-accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--c-accent);
+}
+.quote .cite-name { font-size: 13px; font-weight: 500; margin: 0; }
+.quote .cite-role { font-size: 12px; color: var(--c-text-soft); margin: 0; }
+
+.calc { margin: 0 0 1.5rem; }
+.calc-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 0.5rem;
+}
+.calc-label { font-size: 14px; color: var(--c-text-soft); min-width: 90px; }
+.calc-slider { flex: 1; accent-color: var(--c-accent); }
+.calc-value { font-size: 16px; font-weight: 500; min-width: 70px; text-align: right; }
+.calc-hint { font-size: 12px; color: var(--c-text-muted); margin: 0 0 1.5rem 106px; }
+@media (max-width: 540px) {
+  .calc-hint { margin-left: 0; }
+}
+
+.price-box {
+  background: var(--c-bg-card);
+  border: 2px solid var(--c-accent-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.price-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.price-label { font-size: 13px; color: var(--c-text-soft); margin: 0 0 6px; }
+.price-amount { font-size: 36px; font-weight: 500; margin: 0; line-height: 1; }
+.price-amount .suffix { font-size: 16px; color: var(--c-text-soft); font-weight: 400; }
+.price-year { font-size: 13px; color: var(--c-text-soft); margin: 0; }
+
+.price-features {
+  border-top: 0.5px solid var(--c-border);
+  padding-top: 12px;
+}
+.price-features-label { font-size: 13px; color: var(--c-text-soft); margin: 0 0 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font-size: 13px;
+  padding: 4px 10px;
+  background: var(--c-accent-soft);
+  color: var(--c-accent);
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.chip svg { width: 14px; height: 14px; }
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+.compare-card {
+  background: var(--c-bg-soft);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+}
+.compare-label { font-size: 13px; color: var(--c-text-soft); margin: 0 0 6px; }
+.compare-amount { font-size: 20px; font-weight: 500; margin: 0 0 4px; }
+.compare-note { font-size: 12px; color: var(--c-text-soft); margin: 0; }
+
+.chart-wrap { position: relative; width: 100%; height: 200px; }
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 0 0 2rem;
+  font-size: 12px;
+  color: var(--c-text-soft);
+}
+.chart-legend span { display: flex; align-items: center; gap: 6px; }
+.chart-legend .dot-solid { width: 14px; height: 2px; background: var(--c-accent); }
+.chart-legend .dot-dash { width: 14px; height: 0; border-top: 2px dashed #888780; }
+.chart-legend .dot-dot { width: 14px; height: 0; border-top: 2px dotted #5F5E5A; }
+
+.cta-box {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  background: var(--c-bg-soft);
+  border-radius: var(--radius-lg);
+  margin: 0 0 2rem;
+}
+.cta-box h2 { font-size: 20px; margin: 0 0 0.5rem; }
+.cta-box p { font-size: 13px; color: var(--c-text-soft); margin: 0 0 1.25rem; }
+.cta-buttons { display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-top: 0.5px solid var(--c-border);
+  flex-wrap: wrap;
+}
+footer p {
+  font-size: 12px;
+  color: var(--c-text-muted);
+  margin: 0;
+  text-align: left;
+}
+footer p a { color: inherit; text-decoration: underline; text-decoration-color: var(--c-border-strong); text-underline-offset: 2px; }
+footer .swiss-made { flex-shrink: 0; display: inline-block; }
+footer .swiss-made img { height: 24px; width: auto; display: block; }
+
+</style>
+</head>
+<body>
+<main>
+<div class="header"><div style="display:flex;align-items:center;gap:10px;"><a class="brand" href="https://kring.ch" aria-label="openkring"><svg class="brand-logo" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 14 L10 14 L10 66 L18 66"/><path d="M62 14 L70 14 L70 66 L62 66"/><circle cx="40" cy="40" r="18"/></g><text x="92" y="49" font-family="'Inter Tight', system-ui, sans-serif" font-size="26" font-weight="500" letter-spacing="-0.4"><tspan fill="#6F95C0" font-weight="400">open</tspan><tspan fill="#1A1815">kring</tspan></text></svg></a><span class="brand-path">/ club</span></div><nav class="nav">
+      <a href="#funktionen">Funktionen</a>
+      <a href="#referenzen">Referenzen</a>
+      <a href="#preise">Preise</a>
+      <a href="#open-source">Open Source</a>
+    </nav></div>
+    <section class="hero">
+      <p class="eyebrow">Für Schweizer Vereine</p>
+      <h1>Die Vereinsplattform, die mehr kann als verwalten.</h1>
+      <p class="lede">Mitglieder, Anlässe, Finanzen — und endlich auch Chat und Aufgaben. Kring bringt zusammen, was dein Verein heute braucht. Schluss mit WhatsApp-Gruppen, Excel-Listen und verlorenen E-Mails. Alles an einem Ort, ohne Medienbrüche.</p>
+      <div class="cta-row">
+        <button class="primary">Demo vereinbaren</button>
+        <button>30 Tage testen</button>
+      </div>
+    </section>
+
+    <section class="section" id="funktionen">
+      <p class="eyebrow">Was Kring kann</p>
+      <h2 class="section-title">Alles, was deinen Verein am Laufen hält.</h2>
+      <div class="grid">
+        <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11a4 4 0 100-8 4 4 0 000 8zM3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2M16 11a4 4 0 100-8M21 21v-2a4 4 0 00-3-3.87"/></svg>
+      <h3 class="card-title">Mitglieder & Beiträge</h3>
+      <p class="card-text">Verzeichnis, Riegen, Funktionen. Beiträge per QR-Rechnung, Buchhaltung inklusive.</p>
+    </div>
+        <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <h3 class="card-title">Anlässe & Anmeldungen</h3>
+      <p class="card-text">Vom Training bis zur GV. Anmelden, einteilen, erinnern — automatisch.</p>
+    </div>
+        <div class="card"><span class="badge">neu im Markt</span>
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      <h3 class="card-title">Vereinschat</h3>
+      <p class="card-text">Echtzeit-Kommunikation in Gruppen. Vorstand, Riege, Mannschaft — getrennt und sicher.</p>
+    </div>
+        <div class="card"><span class="badge">neu im Markt</span>
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      <h3 class="card-title">Aufgaben</h3>
+      <p class="card-text">Verteilen, erinnern, erledigen. Verbunden mit Anlässen, Personen, Dokumenten.</p>
+    </div>
+        <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+      <h3 class="card-title">Dokumente</h3>
+      <p class="card-text">Protokolle, Statuten, Fotos. Pro Gruppe freigegeben, versioniert.</p>
+    </div>
+        <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      <h3 class="card-title">Vereinswebseite</h3>
+      <p class="card-text">Öffentlicher Auftritt und interner Bereich, aus einer Quelle gepflegt.</p>
+    </div>
+      </div>
+    </section>
+
+    <div style="margin-bottom:3rem;"><div class="info-block">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16zM3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg>
+      <div>
+        <h3>Volle Funktionalität, immer inklusive.</h3>
+        <p>Keine Zusatzpakete, keine Pro-Versionen. Alle Funktionen sind in jedem Abo enthalten. Wir helfen dich bei der Konfiguration und begleiten dich bei der Digitalisierung. Externe Dienste wie Bexio-Buchhaltung oder Twint-Zahlungen integrieren wir, die Lizenzen dafür kommen direkt vom Anbieter.</p>
+      </div>
+    </div></div>
+
+    <section class="section" id="referenzen">
+      <div class="quote">
+        <p class="label">Referenz</p>
+        <p class="text">Seit Jahren das digitale Zuhause des Seeclub Stäfa. Über 200 Mitglieder, vier Riegen, ein Bootshaus-Projekt — alles in Kring.</p>
+        <div class="cite">
+          <div class="avatar">SC</div>
+          <div>
+            <p class="cite-name">Seeclub Stäfa</p>
+            <p class="cite-role">Ruderclub am Zürichsee</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="preise">
+      <p class="eyebrow">Preise</p>
+      <h2 class="section-title">Was kostet Kring für deinen Verein?</h2>
+      <p class="section-intro">Ein fairer Preis, der mit deinem Verein wächst. Verschiebe den Regler.</p>
+
+      <div class="calc">
+        <div class="calc-row">
+          <label class="calc-label" for="members">Nutzer</label>
+          <input class="calc-slider" type="range" min="5" max="3000" value="200" step="5" id="members" />
+          <span class="calc-value" id="members-out">200</span>
+        </div>
+        <p class="calc-hint">Vorstand und Funktionäre zählen doppelt. Über 3'000 Nutzer: individuelles Angebot.</p>
+      </div>
+
+      <div class="price-box">
+        <div class="price-head">
+          <div>
+            <p class="price-label">Dein Kring-Abo</p>
+            <p class="price-amount"><span id="price-kring">CHF 19</span><span class="suffix"> / Monat</span></p>
+          </div>
+          <p class="price-year" id="price-kring-yearly">entspricht CHF 228 / Jahr</p>
+        </div>
+        <div class="price-features">
+          <p class="price-features-label">Volle Funktionalität, im Preis enthalten:</p>
+          <div class="chips">
+            <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Vereinschat</span>
+            <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Aufgaben</span>
+            <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 5a7 7 0 014 12.7M12 5a7 7 0 00-4 12.7M10 14l-2 4M14 14l2 4"/></svg>Open Source</span>
+            <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>Hosting Schweiz</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <p class="compare-label">Konkurrent 1 im Vergleich</p>
+          <p class="compare-amount" id="price-c1">CHF 20 / Monat</p>
+          <p class="compare-note" id="price-c1-note">ohne Chat, ohne Aufgaben</p>
+        </div>
+        <div class="compare-card">
+          <p class="compare-label">Konkurrent 2 im Vergleich</p>
+          <p class="compare-amount" id="price-c2">CHF 21 / Monat</p>
+          <p class="compare-note" id="price-c2-note">ohne Chat, ohne Aufgaben</p>
+        </div>
+      </div>
+
+      <div style="margin:0 0 0.75rem;">
+        <p style="font-size:13px;color:var(--c-text-soft);margin:0 0 8px;">Preisverlauf nach Vereinsgrösse</p>
+        <div class="chart-wrap">
+          <canvas id="chart" role="img" aria-label="Liniendiagramm vergleicht den Monatspreis von Kring mit zwei anonymisierten Wettbewerbern.">Kring bleibt durchgehend günstiger als die beiden Wettbewerber.</canvas>
+        </div>
+      </div>
+      <div class="chart-legend">
+        <span><span class="dot-solid"></span>Kring</span>
+        <span><span class="dot-dash"></span>Konkurrent 1</span>
+        <span><span class="dot-dot"></span>Konkurrent 2</span>
+      </div>
+
+      <div class="note">
+        <p class="label">Gratis bis 10 Nutzer</p>
+        <p>Kleine Riegen, neue Vereine, Pilotprojekte: leg kostenlos los. Ohne Kreditkarte, ohne Zeitlimit. Vorstand und Funktionäre zählen doppelt — wer mehr Rechte hat, hat mehr Gewicht.</p>
+      </div>
+    </section>
+
+    <div id="open-source" style="margin-bottom:3rem;"><div class="info-block">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 5a7 7 0 014 12.7M12 5a7 7 0 00-4 12.7M10 14l-2 4M14 14l2 4"/></svg>
+      <div>
+        <h3>Open Source. Daten in der Schweiz.</h3>
+        <p>Kring basiert auf dem Open-Source-Projekt <span style="font-family:'JetBrains Mono',monospace;color:var(--c-text);">openkring</span>. Deine Daten gehören dir. Kein Lock-in. Gehostet in der Schweiz.</p>
+      </div>
+    </div></div>
+
+    <div class="cta-box">
+      <h2>30 Tage unverbindlich testen.</h2>
+      <p>Mit deinen echten Mitgliederdaten. Ohne Kreditkarte. Auf Wunsch mit persönlicher Einrichtung.</p>
+      <div class="cta-buttons">
+        <button class="primary">Verein registrieren</button>
+        <button>Demo vereinbaren</button>
+      </div>
+    </div>
+
+    <footer>
+  <p>Kring ist eine Marke der bkaiser GmbH · <a href="https://kring.ch">kring.ch</a> · <a href="https://openkring.org">openkring.org</a></p>
+  <a href="https://www.swissmadesoftware.org/" target="_blank" rel="noopener" aria-label="Swiss Made Software" class="swiss-made">
+    <img src="https://bkaiser.imgix.net/logo/general/swissMadeSoftware.svg" alt="Swiss Made Software" />
+  </a>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+    (function() {
+
+function kring(n) {
+  if (n <= 10) return 0;
+  var raw = 9 + 0.40 * Math.sqrt(n);
+  if (n <= 100) return Math.round(raw);
+  if (n <= 500) return Math.round(raw / 2) * 2;
+  if (n <= 2000) return Math.round(raw * 1.8 / 5) * 5;
+  return Math.min(99, Math.round(raw * 2.5 / 5) * 5);
+}
+function fmtYr(v) {
+  if (v === null) return 'auf Anfrage';
+  if (v === 0) return 'CHF 0 / Jahr';
+  return 'entspricht CHF ' + (v * 12).toLocaleString('de-CH') + ' / Jahr';
+}
+
+      function competitor1(n) {
+        if (n <= 50) return 0;
+        if (n <= 100) return 13;
+        if (n <= 250) return 20;
+        if (n <= 500) return 36;
+        if (n <= 1000) return 41;
+        return null;
+      }
+      function competitor2(n) {
+        if (n <= 50) return 0;
+        if (n <= 100) return 10;
+        if (n <= 250) return 21;
+        if (n <= 500) return 37;
+        if (n <= 1000) return 62;
+        return null;
+      }
+      var slider = document.getElementById('members');
+      var membersOut = document.getElementById('members-out');
+      var pKring = document.getElementById('price-kring');
+      var pKringY = document.getElementById('price-kring-yearly');
+      var pC1 = document.getElementById('price-c1');
+      var pC1Note = document.getElementById('price-c1-note');
+      var pC2 = document.getElementById('price-c2');
+      var pC2Note = document.getElementById('price-c2-note');
+      function fmtMo(v) { if (v === null) return 'individuell'; if (v === 0) return 'gratis'; return 'CHF ' + v + ' / Monat'; }
+      function update() {
+        var n = parseInt(slider.value, 10);
+        membersOut.textContent = n.toLocaleString('de-CH');
+        var k = kring(n);
+        pKring.textContent = k === 0 ? 'gratis' : 'CHF ' + k;
+        pKringY.textContent = fmtYr(k);
+        pC1.textContent = fmtMo(competitor1(n));
+        pC2.textContent = fmtMo(competitor2(n));
+        var c1v = competitor1(n), c2v = competitor2(n);
+        pC1Note.textContent = c1v === null ? 'nur auf Anfrage' : (k > 0 && c1v > k ? 'CHF ' + (c1v - k) + ' teurer, ohne Chat & Aufgaben' : 'ohne Chat, ohne Aufgaben');
+        pC2Note.textContent = c2v === null ? 'nur auf Anfrage' : (k > 0 && c2v > k ? 'CHF ' + (c2v - k) + ' teurer, ohne Chat & Aufgaben' : 'ohne Chat, ohne Aufgaben');
+      }
+      slider.addEventListener('input', update);
+      update();
+      var labels = [10, 25, 50, 100, 250, 500, 1000, 1500, 2000, 3000];
+      new Chart(document.getElementById('chart'), {
+        type: 'line',
+        data: { labels: labels, datasets: [
+          { label: 'Kring', data: labels.map(kring), borderColor: '#185FA5', backgroundColor: '#185FA5', borderWidth: 2, tension: 0.3, pointRadius: 3 },
+          { label: 'Konkurrent 1', data: labels.map(competitor1), borderColor: '#888780', backgroundColor: '#888780', borderWidth: 1.5, borderDash: [5,4], tension: 0.3, pointRadius: 3 },
+          { label: 'Konkurrent 2', data: labels.map(competitor2), borderColor: '#5F5E5A', backgroundColor: '#5F5E5A', borderWidth: 1.5, borderDash: [2,3], tension: 0.3, pointRadius: 3 }
+        ]},
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+          scales: {
+            x: { title: { display: true, text: 'Nutzer', color: '#888780', font: { size: 11 } }, ticks: { color: '#888780', font: { size: 11 } } },
+            y: { title: { display: true, text: 'CHF / Monat', color: '#888780', font: { size: 11 } }, ticks: { color: '#888780', font: { size: 11 }, callback: function(v) { return 'CHF ' + v; } }, beginAtZero: true }
+          }
+        }
+      });
+    })();
+    </script>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kring — eine Software für alle, die gemeinsam etwas tun</title>
+<meta name="description" content="Kring ist die digitale Plattform für Gemeinschaften: Vereine, Alumni, Stockwerkeigentum, Genossenschaften und KMU. Open Source, gehostet in der Schweiz." />
+<meta property="og:title" content="Kring — eine Software für alle, die gemeinsam etwas tun" />
+<meta property="og:description" content="Kring ist die digitale Plattform für Gemeinschaften: Vereine, Alumni, Stockwerkeigentum, Genossenschaften und KMU. Open Source, gehostet in der Schweiz." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="assets/openkring-favicon.svg" />
+<style>
+:root {
+  --c-bg: #FAFAF7;
+  --c-bg-soft: #F1F0EA;
+  --c-bg-card: #FFFFFF;
+  --c-border: #E5E3DA;
+  --c-border-strong: #C9C5B7;
+  --c-text: #1A1815;
+  --c-text-soft: #5F5E5A;
+  --c-text-muted: #8E8C86;
+  --c-accent: #185FA5;
+  --c-accent-soft: #E7EEF6;
+  --c-accent-border: #BFD0E4;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --max-w: 880px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: 'Inter Tight', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+main {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+a { color: inherit; }
+
+h1, h2, h3 { font-weight: 500; letter-spacing: -0.01em; margin: 0; }
+h1 { font-size: clamp(28px, 4vw, 34px); line-height: 1.15; }
+h2 { font-size: 22px; line-height: 1.25; }
+h3 { font-size: 16px; line-height: 1.4; }
+
+p { margin: 0; }
+
+.eyebrow {
+  font-size: 11px;
+  color: var(--c-text-soft);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+}
+
+.lede {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--c-text-soft);
+  max-width: 560px;
+}
+
+button {
+  font: inherit;
+  border: 0.5px solid var(--c-border-strong);
+  background: var(--c-bg-card);
+  color: var(--c-text);
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+button:hover { background: var(--c-bg-soft); }
+
+button.primary {
+  background: var(--c-text);
+  color: var(--c-bg-card);
+  border-color: var(--c-text);
+}
+button.primary:hover { background: #2F2C28; }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.5px solid var(--c-border);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+.brand-logo { height: 26px; width: auto; display: block; }
+.brand-path { font-size: 13px; color: var(--c-text-soft); margin-left: 4px; }
+.nav { display: flex; gap: 1.25rem; font-size: 13px; color: var(--c-text-soft); }
+.nav a { text-decoration: none; }
+.nav a:hover { color: var(--c-text); }
+
+.hero { margin: 0 0 3rem; }
+.hero h1 { margin: 0 0 1.25rem; max-width: 580px; }
+.hero .lede { margin-bottom: 1.5rem; }
+.cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.section { margin: 0 0 3rem; }
+.section-title { margin: 0 0 1.5rem; }
+.section-intro { font-size: 14px; color: var(--c-text-soft); margin: 0 0 1.5rem; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+.grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid.compact { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+
+.card {
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  position: relative;
+}
+.card.link { text-decoration: none; color: inherit; display: block; }
+.card.link:hover { border-color: var(--c-border-strong); }
+.card.soft { background: var(--c-bg-soft); border: none; }
+.card .icon {
+  width: 22px;
+  height: 22px;
+  color: var(--c-accent);
+  margin-bottom: 10px;
+  display: block;
+  stroke-width: 1.5;
+}
+.card-title { font-size: 15px; font-weight: 500; margin: 0 0 6px; }
+.card-text { font-size: 13px; line-height: 1.6; color: var(--c-text-soft); margin: 0; }
+.card-mono { font-size: 12px; color: var(--c-text-muted); margin: 0 0 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.card-cta { font-size: 12px; color: var(--c-accent); margin: 10px 0 0; }
+.card-cta svg { width: 13px; height: 13px; vertical-align: -2px; }
+
+.badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 11px;
+  padding: 2px 8px;
+  background: var(--c-accent-soft);
+  color: var(--c-accent);
+  border-radius: var(--radius-md);
+}
+
+.feature-mini {
+  padding: 0.5rem 0;
+}
+.feature-mini .icon {
+  width: 20px;
+  height: 20px;
+  color: var(--c-text-soft);
+  margin-bottom: 6px;
+  display: block;
+  stroke-width: 1.5;
+}
+.feature-mini h3 { font-size: 14px; margin: 0 0 2px; }
+.feature-mini p { font-size: 12px; color: var(--c-text-soft); }
+
+.info-block {
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.info-block.soft {
+  background: var(--c-bg-soft);
+  border: none;
+}
+.info-block .icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--c-text-soft);
+  stroke-width: 1.5;
+}
+.info-block.lg .icon { width: 28px; height: 28px; }
+.info-block h3 { font-size: 15px; margin: 0 0 4px; }
+.info-block p { font-size: 13px; line-height: 1.6; color: var(--c-text-soft); }
+
+.note {
+  background: var(--c-bg-soft);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+}
+.note p { font-size: 13px; line-height: 1.6; margin: 0; }
+.note p + p { margin-top: 6px; }
+.note .label { color: var(--c-text-soft); margin-bottom: 6px; }
+
+.quote {
+  background: var(--c-bg-soft);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+.quote .label { font-size: 11px; color: var(--c-text-soft); letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 0.75rem; }
+.quote .text {
+  font-family: 'IBM Plex Serif', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+  font-weight: 400;
+}
+.quote .cite { display: flex; align-items: center; gap: 10px; }
+.quote .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--c-accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--c-accent);
+}
+.quote .cite-name { font-size: 13px; font-weight: 500; margin: 0; }
+.quote .cite-role { font-size: 12px; color: var(--c-text-soft); margin: 0; }
+
+.calc { margin: 0 0 1.5rem; }
+.calc-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 0.5rem;
+}
+.calc-label { font-size: 14px; color: var(--c-text-soft); min-width: 90px; }
+.calc-slider { flex: 1; accent-color: var(--c-accent); }
+.calc-value { font-size: 16px; font-weight: 500; min-width: 70px; text-align: right; }
+.calc-hint { font-size: 12px; color: var(--c-text-muted); margin: 0 0 1.5rem 106px; }
+@media (max-width: 540px) {
+  .calc-hint { margin-left: 0; }
+}
+
+.price-box {
+  background: var(--c-bg-card);
+  border: 2px solid var(--c-accent-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.price-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.price-label { font-size: 13px; color: var(--c-text-soft); margin: 0 0 6px; }
+.price-amount { font-size: 36px; font-weight: 500; margin: 0; line-height: 1; }
+.price-amount .suffix { font-size: 16px; color: var(--c-text-soft); font-weight: 400; }
+.price-year { font-size: 13px; color: var(--c-text-soft); margin: 0; }
+
+.price-features {
+  border-top: 0.5px solid var(--c-border);
+  padding-top: 12px;
+}
+.price-features-label { font-size: 13px; color: var(--c-text-soft); margin: 0 0 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font-size: 13px;
+  padding: 4px 10px;
+  background: var(--c-accent-soft);
+  color: var(--c-accent);
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.chip svg { width: 14px; height: 14px; }
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+.compare-card {
+  background: var(--c-bg-soft);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+}
+.compare-label { font-size: 13px; color: var(--c-text-soft); margin: 0 0 6px; }
+.compare-amount { font-size: 20px; font-weight: 500; margin: 0 0 4px; }
+.compare-note { font-size: 12px; color: var(--c-text-soft); margin: 0; }
+
+.chart-wrap { position: relative; width: 100%; height: 200px; }
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 0 0 2rem;
+  font-size: 12px;
+  color: var(--c-text-soft);
+}
+.chart-legend span { display: flex; align-items: center; gap: 6px; }
+.chart-legend .dot-solid { width: 14px; height: 2px; background: var(--c-accent); }
+.chart-legend .dot-dash { width: 14px; height: 0; border-top: 2px dashed #888780; }
+.chart-legend .dot-dot { width: 14px; height: 0; border-top: 2px dotted #5F5E5A; }
+
+.cta-box {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  background: var(--c-bg-soft);
+  border-radius: var(--radius-lg);
+  margin: 0 0 2rem;
+}
+.cta-box h2 { font-size: 20px; margin: 0 0 0.5rem; }
+.cta-box p { font-size: 13px; color: var(--c-text-soft); margin: 0 0 1.25rem; }
+.cta-buttons { display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-top: 0.5px solid var(--c-border);
+  flex-wrap: wrap;
+}
+footer p {
+  font-size: 12px;
+  color: var(--c-text-muted);
+  margin: 0;
+  text-align: left;
+}
+footer p a { color: inherit; text-decoration: underline; text-decoration-color: var(--c-border-strong); text-underline-offset: 2px; }
+footer .swiss-made { flex-shrink: 0; display: inline-block; }
+footer .swiss-made img { height: 24px; width: auto; display: block; }
+
+</style>
+</head>
+<body>
+<main>
+<div class="header"><div style="display:flex;align-items:center;gap:10px;"><a class="brand" href="https://kring.ch" aria-label="openkring"><svg class="brand-logo" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 14 L10 14 L10 66 L18 66"/><path d="M62 14 L70 14 L70 66 L62 66"/><circle cx="40" cy="40" r="18"/></g><text x="92" y="49" font-family="'Inter Tight', system-ui, sans-serif" font-size="26" font-weight="500" letter-spacing="-0.4"><tspan fill="#6F95C0" font-weight="400">open</tspan><tspan fill="#1A1815">kring</tspan></text></svg></a></div><nav class="nav">
+      <a href="#funktionen">Funktionen</a>
+      <a href="#referenzen">Referenzen</a>
+      <a href="#preise">Preise</a>
+      <a href="#open-source">Open Source</a>
+    </nav></div>
+    <section class="hero">
+      <p class="eyebrow">Die digitale Plattform für Gemeinschaften</p>
+      <h1>Eine Software für alle, die gemeinsam etwas tun.</h1>
+      <p class="lede">Vereine, Jahrgänge, Eigentümergemeinschaften, Genossenschaften, kleine Betriebe — alle organisieren sich ähnlich. Kring bringt zusammen, was sie dafür brauchen: Menschen, Anlässe, Kommunikation, Finanzen. Ohne Medienbrüche, mit Begleitung bei der Digitalisierung.</p>
+      <div class="cta-row">
+        <button class="primary">Demo vereinbaren</button>
+        <button>30 Tage testen</button>
+      </div>
+    </section>
+
+    <section class="section" id="fuer-wen">
+      <p class="eyebrow">Für wen</p>
+      <h2 class="section-title">Fünf Welten, eine Plattform.</h2>
+      <p class="section-intro">Jede Gemeinschaft hat ihre eigene Sprache. Eine davon ist Ihre.</p>
+      <div class="grid">
+        <a class="card link" href="/club">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11a4 4 0 100-8 4 4 0 000 8zM3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2M16 11a4 4 0 100-8M21 21v-2a4 4 0 00-3-3.87"/></svg>
+      <h3 class="card-title">Vereine</h3>
+      <p class="card-mono">kring.ch/club</p>
+      <p class="card-text">Sport-, Musik-, Kulturvereine. Vom Trainingsplan bis zur GV.</p>
+      <p class="card-cta">Mehr erfahren <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></p>
+    </a>
+        <a class="card link" href="/alumni">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 10L12 5 2 10l10 5 10-5zM6 12v5c0 1 4 3 6 3s6-2 6-3v-5"/></svg>
+      <h3 class="card-title">Alumni</h3>
+      <p class="card-mono">kring.ch/alumni</p>
+      <p class="card-text">Jahrgänge, Klassen, Verbindungen. Verbundenheit, die über Jahrzehnte trägt.</p>
+      <p class="card-cta">Mehr erfahren <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></p>
+    </a>
+        <a class="card link" href="/steg">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></svg>
+      <h3 class="card-title">Stockwerkeigentum</h3>
+      <p class="card-mono">kring.ch/steg</p>
+      <p class="card-text">Eigentümergemeinschaften. Gemeinsam wohnen, gemeinsam entscheiden.</p>
+      <p class="card-cta">Mehr erfahren <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></p>
+    </a>
+        <a class="card link" href="/coop">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM22 11h-6M19 8v6"/></svg>
+      <h3 class="card-title">Coop & Co.</h3>
+      <p class="card-mono">kring.ch/coop</p>
+      <p class="card-text">Genossenschaften, Quartiervereine, Energiegemeinschaften, Parteien. Miteinander etwas erreichen.</p>
+      <p class="card-cta">Mehr erfahren <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></p>
+    </a>
+        <a class="card link" href="/kmu">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+      <h3 class="card-title">KMU</h3>
+      <p class="card-mono">kring.ch/kmu</p>
+      <p class="card-text">Kleine Betriebe. Mitarbeitende, Aufgaben, Anlässe — an einem Ort.</p>
+      <p class="card-cta">Mehr erfahren <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></p>
+    </a>
+      </div>
+    </section>
+
+    <section class="section" id="funktionen">
+      <p class="eyebrow">Was Kring kann</p>
+      <h2 class="section-title">Eine Plattform, die mehr kann als verwalten.</h2>
+      <div class="grid compact">
+        <div class="feature-mini">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11a4 4 0 100-8 4 4 0 000 8zM3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2M16 11a4 4 0 100-8M21 21v-2a4 4 0 00-3-3.87"/></svg>
+      <h3>Mitglieder</h3>
+      <p>Verzeichnis, Rollen, Beiträge</p>
+    </div>
+        <div class="feature-mini">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <h3>Anlässe</h3>
+      <p>Kalender, Anmeldung, Erinnerung</p>
+    </div>
+        <div class="feature-mini">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      <h3>Chat</h3>
+      <p>Echtzeit, in Gruppen</p>
+    </div>
+        <div class="feature-mini">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      <h3>Aufgaben</h3>
+      <p>Verteilen, erinnern, erledigen</p>
+    </div>
+        <div class="feature-mini">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 22V4a2 2 0 00-2-2H7a2 2 0 00-2 2v18l3.5-2 3.5 2 3.5-2 3.5 2zM9 7h6M9 11h6M9 15h4"/></svg>
+      <h3>Finanzen</h3>
+      <p>Rechnungen, Buchhaltung, QR</p>
+    </div>
+        <div class="feature-mini">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+      <h3>Dokumente</h3>
+      <p>Ablage, Versionen, Freigabe</p>
+    </div>
+        <div class="feature-mini">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      <h3>Webseite</h3>
+      <p>Öffentlich und intern</p>
+    </div>
+        <div class="feature-mini">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+      <h3>Sicherheit</h3>
+      <p>Rollen, Rechte, Audit</p>
+    </div>
+      </div>
+    </section>
+
+    <div class="info-block" style="margin-bottom:3rem;">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16zM3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg>
+      <div>
+        <h3>Volle Funktionalität, immer inklusive.</h3>
+        <p>Keine Zusatzpakete, keine Pro-Versionen. Alle Funktionen sind in jedem Abo enthalten — und werden mit Unterstützung konfiguriert. Externe Dienste wie Buchhaltungspakete integrieren wir; die Lizenzen kommen direkt vom jeweiligen Anbieter.</p>
+      </div>
+    </div>
+
+    <div class="info-block lg" id="open-source" style="background:var(--c-bg-soft);border:none;margin-bottom:3rem;">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 5a7 7 0 014 12.7M12 5a7 7 0 00-4 12.7M10 14l-2 4M14 14l2 4"/></svg>
+      <div>
+        <h3 style="font-size:16px;margin-bottom:6px;">Open Source. Daten in der Schweiz.</h3>
+        <p style="line-height:1.7;margin-bottom:8px;">Kring basiert auf dem Open-Source-Projekt <span style="font-family:'JetBrains Mono',monospace;color:var(--c-text);">openkring</span>. Der Quelltext ist offen, die Daten gehören der Gemeinschaft, das Hosting ist in der Schweiz. Kein Lock-in — jederzeit auf eine eigene Instanz wechselbar.</p>
+        <a href="https://openkring.org" style="font-size:13px;color:var(--c-accent);text-decoration:none;">openkring.org <span style="display:inline-block;width:13px;height:13px;vertical-align:-2px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></span></a>
+      </div>
+    </div>
+
+    <section class="section" id="referenzen">
+      <p class="eyebrow">Im Einsatz bei</p>
+      <h2 class="section-title">Referenzen aus der Praxis.</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <p class="text" style="font-family:'IBM Plex Serif',Georgia,serif;font-size:16px;line-height:1.5;margin:0 0 1rem;">Über 200 Mitglieder, vier Riegen, ein Bootshaus-Projekt — alles in Kring.</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--c-accent-soft);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:11px;color:var(--c-accent);">SC</div>
+            <div>
+              <p style="font-size:13px;font-weight:500;margin:0;">Seeclub Stäfa</p>
+              <p style="font-size:12px;color:var(--c-text-soft);margin:0;">Ruderclub am Zürichsee</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <p class="text" style="font-family:'IBM Plex Serif',Georgia,serif;font-size:16px;line-height:1.5;margin:0 0 1rem;">Vierzig Jahre Verbundenheit, ein jährliches Wochenende — Kring hält uns zusammen.</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--c-accent-soft);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:11px;color:var(--c-accent);">P13</div>
+            <div>
+              <p style="font-size:13px;font-weight:500;margin:0;">P-13 Alumni</p>
+              <p style="font-size:12px;color:var(--c-text-soft);margin:0;">FF OS 2/84, seit 1984</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta-box">
+      <h2>Welche Welt passt?</h2>
+      <p>Die fünf Welten oben führen direkt zur passenden Sprache. Oder einfach eine Demo vereinbaren, wenn unklar.</p>
+      <div class="cta-buttons">
+        <button class="primary">Demo vereinbaren</button>
+        <button>Kontakt aufnehmen</button>
+      </div>
+    </div>
+
+    <footer>
+  <p>Kring ist eine Marke der bkaiser GmbH · <a href="https://kring.ch">kring.ch</a> · <a href="https://openkring.org">openkring.org</a></p>
+  <a href="https://www.swissmadesoftware.org/" target="_blank" rel="noopener" aria-label="Swiss Made Software" class="swiss-made">
+    <img src="https://bkaiser.imgix.net/logo/general/swissMadeSoftware.svg" alt="Swiss Made Software" />
+  </a>
+</footer>
+
+</main>
+</body>
+</html>

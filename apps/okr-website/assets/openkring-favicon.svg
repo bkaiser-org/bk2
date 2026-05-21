@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="openkring favicon">
+  <title>openkring</title>
+  <desc>Favicon-Variante des openkring-Logos mit dickeren Strichen für kleine Darstellung.</desc>
+  <g fill="none" stroke="#185FA5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 18 L14 18 L14 62 L22 62"/>
+    <path d="M58 18 L66 18 L66 62 L58 62"/>
+    <circle cx="40" cy="40" r="16"/>
+  </g>
+</svg>

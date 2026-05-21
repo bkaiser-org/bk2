@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>openkring — Brand Styleguide</title>
+<meta name="description" content="Logo, Farben, Typografie und Anwendungsregeln für das Open-Source-Projekt openkring." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --c-bg: #FAFAF7;
+  --c-bg-soft: #F1F0EA;
+  --c-bg-card: #FFFFFF;
+  --c-bg-dark: #0F1A2A;
+  --c-border: #E5E3DA;
+  --c-border-strong: #C9C5B7;
+  --c-text: #1A1815;
+  --c-text-soft: #5F5E5A;
+  --c-text-muted: #8E8C86;
+  --c-text-inverse: #C9D5E5;
+  --c-kring: #185FA5;
+  --c-kring-dark: #0E3E70;
+  --c-kring-light: #6F95C0;
+  --c-kring-lighter: #7FA8D3;
+  --c-kring-soft: #E7EEF6;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --max-w: 880px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: 'Inter Tight', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+main {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+h1, h2, h3, h4 { font-weight: 500; letter-spacing: -0.01em; margin: 0; }
+h1 { font-size: 32px; line-height: 1.15; margin-bottom: 0.5rem; }
+h2 { font-size: 22px; line-height: 1.25; margin: 3rem 0 1rem; padding-top: 1rem; border-top: 0.5px solid var(--c-border); }
+h2:first-of-type { border-top: none; padding-top: 0; }
+h3 { font-size: 16px; line-height: 1.4; margin: 1.5rem 0 0.5rem; }
+h4 { font-size: 13px; color: var(--c-text-soft); letter-spacing: 0.08em; text-transform: uppercase; margin: 1.5rem 0 0.5rem; }
+p { margin: 0 0 1rem; }
+p.lede {
+  font-size: 16px;
+  color: var(--c-text-soft);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+a { color: var(--c-kring); text-decoration: underline; text-decoration-color: var(--c-border-strong); text-underline-offset: 2px; }
+code { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; background: var(--c-bg-soft); padding: 1px 6px; border-radius: 4px; }
+pre {
+  background: var(--c-bg-soft);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin: 0.5rem 0 1.5rem;
+}
+pre code { background: transparent; padding: 0; font-size: 12px; line-height: 1.6; }
+
+.eyebrow { font-size: 11px; color: var(--c-text-soft); letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 0.75rem; }
+
+.toc {
+  background: var(--c-bg-soft);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 3rem;
+}
+.toc h4 { margin-top: 0; }
+.toc ol { margin: 0; padding-left: 1.25rem; font-size: 14px; }
+.toc li { margin-bottom: 4px; }
+.toc a { text-decoration: none; color: var(--c-text); }
+.toc a:hover { color: var(--c-kring); }
+
+.stage {
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  margin: 1rem 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+}
+.stage.dark { background: var(--c-bg-dark); border: none; }
+.stage.compact { padding: 1.5rem; min-height: 100px; }
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 1rem 0 1.5rem;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin: 1rem 0 1.5rem;
+}
+
+.card {
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+.card .label { font-size: 12px; color: var(--c-text-soft); margin: 0 0 0.5rem; }
+.card .filename { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--c-text-muted); margin-top: 0.5rem; }
+
+.swatch {
+  display: block;
+  height: 80px;
+  border-radius: var(--radius-md);
+  margin-bottom: 0.75rem;
+  border: 0.5px solid var(--c-border);
+}
+.swatch-name { font-size: 13px; font-weight: 500; margin: 0; }
+.swatch-hex { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--c-text-soft); margin: 0; }
+.swatch-role { font-size: 12px; color: var(--c-text-soft); margin: 0.25rem 0 0; }
+
+.size-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-md);
+  flex-wrap: wrap;
+}
+.size-strip .item { text-align: center; }
+.size-strip .px { font-size: 11px; color: var(--c-text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 0.5rem; }
+
+.do-dont {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.do-dont .row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-md);
+}
+.do-dont .row.bad { background: #FCF1EE; border-color: #F2D5CC; }
+.do-dont .row.good { background: #F0F6EE; border-color: #D5E5CD; }
+.do-dont .row p { margin: 0; font-size: 13px; }
+.do-dont .row .visual { display: flex; align-items: center; justify-content: center; min-height: 60px; }
+.do-dont .row .tag { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+.do-dont .row.bad .tag { color: #B5573D; }
+.do-dont .row.good .tag { color: #4D7A39; }
+
+.divider { height: 0.5px; background: var(--c-border); border: none; margin: 2rem 0; }
+
+footer {
+  margin-top: 4rem;
+  padding-top: 1.25rem;
+  border-top: 0.5px solid var(--c-border);
+  font-size: 12px;
+  color: var(--c-text-muted);
+}
+</style>
+</head>
+<body>
+<main>
+
+<p class="eyebrow">openkring · Brand Styleguide</p>
+<h1>Logo, Farben, Anwendung.</h1>
+<p class="lede">Diese Richtlinie beschreibt, wie das Logo und die visuellen Elemente des Open-Source-Projekts openkring verwendet werden. Sie gilt für die Projekt-Website, GitHub-Repositories, Präsentationen, Sticker und alle weiteren Anwendungen, in denen openkring auftritt.</p>
+
+<div class="toc">
+  <h4>Inhalt</h4>
+  <ol>
+    <li><a href="#logo">Logo — Form und Bedeutung</a></li>
+    <li><a href="#varianten">Logo-Varianten</a></li>
+    <li><a href="#wortmarke">Wortmarke</a></li>
+    <li><a href="#groessen">Größen und Abstände</a></li>
+    <li><a href="#farben">Farbpalette</a></li>
+    <li><a href="#typografie">Typografie</a></li>
+    <li><a href="#anwendung">Anwendungsregeln</a></li>
+    <li><a href="#dateien">Dateien und Downloads</a></li>
+  </ol>
+</div>
+
+<h2 id="logo">1 — Logo: Form und Bedeutung</h2>
+
+<div class="stage">
+  <svg width="120" height="120" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-label="openkring Logo">
+    <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 14 L10 14 L10 66 L18 66"/>
+      <path d="M62 14 L70 14 L70 66 L62 66"/>
+      <circle cx="40" cy="40" r="18"/>
+    </g>
+  </svg>
+</div>
+
+<p>Das Logo besteht aus drei Elementen:</p>
+<ul>
+  <li><strong>Zwei eckige Klammern</strong> links und rechts — die geschweiften Klammern stehen für Quellcode und das Bekenntnis zu Open Source.</li>
+  <li><strong>Ein Ring</strong> in der Mitte — der "kring" (niederländisch/afrikaans für Kreis). Steht für die Gemeinschaft von Menschen, die das Projekt nutzt und mitgestaltet.</li>
+  <li><strong>Blau</strong> als einzige Farbe — derselbe Ton wie die kommerzielle Marke Kring. Verwandt, ruhig, vertrauensbildend.</li>
+</ul>
+<p>Die Klammern stehen für das, was wir liefern (Code). Der Ring steht für die, mit denen wir arbeiten (die Gemeinschaft). Beides gleichgewichtig, beides sichtbar.</p>
+
+<h2 id="varianten">2 — Logo-Varianten</h2>
+<p class="lede">Drei Farbvarianten und eine Favicon-Variante. Wähle die Variante, die zum Hintergrund passt.</p>
+
+<div class="grid-3">
+
+  <div class="card">
+    <p class="label">Primär</p>
+    <div class="stage compact">
+      <svg width="64" height="64" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <p class="filename">openkring-logo.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Auf hellem Hintergrund. Erste Wahl in 99% der Fälle.</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Mono dunkel</p>
+    <div class="stage compact">
+      <svg width="64" height="64" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#0E3E70" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <p class="filename">openkring-logo-mono.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Für Druck, Stempel, Schwarz-Weiß-Anwendungen.</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Inverse</p>
+    <div class="stage compact dark">
+      <svg width="64" height="64" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#7FA8D3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <p class="filename">openkring-logo-inverse.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Auf dunklem Hintergrund. README dark mode, Social-Cards.</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Favicon</p>
+    <div class="stage compact">
+      <svg width="64" height="64" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 18 L14 18 L14 62 L22 62"/>
+          <path d="M58 18 L66 18 L66 62 L58 62"/>
+          <circle cx="40" cy="40" r="16"/>
+        </g>
+      </svg>
+    </div>
+    <p class="filename">openkring-favicon.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Dickere Striche für 16–32 px Darstellung.</p>
+  </div>
+
+</div>
+
+<h2 id="wortmarke">3 — Wortmarke</h2>
+<p class="lede">Logo plus Schriftzug, zwei Anordnungen. Das Wort "open" steht in hellem Blau, "kring" in Tiefschwarz — die Trennung signalisiert die Beziehung zwischen Open-Source-Projekt und Hauptmarke.</p>
+
+<div class="grid-2">
+
+  <div class="card">
+    <p class="label">Horizontal</p>
+    <div class="stage compact">
+      <svg width="240" height="64" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+        <text x="92" y="49" font-family="'Inter Tight', system-ui, sans-serif" font-size="26" font-weight="500" letter-spacing="-0.4">
+          <tspan fill="#6F95C0" font-weight="400">open</tspan><tspan fill="#1A1815">kring</tspan>
+        </text>
+      </svg>
+    </div>
+    <p class="filename">openkring-wordmark-horizontal.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Standard für Header, README-Hero, Footer.</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Vertikal gestapelt</p>
+    <div class="stage compact" style="min-height: 160px;">
+      <svg width="120" height="100" viewBox="0 0 160 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(40 0)">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+        <text x="80" y="115" text-anchor="middle" font-family="'Inter Tight', system-ui, sans-serif" font-size="22" font-weight="500" letter-spacing="-0.3">
+          <tspan fill="#6F95C0" font-weight="400">open</tspan><tspan fill="#1A1815">kring</tspan>
+        </text>
+      </svg>
+    </div>
+    <p class="filename">openkring-wordmark-vertical.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Für Sticker, Hero-Banner, Splash-Screens.</p>
+  </div>
+
+</div>
+
+<div style="background: var(--c-bg-soft); border-radius: var(--radius-md); padding: 1rem 1.25rem; margin: 1.5rem 0;">
+  <p style="font-size: 13px; line-height: 1.6; margin: 0;"><strong style="font-weight: 500;">Hinweis zur Schriftart:</strong> Die SVG-Wortmarken referenzieren <code>Inter Tight</code>. Wenn die Schrift auf dem Zielsystem nicht installiert ist, fällt der Browser auf System-Sans zurück. Für endgültige, publizierte Assets (Visitenkarten, Druck) sollte das SVG einmal in Inkscape oder Figma in Pfade konvertiert werden — danach ist es schriftunabhängig.</p>
+</div>
+
+<h2 id="groessen">4 — Größen und Abstände</h2>
+
+<h4>Mindestgröße</h4>
+<p>Das Logo bleibt bis 16 px lesbar (mit der Favicon-Variante). Unter 16 px nicht verwenden.</p>
+
+<div class="size-strip">
+  <div class="item">
+    <svg width="16" height="16" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="none" stroke="#185FA5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 18 L14 18 L14 62 L22 62"/>
+        <path d="M58 18 L66 18 L66 62 L58 62"/>
+        <circle cx="40" cy="40" r="16"/>
+      </g>
+    </svg>
+    <p class="px">16 px favicon</p>
+  </div>
+  <div class="item">
+    <svg width="24" height="24" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="none" stroke="#185FA5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 14 L10 14 L10 66 L18 66"/>
+        <path d="M62 14 L70 14 L70 66 L62 66"/>
+        <circle cx="40" cy="40" r="18"/>
+      </g>
+    </svg>
+    <p class="px">24 px</p>
+  </div>
+  <div class="item">
+    <svg width="32" height="32" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="none" stroke="#185FA5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 14 L10 14 L10 66 L18 66"/>
+        <path d="M62 14 L70 14 L70 66 L62 66"/>
+        <circle cx="40" cy="40" r="18"/>
+      </g>
+    </svg>
+    <p class="px">32 px</p>
+  </div>
+  <div class="item">
+    <svg width="48" height="48" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="none" stroke="#185FA5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 14 L10 14 L10 66 L18 66"/>
+        <path d="M62 14 L70 14 L70 66 L62 66"/>
+        <circle cx="40" cy="40" r="18"/>
+      </g>
+    </svg>
+    <p class="px">48 px</p>
+  </div>
+  <div class="item">
+    <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 14 L10 14 L10 66 L18 66"/>
+        <path d="M62 14 L70 14 L70 66 L62 66"/>
+        <circle cx="40" cy="40" r="18"/>
+      </g>
+    </svg>
+    <p class="px">80 px</p>
+  </div>
+</div>
+
+<h4>Schutzraum</h4>
+<p>Um das Logo ist ein freier Raum von mindestens der Breite einer Klammer (≈10 % der Logobreite). In diesem Raum keine weiteren Elemente, kein Text, keine andere Marke.</p>
+
+<div class="stage" style="position: relative;">
+  <svg width="200" height="200" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="0" y="0" width="100" height="100" fill="none" stroke="#C9C5B7" stroke-width="0.5" stroke-dasharray="2 2"/>
+    <g transform="translate(10 10)">
+      <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 14 L10 14 L10 66 L18 66"/>
+        <path d="M62 14 L70 14 L70 66 L62 66"/>
+        <circle cx="40" cy="40" r="18"/>
+      </g>
+    </g>
+  </svg>
+</div>
+<p style="font-size: 13px; color: var(--c-text-soft); text-align: center; margin: 0;">Gestrichelte Linie zeigt den Schutzraum. Im realen Einsatz nicht sichtbar.</p>
+
+<h2 id="farben">5 — Farbpalette</h2>
+<p class="lede">Eine Farbfamilie, fünf Töne. Kring-Blau (185FA5) ist der Anker. Hellere Töne für Sekundärrollen, dunklere für Druck und Tiefe.</p>
+
+<div class="grid-3">
+
+  <div class="card">
+    <span class="swatch" style="background: #185FA5;"></span>
+    <p class="swatch-name">Kring Blau</p>
+    <p class="swatch-hex">#185FA5</p>
+    <p class="swatch-role">Primär. Logo, Akzente, Buttons.</p>
+  </div>
+
+  <div class="card">
+    <span class="swatch" style="background: #0E3E70;"></span>
+    <p class="swatch-name">Kring Dunkel</p>
+    <p class="swatch-hex">#0E3E70</p>
+    <p class="swatch-role">Druck, Mono-Variante.</p>
+  </div>
+
+  <div class="card">
+    <span class="swatch" style="background: #6F95C0;"></span>
+    <p class="swatch-name">Kring Mittel</p>
+    <p class="swatch-hex">#6F95C0</p>
+    <p class="swatch-role">"open"-Wortmarke, Sekundär-Akzent.</p>
+  </div>
+
+  <div class="card">
+    <span class="swatch" style="background: #7FA8D3;"></span>
+    <p class="swatch-name">Kring Hell</p>
+    <p class="swatch-hex">#7FA8D3</p>
+    <p class="swatch-role">Inverse-Variante auf dunklem Grund.</p>
+  </div>
+
+  <div class="card">
+    <span class="swatch" style="background: #E7EEF6;"></span>
+    <p class="swatch-name">Kring Tint</p>
+    <p class="swatch-hex">#E7EEF6</p>
+    <p class="swatch-role">Hintergrund für Chips, Badges, Highlights.</p>
+  </div>
+
+  <div class="card">
+    <span class="swatch" style="background: #1A1815;"></span>
+    <p class="swatch-name">Tiefschwarz</p>
+    <p class="swatch-hex">#1A1815</p>
+    <p class="swatch-role">Primär-Text. Nicht reines Schwarz.</p>
+  </div>
+
+</div>
+
+<h2 id="typografie">6 — Typografie</h2>
+<p class="lede">Eine Sans-Schrift mit Charakter, eine Serif für die seltenen editorialen Momente. Die Mono-Schrift für Codebeispiele und Pfade.</p>
+
+<div class="grid-3">
+
+  <div class="card">
+    <p class="label">Display & Body</p>
+    <p style="font-family: 'Inter Tight', sans-serif; font-size: 28px; font-weight: 500; margin: 0.5rem 0; letter-spacing: -0.01em;">Inter Tight</p>
+    <p style="font-family: 'Inter Tight', sans-serif; font-size: 14px; color: var(--c-text-soft); margin: 0;">Eine moderne, etwas verdichtete Sans. Gewichte 400 und 500. Niemals fett gewichten — bleibt ruhig.</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Editorial / Quotes</p>
+    <p style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 24px; font-weight: 400; margin: 0.5rem 0;">IBM Plex Serif</p>
+    <p style="font-family: 'Inter Tight', sans-serif; font-size: 14px; color: var(--c-text-soft); margin: 0;">Für Zitate, Tagline-Sätze, redaktionelle Hervorhebungen. Nur in Ausnahmen.</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Code & Mono</p>
+    <p style="font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 400; margin: 0.5rem 0;">JetBrains Mono</p>
+    <p style="font-family: 'Inter Tight', sans-serif; font-size: 14px; color: var(--c-text-soft); margin: 0;">Für Codebeispiele, Pfade, Dateinamen, kleine Datenpunkte.</p>
+  </div>
+
+</div>
+
+<h2 id="anwendung">7 — Anwendungsregeln</h2>
+
+<div class="do-dont">
+
+  <div class="row good">
+    <div class="visual">
+      <svg width="48" height="48" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <div>
+      <p class="tag">Gut</p>
+      <p>Auf neutralem, hellem Hintergrund. Volle Sichtbarkeit, freier Schutzraum, originale Farbgebung.</p>
+    </div>
+  </div>
+
+  <div class="row bad">
+    <div class="visual" style="background: #FF6B35; padding: 8px; border-radius: 6px;">
+      <svg width="48" height="48" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <div>
+      <p class="tag">Schlecht</p>
+      <p>Nicht auf gesättigten, kontrastreichen Farbflächen. Wenn der Hintergrund nicht neutral ist, die Mono- oder Inverse-Variante wählen.</p>
+    </div>
+  </div>
+
+  <div class="row bad">
+    <div class="visual">
+      <svg width="48" height="64" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <div>
+      <p class="tag">Schlecht</p>
+      <p>Nicht verzerren. Wenn das Logo skaliert wird, immer proportional. Höhe und Breite gleichmäßig anpassen.</p>
+    </div>
+  </div>
+
+  <div class="row bad">
+    <div class="visual">
+      <svg width="48" height="48" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#D14A2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <div>
+      <p class="tag">Schlecht</p>
+      <p>Nicht umfärben. Das Logo wird ausschließlich in den vier definierten Blau-Tönen verwendet. Keine Akzentfarben aus anderen Familien.</p>
+    </div>
+  </div>
+
+  <div class="row bad">
+    <div class="visual">
+      <svg width="48" height="48" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+        <circle cx="40" cy="40" r="5" fill="#185FA5"/>
+      </svg>
+    </div>
+    <div>
+      <p class="tag">Schlecht</p>
+      <p>Keine zusätzlichen Elemente einfügen. Der zentrale Punkt im Ring wurde in der Final-Variante bewusst entfernt — er erzeugt Bullseye-Optik und überlädt das Zeichen.</p>
+    </div>
+  </div>
+
+</div>
+
+<h2 id="dateien">8 — Dateien und Downloads</h2>
+<p>Alle Asset-Dateien sind im SVG-Format gehalten, vektorbasiert, unter 1 KB pro Datei. Bei Bedarf in PNG, PDF oder ICO konvertierbar mit Tools wie Inkscape oder Figma.</p>
+
+<div class="grid-2">
+
+  <div class="card">
+    <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">openkring-logo.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Logo, Standardvariante. 80×80 viewBox, ~465 Bytes.</p>
+  </div>
+
+  <div class="card">
+    <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">openkring-logo-mono.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Monochrom dunkel. Für Druck oder Anwendungen ohne Farbe.</p>
+  </div>
+
+  <div class="card">
+    <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">openkring-logo-inverse.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Hellblau für dunkle Hintergründe.</p>
+  </div>
+
+  <div class="card">
+    <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">openkring-favicon.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Verstärkte Striche für 16–32 px. Auch als favicon.ico konvertierbar.</p>
+  </div>
+
+  <div class="card">
+    <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">openkring-wordmark-horizontal.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Logo + Schriftzug nebeneinander.</p>
+  </div>
+
+  <div class="card">
+    <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">openkring-wordmark-vertical.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Logo gestapelt über dem Schriftzug.</p>
+  </div>
+
+</div>
+
+<h4>Lizenz</h4>
+<p>Das openkring-Logo und seine Wortmarke gehören zur bkaiser GmbH. Verwendung im Rahmen der openkring-Dokumentation, in Beiträgen zum Projekt und in Zusammenhang mit Kring-Produkten ist erlaubt. Modifikationen oder Verwendung in fremden Kontexten erfordern Zustimmung.</p>
+
+<h4>Kontakt</h4>
+<p>Bei Fragen zur Markenanwendung oder Anforderungen für besondere Verwendungen: bkaiser GmbH, <a href="https://kring.ch">kring.ch</a>.</p>
+
+<footer>
+  <p>Styleguide openkring · Version 1.0 · Mai 2026 · eine Marke der bkaiser GmbH</p>
+</footer>
+
+</main>
+</body>
+</html>
