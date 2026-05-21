@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Architektur — openkring</title>
+<meta name="description" content="Die technische Architektur von openkring: Angular/Ionic-Frontend, Firebase-Backend, Nx-Monorepo mit klarer Schichtentrennung, Signal Stores und Cloud Functions." />
+<meta property="og:title" content="Architektur — openkring" />
+<meta property="og:description" content="Angular/Ionic auf Firebase, organisiert als Nx-Monorepo mit klarer Schichtentrennung." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="assets/openkring-favicon.svg" />
+<style>
+:root {
+  --c-bg: #F3F6FA;
+  --c-bg-soft: #E8EEF6;
+  --c-bg-card: #FFFFFF;
+  --c-bg-dark: #0F1A2A;
+  --c-border: #E5E3DA;
+  --c-border-strong: #C9C5B7;
+  --c-text: #1A1815;
+  --c-text-soft: #5F5E5A;
+  --c-text-muted: #8E8C86;
+  --c-accent: #185FA5;
+  --c-accent-soft: #E7EEF6;
+  --c-accent-border: #BFD0E4;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --max-w: 880px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--c-bg);
+  background-image:
+    radial-gradient(circle, rgba(24, 95, 165, 0.06) 1px, transparent 1px),
+    linear-gradient(180deg, #DCE6F3 0%, rgba(220, 230, 243, 0) 600px);
+  background-repeat: repeat, no-repeat;
+  background-size: 22px 22px, 100% 600px;
+  color: var(--c-text);
+  font-family: 'Inter Tight', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+main {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+a { color: inherit; }
+
+h1, h2, h3 { font-weight: 500; letter-spacing: -0.01em; margin: 0; }
+h1 { font-size: clamp(28px, 4vw, 34px); line-height: 1.15; }
+h2 { font-size: 22px; line-height: 1.25; }
+h3 { font-size: 16px; line-height: 1.4; }
+
+p { margin: 0; }
+
+ul { margin: 0.5rem 0 0; padding-left: 1.1rem; }
+li { font-size: 14px; line-height: 1.6; color: var(--c-text-soft); margin-bottom: 4px; }
+
+.eyebrow {
+  font-size: 11px;
+  color: var(--c-text-soft);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+}
+
+.lede {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--c-text-soft);
+  max-width: 600px;
+}
+
+button, a.btn {
+  font: inherit;
+  display: inline-block;
+  border: 0.5px solid var(--c-border-strong);
+  background: var(--c-bg-card);
+  color: var(--c-text);
+  text-decoration: none;
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+button:hover, a.btn:hover { background: var(--c-bg-soft); }
+
+button.primary, a.btn.primary {
+  background: var(--c-text);
+  color: var(--c-bg-card);
+  border-color: var(--c-text);
+}
+button.primary:hover, a.btn.primary:hover { background: #2F2C28; }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.5px solid var(--c-border);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+.brand-logo { height: 34px; width: auto; display: block; }
+.nav { display: flex; gap: 1.25rem; font-size: 13px; color: var(--c-text-soft); flex-wrap: wrap; }
+.nav a { text-decoration: none; }
+.nav a:hover { color: var(--c-text); }
+
+.hero { margin: 0 0 3rem; }
+.hero h1 { margin: 0 0 1.25rem; max-width: 600px; }
+.hero .lede { margin-bottom: 1.5rem; }
+.cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.section { margin: 0 0 1.5rem; background: var(--c-bg-soft); border-radius: var(--radius-lg); padding: 1.75rem 1.5rem; }
+.section-title { margin: 0 0 1.5rem; }
+.section-intro { font-size: 14px; color: var(--c-text-soft); margin: 0 0 1.5rem; max-width: 600px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+.grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid.compact { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+
+.card {
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  position: relative;
+}
+.card.link { text-decoration: none; color: inherit; display: block; }
+.card.link:hover { border-color: var(--c-border-strong); }
+.card.soft { background: var(--c-bg-soft); border: none; }
+.card .icon {
+  width: 22px;
+  height: 22px;
+  color: var(--c-accent);
+  margin-bottom: 10px;
+  display: block;
+  stroke-width: 1.5;
+}
+.card-title { font-size: 15px; font-weight: 500; margin: 0 0 6px; }
+.card-text { font-size: 13px; line-height: 1.6; color: var(--c-text-soft); margin: 0; }
+.card-mono { font-size: 12px; color: var(--c-text-muted); margin: 0 0 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.card-cta { font-size: 12px; color: var(--c-accent); margin: 10px 0 0; }
+.card-cta svg { width: 13px; height: 13px; vertical-align: -2px; }
+
+.feature-mini { padding: 0.5rem 0; }
+.feature-mini .icon {
+  width: 20px;
+  height: 20px;
+  color: var(--c-text-soft);
+  margin-bottom: 6px;
+  display: block;
+  stroke-width: 1.5;
+}
+.feature-mini h3 { font-size: 14px; margin: 0 0 2px; }
+.feature-mini p { font-size: 12px; color: var(--c-text-soft); }
+
+.info-block {
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.info-block:last-child { margin-bottom: 0; }
+.info-block .icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--c-accent);
+  stroke-width: 1.5;
+}
+.info-block.lg .icon { width: 28px; height: 28px; }
+.info-block h3 { font-size: 15px; margin: 0 0 4px; }
+.info-block p { font-size: 13px; line-height: 1.7; color: var(--c-text-soft); }
+.info-block p + p { margin-top: 8px; }
+
+.step {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 10px;
+}
+.step-num {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--c-accent-soft);
+  color: var(--c-accent);
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step h3 { font-size: 15px; margin: 0 0 3px; }
+.step p { font-size: 13px; line-height: 1.6; color: var(--c-text-soft); margin: 0; }
+
+pre {
+  background: var(--c-bg-dark);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  margin: 0;
+}
+pre code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: #C9D5E5;
+}
+pre .c { color: #6F95C0; }
+code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.86em;
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+pre code { background: none; border: none; padding: 0; }
+
+.lic {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.lic code { font-size: 12px; line-height: 1.7; }
+
+.cta-box {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  background: var(--c-bg-soft);
+  border-radius: var(--radius-lg);
+  margin: 0 0 2rem;
+}
+.cta-box h2 { font-size: 20px; margin: 0 0 0.5rem; }
+.cta-box p { font-size: 13px; color: var(--c-text-soft); margin: 0 0 1.25rem; }
+.cta-buttons { display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-top: 0.5px solid var(--c-border);
+  flex-wrap: wrap;
+}
+.cobrand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--c-text-muted);
+}
+.cobrand-item { display: inline-flex; align-items: center; gap: 5px; }
+.cobrand-item svg { width: 16px; height: 16px; display: block; }
+.cobrand-item strong { color: var(--c-text); font-weight: 500; }
+.cobrand-sep { color: var(--c-text-muted); }
+.ok-open { color: #6F95C0; }
+footer .swiss-made { flex-shrink: 0; display: inline-block; }
+footer .swiss-made img { height: 24px; width: auto; display: block; }
+</style>
+</head>
+<body>
+<main>
+<div class="header">
+  <a class="brand" href="/" aria-label="openkring"><svg class="brand-logo" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 14 L10 14 L10 66 L18 66"/><path d="M62 14 L70 14 L70 66 L62 66"/><circle cx="40" cy="40" r="18"/></g><text x="92" y="49" font-family="'Inter Tight', system-ui, sans-serif" font-size="26" font-weight="500" letter-spacing="-0.4"><tspan fill="#6F95C0" font-weight="400">open</tspan><tspan fill="#1A1815">kring</tspan></text></svg></a>
+  <nav class="nav">
+    <a href="/architektur">Architektur</a>
+    <a href="/mitwirken">Mitwirken</a>
+    <a href="/lizenz">Lizenz</a>
+    <a href="/oekosystem">Ökosystem</a>
+  </nav>
+</div>
+
+<section class="hero">
+  <p class="eyebrow">Technische Architektur</p>
+  <h1>Wie openkring aufgebaut ist.</h1>
+  <p class="lede">openkring ist eine Angular/Ionic-Anwendung auf Google Firebase, organisiert als Nx-Monorepo: ein zustandsorientiertes Frontend, eine serverlose Backend-Schicht und eine klare Trennung der Verantwortlichkeiten.</p>
+</section>
+
+<section class="section">
+  <p class="eyebrow">Technologie-Stack</p>
+  <h2 class="section-title">Worauf openkring läuft.</h2>
+  <div class="grid cols-2">
+    <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      <h3 class="card-title">Frontend</h3>
+      <p class="card-text">Angular 20 mit TypeScript im strict-Modus, Ionic 8.7 und Capacitor 7.4. Zoneless Change Detection, ausschliesslich Standalone Components, durchgehend Signals.</p>
+    </div>
+    <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></svg>
+      <h3 class="card-title">Backend</h3>
+      <p class="card-text">Google Firebase — Firestore als Datenbank, Authentication, Cloud Storage, Cloud Messaging und App Check. Serverlos, ohne eigene Infrastruktur.</p>
+    </div>
+    <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+      <h3 class="card-title">Build &amp; Werkzeuge</h3>
+      <p class="card-text">Nx verwaltet das Monorepo, pnpm die Abhängigkeiten. Cloud Functions werden mit esbuild gebündelt, Unit-Tests laufen mit Vitest.</p>
+    </div>
+    <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      <h3 class="card-title">Sprache &amp; UI</h3>
+      <p class="card-text">Transloco für Mehrsprachigkeit, SCSS für das Styling, native Ionic-Komponenten für eine konsistente Oberfläche auf Web und Mobil.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <p class="eyebrow">Monorepo</p>
+  <h2 class="section-title">Vier Schichten, klar getrennt.</h2>
+  <p class="section-intro">openkring ist ein Nx-Monorepo. <code>apps/</code> enthält die Anwendungen, <code>apps/functions/</code> die Cloud Functions, <code>libs/</code> die Feature-Bibliotheken nach dem Schema <code>@bk2/&lt;domain&gt;-&lt;layer&gt;</code>. Jede Domäne ist in dieselben vier Schichten gegliedert.</p>
+  <div class="grid">
+    <div class="card">
+      <p class="card-mono">data-access</p>
+      <h3 class="card-title">Datenzugriff</h3>
+      <p class="card-text">Services, Firestore-Abfragen und Echtzeit-Streams über RxFire.</p>
+    </div>
+    <div class="card">
+      <p class="card-mono">feature</p>
+      <h3 class="card-title">Funktion</h3>
+      <p class="card-text">Smart Components und die NgRx Signal Stores der Features.</p>
+    </div>
+    <div class="card">
+      <p class="card-mono">ui</p>
+      <h3 class="card-title">Darstellung</h3>
+      <p class="card-text">Reine Präsentations-Komponenten — ohne Logik, ohne Datenzugriff.</p>
+    </div>
+    <div class="card">
+      <p class="card-mono">util</p>
+      <h3 class="card-title">Werkzeuge</h3>
+      <p class="card-text">Reine Funktionen, Validatoren und Modell-Factories.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <p class="eyebrow">Zustand &amp; Daten</p>
+  <h2 class="section-title">Wie Daten durch die App fliessen.</h2>
+  <div class="info-block">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    <div>
+      <h3>Zustandsverwaltung mit Signal Stores</h3>
+      <p>Globaler und Feature-Zustand laufen über NgRx Signal Stores. Ein zentraler <code>AppStore</code> hält den Firebase-Auth-Zustand, die aktuelle Nutzerin samt Rollen, die App-Konfiguration und häufig benötigte Referenzdaten.</p>
+    </div>
+  </div>
+  <div class="info-block">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+    <div>
+      <h3>Datenhaltung über einen einzigen Zugang</h3>
+      <p>Der <code>FirestoreService</code> ist das einzige Tor zu Firestore — mit Echtzeit-Streams über rxfire, SSR-sicheren Browser-Guards und zwischengespeicherten Abfragen. Jedes Modell trägt ein <code>tenants</code>-Feld: Mehrmandantenfähigkeit ist von Grund auf eingebaut, jede Abfrage filtert nach Mandant.</p>
+    </div>
+  </div>
+  <div class="info-block">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+    <div>
+      <h3>CMS — Seiten und Abschnitte</h3>
+      <p>Inhalte sind als Seiten → Abschnitte strukturiert. Über 20 Abschnittstypen — Artikel, Galerie, Kalender, Chat, Karte, Personen, Tracker und mehr — werden anhand des Seitentyps dynamisch zusammengesetzt.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <p class="eyebrow">Authentifizierung &amp; Sicherheit</p>
+  <h2 class="section-title">Zugriff, kontrolliert auf jeder Ebene.</h2>
+  <div class="info-block">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+    <div>
+      <h3>Rollenbasierte Authentifizierung</h3>
+      <p>Firebase Authentication mit E-Mail und Passwort. Nach dem Login lädt die App das Nutzerprofil; rollenbasierte Guards — authentifiziert, privilegiert, Admin — steuern den Zugriff auf Routen und Funktionen.</p>
+    </div>
+  </div>
+  <div class="info-block">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <div>
+      <h3>Mehrschichtige Sicherheit</h3>
+      <p>Firebase App Check schützt vor missbräuchlichen Zugriffen, eine strikte Content-Security-Policy begrenzt, was im Browser ausgeführt wird. Die Mehrmandantentrennung auf Datenebene stellt sicher, dass jede Organisation nur ihre eigenen Daten sieht.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <p class="eyebrow">Cloud Functions &amp; Integrationen</p>
+  <h2 class="section-title">Serverlogik und externe Dienste.</h2>
+  <p class="section-intro">Serverseitige Logik liegt in Firebase Cloud Functions (Node.js, mit esbuild gebündelt) — gegliedert in Authentifizierung, Matrix, OIDC-Bridge und Replikation. Externe Dienste werden über Cloud Functions angebunden, die Zugangsdaten sicher verwahren und Antworten zwischenspeichern.</p>
+  <div class="grid">
+    <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      <h3 class="card-title">Matrix</h3>
+      <p class="card-text">Echtzeit-Chat. Eine Cloud Function tauscht das Firebase-Token gegen Matrix-Zugangsdaten.</p>
+    </div>
+    <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 22V4a2 2 0 00-2-2H7a2 2 0 00-2 2v18l3.5-2 3.5 2 3.5-2 3.5 2zM9 7h6M9 11h6M9 15h4"/></svg>
+      <h3 class="card-title">bexio</h3>
+      <p class="card-text">Buchhaltung. Rechnungen und Belege fliessen in die Schweizer Buchhaltungssoftware.</p>
+    </div>
+    <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      <h3 class="card-title">Push (FCM)</h3>
+      <p class="card-text">Benachrichtigungen auf Web und Mobil über Firebase Cloud Messaging.</p>
+    </div>
+    <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 21v.01M17 21h.01M21 17h.01"/></svg>
+      <h3 class="card-title">QR-Rechnung</h3>
+      <p class="card-text">Schweizer QR-Rechnungen direkt aus den Finanzdaten der Organisation.</p>
+    </div>
+    <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <h3 class="card-title">Kalender</h3>
+      <p class="card-text">Termin- und Anlassverwaltung mit Anmeldungen und Erinnerungen.</p>
+    </div>
+    <div class="card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 16l-4-4-4 4M12 12v9"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
+      <h3 class="card-title">Bereitstellung</h3>
+      <p class="card-text">Ausgeliefert über Firebase Hosting — bewusst ohne SSR/Hydration, da Ionic damit noch nicht kompatibel ist.</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta-box">
+  <h2>Den Code selbst lesen?</h2>
+  <p>Die Architektur lässt sich am besten am Quelltext nachvollziehen.</p>
+  <div class="cta-buttons">
+    <a class="btn primary" href="https://github.com/bkaiser-org/openkring">Zum Repository</a>
+    <a class="btn" href="/mitwirken">Lokal aufsetzen</a>
+  </div>
+</div>
+
+<footer>
+  <div class="cobrand">
+    <span class="cobrand-item"><svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="3"/><circle cx="40" cy="40" r="9" fill="#185FA5"/></svg><strong>Kring</strong></span>
+    <span class="cobrand-sep">·</span>
+    <span>basierend auf</span>
+    <span class="cobrand-item"><svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#185FA5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 14 L10 14 L10 66 L18 66"/><path d="M62 14 L70 14 L70 66 L62 66"/><circle cx="40" cy="40" r="18"/></g></svg><span><span class="ok-open">open</span><strong>kring</strong></span></span>
+    <span class="cobrand-sep">·</span>
+    <span>eine Marke der bkaiser GmbH</span>
+  </div>
+  <a href="https://www.swissmadesoftware.org/" target="_blank" rel="noopener" aria-label="Swiss Made Software" class="swiss-made">
+    <img src="https://bkaiser.imgix.net/logo/general/swissMadeSoftware.svg" alt="Swiss Made Software" />
+  </a>
+</footer>
+
+</main>
+</body>
+</html>

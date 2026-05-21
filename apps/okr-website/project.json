@@ -19,7 +19,7 @@
         "commands": [
           "rm -rf dist/apps/okr-website",
           "mkdir -p dist/apps/okr-website",
-          "cp apps/okr-website/*.html dist/apps/okr-website/ 2>/dev/null || true",
+          "cp apps/okr-website/*.html dist/apps/okr-website/",
           "cp -R apps/okr-website/assets dist/apps/okr-website/assets"
         ]
       }
