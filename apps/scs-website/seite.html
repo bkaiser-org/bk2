@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seeclub Stäfa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'media', theme: { extend: {
+      colors: { scs: { green: '#009D53', greenDark: '#007a40', blue: '#014da2', blueDark: '#013a7c' } },
+      fontFamily: { sans: ['Inter','system-ui','sans-serif'], display: ['"Plus Jakarta Sans"','Inter','sans-serif'] }
+    }}};
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-200 antialiased">
+
+  <div id="site-header"></div>
+
+  <!-- Lightbox (für album sections) -->
+  <div id="lightbox" class="fixed inset-0 z-50 hidden flex-col bg-black/95" role="dialog" aria-modal="true">
+    <div class="flex items-center justify-between px-4 py-2 bg-black text-white shrink-0">
+      <button id="lb-prev" onclick="lbStep(-1)" class="p-2 rounded hover:bg-white/10 disabled:opacity-30 text-2xl leading-none">&#8249;</button>
+      <span id="lb-title" class="text-sm truncate max-w-xs"></span>
+      <div class="flex items-center gap-1">
+        <button id="lb-next" onclick="lbStep(1)" class="p-2 rounded hover:bg-white/10 disabled:opacity-30 text-2xl leading-none">&#8250;</button>
+        <a id="lb-download" href="#" download class="p-2 rounded hover:bg-white/10 text-sm">&#8659;</a>
+        <button onclick="lbClose()" class="p-2 rounded hover:bg-white/10 text-lg leading-none">&#x2715;</button>
+      </div>
+    </div>
+    <div class="flex-1 flex items-center justify-center overflow-hidden">
+      <img id="lb-img" src="" alt="" class="max-w-full max-h-full object-contain" />
+    </div>
+    <div id="lb-dots" class="flex justify-center gap-2 py-3 shrink-0"></div>
+  </div>
+
+  <main id="page-root"></main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/shared.js"></script>
+  <script src="assets/api.js"></script>
+  <script>
+    Object.assign(scs.i18n.de, {
+      'page.loading':  'Seite wird geladen …',
+      'page.notFound': 'Diese Seite existiert nicht oder ist nicht öffentlich.',
+      'page.back':     '← Zurück zur Startseite',
+    });
+    Object.assign(scs.i18n.en, {
+      'page.loading':  'Loading page …',
+      'page.notFound': 'This page does not exist or is not public.',
+      'page.back':     '← Back to home',
+    });
+
+    function getPageKey() {
+      return new URLSearchParams(location.search).get('key');
+    }
+
+    function esc(s) {
+      return String(s ?? '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    // ─── Section renderers ────────────────────────────────────────────────
+    function renderHero(s) {
+      const bg = s.background?.url
+        ? `<img src="${esc(s.background.url)}" alt="${esc(s.background.alt || '')}" class="absolute inset-0 w-full h-full object-cover" />
+           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>`
+        : `<div class="absolute inset-0 bg-gradient-to-br from-scs-blue to-scs-blueDark"></div>`;
+      return `
+        <section class="relative overflow-hidden">
+          ${bg}
+          <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36 text-white">
+            ${s.title    ? `<h1 class="font-display text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">${esc(s.title)}</h1>` : ''}
+            ${s.subTitle ? `<p class="text-xl md:text-2xl max-w-2xl text-white/90">${esc(s.subTitle)}</p>` : ''}
+            ${s.content  ? `<div class="prose prose-invert mt-6 max-w-2xl">${s.content}</div>` : ''}
+          </div>
+        </section>`;
+    }
+
+    function renderArticle(s) {
+      return `
+        <section class="py-12 md:py-16">
+          <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            ${s.title    ? `<h2 class="font-display text-2xl md:text-3xl font-bold mb-3">${esc(s.title)}</h2>` : ''}
+            ${s.subTitle ? `<p class="font-display text-lg text-slate-500 dark:text-slate-400 mb-6">${esc(s.subTitle)}</p>` : ''}
+            <div class="prose-scs text-slate-700 dark:text-slate-300">${s.content || ''}</div>
+          </div>
+        </section>`;
+    }
+
+    function renderTable(s) {
+      const cards = (s.rows || []).map((r, i) => {
+        const palette = i % 2 === 0
+          ? 'from-scs-green/10 to-scs-green/5 dark:from-scs-green/20 border-scs-green/20'
+          : 'from-scs-blue/10 to-scs-blue/5 dark:from-scs-blue/20 border-scs-blue/20';
+        const valColor = i % 2 === 0 ? 'text-scs-green' : 'text-scs-blue dark:text-blue-300';
+        return `
+          <div class="reveal bg-gradient-to-br ${palette} dark:to-transparent rounded-xl p-6 border">
+            <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">${esc(r.label)}</div>
+            <div class="font-display text-2xl font-bold ${valColor}">${esc(r.value)}</div>
+          </div>`;
+      }).join('');
+      return `
+        <section class="py-12 md:py-16">
+          <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            ${s.title ? `<h2 class="font-display text-2xl md:text-3xl font-bold mb-8 reveal">${esc(s.title)}</h2>` : ''}
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">${cards}</div>
+          </div>
+        </section>`;
+    }
+
+    // Albums are stashed in a global registry; the album index is used as the lookup key.
+    let _albumRegistry = [];
+    function renderAlbum(s) {
+      const imgs = (s.images || []);
+      if (imgs.length === 0) return '';
+      const albumIdx = _albumRegistry.length;
+      _albumRegistry.push(imgs);
+      const tiles = imgs.map((img, idx) => `
+        <button onclick="lbOpen(${albumIdx}, ${idx})"
+                class="album-tile relative overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 aspect-[4/3] group">
+          <img src="${esc(img.url)}" alt="${esc(img.alt || '')}" loading="lazy"
+               class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        </button>`).join('');
+      return `
+        <section class="py-12 md:py-16">
+          <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            ${s.title    ? `<h2 class="font-display text-2xl md:text-3xl font-bold mb-3 reveal">${esc(s.title)}</h2>` : ''}
+            ${s.subTitle ? `<p class="text-slate-500 dark:text-slate-400 mb-8 reveal">${esc(s.subTitle)}</p>` : ''}
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">${tiles}</div>
+          </div>
+        </section>`;
+    }
+
+    function renderButton(s) {
+      if (!s.url) return '';
+      const isBlue = (s.color || 'primary').toString().toLowerCase().includes('blue') || s.color === 'primary';
+      const wrap = isBlue
+        ? 'from-scs-blue to-scs-blueDark text-white'
+        : 'from-scs-green to-scs-greenDark text-white';
+      const btn = isBlue
+        ? 'bg-white text-scs-blue hover:bg-blue-50'
+        : 'bg-white text-scs-green hover:bg-green-50';
+      return `
+        <section class="py-12 md:py-16">
+          <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-br ${wrap} rounded-2xl p-8 md:p-12 reveal">
+              ${s.title ? `<h2 class="font-display text-2xl md:text-3xl font-bold mb-4">${esc(s.title)}</h2>` : ''}
+              <a href="${esc(s.url)}" class="inline-flex items-center gap-2 ${btn} px-5 py-3 rounded-lg font-semibold transition">
+                ${esc(s.label || s.title || '→')}
+              </a>
+            </div>
+          </div>
+        </section>`;
+    }
+
+    function renderIframe(s) {
+      if (!s.url) return '';
+      const style = s.style || 'width:100%; min-height:500px; border:none;';
+      return `
+        <section class="py-12 md:py-16">
+          <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            ${s.title ? `<h2 class="font-display text-2xl md:text-3xl font-bold mb-6">${esc(s.title)}</h2>` : ''}
+            <iframe src="${esc(s.url)}" style="${esc(style)}" class="rounded-xl shadow-sm"></iframe>
+          </div>
+        </section>`;
+    }
+
+    function renderVideo(s) {
+      if (!s.url) return '';
+      return `
+        <section class="py-12 md:py-16">
+          <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            ${s.title ? `<h2 class="font-display text-2xl md:text-3xl font-bold mb-6 text-center">${esc(s.title)}</h2>` : ''}
+            <div class="aspect-video rounded-xl overflow-hidden shadow-lg">
+              <iframe src="${esc(s.url)}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </section>`;
+    }
+
+    function renderPeople(s) {
+      const persons = s.persons || [];
+      if (persons.length === 0) return '';
+      const cards = persons.map(p => {
+        const name = [p.firstName, p.lastName].filter(Boolean).join(' ');
+        const initials = ((p.firstName || '').charAt(0) + (p.lastName || '').charAt(0)).toUpperCase() || '·';
+        return `
+          <div class="reveal bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-scs-green to-scs-blue text-white flex items-center justify-center font-semibold">
+              ${esc(initials)}
+            </div>
+            <div>
+              <div class="font-semibold">${esc(name)}</div>
+              ${p.label ? `<div class="text-sm text-slate-500 dark:text-slate-400">${esc(p.label)}</div>` : ''}
+            </div>
+          </div>`;
+      }).join('');
+      return `
+        <section class="py-12 md:py-16 bg-slate-50 dark:bg-slate-900/50">
+          <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            ${s.title    ? `<h2 class="font-display text-2xl md:text-3xl font-bold mb-3 reveal">${esc(s.title)}</h2>` : ''}
+            ${s.subTitle ? `<p class="text-slate-500 dark:text-slate-400 mb-8 reveal">${esc(s.subTitle)}</p>` : ''}
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">${cards}</div>
+          </div>
+        </section>`;
+    }
+
+    function renderAccordion(s) {
+      const items = (s.items || []);
+      if (items.length === 0) return '';
+      const rows = items.map(it => `
+        <details class="group">
+          <summary class="px-5 py-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 font-semibold flex items-center justify-between gap-3">
+            <span>${esc(it.label)}</span>
+            <svg class="w-4 h-4 shrink-0 text-slate-500 group-open:rotate-180 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 prose-scs text-slate-700 dark:text-slate-300">${it.content || ''}</div>
+        </details>`).join('');
+      return `
+        <section class="py-12 md:py-16">
+          <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            ${s.title ? `<h2 class="font-display text-2xl md:text-3xl font-bold mb-6">${esc(s.title)}</h2>` : ''}
+            <div class="divide-y divide-slate-200 dark:divide-slate-800 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden bg-white dark:bg-slate-900">
+              ${rows}
+            </div>
+          </div>
+        </section>`;
+    }
+
+    function renderSection(s) {
+      switch (s.type) {
+        case 'hero':      return renderHero(s);
+        case 'table':     return renderTable(s);
+        case 'album':     return renderAlbum(s);
+        case 'button':    return renderButton(s);
+        case 'iframe':    return renderIframe(s);
+        case 'video':     return renderVideo(s);
+        case 'people':    return renderPeople(s);
+        case 'accordion': return renderAccordion(s);
+        case 'article':
+        default:          return renderArticle(s);
+      }
+    }
+
+    function renderPageBanner(page) {
+      if (!page.banner?.url && !page.title && !page.subTitle) return '';
+      // If the first section is already a hero, don't add a redundant banner
+      const hasOwnHero = (page.sections || []).some(s => s.type === 'hero');
+      if (hasOwnHero) return '';
+      const bg = page.banner?.url
+        ? `<img src="${esc(page.banner.url)}" alt="${esc(page.banner.alt || '')}" class="absolute inset-0 w-full h-full object-cover" />
+           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>`
+        : `<div class="absolute inset-0 bg-gradient-to-br from-scs-blue to-scs-blueDark"></div>`;
+      return `
+        <section class="relative overflow-hidden">
+          ${bg}
+          <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-white">
+            ${page.title    ? `<h1 class="font-display text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">${esc(page.title)}</h1>` : ''}
+            ${page.subTitle ? `<p class="text-xl md:text-2xl max-w-2xl text-white/90">${esc(page.subTitle)}</p>` : ''}
+            ${page.abstract ? `<p class="mt-4 text-base md:text-lg max-w-2xl text-white/80">${esc(page.abstract)}</p>` : ''}
+          </div>
+        </section>`;
+    }
+
+    function renderEmpty(message) {
+      return `
+        <section class="py-24 md:py-32">
+          <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-slate-500 dark:text-slate-400 mb-6">${esc(message)}</p>
+            <a href="index.html" class="inline-flex items-center gap-2 bg-scs-green hover:bg-scs-greenDark text-white px-5 py-3 rounded-lg font-semibold transition">${esc(scs.t('page.back'))}</a>
+          </div>
+        </section>`;
+    }
+
+    async function loadAndRender() {
+      const root = document.getElementById('page-root');
+      const key = getPageKey();
+      if (!key) { root.innerHTML = renderEmpty(scs.t('page.notFound')); return; }
+
+      root.innerHTML = `<section class="py-24"><div class="max-w-3xl mx-auto px-4 text-center text-slate-500">${esc(scs.t('page.loading'))}</div></section>`;
+
+      _albumRegistry = [];
+      const page = await SCS_API.page(key);
+      if (!page) { root.innerHTML = renderEmpty(scs.t('page.notFound')); return; }
+
+      if (page.title) document.title = page.title + ' – Seeclub Stäfa';
+
+      const html = renderPageBanner(page)
+                 + (page.sections || []).map(renderSection).join('');
+      root.innerHTML = html || renderEmpty(scs.t('page.notFound'));
+
+      // Wire up reveal observer for newly rendered nodes
+      if (typeof IntersectionObserver !== 'undefined') {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }});
+        }, { threshold: 0.12 });
+        root.querySelectorAll('.reveal').forEach(el => io.observe(el));
+      }
+    }
+
+    window.scsPageInit = loadAndRender;
+    window.scsReRender = loadAndRender;
+
+    // ── Lightbox (used by album sections) ───────────────────────────────
+    let _lbImages = [];
+    let _lbIndex  = 0;
+    function lbOpen(albumIdx, i) {
+      _lbImages = _albumRegistry[albumIdx] || [];
+      if (!_lbImages.length) return;
+      const box = document.getElementById('lightbox');
+      box.classList.remove('hidden');
+      box.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      const dots = document.getElementById('lb-dots');
+      dots.innerHTML = _lbImages.length > 1
+        ? _lbImages.map((_, idx) => `<button onclick="lbGo(${idx})" class="lb-dot w-2 h-2 rounded-full transition-colors" data-index="${idx}"></button>`).join('')
+        : '';
+      document.getElementById('lb-prev').style.visibility = _lbImages.length > 1 ? '' : 'hidden';
+      document.getElementById('lb-next').style.visibility = _lbImages.length > 1 ? '' : 'hidden';
+      lbGo(i);
+    }
+    function lbGo(i) {
+      _lbIndex = (i + _lbImages.length) % _lbImages.length;
+      const img = _lbImages[_lbIndex];
+      document.getElementById('lb-img').src = img.url;
+      document.getElementById('lb-img').alt = img.alt || '';
+      document.getElementById('lb-title').textContent = `${_lbIndex + 1} / ${_lbImages.length}`;
+      document.getElementById('lb-download').href = img.url;
+      document.querySelectorAll('.lb-dot').forEach((d, idx) => {
+        d.className = 'lb-dot w-2 h-2 rounded-full transition-colors ' + (idx === _lbIndex ? 'bg-white' : 'bg-white/40');
+      });
+      document.getElementById('lb-prev').disabled = _lbIndex === 0;
+      document.getElementById('lb-next').disabled = _lbIndex === _lbImages.length - 1;
+    }
+    function lbStep(dir) { lbGo(_lbIndex + dir); }
+    function lbClose() {
+      document.getElementById('lightbox').classList.add('hidden');
+      document.getElementById('lightbox').classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => {
+      const box = document.getElementById('lightbox');
+      if (box?.classList.contains('hidden')) return;
+      if (e.key === 'ArrowLeft')  lbStep(-1);
+      if (e.key === 'ArrowRight') lbStep(1);
+      if (e.key === 'Escape')     lbClose();
+    });
+  </script>
+</body>
+</html>
