@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>P-13 — Brand Styleguide</title>
+<meta name="description" content="Brand Styleguide für P-13 — Alumni der Flieger Flab Offiziersschule 2/84. Logo, Farben, Typografie und Anwendungsregeln." />
+<meta name="theme-color" content="#002A7E" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0a0f1e" media="(prefers-color-scheme: dark)" />
+
+<link rel="icon" type="image/svg+xml" href="https://bkaiser.imgix.net/tenant/p13/logo/favicon.svg" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<script>
+  tailwind.config = {
+    darkMode: 'media',
+    theme: {
+      extend: {
+        colors: {
+          primary: { DEFAULT: '#002A7E', 50: '#E8EEF8', 100: '#C6D8E3', 900: '#001a4f' },
+          accent: { DEFAULT: '#C6D8E3' },
+          ink: { DEFAULT: '#0a0f1e', soft: '#1a2238' },
+        },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root {
+    --primary: #002A7E;
+    --accent: #C6D8E3;
+    --bg: #FAFBFD;
+    --bg-soft: #F2F5FA;
+    --bg-card: #FFFFFF;
+    --text: #0a0f1e;
+    --text-muted: #4a5570;
+    --border: rgba(0, 42, 126, 0.12);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --primary: #4A78D6;
+      --accent: #C6D8E3;
+      --bg: #060912;
+      --bg-soft: #0e1426;
+      --bg-card: #0e1426;
+      --text: #E8EEF8;
+      --text-muted: #8a93ac;
+      --border: rgba(198, 216, 227, 0.14);
+    }
+  }
+
+  * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; box-sizing: border-box; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spacing: -0.02em; }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+  .eyebrow::before {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--primary);
+  }
+
+  .swatch {
+    height: 5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .trajectory {
+    stroke: var(--primary);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-dasharray: 4 8;
+    opacity: 0.3;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body class="bg-[var(--bg)] text-[var(--text)]">
+
+<!-- ============ HEADER ============ -->
+<header class="border-b border-[var(--border)]">
+  <div class="max-w-5xl mx-auto px-6 lg:px-8 py-5 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <img src="https://bkaiser.imgix.net/tenant/p13/logo/logo_round.svg" alt="P-13 Logo" class="w-9 h-9" width="36" height="36" />
+      <div class="flex flex-col leading-tight">
+        <span class="font-display font-semibold text-base tracking-tight">P-13</span>
+        <span class="text-[10px] uppercase tracking-[0.18em] text-[var(--text-muted)]">FF OS 2/84</span>
+      </div>
+    </div>
+    <span class="font-display text-sm text-[var(--text-muted)]">Brand Styleguide</span>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-6 lg:px-8 pb-24">
+
+  <!-- ============ INTRO ============ -->
+  <section class="relative pt-16 pb-12 overflow-hidden">
+    <svg class="absolute inset-0 w-full h-full -z-10" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+      <path class="trajectory" d="M -50 320 Q 300 80, 600 220 T 1100 60" />
+      <circle cx="600" cy="220" r="3" fill="var(--primary)" opacity="0.5" />
+    </svg>
+    <p class="eyebrow mb-6">P-13 · Visuelle Identität</p>
+    <h1 class="font-display font-semibold text-5xl sm:text-6xl tracking-tight mb-5">Brand Styleguide.</h1>
+    <p class="text-lg text-[var(--text-muted)] leading-relaxed max-w-2xl">
+      Diese Richtlinie beschreibt das Erscheinungsbild von <strong class="font-semibold text-[var(--text)]">P-13</strong> —
+      den Alumni der Flieger Flab Offiziersschule 2/1984. Sie gilt für die Website, die kommende App,
+      sowie für Einladungen, Mitteilungen und alle Auftritte des Jahrgangs.
+    </p>
+  </section>
+
+  <!-- ============ TOC ============ -->
+  <nav class="bg-[var(--bg-soft)] rounded-xl p-6 mb-16" aria-label="Inhalt">
+    <p class="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)] mb-3">Inhalt</p>
+    <ol class="grid sm:grid-cols-2 gap-x-8 gap-y-1.5 text-sm font-display">
+      <li><a href="#marke" class="hover:text-[var(--primary)]">01 — Die Marke</a></li>
+      <li><a href="#logo" class="hover:text-[var(--primary)]">02 — Logo</a></li>
+      <li><a href="#farben" class="hover:text-[var(--primary)]">03 — Farben</a></li>
+      <li><a href="#typografie" class="hover:text-[var(--primary)]">04 — Typografie</a></li>
+      <li><a href="#elemente" class="hover:text-[var(--primary)]">05 — Gestaltungselemente</a></li>
+      <li><a href="#regeln" class="hover:text-[var(--primary)]">06 — Anwendungsregeln</a></li>
+      <li><a href="#dateien" class="hover:text-[var(--primary)]">07 — Dateien</a></li>
+    </ol>
+  </nav>
+
+  <!-- ============ 01 — DIE MARKE ============ -->
+  <section id="marke" class="mb-20 scroll-mt-8">
+    <p class="eyebrow mb-4">01</p>
+    <h2 class="font-display font-semibold text-3xl sm:text-4xl tracking-tight mb-4">Die Marke.</h2>
+    <p class="text-[var(--text-muted)] leading-relaxed max-w-2xl mb-8">
+      P-13 ist der Jahrgang der Flieger Flab Offiziersschule 2/1984. Die Marke steht für vier Jahrzehnte
+      Kameradschaft: ein jährliches Weekendtreffen, gemeinsame Erinnerungen, eine Verbundenheit, die trägt.
+    </p>
+    <div class="grid sm:grid-cols-3 gap-px bg-[var(--border)] rounded-xl overflow-hidden">
+      <div class="bg-[var(--bg-card)] p-6">
+        <h3 class="font-display font-semibold text-lg mb-2">Verbundenheit</h3>
+        <p class="text-sm text-[var(--text-muted)] leading-relaxed">Der Jahrgang im Zentrum — Menschen, die sich seit 1984 kennen.</p>
+      </div>
+      <div class="bg-[var(--bg-card)] p-6">
+        <h3 class="font-display font-semibold text-lg mb-2">Beständigkeit</h3>
+        <p class="text-sm text-[var(--text-muted)] leading-relaxed">Ruhig, verlässlich, ohne Moden. Was bleibt, zählt mehr als was glänzt.</p>
+      </div>
+      <div class="bg-[var(--bg-card)] p-6">
+        <h3 class="font-display font-semibold text-lg mb-2">Präzision</h3>
+        <p class="text-sm text-[var(--text-muted)] leading-relaxed">Ein dezenter Bezug zur Fliegerei — Flugbahn, Raster, Horizont. Klar statt nostalgisch.</p>
+      </div>
+    </div>
+    <div class="mt-4 bg-[var(--bg-soft)] rounded-xl p-5">
+      <p class="text-sm leading-relaxed text-[var(--text-muted)]">
+        <strong class="font-semibold text-[var(--text)]">Tonalität:</strong> sachlich, präzise, editorial.
+        Grosszügiger Weissraum, Haarlinien statt schwerer Rahmen, ein einziger kräftiger Blauton als Anker.
+        Kein Militär-Pathos, keine Vintage-Klischees.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 02 — LOGO ============ -->
+  <section id="logo" class="mb-20 scroll-mt-8">
+    <p class="eyebrow mb-4">02</p>
+    <h2 class="font-display font-semibold text-3xl sm:text-4xl tracking-tight mb-4">Logo.</h2>
+    <p class="text-[var(--text-muted)] leading-relaxed max-w-2xl mb-8">
+      Das P-13-Logo ist eine runde Bildmarke. Sie tritt allein oder zusammen mit dem Schriftzug
+      „P-13 / FF OS 2/84" auf.
+    </p>
+
+    <div class="grid sm:grid-cols-2 gap-4 mb-4">
+      <!-- Logo auf hell -->
+      <div class="rounded-xl border border-[var(--border)] overflow-hidden">
+        <div class="flex items-center justify-center py-12" style="background:#FAFBFD">
+          <img src="https://bkaiser.imgix.net/tenant/p13/logo/logo_round.svg" alt="P-13 Logo auf hellem Grund" class="w-24 h-24" width="96" height="96" />
+        </div>
+        <p class="text-xs text-[var(--text-muted)] px-4 py-3 border-t border-[var(--border)]">Bildmarke auf hellem Grund — Standardfall.</p>
+      </div>
+      <!-- Logo auf dunkel -->
+      <div class="rounded-xl border border-[var(--border)] overflow-hidden">
+        <div class="flex items-center justify-center py-12" style="background:#0a0f1e">
+          <img src="https://bkaiser.imgix.net/tenant/p13/logo/logo_round.svg" alt="P-13 Logo auf dunklem Grund" class="w-24 h-24" width="96" height="96" />
+        </div>
+        <p class="text-xs text-[var(--text-muted)] px-4 py-3 border-t border-[var(--border)]">Bildmarke auf dunklem Grund — Dark Mode, Social.</p>
+      </div>
+    </div>
+
+    <!-- Wortmarke -->
+    <div class="rounded-xl border border-[var(--border)] overflow-hidden mb-4">
+      <div class="flex items-center justify-center py-12 px-6" style="background:#F2F5FA">
+        <div class="flex items-center gap-3">
+          <img src="https://bkaiser.imgix.net/tenant/p13/logo/logo_round.svg" alt="" class="w-12 h-12" width="48" height="48" aria-hidden="true" />
+          <div class="flex flex-col leading-tight" style="color:#0a0f1e">
+            <span class="font-display font-semibold text-2xl tracking-tight">P-13</span>
+            <span class="text-[11px] uppercase tracking-[0.18em]" style="color:#4a5570">FF OS 2/84</span>
+          </div>
+        </div>
+      </div>
+      <p class="text-xs text-[var(--text-muted)] px-4 py-3 border-t border-[var(--border)]">Wortmarke — Bildmarke plus Schriftzug. Standard für Header und Footer.</p>
+    </div>
+
+    <!-- Grössen -->
+    <h3 class="font-display font-semibold text-lg mb-3 mt-8">Grössen &amp; Schutzraum</h3>
+    <p class="text-sm text-[var(--text-muted)] leading-relaxed mb-4 max-w-2xl">
+      Im Header erscheint die Bildmarke mit 40 px, im Footer mit 32 px. Minimalgrösse 24 px.
+      Um das Logo bleibt ein freier Schutzraum von mindestens der halben Logobreite — darin kein Text, keine Grafik.
+    </p>
+    <div class="flex flex-wrap items-end gap-8 rounded-xl border border-[var(--border)] p-8" style="background:var(--bg-card)">
+      <div class="text-center">
+        <img src="https://bkaiser.imgix.net/tenant/p13/logo/logo_round.svg" alt="" class="w-6 h-6 mx-auto" aria-hidden="true" />
+        <p class="text-[10px] font-display text-[var(--text-muted)] mt-2">24 px</p>
+      </div>
+      <div class="text-center">
+        <img src="https://bkaiser.imgix.net/tenant/p13/logo/logo_round.svg" alt="" class="w-8 h-8 mx-auto" aria-hidden="true" />
+        <p class="text-[10px] font-display text-[var(--text-muted)] mt-2">32 px</p>
+      </div>
+      <div class="text-center">
+        <img src="https://bkaiser.imgix.net/tenant/p13/logo/logo_round.svg" alt="" class="w-10 h-10 mx-auto" aria-hidden="true" />
+        <p class="text-[10px] font-display text-[var(--text-muted)] mt-2">40 px</p>
+      </div>
+      <div class="text-center">
+        <img src="https://bkaiser.imgix.net/tenant/p13/logo/logo_round.svg" alt="" class="w-16 h-16 mx-auto" aria-hidden="true" />
+        <p class="text-[10px] font-display text-[var(--text-muted)] mt-2">64 px</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 — FARBEN ============ -->
+  <section id="farben" class="mb-20 scroll-mt-8">
+    <p class="eyebrow mb-4">03</p>
+    <h2 class="font-display font-semibold text-3xl sm:text-4xl tracking-tight mb-4">Farben.</h2>
+    <p class="text-[var(--text-muted)] leading-relaxed max-w-2xl mb-8">
+      Ein tiefes Blau als Anker, ein helles Himmelblau als Akzent, dazu ein fast schwarzes Tintenblau für Text.
+      Kühl, ruhig, mit Bezug zum Himmel.
+    </p>
+
+    <h3 class="font-display font-semibold text-lg mb-3">Hell (Light Mode)</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+      <div>
+        <div class="swatch" style="background:#002A7E"></div>
+        <p class="font-display text-sm font-semibold mt-2">P-13 Blau</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#002A7E</p>
+        <p class="text-xs text-[var(--text-muted)] mt-0.5">Primär · Logo, Akzente, Links</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#001a4f"></div>
+        <p class="font-display text-sm font-semibold mt-2">Tiefblau</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#001A4F</p>
+        <p class="text-xs text-[var(--text-muted)] mt-0.5">Tiefe, Hover-Zustände</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#C6D8E3"></div>
+        <p class="font-display text-sm font-semibold mt-2">Himmelblau</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#C6D8E3</p>
+        <p class="text-xs text-[var(--text-muted)] mt-0.5">Akzent · Flächen, Glow</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#E8EEF8"></div>
+        <p class="font-display text-sm font-semibold mt-2">Dunst</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#E8EEF8</p>
+        <p class="text-xs text-[var(--text-muted)] mt-0.5">Zarte getönte Flächen</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#0a0f1e"></div>
+        <p class="font-display text-sm font-semibold mt-2">Ink</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#0A0F1E</p>
+        <p class="text-xs text-[var(--text-muted)] mt-0.5">Primärer Text. Kein reines Schwarz</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#4a5570"></div>
+        <p class="font-display text-sm font-semibold mt-2">Ink gedämpft</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#4A5570</p>
+        <p class="text-xs text-[var(--text-muted)] mt-0.5">Sekundärer Text, Captions</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#F2F5FA"></div>
+        <p class="font-display text-sm font-semibold mt-2">Nebel Soft</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#F2F5FA</p>
+        <p class="text-xs text-[var(--text-muted)] mt-0.5">Hintergrund für Sektionen</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#FAFBFD"></div>
+        <p class="font-display text-sm font-semibold mt-2">Nebel</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#FAFBFD</p>
+        <p class="text-xs text-[var(--text-muted)] mt-0.5">Seitenhintergrund</p>
+      </div>
+    </div>
+
+    <h3 class="font-display font-semibold text-lg mb-3">Dunkel (Dark Mode)</h3>
+    <p class="text-sm text-[var(--text-muted)] leading-relaxed mb-4 max-w-2xl">
+      Die Marke unterstützt einen Dark Mode (gesteuert über die System-Einstellung). Im Dunkeln wird das
+      Primärblau aufgehellt, damit es auf dunklem Grund lesbar bleibt.
+    </p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div>
+        <div class="swatch" style="background:#4A78D6"></div>
+        <p class="font-display text-xs font-semibold mt-2">Primär hell</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#4A78D6</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#060912"></div>
+        <p class="font-display text-xs font-semibold mt-2">BG</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#060912</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#0e1426"></div>
+        <p class="font-display text-xs font-semibold mt-2">BG Soft</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#0E1426</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#E8EEF8"></div>
+        <p class="font-display text-xs font-semibold mt-2">Text</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#E8EEF8</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#8a93ac"></div>
+        <p class="font-display text-xs font-semibold mt-2">Text gedämpft</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#8A93AC</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#C6D8E3"></div>
+        <p class="font-display text-xs font-semibold mt-2">Akzent</p>
+        <p class="font-display text-xs text-[var(--text-muted)]">#C6D8E3</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 — TYPOGRAFIE ============ -->
+  <section id="typografie" class="mb-20 scroll-mt-8">
+    <p class="eyebrow mb-4">04</p>
+    <h2 class="font-display font-semibold text-3xl sm:text-4xl tracking-tight mb-4">Typografie.</h2>
+    <p class="text-[var(--text-muted)] leading-relaxed max-w-2xl mb-8">
+      Zwei Schriften: <strong class="font-semibold text-[var(--text)]">Space Grotesk</strong> für Überschriften
+      und Eckdaten, <strong class="font-semibold text-[var(--text)]">Inter</strong> für Fliesstext und Bedienelemente.
+    </p>
+
+    <div class="grid sm:grid-cols-2 gap-4 mb-8">
+      <div class="rounded-xl border border-[var(--border)] p-6" style="background:var(--bg-card)">
+        <p class="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)] mb-3">Display</p>
+        <p class="font-display font-semibold text-5xl tracking-tight mb-3">Space Grotesk</p>
+        <p class="text-sm text-[var(--text-muted)] leading-relaxed">Für Überschriften, Hero-Titel und Eckdaten. Laufweite −0.02 em. Gewichte 400–700.</p>
+      </div>
+      <div class="rounded-xl border border-[var(--border)] p-6" style="background:var(--bg-card)">
+        <p class="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)] mb-3">Text &amp; UI</p>
+        <p class="font-semibold text-5xl tracking-tight mb-3">Inter</p>
+        <p class="text-sm text-[var(--text-muted)] leading-relaxed">Für Fliesstext, Navigation und Beschriftungen. Gewichte 300–700.</p>
+      </div>
+    </div>
+
+    <h3 class="font-display font-semibold text-lg mb-4">Hierarchie</h3>
+    <div class="rounded-xl border border-[var(--border)] divide-y divide-[var(--border)]" style="background:var(--bg-card)">
+      <div class="flex items-baseline justify-between gap-4 px-6 py-4">
+        <span class="font-display font-semibold text-4xl tracking-tight">Hero-Titel</span>
+        <span class="font-display text-xs text-[var(--text-muted)] whitespace-nowrap">Space Grotesk 600</span>
+      </div>
+      <div class="flex items-baseline justify-between gap-4 px-6 py-4">
+        <span class="font-display font-semibold text-2xl tracking-tight">Abschnittstitel</span>
+        <span class="font-display text-xs text-[var(--text-muted)] whitespace-nowrap">Space Grotesk 600</span>
+      </div>
+      <div class="flex items-baseline justify-between gap-4 px-6 py-4">
+        <span class="text-base">Fliesstext — gelebte Kameradschaft, die über Jahrzehnte trägt.</span>
+        <span class="font-display text-xs text-[var(--text-muted)] whitespace-nowrap">Inter 400</span>
+      </div>
+      <div class="flex items-baseline justify-between gap-4 px-6 py-4">
+        <span class="eyebrow">Eyebrow / Label</span>
+        <span class="font-display text-xs text-[var(--text-muted)] whitespace-nowrap">Inter 500 · 0.2 em</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 — GESTALTUNGSELEMENTE ============ -->
+  <section id="elemente" class="mb-20 scroll-mt-8">
+    <p class="eyebrow mb-4">05</p>
+    <h2 class="font-display font-semibold text-3xl sm:text-4xl tracking-tight mb-4">Gestaltungselemente.</h2>
+    <p class="text-[var(--text-muted)] leading-relaxed max-w-2xl mb-8">
+      Wiederkehrende Bausteine geben dem Auftritt seinen Charakter — alle ruhig, präzise, mit einer
+      Andeutung von Fliegerei.
+    </p>
+    <div class="grid sm:grid-cols-2 gap-px bg-[var(--border)] rounded-xl overflow-hidden">
+      <div class="bg-[var(--bg-card)] p-6">
+        <span class="eyebrow mb-3">Eyebrow</span>
+        <h3 class="font-display font-semibold text-lg mb-2 mt-3">Linie plus Grossbuchstaben</h3>
+        <p class="text-sm text-[var(--text-muted)] leading-relaxed">Jeder Abschnitt beginnt mit einer kurzen Linie und einem gesperrten Label in Primärfarbe.</p>
+      </div>
+      <div class="bg-[var(--bg-card)] p-6">
+        <span class="font-display text-2xl font-semibold text-[var(--text-muted)]">01 — 03</span>
+        <h3 class="font-display font-semibold text-lg mb-2 mt-3">Abschnittsnummern</h3>
+        <p class="text-sm text-[var(--text-muted)] leading-relaxed">Abschnitte und Karten sind nummeriert — in Space Grotesk, gedämpft.</p>
+      </div>
+      <div class="bg-[var(--bg-card)] p-6">
+        <svg width="100%" height="48" viewBox="0 0 280 48" aria-hidden="true">
+          <path class="trajectory" d="M 0 40 Q 90 0, 160 24 T 280 4" />
+          <circle cx="160" cy="24" r="3" fill="var(--primary)" opacity="0.6" />
+        </svg>
+        <h3 class="font-display font-semibold text-lg mb-2 mt-3">Flugbahn &amp; Raster</h3>
+        <p class="text-sm text-[var(--text-muted)] leading-relaxed">Gestrichelte Kurven, ein feines Raster und einzelne Punkte deuten eine Flugbahn an — dezent im Hintergrund.</p>
+      </div>
+      <div class="bg-[var(--bg-card)] p-6">
+        <div class="flex gap-1.5 mb-1">
+          <span class="h-8 flex-1 rounded border border-[var(--border)]"></span>
+          <span class="h-8 flex-1 rounded border border-[var(--primary)]"></span>
+        </div>
+        <h3 class="font-display font-semibold text-lg mb-2 mt-3">Karten &amp; Haarlinien</h3>
+        <p class="text-sm text-[var(--text-muted)] leading-relaxed">1 px-Ränder, hairline-getrennte Raster, beim Hover hebt die Karte leicht an. Keine schweren Schatten.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 — ANWENDUNGSREGELN ============ -->
+  <section id="regeln" class="mb-20 scroll-mt-8">
+    <p class="eyebrow mb-4">06</p>
+    <h2 class="font-display font-semibold text-3xl sm:text-4xl tracking-tight mb-4">Anwendungsregeln.</h2>
+    <div class="space-y-3">
+      <div class="flex gap-4 rounded-xl border p-5" style="border-color:rgba(45,122,57,0.3);background:rgba(45,122,57,0.06)">
+        <span class="text-xs font-semibold uppercase tracking-[0.08em] shrink-0 mt-0.5" style="color:#4D7A39">Gut</span>
+        <p class="text-sm leading-relaxed">Logo auf neutralem, ruhigem Grund. Genügend Schutzraum. Originalfarben.</p>
+      </div>
+      <div class="flex gap-4 rounded-xl border p-5" style="border-color:rgba(45,122,57,0.3);background:rgba(45,122,57,0.06)">
+        <span class="text-xs font-semibold uppercase tracking-[0.08em] shrink-0 mt-0.5" style="color:#4D7A39">Gut</span>
+        <p class="text-sm leading-relaxed">Space Grotesk für Überschriften, Inter für Fliesstext. P-13 Blau als einziger kräftiger Akzent.</p>
+      </div>
+      <div class="flex gap-4 rounded-xl border p-5" style="border-color:rgba(181,87,61,0.3);background:rgba(181,87,61,0.06)">
+        <span class="text-xs font-semibold uppercase tracking-[0.08em] shrink-0 mt-0.5" style="color:#B5573D">Schlecht</span>
+        <p class="text-sm leading-relaxed">Das Logo verzerren, drehen, umfärben oder mit Effekten versehen. Es bleibt rund und unverändert.</p>
+      </div>
+      <div class="flex gap-4 rounded-xl border p-5" style="border-color:rgba(181,87,61,0.3);background:rgba(181,87,61,0.06)">
+        <span class="text-xs font-semibold uppercase tracking-[0.08em] shrink-0 mt-0.5" style="color:#B5573D">Schlecht</span>
+        <p class="text-sm leading-relaxed">Das Logo auf unruhige Fotos oder gesättigte Farbflächen setzen. Bei Bedarf eine ruhige Fläche unterlegen.</p>
+      </div>
+      <div class="flex gap-4 rounded-xl border p-5" style="border-color:rgba(181,87,61,0.3);background:rgba(181,87,61,0.06)">
+        <span class="text-xs font-semibold uppercase tracking-[0.08em] shrink-0 mt-0.5" style="color:#B5573D">Schlecht</span>
+        <p class="text-sm leading-relaxed">Fremde Schriften oder Farben ausserhalb der Palette verwenden. Kein Militär-Pathos, keine Vintage-Optik.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07 — DATEIEN ============ -->
+  <section id="dateien" class="mb-8 scroll-mt-8">
+    <p class="eyebrow mb-4">07</p>
+    <h2 class="font-display font-semibold text-3xl sm:text-4xl tracking-tight mb-4">Dateien.</h2>
+    <p class="text-[var(--text-muted)] leading-relaxed max-w-2xl mb-6">
+      Die Logo-Assets liegen als SVG auf dem Imgix-CDN der bkaiser GmbH unter <code class="font-display text-xs px-1.5 py-0.5 rounded" style="background:var(--bg-soft)">tenant/p13/logo/</code>
+      und werden direkt von dort eingebunden.
+    </p>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="rounded-xl border border-[var(--border)] p-5" style="background:var(--bg-card)">
+        <p class="font-display text-sm font-semibold mb-1">logo_round.svg</p>
+        <p class="text-xs text-[var(--text-muted)] leading-relaxed mb-2">Runde Bildmarke. Header, Footer, App-Icon.</p>
+        <p class="font-display text-[11px] text-[var(--primary)] break-all">bkaiser.imgix.net/tenant/p13/logo/logo_round.svg</p>
+      </div>
+      <div class="rounded-xl border border-[var(--border)] p-5" style="background:var(--bg-card)">
+        <p class="font-display text-sm font-semibold mb-1">favicon.svg</p>
+        <p class="text-xs text-[var(--text-muted)] leading-relaxed mb-2">Favicon und Apple-Touch-Icon des Webauftritts.</p>
+        <p class="font-display text-[11px] text-[var(--primary)] break-all">bkaiser.imgix.net/tenant/p13/logo/favicon.svg</p>
+      </div>
+    </div>
+    <div class="mt-4 bg-[var(--bg-soft)] rounded-xl p-5">
+      <p class="text-sm leading-relaxed text-[var(--text-muted)]">
+        <strong class="font-semibold text-[var(--text)]">Kontakt:</strong> Bei Fragen zur Markenanwendung oder
+        für zusätzliche Dateiformate wendet euch an die bkaiser GmbH.
+      </p>
+    </div>
+  </section>
+
+  <div class="h-px" style="background:linear-gradient(to right, transparent, var(--border), transparent)"></div>
+
+  <footer class="pt-6 text-xs text-[var(--text-muted)] font-display">
+    Brand Styleguide · P-13 — Alumni FF OS 2/84 · Version 1.0 · Mai 2026
+  </footer>
+
+</main>
+
+</body>
+</html>

@@ -19,7 +19,8 @@
         "commands": [
           "rm -rf dist/apps/p13-website",
           "mkdir -p dist/apps/p13-website",
-          "cp apps/p13-website/*.html dist/apps/p13-website/"
+          "cp apps/p13-website/*.html dist/apps/p13-website/",
+          "cp -R apps/p13-website/assets dist/apps/p13-website/assets"
         ]
       }
     },
