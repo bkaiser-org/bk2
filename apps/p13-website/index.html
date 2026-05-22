@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>P-13 — Alumni FF OS 2/84</title>
+  <meta name="description" content="P-13 — Alumni der Flieger Flab Offiziersschule 2/84. Jährliches Weekendtreffen und gemeinsame Erinnerungen." />
+  <meta name="theme-color" content="#002A7E" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0f1e" media="(prefers-color-scheme: dark)" />
+
+  <link rel="icon" type="image/svg+xml" href="https://bkaiser.imgix.net/tenant/p13/logo/favicon.svg" />
+  <link rel="apple-touch-icon" href="https://bkaiser.imgix.net/tenant/p13/logo/favicon.svg" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Inter & Space Grotesk — moderne Sans-Serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'media',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#002A7E',
+              50: '#E8EEF8',
+              100: '#C6D8E3',
+              900: '#001a4f',
+            },
+            accent: {
+              DEFAULT: '#C6D8E3',
+            },
+            ink: {
+              DEFAULT: '#0a0f1e',
+              soft: '#1a2238',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --primary: #002A7E;
+      --accent: #C6D8E3;
+      --bg: #FAFBFD;
+      --bg-soft: #F2F5FA;
+      --text: #0a0f1e;
+      --text-muted: #4a5570;
+      --border: rgba(0, 42, 126, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --primary: #4A78D6;
+        --accent: #C6D8E3;
+        --bg: #060912;
+        --bg-soft: #0e1426;
+        --text: #E8EEF8;
+        --text-muted: #8a93ac;
+        --border: rgba(198, 216, 227, 0.1);
+      }
+    }
+
+    * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spacing: -0.02em; }
+
+    /* Hero Hintergrund — abstrakte Grafik */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.6) 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.6) 0%, transparent 70%);
+    }
+
+    /* Abstrakter "Flieger"-Strich — angedeutete Flugbahn */
+    .trajectory {
+      position: absolute;
+      stroke: var(--primary);
+      stroke-width: 1.5;
+      fill: none;
+      stroke-dasharray: 4 8;
+      opacity: 0.35;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .trajectory { opacity: 0.5; }
+    }
+
+    /* Blob/Glow im Hintergrund */
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .glow-1 {
+      width: 480px; height: 480px;
+      background: var(--accent);
+      top: -120px; right: -120px;
+    }
+
+    .glow-2 {
+      width: 380px; height: 380px;
+      background: var(--primary);
+      bottom: -100px; left: -100px;
+      opacity: 0.15;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .glow-1 { opacity: 0.08; }
+      .glow-2 { opacity: 0.25; }
+    }
+
+    /* Nav Underline */
+    .nav-link {
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 100%;
+      height: 1.5px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-link:hover::after,
+    .nav-link:focus-visible::after {
+      transform: scaleX(1);
+    }
+
+    /* Cards für mobile menu items */
+    .menu-card {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid var(--border);
+    }
+    .menu-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+    }
+    .menu-card .arrow {
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .menu-card:hover .arrow {
+      transform: translate(4px, -4px);
+    }
+
+    /* Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* gestaffelter Anstrich */
+    .stagger > * { transition-delay: calc(var(--i, 0) * 90ms); }
+
+    /* Logo Hover */
+    .logo-mark {
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    a:hover .logo-mark { transform: rotate(8deg); }
+
+    /* Focus Ring */
+    :focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* dezente Bewegung im Hero */
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(20px, -20px); }
+    }
+    .glow-1 { animation: drift 14s ease-in-out infinite; }
+    .glow-2 { animation: drift 18s ease-in-out infinite reverse; }
+
+    /* Vertical text accent */
+    .vertical-text {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      letter-spacing: 0.3em;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* Footer divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+    }
+  </style>
+</head>
+<body class="bg-[var(--bg)] text-[var(--text)]">
+
+  <a href="#hauptinhalt" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-[var(--primary)] focus:text-white focus:px-4 focus:py-2 focus:rounded">
+    Zum Hauptinhalt springen
+  </a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="fixed top-0 left-0 right-0 z-40 backdrop-blur-md bg-[var(--bg)]/70 border-b border-[var(--border)]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3" aria-label="P-13 Startseite">
+        <img
+          src="https://bkaiser.imgix.net/tenant/p13/logo/logo_round.svg"
+          alt="P-13 Logo"
+          class="logo-mark w-10 h-10"
+          width="40" height="40"
+        />
+        <div class="flex flex-col leading-tight">
+          <span class="font-display font-semibold text-base tracking-tight">P-13</span>
+          <span class="text-[10px] uppercase tracking-[0.18em] text-[var(--text-muted)] hidden sm:block">FF OS 2/84</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav aria-label="Hauptnavigation" class="hidden md:flex items-center gap-10">
+        <a href="/private/events" class="nav-link text-sm font-medium">Anlässe</a>
+        <a href="/private/album" class="nav-link text-sm font-medium">Album</a>
+        <a href="/private/adresses" class="nav-link text-sm font-medium">Adressen</a>
+      </nav>
+
+      <!-- Mobile Toggle -->
+      <button
+        id="menuToggle"
+        class="md:hidden p-2 -mr-2"
+        aria-label="Menü öffnen"
+        aria-expanded="false"
+        aria-controls="mobileNav"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <line x1="4" y1="8" x2="20" y2="8"/>
+          <line x1="4" y1="16" x2="20" y2="16"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <nav
+      id="mobileNav"
+      aria-label="Mobile Navigation"
+      class="md:hidden hidden border-t border-[var(--border)] bg-[var(--bg)]"
+    >
+      <ul class="px-6 py-4 flex flex-col gap-1">
+        <li><a href="/private/events" class="block py-3 text-base font-medium border-b border-[var(--border)]">Anlässe</a></li>
+        <li><a href="/private/album" class="block py-3 text-base font-medium border-b border-[var(--border)]">Album</a></li>
+        <li><a href="/private/adresses" class="block py-3 text-base font-medium">Adressen</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="hauptinhalt">
+
+    <!-- ============ HERO ============ -->
+    <section class="relative min-h-screen flex items-center pt-24 pb-20 overflow-hidden" aria-labelledby="hero-title">
+
+      <!-- Abstrakte Grafiken im Hintergrund -->
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-grid"></div>
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+
+        <!-- Flugbahn-SVG -->
+        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+          <path class="trajectory" d="M -50 700 Q 400 200, 800 450 T 1500 100" />
+          <path class="trajectory" d="M -50 800 Q 500 350, 900 550 T 1500 250" style="opacity:.2" />
+          <circle cx="800" cy="450" r="3" fill="var(--primary)" opacity="0.6" />
+          <circle cx="1180" cy="240" r="4" fill="var(--primary)" opacity="0.4" />
+          <circle cx="320" cy="380" r="2" fill="var(--primary)" opacity="0.5" />
+        </svg>
+      </div>
+
+      <!-- vertikaler Text Akzent -->
+      <div class="hidden lg:block absolute left-6 top-1/2 -translate-y-1/2 vertical-text z-10" aria-hidden="true">
+        Alumni · Seit 1984
+      </div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 w-full">
+        <div class="max-w-4xl">
+
+          <p class="reveal text-sm font-medium tracking-[0.2em] uppercase text-[var(--primary)] mb-8" style="--i: 0">
+            <span class="inline-block w-8 h-px bg-[var(--primary)] align-middle mr-3"></span>
+            Flieger Flab Offiziersschule 2 / 1984
+          </p>
+
+          <h1 id="hero-title" class="reveal font-display font-semibold text-5xl sm:text-6xl lg:text-8xl leading-[0.95] tracking-tight mb-8" style="--i: 1">
+            P-13.<br>
+            <span class="text-[var(--text-muted)]">Vierzig Jahre</span><br>
+            Verbundenheit.
+          </h1>
+
+          <p class="reveal text-lg sm:text-xl text-[var(--text-muted)] max-w-2xl leading-relaxed mb-12" style="--i: 2">
+            Die Alumni der FF OS 2/84. Einmal im Jahr — ein Weekend, gemeinsame Erinnerungen
+            und gelebte Kameradschaft, die über Jahrzehnte trägt.
+          </p>
+
+          <!-- Stats / Eckdaten -->
+          <dl class="reveal stagger grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-12 max-w-2xl border-t border-[var(--border)] pt-10" style="--i: 3">
+            <div style="--i: 0">
+              <dt class="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)] mb-2">Jahrgang</dt>
+              <dd class="font-display text-3xl font-semibold">2/84</dd>
+            </div>
+            <div style="--i: 1">
+              <dt class="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)] mb-2">Treffen</dt>
+              <dd class="font-display text-3xl font-semibold">Jährlich</dd>
+            </div>
+            <div style="--i: 2">
+              <dt class="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)] mb-2">Promotion</dt>
+              <dd class="font-display text-3xl font-semibold">P-13</dd>
+            </div>
+          </dl>
+
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-[var(--text-muted)]" aria-hidden="true">
+        <span class="text-[10px] uppercase tracking-[0.2em]">Scroll</span>
+        <svg width="14" height="20" viewBox="0 0 14 20" fill="none">
+          <line x1="7" y1="0" x2="7" y2="18" stroke="currentColor" stroke-width="1"/>
+          <polyline points="2,13 7,18 12,13" stroke="currentColor" stroke-width="1" fill="none"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ============ MENU SECTION ============ -->
+    <section class="relative py-24 sm:py-32 border-t border-[var(--border)]" aria-labelledby="bereiche-title">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+        <div class="reveal flex items-end justify-between mb-16 sm:mb-20">
+          <div>
+            <p class="text-xs font-medium tracking-[0.2em] uppercase text-[var(--primary)] mb-4">
+              <span class="inline-block w-6 h-px bg-[var(--primary)] align-middle mr-2"></span>
+              Bereiche
+            </p>
+            <h2 id="bereiche-title" class="font-display font-semibold text-3xl sm:text-5xl tracking-tight max-w-2xl">
+              Der interne Bereich.
+            </h2>
+          </div>
+          <span class="hidden sm:block font-display text-sm text-[var(--text-muted)]" aria-hidden="true">— 03</span>
+        </div>
+
+        <ul class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--border)] reveal stagger">
+
+          <li style="--i: 0">
+            <a href="/private/events" class="menu-card group block bg-[var(--bg)] p-8 sm:p-10 h-full">
+              <div class="flex items-start justify-between mb-12">
+                <span class="font-display text-xs text-[var(--text-muted)]">01</span>
+                <svg class="arrow text-[var(--primary)]" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M5 15 L15 5 M8 5 H15 V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3 class="font-display text-2xl sm:text-3xl font-semibold mb-3">Anlässe</h3>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">
+                Übersicht der jährlichen Weekendausflüge — Programm, Anmeldung und Archiv vergangener Treffen.
+              </p>
+            </a>
+          </li>
+
+          <li style="--i: 1">
+            <a href="/private/album" class="menu-card group block bg-[var(--bg)] p-8 sm:p-10 h-full">
+              <div class="flex items-start justify-between mb-12">
+                <span class="font-display text-xs text-[var(--text-muted)]">02</span>
+                <svg class="arrow text-[var(--primary)]" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M5 15 L15 5 M8 5 H15 V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3 class="font-display text-2xl sm:text-3xl font-semibold mb-3">Album</h3>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">
+                Bilder und Erinnerungen aus über vier Jahrzehnten — vom Eintritt bis zum letzten Weekend.
+              </p>
+            </a>
+          </li>
+
+          <li style="--i: 2">
+            <a href="/private/adresses" class="menu-card group block bg-[var(--bg)] p-8 sm:p-10 h-full">
+              <div class="flex items-start justify-between mb-12">
+                <span class="font-display text-xs text-[var(--text-muted)]">03</span>
+                <svg class="arrow text-[var(--primary)]" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M5 15 L15 5 M8 5 H15 V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3 class="font-display text-2xl sm:text-3xl font-semibold mb-3">Adressen</h3>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">
+                Aktuelles Verzeichnis der Mitglieder — Kontaktdaten für den persönlichen Austausch.
+              </p>
+            </a>
+          </li>
+
+        </ul>
+
+        <p class="reveal mt-10 text-xs text-[var(--text-muted)] flex items-center gap-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="5" y="11" width="14" height="10" rx="2"/>
+            <path d="M8 11V7a4 4 0 018 0v4"/>
+          </svg>
+          Geschützter Bereich — Zugang nur für Mitglieder nach Anmeldung.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="relative py-12 border-t border-[var(--border)]">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div class="flex items-center gap-3">
+            <img
+              src="https://bkaiser.imgix.net/tenant/p13/logo/logo_round.svg"
+              alt=""
+              class="w-8 h-8 opacity-70"
+              width="32" height="32"
+              aria-hidden="true"
+            />
+            <div>
+              <p class="font-display text-sm font-semibold">P-13</p>
+              <p class="text-xs text-[var(--text-muted)]">Alumni FF OS 2/84</p>
+            </div>
+          </div>
+
+          <p class="text-xs text-[var(--text-muted)]">
+            © <span id="year">2026</span> P-13 · Alle Rechte vorbehalten
+          </p>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    // Mobile Menu Toggle
+    (function () {
+      const btn = document.getElementById('menuToggle');
+      const nav = document.getElementById('mobileNav');
+      if (!btn || !nav) return;
+      btn.addEventListener('click', () => {
+        const open = nav.classList.toggle('hidden') === false;
+        btn.setAttribute('aria-expanded', String(open));
+        btn.setAttribute('aria-label', open ? 'Menü schliessen' : 'Menü öffnen');
+      });
+      // Beim Anklicken eines Links schliessen
+      nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        nav.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      }));
+    })();
+
+    // Reveal on Scroll
+    (function () {
+      const items = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(el => el.classList.add('in'));
+        return;
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      items.forEach(el => io.observe(el));
+    })();
+
+    // Jahreszahl aktuell
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
