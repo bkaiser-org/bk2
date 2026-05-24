@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Kring logo, inverse for dark backgrounds">
+  <title>Kring (inverse)</title>
+  <desc>Kring-Logo hellblau für dunkle Hintergründe.</desc>
+  <circle cx="40" cy="40" r="18" fill="none" stroke="#7FA8D3" stroke-width="2"/>
+  <circle cx="40" cy="40" r="9" fill="#7FA8D3"/>
+</svg>

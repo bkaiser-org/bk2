@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 80" role="img" aria-label="openkring Wortmarke horizontal">
+  <title>openkring</title>
+  <desc>Logo und Schriftzug nebeneinander.</desc>
+  <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 14 L10 14 L10 66 L18 66"/>
+    <path d="M62 14 L70 14 L70 66 L62 66"/>
+    <circle cx="40" cy="40" r="18"/>
+  </g>
+  <text x="92" y="49" font-family="'Inter Tight', system-ui, sans-serif" font-size="26" font-weight="500" letter-spacing="-0.4">
+    <tspan fill="#6F95C0" font-weight="400">open</tspan><tspan fill="#1A1815">kring</tspan>
+  </text>
+</svg>

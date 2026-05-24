@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="openkring logo, monochromatic dark">
+  <title>openkring (mono)</title>
+  <desc>Open-Source-Projekt openkring: ein Ring eingerahmt von zwei Klammern, einfarbig dunkelblau.</desc>
+  <g fill="none" stroke="#0E3E70" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 14 L10 14 L10 66 L18 66"/>
+    <path d="M62 14 L70 14 L70 66 L62 66"/>
+    <circle cx="40" cy="40" r="18"/>
+  </g>
+</svg>

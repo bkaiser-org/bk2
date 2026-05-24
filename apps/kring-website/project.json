@@ -1,0 +1,35 @@
+{
+  "name": "kring-website",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/kring-website",
+  "tags": ["type:app", "platform:web"],
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "serve apps/kring-website -l 4200"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/apps/kring-website"],
+      "options": {
+        "parallel": false,
+        "commands": [
+          "rm -rf dist/apps/kring-website",
+          "mkdir -p dist/apps/kring-website",
+          "cp apps/kring-website/*.html dist/apps/kring-website/",
+          "cp -R apps/kring-website/assets dist/apps/kring-website/assets"
+        ]
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "command": "firebase deploy --only hosting:kring-website-54aef"
+      }
+    }
+  }
+}

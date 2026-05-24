@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kring & openkring — Brand Styleguide</title>
+<meta name="description" content="Logo, Farben, Typografie und Anwendungsregeln für die Marken Kring (Produkt) und openkring (Open-Source-Projekt) der bkaiser GmbH." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --c-bg: #FAFAF7;
+  --c-bg-soft: #F1F0EA;
+  --c-bg-card: #FFFFFF;
+  --c-bg-dark: #0F1A2A;
+  --c-border: #E5E3DA;
+  --c-border-strong: #C9C5B7;
+  --c-text: #1A1815;
+  --c-text-soft: #5F5E5A;
+  --c-text-muted: #8E8C86;
+  --c-text-inverse: #C9D5E5;
+  --c-kring: #185FA5;
+  --c-kring-dark: #0E3E70;
+  --c-kring-light: #6F95C0;
+  --c-kring-lighter: #7FA8D3;
+  --c-kring-soft: #E7EEF6;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --max-w: 920px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: 'Inter Tight', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+main {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+h1, h2, h3, h4 { font-weight: 500; letter-spacing: -0.01em; margin: 0; }
+h1 { font-size: 32px; line-height: 1.15; margin-bottom: 0.5rem; }
+h2 { font-size: 22px; line-height: 1.25; margin: 3rem 0 1rem; padding-top: 1rem; border-top: 0.5px solid var(--c-border); }
+h2:first-of-type { border-top: none; padding-top: 0; }
+h3 { font-size: 16px; line-height: 1.4; margin: 1.5rem 0 0.5rem; }
+h4 { font-size: 12px; color: var(--c-text-soft); letter-spacing: 0.08em; text-transform: uppercase; margin: 1.5rem 0 0.5rem; }
+p { margin: 0 0 1rem; }
+p.lede { font-size: 16px; color: var(--c-text-soft); line-height: 1.7; margin-bottom: 2rem; max-width: 620px; }
+a { color: var(--c-kring); text-decoration: underline; text-decoration-color: var(--c-border-strong); text-underline-offset: 2px; }
+code { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; background: var(--c-bg-soft); padding: 1px 6px; border-radius: 4px; }
+.eyebrow { font-size: 11px; color: var(--c-text-soft); letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 0.75rem; }
+
+.toc {
+  background: var(--c-bg-soft);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 3rem;
+}
+.toc h4 { margin-top: 0; }
+.toc ol { margin: 0; padding-left: 1.25rem; font-size: 14px; }
+.toc li { margin-bottom: 4px; }
+.toc a { text-decoration: none; color: var(--c-text); }
+.toc a:hover { color: var(--c-kring); }
+
+.stage {
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  margin: 1rem 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+}
+.stage.dark { background: var(--c-bg-dark); border: none; }
+.stage.compact { padding: 1.5rem; min-height: 100px; }
+
+.family-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+.family-item { text-align: center; }
+.family-item .name { font-size: 15px; font-weight: 500; margin: 0.75rem 0 0.25rem; }
+.family-item .role { font-size: 12px; color: var(--c-text-soft); letter-spacing: 0.08em; text-transform: uppercase; margin: 0; }
+
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 1rem 0 1.5rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin: 1rem 0 1.5rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 1rem 0 1.5rem; }
+
+.card {
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+.card .label { font-size: 12px; color: var(--c-text-soft); margin: 0 0 0.5rem; }
+.card .filename { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--c-text-muted); margin-top: 0.5rem; }
+
+.swatch {
+  display: block;
+  height: 72px;
+  border-radius: var(--radius-md);
+  margin-bottom: 0.75rem;
+  border: 0.5px solid var(--c-border);
+}
+.swatch-name { font-size: 13px; font-weight: 500; margin: 0; }
+.swatch-hex { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--c-text-soft); margin: 0; }
+.swatch-role { font-size: 12px; color: var(--c-text-soft); margin: 0.25rem 0 0; }
+
+.size-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-md);
+  flex-wrap: wrap;
+}
+.size-strip .item { text-align: center; }
+.size-strip .item-pair { display: flex; gap: 12px; align-items: center; }
+.size-strip .px { font-size: 11px; color: var(--c-text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 0.5rem; }
+
+.usage-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 8px;
+  align-items: center;
+}
+.usage-row .ok-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #4D7A39; }
+.usage-row .when { font-size: 13px; color: var(--c-text-soft); }
+.usage-row .which { font-size: 13px; font-weight: 500; }
+
+.do-dont .row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--c-bg-card);
+  border: 0.5px solid var(--c-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 8px;
+}
+.do-dont .row.bad { background: #FCF1EE; border-color: #F2D5CC; }
+.do-dont .row.good { background: #F0F6EE; border-color: #D5E5CD; }
+.do-dont .row p { margin: 0; font-size: 13px; }
+.do-dont .row .visual { display: flex; align-items: center; justify-content: center; min-height: 60px; }
+.do-dont .row .tag { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+.do-dont .row.bad .tag { color: #B5573D; }
+.do-dont .row.good .tag { color: #4D7A39; }
+
+.footer-demo { background: var(--c-bg-card); border: 0.5px solid var(--c-border); border-radius: var(--radius-md); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--c-text-soft); }
+.footer-demo .sep { color: var(--c-text-muted); }
+.footer-demo .inline { display: inline-flex; align-items: center; gap: 4px; }
+.footer-demo strong { color: var(--c-text); font-weight: 500; }
+.footer-demo .ok-open { color: var(--c-kring-light); }
+
+footer.page-footer {
+  margin-top: 4rem;
+  padding-top: 1.25rem;
+  border-top: 0.5px solid var(--c-border);
+  font-size: 12px;
+  color: var(--c-text-muted);
+}
+</style>
+</head>
+<body>
+<main>
+
+<p class="eyebrow">Brand Styleguide</p>
+<h1>Kring &amp; openkring</h1>
+<p class="lede">Diese Richtlinie beschreibt die zwei Marken der bkaiser GmbH: <strong style="font-weight: 500;">Kring</strong> als kommerzielles SaaS-Produkt und <strong style="font-weight: 500;">openkring</strong> als zugrundeliegendes Open-Source-Projekt. Beide bilden eine Markenfamilie — verwandt im Erscheinungsbild, eigenständig in der Aussage.</p>
+
+<div class="toc">
+  <h4>Inhalt</h4>
+  <ol>
+    <li><a href="#familie">Die Markenfamilie</a></li>
+    <li><a href="#kring-logo">Kring — Logo und Varianten</a></li>
+    <li><a href="#openkring-logo">openkring — Logo und Varianten</a></li>
+    <li><a href="#wortmarken">Wortmarken</a></li>
+    <li><a href="#groessen">Größen und Abstände</a></li>
+    <li><a href="#farben">Farbpalette</a></li>
+    <li><a href="#typografie">Typografie</a></li>
+    <li><a href="#anwendung">Wann welche Marke verwenden</a></li>
+    <li><a href="#regeln">Anwendungsregeln</a></li>
+    <li><a href="#dateien">Dateien und Downloads</a></li>
+  </ol>
+</div>
+
+<h2 id="familie">1 — Die Markenfamilie</h2>
+
+<div class="stage">
+  <div class="family-stage">
+    <div class="family-item">
+      <svg width="110" height="110" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-label="Kring logo">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2"/>
+        <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+      </svg>
+      <p class="name">Kring</p>
+      <p class="role">Produkt · SaaS</p>
+    </div>
+    <div class="family-item">
+      <svg width="110" height="110" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-label="openkring logo">
+        <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+      <p class="name">openkring</p>
+      <p class="role">Projekt · Open Source</p>
+    </div>
+  </div>
+</div>
+
+<h3>Die Erzählung</h3>
+<p><strong style="font-weight: 500;">openkring</strong> ist die offene Codebasis: ein Ring (die Gemeinschaft), eingerahmt von Klammern (der Code, offen einsehbar). Das Projekt richtet sich an Entwickler, Mitwirkende, Selbst-Hostende.</p>
+<p><strong style="font-weight: 500;">Kring</strong> ist das gepflegte, gehostete Produkt: derselbe Ring, jetzt mit einem ausgefüllten Kern. Der Kern steht für Substanz — Support, Hosting, Konfiguration, Verlässlichkeit. Das Produkt richtet sich an Vereine, Alumni, Stockwerkeigentümer, Genossenschaften, KMU.</p>
+
+<h3>Die geometrische Verwandtschaft</h3>
+<p>Beide Logos teilen <strong style="font-weight: 500;">denselben Ring</strong>: Radius 18, Strichstärke 2, Position 40/40 im 80×80-viewBox. Wenn die zwei Logos nebeneinander erscheinen, ist die Verwandtschaft sofort sichtbar. Das ist Absicht, kein Zufall.</p>
+
+<h4>Anwendung im Co-Branding</h4>
+<div class="footer-demo">
+  <span class="inline">
+    <svg width="16" height="16" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="3"/>
+      <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+    </svg>
+    <strong>Kring</strong>
+  </span>
+  <span class="sep">·</span>
+  <span>basierend auf</span>
+  <span class="inline">
+    <svg width="16" height="16" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="none" stroke="#185FA5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 14 L10 14 L10 66 L18 66"/>
+        <path d="M62 14 L70 14 L70 66 L62 66"/>
+        <circle cx="40" cy="40" r="18"/>
+      </g>
+    </svg>
+    <span><span class="ok-open">open</span><strong>kring</strong></span>
+  </span>
+  <span class="sep">·</span>
+  <span>eine Marke der bkaiser GmbH</span>
+</div>
+<p style="font-size: 13px; color: var(--c-text-soft); margin-top: 0.75rem;">Beispiel-Footer: beide Marken nebeneinander, klar erkennbare Familie.</p>
+
+<h2 id="kring-logo">2 — Kring · Logo und Varianten</h2>
+
+<div class="stage">
+  <svg width="120" height="120" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-label="Kring Logo">
+    <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2"/>
+    <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+  </svg>
+</div>
+
+<p>Das Kring-Logo besteht aus zwei Elementen:</p>
+<ul>
+  <li><strong style="font-weight: 500;">Ein Ring</strong> — die Gemeinschaft. Identisch zum Ring im openkring-Logo.</li>
+  <li><strong style="font-weight: 500;">Ein gefüllter Kern</strong> — die Substanz des Produkts: gepflegt, gehostet, verlässlich.</li>
+</ul>
+
+<div class="grid-4">
+
+  <div class="card">
+    <p class="label">Primär</p>
+    <div class="stage compact">
+      <svg width="64" height="64" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2"/>
+        <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+      </svg>
+    </div>
+    <p class="filename">kring-logo.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Auf hellem Hintergrund. Standardvariante.</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Mono dunkel</p>
+    <div class="stage compact">
+      <svg width="64" height="64" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#0E3E70" stroke-width="2"/>
+        <circle cx="40" cy="40" r="9" fill="#0E3E70"/>
+      </svg>
+    </div>
+    <p class="filename">kring-logo-mono.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Druck, Stempel, Schwarz-Weiß.</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Inverse</p>
+    <div class="stage compact dark">
+      <svg width="64" height="64" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#7FA8D3" stroke-width="2"/>
+        <circle cx="40" cy="40" r="9" fill="#7FA8D3"/>
+      </svg>
+    </div>
+    <p class="filename">kring-logo-inverse.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Dunkle Hintergründe, Social-Cards.</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Favicon</p>
+    <div class="stage compact">
+      <svg width="64" height="64" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="22" fill="none" stroke="#185FA5" stroke-width="4"/>
+        <circle cx="40" cy="40" r="12" fill="#185FA5"/>
+      </svg>
+    </div>
+    <p class="filename">kring-favicon.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Dickere Striche für 16–32 px.</p>
+  </div>
+
+</div>
+
+<h2 id="openkring-logo">3 — openkring · Logo und Varianten</h2>
+
+<div class="stage">
+  <svg width="120" height="120" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-label="openkring Logo">
+    <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 14 L10 14 L10 66 L18 66"/>
+      <path d="M62 14 L70 14 L70 66 L62 66"/>
+      <circle cx="40" cy="40" r="18"/>
+    </g>
+  </svg>
+</div>
+
+<p>Das openkring-Logo besteht aus drei Elementen:</p>
+<ul>
+  <li><strong style="font-weight: 500;">Zwei eckige Klammern</strong> — stehen für Quellcode und das Bekenntnis zu Open Source.</li>
+  <li><strong style="font-weight: 500;">Ein Ring</strong> — der "kring" (niederländisch/afrikaans für Kreis). Identisch zum Ring im Kring-Logo.</li>
+  <li><strong style="font-weight: 500;">Blau</strong> als einzige Farbe — derselbe Ton wie Kring.</li>
+</ul>
+
+<div class="grid-4">
+
+  <div class="card">
+    <p class="label">Primär</p>
+    <div class="stage compact">
+      <svg width="64" height="64" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <p class="filename">openkring-logo.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Auf hellem Hintergrund.</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Mono dunkel</p>
+    <div class="stage compact">
+      <svg width="64" height="64" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#0E3E70" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <p class="filename">openkring-logo-mono.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Druck, Schwarz-Weiß.</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Inverse</p>
+    <div class="stage compact dark">
+      <svg width="64" height="64" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#7FA8D3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <p class="filename">openkring-logo-inverse.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Dunkle Hintergründe, README dark mode.</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Favicon</p>
+    <div class="stage compact">
+      <svg width="64" height="64" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 18 L14 18 L14 62 L22 62"/>
+          <path d="M58 18 L66 18 L66 62 L58 62"/>
+          <circle cx="40" cy="40" r="16"/>
+        </g>
+      </svg>
+    </div>
+    <p class="filename">openkring-favicon.svg</p>
+    <p style="font-size: 12px; color: var(--c-text-soft); margin: 0.5rem 0 0;">Dickere Striche für 16–32 px.</p>
+  </div>
+
+</div>
+
+<h2 id="wortmarken">4 — Wortmarken</h2>
+<p class="lede">Logo plus Schriftzug, zwei Anordnungen pro Marke. Bei openkring trennt der Farbwechsel zwischen "open" (hellblau) und "kring" (tiefschwarz) das Verhältnis Projekt/Marke. Bei Kring ist der Schriftzug einheitlich tiefschwarz — eine ruhige, geschlossene Wortmarke.</p>
+
+<h3>Kring</h3>
+<div class="grid-2">
+  <div class="card">
+    <p class="label">Horizontal</p>
+    <div class="stage compact">
+      <svg width="200" height="64" viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2"/>
+        <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+        <text x="92" y="49" font-family="'Inter Tight', system-ui, sans-serif" font-size="28" font-weight="500" letter-spacing="-0.4" fill="#1A1815">Kring</text>
+      </svg>
+    </div>
+    <p class="filename">kring-wordmark-horizontal.svg</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Vertikal</p>
+    <div class="stage compact" style="min-height: 160px;">
+      <svg width="120" height="100" viewBox="0 0 160 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g transform="translate(40 0)">
+          <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2"/>
+          <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+        </g>
+        <text x="80" y="115" text-anchor="middle" font-family="'Inter Tight', system-ui, sans-serif" font-size="24" font-weight="500" letter-spacing="-0.3" fill="#1A1815">Kring</text>
+      </svg>
+    </div>
+    <p class="filename">kring-wordmark-vertical.svg</p>
+  </div>
+</div>
+
+<h3>openkring</h3>
+<div class="grid-2">
+  <div class="card">
+    <p class="label">Horizontal</p>
+    <div class="stage compact">
+      <svg width="240" height="64" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+        <text x="92" y="49" font-family="'Inter Tight', system-ui, sans-serif" font-size="26" font-weight="500" letter-spacing="-0.4">
+          <tspan fill="#6F95C0" font-weight="400">open</tspan><tspan fill="#1A1815">kring</tspan>
+        </text>
+      </svg>
+    </div>
+    <p class="filename">openkring-wordmark-horizontal.svg</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Vertikal</p>
+    <div class="stage compact" style="min-height: 160px;">
+      <svg width="120" height="100" viewBox="0 0 160 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(40 0)">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+        <text x="80" y="115" text-anchor="middle" font-family="'Inter Tight', system-ui, sans-serif" font-size="22" font-weight="500" letter-spacing="-0.3">
+          <tspan fill="#6F95C0" font-weight="400">open</tspan><tspan fill="#1A1815">kring</tspan>
+        </text>
+      </svg>
+    </div>
+    <p class="filename">openkring-wordmark-vertical.svg</p>
+  </div>
+</div>
+
+<div style="background: var(--c-bg-soft); border-radius: var(--radius-md); padding: 1rem 1.25rem; margin: 1.5rem 0;">
+  <p style="font-size: 13px; line-height: 1.6; margin: 0;"><strong style="font-weight: 500;">Hinweis zur Schriftart:</strong> Die SVG-Wortmarken referenzieren <code>Inter Tight</code>. Auf Systemen ohne diese Schrift fällt der Browser auf System-Sans zurück. Für endgültige, publizierte Assets (Visitenkarten, Druck) sollte das SVG einmal in Inkscape oder Figma in Pfade konvertiert werden — danach ist es schriftunabhängig.</p>
+</div>
+
+<h2 id="groessen">5 — Größen und Abstände</h2>
+
+<h4>Beide Logos parallel skaliert</h4>
+<p>Beide Logos sind aufeinander abgestimmt und bleiben bis 16 px lesbar (mit der Favicon-Variante). Unter 16 px nicht verwenden.</p>
+
+<div class="size-strip">
+  <div class="item">
+    <div class="item-pair">
+      <svg width="16" height="16" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="22" fill="none" stroke="#185FA5" stroke-width="4"/>
+        <circle cx="40" cy="40" r="12" fill="#185FA5"/>
+      </svg>
+      <svg width="16" height="16" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 18 L14 18 L14 62 L22 62"/>
+          <path d="M58 18 L66 18 L66 62 L58 62"/>
+          <circle cx="40" cy="40" r="16"/>
+        </g>
+      </svg>
+    </div>
+    <p class="px">16 px (favicon)</p>
+  </div>
+  <div class="item">
+    <div class="item-pair">
+      <svg width="24" height="24" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="3"/>
+        <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+      </svg>
+      <svg width="24" height="24" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <p class="px">24 px</p>
+  </div>
+  <div class="item">
+    <div class="item-pair">
+      <svg width="32" height="32" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2.5"/>
+        <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+      </svg>
+      <svg width="32" height="32" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <p class="px">32 px</p>
+  </div>
+  <div class="item">
+    <div class="item-pair">
+      <svg width="48" height="48" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2.2"/>
+        <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+      </svg>
+      <svg width="48" height="48" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <p class="px">48 px</p>
+  </div>
+  <div class="item">
+    <div class="item-pair">
+      <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2"/>
+        <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+      </svg>
+      <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <p class="px">80 px</p>
+  </div>
+</div>
+
+<h4>Schutzraum</h4>
+<p>Um beide Logos ist ein freier Raum von mindestens 10 % der Logobreite einzuhalten. In diesem Raum keine weiteren Elemente, kein Text, keine andere Marke.</p>
+
+<h2 id="farben">6 — Farbpalette</h2>
+<p class="lede">Eine Farbfamilie für beide Marken. Kring-Blau ist der Anker; hellere Töne tragen Sekundärrollen, dunklere geben Tiefe.</p>
+
+<div class="grid-3">
+  <div class="card">
+    <span class="swatch" style="background: #185FA5;"></span>
+    <p class="swatch-name">Kring Blau</p>
+    <p class="swatch-hex">#185FA5</p>
+    <p class="swatch-role">Primär. Logo, Akzente, Buttons.</p>
+  </div>
+  <div class="card">
+    <span class="swatch" style="background: #0E3E70;"></span>
+    <p class="swatch-name">Kring Dunkel</p>
+    <p class="swatch-hex">#0E3E70</p>
+    <p class="swatch-role">Druck, Mono-Variante.</p>
+  </div>
+  <div class="card">
+    <span class="swatch" style="background: #6F95C0;"></span>
+    <p class="swatch-name">Kring Mittel</p>
+    <p class="swatch-hex">#6F95C0</p>
+    <p class="swatch-role">"open"-Wortmarke, Sekundär-Akzent.</p>
+  </div>
+  <div class="card">
+    <span class="swatch" style="background: #7FA8D3;"></span>
+    <p class="swatch-name">Kring Hell</p>
+    <p class="swatch-hex">#7FA8D3</p>
+    <p class="swatch-role">Inverse-Variante auf dunklem Grund.</p>
+  </div>
+  <div class="card">
+    <span class="swatch" style="background: #E7EEF6;"></span>
+    <p class="swatch-name">Kring Tint</p>
+    <p class="swatch-hex">#E7EEF6</p>
+    <p class="swatch-role">Hintergrund für Chips, Badges, Highlights.</p>
+  </div>
+  <div class="card">
+    <span class="swatch" style="background: #1A1815;"></span>
+    <p class="swatch-name">Tiefschwarz</p>
+    <p class="swatch-hex">#1A1815</p>
+    <p class="swatch-role">Primär-Text. Nicht reines Schwarz.</p>
+  </div>
+</div>
+
+<h2 id="typografie">7 — Typografie</h2>
+<p class="lede">Eine Sans-Schrift mit Charakter, eine Serif für editoriale Momente, eine Mono für Code und Pfade. Identisch für beide Marken.</p>
+
+<div class="grid-3">
+  <div class="card">
+    <p class="label">Display & Body</p>
+    <p style="font-family: 'Inter Tight', sans-serif; font-size: 28px; font-weight: 500; margin: 0.5rem 0; letter-spacing: -0.01em;">Inter Tight</p>
+    <p style="font-family: 'Inter Tight', sans-serif; font-size: 14px; color: var(--c-text-soft); margin: 0;">Eine moderne, etwas verdichtete Sans. Gewichte 400 und 500.</p>
+  </div>
+  <div class="card">
+    <p class="label">Editorial / Quotes</p>
+    <p style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 24px; font-weight: 400; margin: 0.5rem 0;">IBM Plex Serif</p>
+    <p style="font-family: 'Inter Tight', sans-serif; font-size: 14px; color: var(--c-text-soft); margin: 0;">Für Zitate, Referenzen, redaktionelle Hervorhebungen.</p>
+  </div>
+  <div class="card">
+    <p class="label">Code & Mono</p>
+    <p style="font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 400; margin: 0.5rem 0;">JetBrains Mono</p>
+    <p style="font-family: 'Inter Tight', sans-serif; font-size: 14px; color: var(--c-text-soft); margin: 0;">Für Codebeispiele, Pfade, Dateinamen.</p>
+  </div>
+</div>
+
+<h2 id="anwendung">8 — Wann welche Marke verwenden</h2>
+<p class="lede">Die wichtigste Regel: Im Zweifel <strong style="font-weight: 500;">Kring</strong>, weil die kommerzielle Marke das primäre Geschäft trägt. openkring tritt vor allem im technischen Umfeld auf — und immer dann, wenn die Open-Source-Eigenschaft betont werden soll.</p>
+
+<div style="margin-bottom: 1.5rem;">
+
+  <div class="usage-row">
+    <span class="ok-label">Kring</span>
+    <span class="when">Produkt-Website, Marketing, Verkauf</span>
+    <span class="which">kring.ch und alle Unterseiten</span>
+  </div>
+  <div class="usage-row">
+    <span class="ok-label">Kring</span>
+    <span class="when">Mobile App, App-Store-Auftritt</span>
+    <span class="which">App-Icon, Splash-Screen</span>
+  </div>
+  <div class="usage-row">
+    <span class="ok-label">Kring</span>
+    <span class="when">Rechnungen, AGB, Verträge</span>
+    <span class="which">Wortmarke horizontal im Briefkopf</span>
+  </div>
+  <div class="usage-row">
+    <span class="ok-label">Kring</span>
+    <span class="when">Pressemitteilungen, Social Media</span>
+    <span class="which">Wortmarke und Hero-Banner</span>
+  </div>
+  <div class="usage-row">
+    <span class="ok-label" style="color: #5F7AAA;">openkring</span>
+    <span class="when">GitHub-Organisation, Repositories</span>
+    <span class="which">Avatar, README-Header</span>
+  </div>
+  <div class="usage-row">
+    <span class="ok-label" style="color: #5F7AAA;">openkring</span>
+    <span class="when">Projekt-Website</span>
+    <span class="which">openkring.org und openkring.ch</span>
+  </div>
+  <div class="usage-row">
+    <span class="ok-label" style="color: #5F7AAA;">openkring</span>
+    <span class="when">Technische Dokumentation, API-Docs</span>
+    <span class="which">Wortmarke im Header</span>
+  </div>
+  <div class="usage-row">
+    <span class="ok-label" style="color: #5F7AAA;">openkring</span>
+    <span class="when">Open-Source-Konferenzen, Sponsoring</span>
+    <span class="which">Vertikales Wortmarken-Layout</span>
+  </div>
+  <div class="usage-row">
+    <span class="ok-label" style="background: linear-gradient(90deg, #4D7A39 50%, #5F7AAA 50%); -webkit-background-clip: text; background-clip: text; color: transparent;">Beide</span>
+    <span class="when">Footer auf kring.ch (Co-Branding)</span>
+    <span class="which">Kring · basierend auf openkring</span>
+  </div>
+  <div class="usage-row">
+    <span class="ok-label" style="background: linear-gradient(90deg, #4D7A39 50%, #5F7AAA 50%); -webkit-background-clip: text; background-clip: text; color: transparent;">Beide</span>
+    <span class="when">Investor-Pitches, Strategie-Decks</span>
+    <span class="which">Markenarchitektur zeigen</span>
+  </div>
+
+</div>
+
+<h2 id="regeln">9 — Anwendungsregeln (Do / Don't)</h2>
+
+<div class="do-dont">
+
+  <div class="row good">
+    <div class="visual">
+      <svg width="48" height="48" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2"/>
+        <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+      </svg>
+    </div>
+    <div>
+      <p class="tag">Gut</p>
+      <p>Auf neutralem, hellem Hintergrund. Freier Schutzraum, originale Farbgebung.</p>
+    </div>
+  </div>
+
+  <div class="row bad">
+    <div class="visual" style="background: #FF6B35; padding: 8px; border-radius: 6px;">
+      <svg width="48" height="48" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2"/>
+        <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+      </svg>
+    </div>
+    <div>
+      <p class="tag">Schlecht</p>
+      <p>Nicht auf gesättigten, kontrastreichen Farbflächen. Wenn der Hintergrund nicht neutral ist, Mono- oder Inverse-Variante wählen.</p>
+    </div>
+  </div>
+
+  <div class="row bad">
+    <div class="visual">
+      <svg width="60" height="40" viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="30" r="18" fill="none" stroke="#185FA5" stroke-width="2"/>
+        <circle cx="40" cy="30" r="9" fill="#185FA5"/>
+      </svg>
+    </div>
+    <div>
+      <p class="tag">Schlecht</p>
+      <p>Nicht verzerren. Wenn das Logo skaliert wird, immer proportional. Höhe und Breite gleichmäßig anpassen.</p>
+    </div>
+  </div>
+
+  <div class="row bad">
+    <div class="visual">
+      <svg width="48" height="48" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#D14A2F" stroke-width="2"/>
+        <circle cx="40" cy="40" r="9" fill="#D14A2F"/>
+      </svg>
+    </div>
+    <div>
+      <p class="tag">Schlecht</p>
+      <p>Nicht umfärben. Die Logos werden ausschließlich in den vier definierten Blau-Tönen verwendet. Keine Akzentfarben aus anderen Familien.</p>
+    </div>
+  </div>
+
+  <div class="row bad">
+    <div class="visual" style="gap: 4px;">
+      <svg width="40" height="40" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2"/>
+        <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+      </svg>
+      <svg width="40" height="40" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 14 L10 14 L10 66 L18 66"/>
+          <path d="M62 14 L70 14 L70 66 L62 66"/>
+          <circle cx="40" cy="40" r="18"/>
+        </g>
+      </svg>
+    </div>
+    <div>
+      <p class="tag">Schlecht</p>
+      <p>Beide Logos nicht ohne Abstand und Klärung nebeneinander stellen. Wenn Co-Branding nötig ist, dann mit Trenner und klarer Beschriftung ("Kring · basierend auf openkring").</p>
+    </div>
+  </div>
+
+  <div class="row bad">
+    <div class="visual">
+      <svg width="48" height="48" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#185FA5" stroke-width="2"/>
+        <circle cx="40" cy="40" r="9" fill="#185FA5"/>
+        <circle cx="62" cy="22" r="6" fill="#D14A2F"/>
+      </svg>
+    </div>
+    <div>
+      <p class="tag">Schlecht</p>
+      <p>Keine zusätzlichen Elemente einfügen, keine Beta- oder Notification-Marker, keine Dekorationen. Die Form bleibt unverändert.</p>
+    </div>
+  </div>
+
+</div>
+
+<h2 id="dateien">10 — Dateien und Downloads</h2>
+<p>Alle Asset-Dateien sind im SVG-Format gehalten, vektorbasiert, unter 1 KB pro Datei. Bei Bedarf in PNG, PDF oder ICO konvertierbar mit Tools wie Inkscape oder Figma.</p>
+
+<h3>Kring</h3>
+<div class="grid-2">
+  <div class="card"><p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">kring-logo.svg</p><p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Logo, Standardvariante. 80×80 viewBox.</p></div>
+  <div class="card"><p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">kring-logo-mono.svg</p><p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Monochrom dunkel, für Druck.</p></div>
+  <div class="card"><p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">kring-logo-inverse.svg</p><p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Hellblau für dunkle Hintergründe.</p></div>
+  <div class="card"><p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">kring-favicon.svg</p><p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Verstärkte Striche für 16–32 px.</p></div>
+  <div class="card"><p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">kring-wordmark-horizontal.svg</p><p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Logo + Schriftzug nebeneinander.</p></div>
+  <div class="card"><p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">kring-wordmark-vertical.svg</p><p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Logo über Schriftzug.</p></div>
+</div>
+
+<h3>openkring</h3>
+<div class="grid-2">
+  <div class="card"><p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">openkring-logo.svg</p><p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Logo, Standardvariante.</p></div>
+  <div class="card"><p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">openkring-logo-mono.svg</p><p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Monochrom dunkel, für Druck.</p></div>
+  <div class="card"><p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">openkring-logo-inverse.svg</p><p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Hellblau für dunkle Hintergründe.</p></div>
+  <div class="card"><p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">openkring-favicon.svg</p><p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Verstärkte Striche für 16–32 px.</p></div>
+  <div class="card"><p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">openkring-wordmark-horizontal.svg</p><p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Logo + Schriftzug nebeneinander.</p></div>
+  <div class="card"><p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 0 0 0.5rem;">openkring-wordmark-vertical.svg</p><p style="font-size: 12px; color: var(--c-text-soft); margin: 0;">Logo über Schriftzug.</p></div>
+</div>
+
+<h4>Lizenz</h4>
+<p>Beide Logos und ihre Wortmarken gehören zur bkaiser GmbH. Die Wortmarke "Kring" ist im Schweizer Markenregister geschützt (in Vorbereitung). Verwendung im Rahmen der Kring- und openkring-Dokumentation, in Beiträgen zum Open-Source-Projekt und in Zusammenhang mit Kring-Produkten ist erlaubt. Modifikationen oder Verwendung in fremden Kontexten erfordern Zustimmung.</p>
+
+<h4>Kontakt</h4>
+<p>Bei Fragen zur Markenanwendung: bkaiser GmbH, <a href="https://kring.ch">kring.ch</a>.</p>
+
+<footer class="page-footer">
+  <p>Brand Styleguide · Kring &amp; openkring · Version 1.0 · Mai 2026 · eine Marke der bkaiser GmbH</p>
+</footer>
+
+</main>
+</body>
+</html>
