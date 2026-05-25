@@ -339,6 +339,16 @@
           },
           {
             "glob": "*.json",
+            "input": "libs/pdf-template/data-access/src/i18n",
+            "output": "./assets/i18n/pdf-template/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/pdf-template/feature/src/i18n",
+            "output": "./assets/i18n/pdf-template/feature"
+          },
+          {
+            "glob": "*.json",
             "input": "libs/relationship/invitation/data-access/src/i18n",
             "output": "./assets/i18n/relationship/invitation/data-access"
           },

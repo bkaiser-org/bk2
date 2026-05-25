@@ -313,6 +313,20 @@ export const appRoutes: Route[] = [
     ],
   },
   {
+    path: 'templates',
+    canActivate: [isAdminGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('@bk2/pdf-template-feature').then(m => m.TemplateList),
+      },
+      {
+        path: ':templateKey',
+        loadComponent: () => import('@bk2/pdf-template-feature').then(m => m.TemplateEditPage),
+      },
+    ],
+  },
+  {
     path: 'i18n',
     canActivate: [isAdminGuard],
     children: [
