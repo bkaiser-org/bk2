@@ -17,7 +17,8 @@ import { appRoutes } from './app.routes';
 import { initializeApp } from 'firebase/app';
 
 // i18n with transloco
-import { APP_STORE_MIN, I18nOverrideService, I18nService, TranslocoHttpLoader } from '@bk2/shared-i18n';
+import { APP_STORE_MIN, I18nOverrideService } from '@bk2/shared-data-access';
+import { I18nService, TranslocoHttpLoader } from '@bk2/shared-i18n';
 import { AppStore } from '@bk2/shared-feature';
 import { provideTransloco } from '@jsverse/transloco';
 import { TranslateModule } from '@ngx-translate/core';
