@@ -3,10 +3,15 @@
 // ---------------- i18n ----------------
 const i18n = {
   de: {
-    'nav.club': 'Verein', 'nav.about': 'Über uns', 'nav.history': 'Geschichte', 'nav.boathouse': 'Neues Bootshaus',
-    'nav.rowing': 'Rudern', 'nav.courses': 'Kurse für Einsteiger', 'nav.youth': 'Jugendrudern',
-    'nav.competitive': 'Leistungssport', 'nav.lateral': 'Quereinstieg',
+    'nav.club': 'Der Club', 'nav.about': 'Über uns', 'nav.history': 'Geschichte', 'nav.boathouse': 'Bootshausprojekt',
+    'nav.recreational': 'Breitensport', 'nav.competitive': 'Leistungssport',
+    'nav.board': 'Vorstand', 'nav.patrons': 'Gönnerverein', 'nav.statutes': 'Statuten', 'nav.veterans': 'Alt Herren',
+    'nav.rowing': 'Rudern', 'nav.courses': 'Kurse für Erwachsene', 'nav.youth': 'Kurse für Jugendliche',
+    'nav.lateral': 'Quereinstieg',
     'nav.events': 'Termine', 'nav.news': 'News', 'nav.contact': 'Kontakt', 'nav.login': 'Mitgliederbereich',
+    'nav.all': 'Alle', 'nav.regattas': 'Regatten', 'nav.clubEvents': 'Anlässe', 'nav.coursesCat': 'Kurse',
+    'nav.diamondRow': 'Diamond Row', 'nav.boathouseTag': 'Bootshausprojekt',
+    'nav.signup': 'Anmeldeformulare', 'nav.contactForm': 'Kontaktformular', 'nav.prevention': 'Präventionsstelle',
     'footer.tagline': 'Rudern auf dem Zürichsee seit 1917.', 'footer.links': 'Links',
     'footer.member': 'Mitgliederbereich', 'footer.calendar': 'Kalender', 'footer.newsLink': 'News', 'footer.contact': 'Kontakt',
     'footer.follow': 'Folge uns', 'footer.imprint': 'Impressum', 'footer.privacy': 'Datenschutz',
@@ -21,7 +26,7 @@ const i18n = {
     'calendar.lead': 'Anlässe, Regatten und Vereinstermine im Überblick.',
     'calendar.filter.all': 'Alle',
     'calendar.filter.regatta': 'Regatten',
-    'calendar.filter.club': 'Vereinsanlässe',
+    'calendar.filter.club': 'Anlässe',
     'calendar.filter.course': 'Kurse',
     'calendar.empty': 'Keine Termine in dieser Kategorie.',
     'contact.title': 'Kontakt',
@@ -56,10 +61,15 @@ const i18n = {
     'boathouse.support.cta': 'Im Mitgliederbereich mehr erfahren →',
   },
   en: {
-    'nav.club': 'Club', 'nav.about': 'About us', 'nav.history': 'History', 'nav.boathouse': 'New boathouse',
-    'nav.rowing': 'Rowing', 'nav.courses': 'Beginner courses', 'nav.youth': 'Youth rowing',
-    'nav.competitive': 'Competitive', 'nav.lateral': 'Experienced rowers',
+    'nav.club': 'The Club', 'nav.about': 'About us', 'nav.history': 'History', 'nav.boathouse': 'Boathouse project',
+    'nav.recreational': 'Recreational', 'nav.competitive': 'Competitive',
+    'nav.board': 'Board', 'nav.patrons': 'Patrons', 'nav.statutes': 'Statutes', 'nav.veterans': 'Veterans',
+    'nav.rowing': 'Rowing', 'nav.courses': 'Adult courses', 'nav.youth': 'Youth courses',
+    'nav.lateral': 'Experienced rowers',
     'nav.events': 'Events', 'nav.news': 'News', 'nav.contact': 'Contact', 'nav.login': 'Member area',
+    'nav.all': 'All', 'nav.regattas': 'Regattas', 'nav.clubEvents': 'Club events', 'nav.coursesCat': 'Courses',
+    'nav.diamondRow': 'Diamond Row', 'nav.boathouseTag': 'Boathouse project',
+    'nav.signup': 'Registration forms', 'nav.contactForm': 'Contact form', 'nav.prevention': 'Prevention contact',
     'footer.tagline': 'Rowing on Lake Zürich since 1917.', 'footer.links': 'Links',
     'footer.member': 'Member area', 'footer.calendar': 'Calendar', 'footer.newsLink': 'News', 'footer.contact': 'Contact',
     'footer.follow': 'Follow us', 'footer.imprint': 'Imprint', 'footer.privacy': 'Privacy',
@@ -152,28 +162,57 @@ function renderHeader() {
         </a>
         <nav class="hidden md:flex items-center gap-1" aria-label="Hauptnavigation">
           <div class="relative group">
-            <button class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.club">Verein</button>
+            <button class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.club">Der Club</button>
             <div class="absolute left-0 top-full pt-2 hidden group-hover:block">
-              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-lg py-2 min-w-[200px]">
+              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-lg py-2 min-w-[220px]">
                 <a href="index.html#ueber-uns" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.about">Über uns</a>
-                <a href="bootshaus.html" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.boathouse">Neues Bootshaus</a>
+                <a href="bootshaus.html" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.boathouse">Bootshausprojekt</a>
+                <a href="seite.html?key=scsw_breitensport" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.recreational">Breitensport</a>
+                <a href="seite.html?key=scsw_leistungssport" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.competitive">Leistungssport</a>
+                <a href="seite.html?key=scsw_vorstand" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.board">Vorstand</a>
+                <a href="seite.html?key=scsw_gss" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.patrons">Gönnerverein</a>
+                <a href="seite.html?key=scsw_statuten" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.statutes">Statuten</a>
+                <a href="seite.html?key=scsw_altherren" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.veterans">Alt Herren</a>
               </div>
             </div>
           </div>
           <div class="relative group">
-            <button class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.rowing">Rudern</button>
+            <a href="termine.html" class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.events">Termine</a>
             <div class="absolute left-0 top-full pt-2 hidden group-hover:block">
-              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-lg py-2 min-w-[220px]">
-                <a href="index.html#kurse" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.courses">Kurse für Einsteiger</a>
-                <a href="index.html#jugend" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.youth">Jugendrudern</a>
-                <a href="index.html#leistungssport" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.competitive">Leistungssport</a>
-                <a href="index.html#quereinstieg" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.lateral">Quereinstieg</a>
+              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-lg py-2 min-w-[200px]">
+                <a href="termine.html" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.all">Alle</a>
+                <a href="termine.html?cat=regatta" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.regattas">Regatten</a>
+                <a href="termine.html?cat=club" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.clubEvents">Anlässe</a>
+                <a href="termine.html?cat=course" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.coursesCat">Kurse</a>
               </div>
             </div>
           </div>
-          <a href="termine.html" class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.events">Termine</a>
-          <a href="news.html" class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.news">News</a>
-          <a href="kontakt.html" class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.contact">Kontakt</a>
+          <div class="relative group">
+            <a href="news.html" class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.news">News</a>
+            <div class="absolute left-0 top-full pt-2 hidden group-hover:block">
+              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-lg py-2 min-w-[220px]">
+                <a href="news.html" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.all">Alle</a>
+                <a href="news.html?tag=Regatten" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.regattas">Regatten</a>
+                <a href="news.html?tag=Anl%C3%A4sse" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.clubEvents">Anlässe</a>
+                <a href="news.html?tag=Diamond%20Row" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.diamondRow">Diamond Row</a>
+                <a href="news.html?tag=Bootshausprojekt" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.boathouseTag">Bootshausprojekt</a>
+              </div>
+            </div>
+          </div>
+          <div class="relative group">
+            <a href="kontakt.html" class="px-3 py-2 text-sm font-medium hover:text-scs-green transition" data-i18n="nav.contact">Kontakt</a>
+            <div class="absolute left-0 top-full pt-2 hidden group-hover:block">
+              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-lg py-2 min-w-[240px]">
+                <div class="px-4 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500" data-i18n="nav.signup">Anmeldeformulare</div>
+                <a href="seite.html?key=scsw_kurs_jugendliche" class="block px-4 py-2 pl-6 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.youth">Kurse für Jugendliche</a>
+                <a href="seite.html?key=scsw_kurs_erwachsene" class="block px-4 py-2 pl-6 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.courses">Kurse für Erwachsene</a>
+                <a href="seite.html?key=scsw_quereinstieg" class="block px-4 py-2 pl-6 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.lateral">Quereinstieg</a>
+                <div class="my-1 border-t border-slate-200 dark:border-slate-800"></div>
+                <a href="kontakt.html" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.contactForm">Kontaktformular</a>
+                <a href="seite.html?key=scsw_praeventionsstelle" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="nav.prevention">Präventionsstelle</a>
+              </div>
+            </div>
+          </div>
         </nav>
         <div class="flex items-center gap-2">
           <div class="hidden sm:flex items-center gap-1 text-xs">
@@ -189,13 +228,38 @@ function renderHeader() {
       </div>
       <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
         <div class="px-4 py-3 space-y-1">
-          <a href="index.html#ueber-uns" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.about">Über uns</a>
-          <a href="index.html#kurse" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.courses">Kurse</a>
-          <a href="termine.html" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.events">Termine</a>
-          <a href="news.html" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.news">News</a>
-          <a href="kontakt.html" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.contact">Kontakt</a>
-          <a href="bootshaus.html" class="block px-3 py-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.boathouse">Bootshaus</a>
-          <a href="https://seeclub.org/" class="block px-3 py-2 rounded bg-scs-green text-white text-center font-semibold" data-i18n="nav.login">Mitgliederbereich</a>
+          <div class="px-3 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500" data-i18n="nav.club">Der Club</div>
+          <a href="index.html#ueber-uns" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.about">Über uns</a>
+          <a href="bootshaus.html" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.boathouse">Bootshausprojekt</a>
+          <a href="seite.html?key=scsw_breitensport" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.recreational">Breitensport</a>
+          <a href="seite.html?key=scsw_leistungssport" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.competitive">Leistungssport</a>
+          <a href="seite.html?key=scsw_vorstand" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.board">Vorstand</a>
+          <a href="seite.html?key=scsw_gss" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.patrons">Gönnerverein</a>
+          <a href="seite.html?key=scsw_statuten" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.statutes">Statuten</a>
+          <a href="seite.html?key=scsw_altherren" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.veterans">Alt Herren</a>
+
+          <div class="px-3 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500" data-i18n="nav.events">Termine</div>
+          <a href="termine.html" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.all">Alle</a>
+          <a href="termine.html?cat=regatta" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.regattas">Regatten</a>
+          <a href="termine.html?cat=club" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.clubEvents">Anlässe</a>
+          <a href="termine.html?cat=course" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.coursesCat">Kurse</a>
+
+          <div class="px-3 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500" data-i18n="nav.news">News</div>
+          <a href="news.html" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.all">Alle</a>
+          <a href="news.html?tag=Regatten" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.regattas">Regatten</a>
+          <a href="news.html?tag=Anl%C3%A4sse" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.clubEvents">Anlässe</a>
+          <a href="news.html?tag=Diamond%20Row" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.diamondRow">Diamond Row</a>
+          <a href="news.html?tag=Bootshausprojekt" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.boathouseTag">Bootshausprojekt</a>
+
+          <div class="px-3 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500" data-i18n="nav.contact">Kontakt</div>
+          <div class="px-3 pt-1 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500" data-i18n="nav.signup">Anmeldeformulare</div>
+          <a href="seite.html?key=scsw_kurs_jugendliche" class="block px-3 py-2 pl-7 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.youth">Kurse für Jugendliche</a>
+          <a href="seite.html?key=scsw_kurs_erwachsene" class="block px-3 py-2 pl-7 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.courses">Kurse für Erwachsene</a>
+          <a href="seite.html?key=scsw_quereinstieg" class="block px-3 py-2 pl-7 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.lateral">Quereinstieg</a>
+          <a href="kontakt.html" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.contactForm">Kontaktformular</a>
+          <a href="seite.html?key=scsw_praeventionsstelle" class="block px-3 py-2 pl-5 rounded hover:bg-slate-100 dark:hover:bg-slate-800" data-i18n="nav.prevention">Präventionsstelle</a>
+
+          <a href="https://seeclub.org/" class="block px-3 py-2 mt-3 rounded bg-scs-green text-white text-center font-semibold" data-i18n="nav.login">Mitgliederbereich</a>
         </div>
       </div>
     </header>`;

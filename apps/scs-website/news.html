@@ -32,7 +32,7 @@
   <!-- Tag filter -->
   <div class="sticky top-16 z-30 bg-white/90 dark:bg-slate-950/90 backdrop-blur border-b border-slate-200 dark:border-slate-800">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex gap-2 overflow-x-auto scrollbar-hide" id="tag-bar">
-      <button data-tag="" class="tag-btn shrink-0 px-3 py-1 rounded-full text-sm font-medium bg-scs-green text-white" data-i18n="news.allTags">Alle</button>
+      <button data-tag="" class="tag-btn shrink-0 px-3 py-1 rounded-full text-sm font-medium" data-i18n="news.allTags">Alle</button>
     </div>
   </div>
 
@@ -50,7 +50,7 @@
   <script src="assets/api.js"></script>
   <script>
     let _allNews = [];
-    let _activeTag = '';
+    let _activeTag = new URLSearchParams(location.search).get('tag') || '';
 
     function newsCard(n) {
       const img = n.coverImage && n.coverImage.url;
@@ -91,27 +91,32 @@
       }
     }
 
+    function styleTagBar() {
+      const bar = document.getElementById('tag-bar');
+      bar.querySelectorAll('.tag-btn').forEach(b => {
+        const active = b.dataset.tag === _activeTag;
+        b.className = 'tag-btn shrink-0 px-3 py-1 rounded-full text-sm font-medium transition ' +
+          (active
+            ? 'bg-scs-green text-white'
+            : 'border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-scs-green hover:text-scs-green');
+      });
+    }
+
     function buildTagBar() {
       const tags = [...new Set(_allNews.flatMap(n => n.tags || []))].sort();
       const bar = document.getElementById('tag-bar');
       tags.forEach(tag => {
         const btn = document.createElement('button');
         btn.dataset.tag = tag;
-        btn.className = 'tag-btn shrink-0 px-3 py-1 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-scs-green hover:text-scs-green transition';
         btn.textContent = tag;
         bar.appendChild(btn);
       });
+      styleTagBar();
       bar.addEventListener('click', e => {
         const btn = e.target.closest('.tag-btn');
         if (!btn) return;
         _activeTag = btn.dataset.tag;
-        bar.querySelectorAll('.tag-btn').forEach(b => {
-          const active = b.dataset.tag === _activeTag;
-          b.className = 'tag-btn shrink-0 px-3 py-1 rounded-full text-sm font-medium transition ' +
-            (active
-              ? 'bg-scs-green text-white'
-              : 'border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-scs-green hover:text-scs-green');
-        });
+        styleTagBar();
         renderGrid();
       });
     }

@@ -31,10 +31,10 @@
 
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-2">
     <div class="flex gap-2 flex-wrap" id="filter-tabs">
-      <button data-cat="" class="filter-btn">Alle</button>
-      <button data-cat="regatta" class="filter-btn">Regatten</button>
-      <button data-cat="club" class="filter-btn">Vereinsanlässe</button>
-      <button data-cat="course" class="filter-btn">Kurse</button>
+      <button data-cat="" class="filter-btn" data-i18n="calendar.filter.all">Alle</button>
+      <button data-cat="regatta" class="filter-btn" data-i18n="calendar.filter.regatta">Regatten</button>
+      <button data-cat="club" class="filter-btn" data-i18n="calendar.filter.club">Anlässe</button>
+      <button data-cat="course" class="filter-btn" data-i18n="calendar.filter.course">Kurse</button>
     </div>
   </div>
 
@@ -133,9 +133,14 @@
       renderEvents(cat ? _allEvents.filter(e => e.category === cat) : _allEvents);
     }
 
+    function getInitialFilter() {
+      const cat = new URLSearchParams(location.search).get('cat') || '';
+      return ['', 'regatta', 'club', 'course'].includes(cat) ? cat : '';
+    }
+
     window.scsPageInit = async () => {
       _allEvents = await SCS_API.calendar();
-      setFilter('');
+      setFilter(getInitialFilter());
       document.getElementById('filter-tabs').addEventListener('click', e => {
         const btn = e.target.closest('.filter-btn');
         if (btn) setFilter(btn.dataset.cat);
