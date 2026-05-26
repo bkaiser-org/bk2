@@ -327,6 +327,16 @@ export const appRoutes: Route[] = [
     ],
   },
   {
+    path: 'esign',
+    canActivate: [isPrivilegedGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('@bk2/esign-feature').then(m => m.EsignList),
+      },
+    ],
+  },
+  {
     path: 'i18n',
     canActivate: [isAdminGuard],
     children: [

@@ -349,6 +349,11 @@
           },
           {
             "glob": "*.json",
+            "input": "libs/esign/feature/src/i18n",
+            "output": "./assets/i18n/esign/feature"
+          },
+          {
+            "glob": "*.json",
             "input": "libs/relationship/invitation/data-access/src/i18n",
             "output": "./assets/i18n/relationship/invitation/data-access"
           },
