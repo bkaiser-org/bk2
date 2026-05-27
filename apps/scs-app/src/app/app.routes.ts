@@ -314,6 +314,18 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('@bk2/finance-vat-code-feature').then(m => m.VatCodeList),
       },
       {
+        path: 'balance',
+        loadComponent: () => import('@bk2/finance-reporting-feature').then(m => m.BalanceSheetPage),
+      },
+      {
+        path: 'income-statement',
+        loadComponent: () => import('@bk2/finance-reporting-feature').then(m => m.IncomeStatementPage),
+      },
+      {
+        path: 'cash-flow',
+        loadComponent: () => import('@bk2/finance-reporting-feature').then(m => m.CashFlowPage),
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'journal',
