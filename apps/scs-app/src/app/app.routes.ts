@@ -310,6 +310,10 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('@bk2/finance-period-feature').then(m => m.PeriodList),
       },
       {
+        path: 'vat-codes',
+        loadComponent: () => import('@bk2/finance-vat-code-feature').then(m => m.VatCodeList),
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'journal',
