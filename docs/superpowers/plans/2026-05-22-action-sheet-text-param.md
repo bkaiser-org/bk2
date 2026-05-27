@@ -1373,9 +1373,9 @@ Add a new `withProps` after:
 ```ts
 withProps(store => ({
   i18n: store.i18nService.translateAll({
-    as_edit:         PFX + 'contextDiagram.actionsheet.edit',
-    as_center:       PFX + 'contextDiagram.actionsheet.center',
-    as_displayConfig: PFX + 'contextDiagram.actionsheet.displayConfig',
+    as_edit:         PFX + 'context.edit',
+    as_center:       PFX + 'context.center',
+    as_displayConfig: PFX + 'context.displayConfig',
     cancel:          '@cancel',
   }),
 })),
@@ -1397,8 +1397,8 @@ withProps(() => ({
 })),
 withProps(store => ({
   i18n: store.i18nService.translateAll({
-    as_subscribe:   PFX + 'invitation.actionsheet.subscribe',
-    as_unsubscribe: PFX + 'invitation.actionsheet.unsubscribe',
+    as_subscribe:   PFX + 'invitation.subscribe',
+    as_unsubscribe: PFX + 'invitation.unsubscribe',
     cancel:         '@cancel',
   }),
 })),

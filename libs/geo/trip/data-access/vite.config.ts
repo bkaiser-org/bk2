@@ -5,14 +5,13 @@ import sharedTestConfig from '../../../../vitest.shared';
 
 const libraryConfig = defineConfig({
   root: __dirname,
-  cacheDir: '../../../node_modules/.vite/libs/trip/util',
+  cacheDir: '../../../../node_modules/.vite/libs/geo/trip/data-access',
   plugins: [nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
   test: {
     coverage: {
-      reportsDirectory: '../../../coverage/libs/trip/util',
+      reportsDirectory: '../../../../coverage/libs/geo/trip/data-access',
       provider: 'v8' as const,
     },
-    setupFiles: ['./test-setup.ts'],
   },
 });
 

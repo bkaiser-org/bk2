@@ -219,6 +219,11 @@ export const appRoutes: Route[] = [
     children: [{ path: ':listId/:contextMenuName', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/location-feature').then(m => m.LocationList) }],
   },
   {
+    path: 'trips',
+    canActivate: [isAuthenticatedGuard],
+    loadComponent: () => import('@bk2/trip-feature').then(m => m.TripList),
+  },
+  {
     path: 'flighttracker',
     canActivate: [isAuthenticatedGuard],
     loadComponent: () =>
@@ -309,6 +314,7 @@ export const appRoutes: Route[] = [
       { path: 'bexio', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocBexio) },
       { path: 'srv', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocSrv) },
       { path: 'sessions', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocSession) },
+      { path: 'trip', canActivate: [isAdminGuard], loadComponent: () => import('@bk2/trip-feature').then(m => m.AocTrip) },
       { path: 'website', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/aoc-feature').then(m => m.AocWebsite) },
     ],
   },

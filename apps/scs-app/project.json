@@ -304,6 +304,11 @@
           },
           {
             "glob": "*.json",
+            "input": "libs/geo/trip/feature/src/i18n",
+            "output": "./assets/i18n/geo/trip/feature"
+          },
+          {
+            "glob": "*.json",
             "input": "libs/i18n/feature/src/i18n",
             "output": "./assets/i18n/i18n/feature"
           },
