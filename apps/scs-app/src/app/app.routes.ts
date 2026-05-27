@@ -326,6 +326,14 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('@bk2/finance-reporting-feature').then(m => m.CashFlowPage),
       },
       {
+        path: 'assets',
+        loadComponent: () => import('@bk2/finance-asset-feature').then(m => m.AssetList),
+      },
+      {
+        path: 'depreciation-run',
+        loadComponent: () => import('@bk2/finance-asset-feature').then(m => m.DepreciationRunPage),
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'journal',
