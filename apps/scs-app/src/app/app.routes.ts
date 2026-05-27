@@ -297,6 +297,30 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('@bk2/finance-journal-feature').then(m => m.JournalList),
   },
   {
+    path: 'accounting/:accountingTenantId',
+    canActivate: [isPrivilegedGuard],
+    loadComponent: () => import('@bk2/finance-accounting-feature').then(m => m.AccountingShell),
+    children: [
+      {
+        path: 'journal',
+        loadComponent: () => import('@bk2/finance-booking-feature').then(m => m.BookingList),
+      },
+      {
+        path: 'periods',
+        loadComponent: () => import('@bk2/finance-period-feature').then(m => m.PeriodList),
+      },
+      {
+        path: 'vat-codes',
+        loadComponent: () => import('@bk2/finance-vat-code-feature').then(m => m.VatCodeList),
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'journal',
+      },
+    ],
+  },
+  {
     path: 'aoc',
     canActivate: [isAdminGuard],
     children: [
