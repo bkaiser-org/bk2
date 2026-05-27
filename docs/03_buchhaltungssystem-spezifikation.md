@@ -1,12 +1,83 @@
 # Spezifikation: Buchhaltungs-System
 
-**Version:** 1.3  **Datum:** 25. Mai 2026  **Status:** Entwurf
+**Version:** 1.4  **Datum:** 27. Mai 2026  **Status:** Entwurf
+
+**Änderungen ggü. 1.3:** Implementierungsentscheidungen (Kap. 0) ergänzt: Architektur (libs/finance in scs-app), Rollenmapping, Migrationsstrategie. Neue Rolle `auditor` hinzugefügt; `paymentApprover` als `ResponsibilityModel` (nicht Rolle) definiert. `BookingModel` neu in `shared/models/booking.model.ts` erstellt; `BookingJournalModel` bleibt unverändert.
 
 **Änderungen ggü. 1.2:** Mehrmandantenfähigkeit für Buchhaltungs-Mandanten (Kap. 3.0) ergänzt; Debitorenmodul (Kap. 3.7) aufgenommen; Konfigurationsseite `aoc-accounting` (Kap. 3.8) beschrieben; offene Punkte aus v1.2 entschieden; `BookingJournalModel` in `BookingModel` umbenannt, Collection `journallogs` zu `bookings` migriert; bk2-Mappings aus v1.2 integriert.
 
 **Änderungen ggü. 1.1:** Mapping auf bestehende bk2-Implementierung (Modelle, Features, Libs) ergänzt. Neue Entitäten (BookingLine, Period, VatCode, ExchangeRate, Asset, AssetMovement, PaymentOrder, Payment) identifiziert.
 
 **Änderungen ggü. 1.0:** Modul Anlagenbuchhaltung (Kap. 3.5) und Zahlungsstandards ISO 20022 pain.001 (Kap. 3.6) ergänzt; Geltungsbereich, Glossar, Schnittstellen und Datenmodell entsprechend angepasst.
+
+---
+
+## 0. Implementierungsentscheidungen (bk2-spezifisch)
+
+Diese Entscheidungen wurden während der Designphase festgelegt und sind bindend für die Implementierung.
+
+### 0.1 Architektur
+
+- Das Buchhaltungssystem wird als Feature-Gruppe in `libs/finance/` implementiert und in `scs-app` integriert.
+- Kein separates `aoc-app`. Alle Buchhaltungsrouten leben unter `/accounting/:accountingTenantId/` (Top-Level, nicht unter `/private/`).
+- Routenbeispiele: `/accounting/scs/journal`, `/accounting/scs/config`, `/accounting/gss/balance`.
+- Neue Libs folgen der bestehenden Schichtkonvention: `finance/<domain>/data-access`, `feature`, `ui`, `util`.
+- Der `AccountingStore` (NgRx Signal Store) lebt in einer neuen Lib `libs/finance/accounting/feature` — isoliert vom globalen `AppStore`.
+- Der `accountingTenantId` wird aus dem URL-Parameter gelesen und im `AccountingStore` gehalten. Der Mandanten-Selektor navigiert zu `/accounting/<tenantId>/...`.
+- Navigation: Die Buchhaltungsmodule erscheinen als Einträge im bestehenden `scs-app`-Seitenmenü (kein eigener Shell-Layer).
+
+### 0.2 Doppelte Mandantenfähigkeit
+
+Das System verwendet zwei Isolationsebenen:
+
+| Ebene | Feld | Bedeutung |
+| :---- | :---- | :---- |
+| bk-Tenant | `tenants: string[]` | Firebase-Deployment-Isolation (bestehend, unveränderlich) |
+| Buchhaltungs-Mandant | `accountingTenantId: string` | Organisations-Isolation innerhalb eines bk-Tenants (`= org.bkey`) |
+
+Alle Firestore-Queries auf Buchhaltungsdaten filtern zwingend auf beiden Ebenen. Der aktive `accountingTenantId` wird im `AccountingStore` gehalten.
+
+### 0.3 Cloud Functions
+
+Alle drei Cloud Functions sind im Scope dieser Implementierung:
+
+- **SNB-Wechselkurs-Abruf** — täglicher Abruf von der Schweizerischen Nationalbank
+- **pain.001-XML-Generierung** — ISO 20022 Zahlungsauftrag inkl. XSD-Validierung
+- **Rechnungs-PDF-Generierung** — QR-Rechnung mit Einzahlungsschein
+
+Implementierungsort: `apps/functions/src/`, analog zu bestehenden Integrationen.
+
+### 0.5 Trennung ResourceModel / AssetModel
+
+`ResourceModel` (`shared/models/resource.model.ts`) ist ein allgemeiner physischer Objektkatalog (Boote, Schränke, Fahrzeuge, Werkzeuge, Software-Lizenzen usw.). `AssetModel` ist der buchhalterische Anlagespiegel-Eintrag mit Anschaffungswert, Abschreibungsplan und Buchungshistorie.
+
+#### Warum kein Merge
+
+- `ResourceModel` wird von Trip-Planung, Personen- und Organisationsverwaltung genutzt; viele Ressourcentypen (Skills, Naturressourcen, Verbrauchsmaterial unterhalb Aktivierungsgrenze) sind niemals Anlagegüter.
+- `AssetModel` hat strenge buchhalterische Pflichtfelder (`accountingTenantId`, `billKey`, Kontenreferenzen), die `ResourceModel` verschmutzen würden.
+- Nicht jedes Anlagegut hat ein physisches bk2-Gegenstück (Software-Lizenzen, immaterielle Güter).
+
+#### Lösung: optionale unidirektionale Referenz
+
+`AssetModel.resourceKey` (optional) zeigt auf ein `ResourceModel`. Die physische Beschreibung (Marke, Seriennummer, Abmessungen) bleibt in `ResourceModel`; die Finanzgeschichte (Anschaffungswert, Abschreibungen, Buchwert) liegt in `AssetModel`. `ResourceModel` kennt `AssetModel` nicht. `ResourceModel.currentValue` bleibt eine manuelle Bewertungsschätzung (Marktwert) und wird nicht automatisch aus dem buchhalterischen Buchwert synchronisiert.
+
+### 0.6 Collection-Migration (`journallogs` → `bookings`)
+
+Die Umbenennung der Collection und des Modells (`BookingJournalModel` → `BookingModel`) wird manuell durch den Datenbankadministrator durchgeführt. Die Implementierung verwendet von Beginn an `bookings` und `BookingModel`. Alle Modelländerungen an `BookingModel` werden explizit dokumentiert, damit der Administrator die Migration anpassen kann.
+
+### 0.4 Rollenmapping
+
+| Spec-Rolle | bk2-Rolle (`Roles`-Typ) | Guard |
+| :---- | :---- | :---- |
+| Administrator | `admin` | `isAdminGuard` |
+| Buchhalter | `treasurer` | `isPrivilegedGuard` |
+| Erfasser | `treasurer` | `isPrivilegedGuard` |
+| Freigeber (Vier-Augen) | `ResponsibilityModel` mit `name = 'payment_approver'` | Lookup der Responsibility im Payment-Feature |
+| Revisor | `auditor` *(neu)* | eigener Guard `isAuditorGuard` |
+| Leser | `registered` | `isAuthenticatedGuard` |
+
+- Neue Rolle `auditor` wird dem `Roles`-Typ in `libs/shared/models/src/lib/roles.ts` hinzugefügt.
+- `paymentApprover` ist **keine Rolle**, sondern eine `ResponsibilityModel`-Instanz (Collection `responsibilities`, `parentKey = accountingTenantId`, `name = 'payment_approver'`). Das Payment-Feature prüft beim Freigeben, ob der aktuelle Benutzer als `responsibleAvatar` in dieser Responsibility eingetragen ist.
 
 ---
 
@@ -101,7 +172,7 @@ Jeder Buchhaltungs-Mandant hat eine eigene Konfiguration (vgl. Kap. 3.8). Die Ko
 - Stornierungen erfolgen ausschliesslich durch Gegenbuchung; eine echte Löschung verbuchter Belege ist nicht zulässig (Revisionssicherheit).
 - Jede Buchung erhält eine eindeutige, lückenlose, fortlaufende Buchungsnummer pro Geschäftsjahr.
 
-> **bk2-Mapping:** Das bestehende `BookingModel` (umbenannt aus `BookingJournalModel`, `shared/models/booking.model.ts`, Collection `bookings`) deckt einfache 1:1-Buchungen ab. Es wird erweitert um: `bookingNo` (fortlaufend), `periodKey` (Referenz auf `PeriodModel`), `documentKey` (Referenz auf `DocumentModel`), `status` (`'draft' | 'posted' | 'cancelled'`), `accountingTenantId`. Für n:m-Sammelbuchungen wird ein neues `BookingLineModel` eingeführt. Das bestehende Feature `finance/journal` (list/view) dient als Basis. Die Migration von Collection `journallogs` zu `bookings` ist einmalig durchzuführen.
+> **bk2-Mapping:** `BookingModel` ist neu in `shared/models/booking.model.ts` (Collection `bookings`) als reiner Kopfsatz erstellt. `BookingJournalModel` bleibt unverändert. **Jede Buchung verwendet `BookingLineModel`-Einträge** (mind. eine Soll- und eine Habenseite) — auch einfache 1:1-Buchungen. `BookingModel` enthält keine Betragsfelder; alle Beträge liegen in `BookingLineModel`. Felder: `bookingNo`, `periodKey`, `documentKey`, `status` (`'draft' | 'posted' | 'cancelled'`), `accountingTenantId`. `BookingLineModel` neu in `shared/models/booking-line.model.ts` (Collection `booking-lines`). Die Migration von Collection `journallogs` zu `bookings` führt der Administrator manuell durch.
 
 #### 3.1.2 Kontenplan
 
@@ -372,7 +443,7 @@ Bericht gemäss Schweizer OR Art. 959c mit folgenden Spalten je Anlagekategorie:
 - Validierung der Dateien gegen das offizielle SIX-XSD-Schema vor dem Export.
 - EBICS-Direktanbindung folgt in einem späteren Ausbauschritt.
 
-> **bk2-Mapping:** XML-Generierung und XSD-Validierung erfolgen in einer Firebase Cloud Function (`apps/functions/src/`), analog zu bestehenden Integrationen (Matrix, Bexio).
+> **bk2-Mapping:** XML-Generierung und XSD-Validierung erfolgen in einer Firebase Cloud Function (`apps/functions/src/`), analog zu bestehenden Integrationen (Matrix, Bexio). Das `PaymentOrderModel` enthält ein Feld `deliveryMethod: 'pain001_download' | 'bexio_api' | 'ebics'`. Phase 7 implementiert `pain001_download`. `bexio_api` (direkter Upload via Bexio Payments API) und `ebics` sind spätere Ausbaustufen: gleicher Freigabe-Flow, andere Cloud Function am Ende. Keine Modelländerungen nötig für spätere Delivery-Methoden.
 
 #### 3.6.2 Unterstützte Zahlungsarten
 
