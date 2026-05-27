@@ -334,6 +334,14 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('@bk2/finance-asset-feature').then(m => m.DepreciationRunPage),
       },
       {
+        path: 'payments',
+        loadComponent: () => import('@bk2/finance-payment-feature').then(m => m.PaymentOrderList),
+      },
+      {
+        path: 'payments/:orderKey',
+        loadComponent: () => import('@bk2/finance-payment-feature').then(m => m.PaymentOrderDetailPage),
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'journal',
