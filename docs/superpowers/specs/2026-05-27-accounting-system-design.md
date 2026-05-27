@@ -29,6 +29,24 @@ Every Firestore query on accounting data filters both levels. The active `accoun
 
 Every booking — including simple 1:1 — uses `BookingLineModel` entries. `BookingModel` is a pure header with no amount fields. Invariant: Σ debitAmount = Σ creditAmount across all lines of a booking (in functional currency).
 
+### Accounting backend: native vs. external cache
+
+`AccountingConfigModel.accountingBackend: 'native' | 'bexio' | 'datev'` controls whether bk2 is the system of record or a read-only sync cache.
+
+- `'native'`: full CRUD in bk2 accounting features
+- `'bexio'`: Bexio is authoritative; bk2 collections are populated by sync Cloud Functions; UI is read-only
+- `'datev'`: reserved for future integration
+
+`AccountingStore` exposes `isExternallyManaged = computed(() => config()?.accountingBackend !== 'native')`. All feature stores gate write operations on this signal. A `ReadOnlyBanner` component is shown when true.
+
+#### Bexio CF adaptations (Phase 2)
+
+All four existing sync CFs (`syncBexioAccounts`, `syncBexioJournal`, `syncBexioInvoices`, `syncBexioBills`) need:
+
+- Add `accountingTenantId: bexioTenantId.value()` to every document written
+- `journal.ts`: write to `bookings` (not `journallogs`); write `BookingModel` header + two `BookingLineModel` docs per entry (debit + credit) in the same Firestore batch; add `status: 'posted'`, `bookingNo = Bexio id`
+- `shared.ts`: replace `toStoreDate()` with `convertDateFormatToString` from `@bk2/shared-util-core` (CLAUDE.md convention)
+
 ### ResourceModel / AssetModel separation
 
 `AssetModel` is the financial ledger entry. `ResourceModel` is the physical catalog. They are linked via optional `AssetModel.resourceKey`. `ResourceModel` has no knowledge of `AssetModel`. `ResourceModel.currentValue` (market estimate) is not auto-synced from book value.
@@ -96,9 +114,10 @@ All created in `libs/shared/models/src/lib/` and exported from `index.ts`. All p
 New libs: `libs/finance/accounting/data-access`, `libs/finance/accounting/feature`
 
 - `AccountingConfigService` — CRUD for `accounting-configs`
-- `AccountingStore` — holds `accountingTenantId`, `AccountingConfigModel`, available tenant list
-- `AccountingShell` — parent route component, provides `AccountingStore`
+- `AccountingStore` — holds `accountingTenantId`, `AccountingConfigModel`, available tenant list; exposes `isExternallyManaged` computed signal
+- `AccountingShell` — parent route component, provides `AccountingStore`; shows `ReadOnlyBanner` when `isExternallyManaged`
 - `TenantSelector` — dropdown navigating to `/accounting/:id/...`
+- `ReadOnlyBanner` — info banner shown when `accountingBackend !== 'native'`
 - `isAuditorGuard` in `@bk2/shared-feature`
 - Route: `/accounting/:accountingTenantId` with child routes for all modules
 - Nav items added to `scs-app` side menu

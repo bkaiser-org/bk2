@@ -47,7 +47,34 @@ Alle drei Cloud Functions sind im Scope dieser Implementierung:
 
 Implementierungsort: `apps/functions/src/`, analog zu bestehenden Integrationen.
 
-### 0.5 Trennung ResourceModel / AssetModel
+### 0.5 Externes Buchhaltungs-Backend vs. natives System
+
+`AccountingConfigModel.accountingBackend: 'native' | 'bexio' | 'datev'` steuert, ob bk2 das führende System ist oder nur ein lesender Cache.
+
+| Wert | Bedeutung |
+| :---- | :---- |
+| `'native'` | bk2 ist das System der Wahrheit; voller CRUD über alle Buchhaltungs-Features |
+| `'bexio'` | Bexio ist die führende Buchhaltung; bk2-Collections werden durch Sync-Cloud-Functions befüllt und sind in der UI **read-only** |
+| `'datev'` | Reserviert für zukünftige DATEV-Integration |
+
+Der `AccountingStore` leitet daraus ein Signal `isExternallyManaged` ab. Alle Feature-Stores und UI-Komponenten prüfen dieses Signal, bevor sie Schreib-Operationen aktivieren. Ein `ReadOnlyBanner` informiert den Benutzer, wenn `isExternallyManaged = true`.
+
+#### Bestehende Bexio-Cloud-Functions
+
+Die bestehenden Sync-CFs (`syncBexioAccounts`, `syncBexioJournal`, `syncBexioInvoices`, `syncBexioBills`) müssen wie folgt angepasst werden:
+
+| CF | Änderung |
+| :---- | :---- |
+| Alle vier | Feld `accountingTenantId: bexioTenantId.value()` zu jedem geschriebenen Dokument hinzufügen |
+| `account.ts` | `accountingTenantId` ergänzen |
+| `invoice.ts` | `accountingTenantId` ergänzen |
+| `bill.ts` | `accountingTenantId` ergänzen |
+| `journal.ts` | Collection `journallogs` → `bookings`; `BookingModel`-kompatible Dokumente schreiben (kein `debitAccount`/`creditAccount`; `status: 'posted'`, `accountingTenantId`, `bookingNo = Bexio-id`); pro Journaleintrag **zwei `BookingLineModel`-Dokumente** in `booking-lines` (Soll-Zeile + Haben-Zeile) im gleichen Batch schreiben |
+| `shared.ts` | `toStoreDate()` durch `convertDateFormatToString` aus `@bk2/shared-util-core` ersetzen (CLAUDE.md-Konvention) |
+
+Diese CF-Anpassungen sind **Teil von Phase 2** (Core Bookkeeping) und werden zusammen mit dem Journal-Feature implementiert.
+
+### 0.6 Trennung ResourceModel / AssetModel
 
 `ResourceModel` (`shared/models/resource.model.ts`) ist ein allgemeiner physischer Objektkatalog (Boote, Schränke, Fahrzeuge, Werkzeuge, Software-Lizenzen usw.). `AssetModel` ist der buchhalterische Anlagespiegel-Eintrag mit Anschaffungswert, Abschreibungsplan und Buchungshistorie.
 
