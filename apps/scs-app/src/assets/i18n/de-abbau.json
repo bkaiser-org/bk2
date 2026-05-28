@@ -288,12 +288,7 @@
       "edit": "Verbands-Mitgliedschaft bearbeiten",
       "create": "Verbands-Mitgliedschaft erstellen"
     },
-    "ownership": {
-      "view": "Nutzung anzeigen",
-      "edit": "Nutzung bearbeiten",
-      "delete": "Nutzung löschen",
-      "end": "Nutzung beenden"
-    },
+
     "reservation": {
       "view": "Reservation anzeigen",
       "edit": "Reservation bearbeiten",
@@ -5262,32 +5257,7 @@
       "raw": "Rohdaten",
       "lockers": "Garderoben-Liste"
     },
-    "operation": {
-      "create": {
-        "label": "Nutzung hinzufügen",
-        "error": "Nutzung konnte nicht erstellt werden.",
-        "conf": "Nutzung wurde erstellt."
-      },
-      "update": {
-        "label": "Nutzung ändern",
-        "error": "Die Aenderungen konnten nicht gespeichert werden",
-        "conf": "Die Aenderungen wurden gespeichert."
-      },
-      "delete": {
-        "label": "Nutzung löschen",
-        "error": "Nutzung konnte nicht gelöscht werden",
-        "conf": "Nutzung wurde gelöscht",
-        "confirm": "Normalerweise sollte eine Nutzung beendet, aber nicht gelöscht werden. Das Löschen ist nur vorgesehen, um falsche Einträge zu korrigieren. Möchtest du die Nutzung wirklich löschen?"
-      },
-      "view": {
-        "label": "Nutzungs-Informationen"
-      },
-      "reactivate": {
-        "label": "Nutzung reaktivieren",
-        "error": "Die Nutzung konnte nicht reaktiviert werden.",
-        "conf": "Die Nutzung wurde reaktiviert."
-      }
-    },
+
     "ownerType": {
       "all": {
         "label": "Alle"
