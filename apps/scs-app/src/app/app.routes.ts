@@ -262,6 +262,11 @@ export const appRoutes: Route[] = [
     children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/task-feature').then(m => m.TaskList) }],
   },
   {
+    path: 'applications',
+    canActivate: [isPrivilegedGuard],
+    loadComponent: () => import('@bk2/application-feature').then(m => m.ApplicationList),
+  },
+  {
     path: 'activity',
     canActivate: [isAdminGuard],
     loadComponent: () => import('@bk2/activity-feature').then(m => m.ActivityList),
