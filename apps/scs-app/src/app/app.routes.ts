@@ -302,6 +302,16 @@ export const appRoutes: Route[] = [
     children: [{ path: ':listId', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/finance-bill-feature').then(m => m.BillList) }],
   },
   {
+    path: 'expense',
+    canActivate: [isAuthenticatedGuard],
+    loadComponent: () => import('@bk2/finance-expense-feature').then(m => m.ExpenseList),
+  },
+  {
+    path: 'expense/:expenseKey',
+    canActivate: [isAuthenticatedGuard],
+    loadComponent: () => import('@bk2/finance-expense-feature').then(m => m.ExpenseDetailModal),
+  },
+  {
     path: 'account',
     canActivate: [isAuthenticatedGuard],
     children: [{ path: ':contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/finance-account-feature').then(m => m.AccountList) }],
