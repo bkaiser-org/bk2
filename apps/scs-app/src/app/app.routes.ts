@@ -272,6 +272,11 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('@bk2/activity-feature').then(m => m.ActivityList),
   },
   {
+    path: 'forms',
+    canActivate: [isAdminGuard],
+    loadComponent: () => import('@bk2/forms-feature').then(m => m.FormDefinitionList),
+  },
+  {
     path: 'icon',
     canActivate: [isAuthenticatedGuard],
     children: [{ path: ':listId/:contextMenuName', canActivate: [isAuthenticatedGuard], loadComponent: () => import('@bk2/icon-feature').then(m => m.IconList) }],
