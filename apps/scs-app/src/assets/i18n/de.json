@@ -1,144 +1,226 @@
 {
-    "account": "Konto",
-    "activity": "Ereignis",
-    "address": "Adresse",
-    "avatar": "Avatar",
-    "boat": "Boot",
-    "cancel": "Abbrechen",
-    "chat": "Chat",
-    "comment": "Kommentar",
-    "confirm": "Bestätigen",
-    "date": "Datum",
-    "description": "Beschreibung",
-    "document": "Dokument",
-    "email": "E-Mail",
-    "error": "Fehler",
-    "event": "Anlass",
-    "file": "Datei",
-    "group": "Gruppe",
-    "key": "ID",
-    "location": "Ort",
-    "loading": "Wird geladen...",
-    "membership": "Mitgliedschaft",
-    "message": "Mitteilung",
-    "more": "mehr...",
-    "name": "Name",
-    "notes": "Notizen",
-    "nyi": "Diese Funktion ist noch nicht implementiert.",
-    "ok": "OK",
-    "org": "Organisation",
-    "ownership": "Nutzung",
-    "page": "Seite",
-    "person": "Person",
-    "personalrel": "Beziehung",
-    "phone": "Tel.",
-    "reservation": "Reservation",
-    "responsibility": "Verantwortung",
-    "resource": "Resource",
-    "section": "Sektion",
-    "subtitle": "Untertitel",
-    "task": "Todo",
-    "title": "Titel",
-    "topic": "Thema",
-    "transfer": "Transfer",
-    "trip": "Trip",
-    "type": "Typ",
-    "url": "URL",
-    "user": "Benutzer",
-    "value": "Wert",
-    "website": "Website",
-    "workrel": "Beschäftigung",
-    "year": "Jahr",
-    "select": {
-        "label": "Auswählen",
-        "tag": "Tag auswählen"
+  "account": "Konto",
+  "activity": "Ereignis",
+  "address": "Adresse",
+  "application": {
+    "list": {
+      "title": "Anträge",
+      "empty": "Keine Anträge gefunden."
     },
-    "copy": {
-        "label": "Kopieren",
-        "conf": "Der Wert wurde kopiert.",
-        "error": "Der Wert konnte nicht kopiert werden."
-    },
-    "save": {
-        "label": "Speichern",
-        "conf": "Der Wert wurde gespeichert.",
-        "error": "Der Wert konnte nicht gespeichert werden."
+    "edit": {
+      "title": "Antrag bearbeiten",
+      "save": "Speichern",
+      "accept": "Annehmen",
+      "deny": "Ablehnen",
+      "save_conf": "Antrag aktualisiert.",
+      "save_error": "Aktualisierung fehlgeschlagen.",
+      "accept_confirm": "Antrag annehmen? Es wird eine Person erstellt.",
+      "accept_conf": "Antrag genehmigt — Person wurde erstellt.",
+      "accept_error": "Genehmigung fehlgeschlagen.",
+      "deny_conf": "Antrag abgelehnt.",
+      "deny_error": "Ablehnen fehlgeschlagen.",
+      "deny_reason": "Grund der Ablehnung"
     },
     "delete": {
-        "label": "Löschen",
-        "askconf": "Soll der Wert wirklich gelöscht werden ?",
-        "conf": "Der Wert wurde gelöscht.",
-        "error": "Der Wert konnte nicht gelöscht werden."
+      "confirm": "Soll dieser Antrag wirklich gelöscht werden?",
+      "conf": "Antrag gelöscht.",
+      "error": "Löschen fehlgeschlagen."
     },
-    "search": {
-        "label": "Suchen...",
-        "tag": "Tag"
+    "actions": {
+      "add_membership": "Mitgliedschaft hinzufügen",
+      "add_to_group": "Zu Gruppe einladen",
+      "membership_added": "Mitgliedschaft hinzugefügt.",
+      "group_invited": "Person zu Gruppe eingeladen.",
+      "no_person": "Person noch nicht erstellt — Antrag zuerst annehmen."
     },
-    "filter": {
-        "all": "Alle"
+    "mail": {
+      "confirmation_sent": "Bestätigung an Antragsteller/in versendet.",
+      "decision_sent": "Entscheidung an Antragsteller/in versendet.",
+      "send_failed": "E-Mail konnte nicht versendet werden."
     },
-   "actionsheet": {
-        "title": "Wähle eine Aktion"
+    "field": {
+      "first_name": "Vorname",
+      "last_name": "Nachname",
+      "gender": "Geschlecht",
+      "date_of_birth": "Geburtsdatum",
+      "ssn": "AHV-Nummer",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "street_name": "Strasse",
+      "street_number": "Nr.",
+      "zip_code": "PLZ",
+      "city": "Ort",
+      "country_code": "Land",
+      "parent_first_name": "Vorname Elternteil",
+      "parent_last_name": "Nachname Elternteil",
+      "parent_email": "E-Mail Elternteil",
+      "parent_phone": "Telefon Elternteil",
+      "application_as": "Antrag als",
+      "state": "Status",
+      "submitted_at": "Eingegangen",
+      "reviewed_at": "In Bearbeitung seit",
+      "reviewer": "Bearbeiter",
+      "close_reason": "Bemerkung"
     },
-    "gender": {
-        "name": "Geschlecht",
-        "all": {
-            "label": "Alle Geschlechter",
-            "icon": "gender_diverse"
-        },
-        "female": {
-            "label": "weiblich",
-            "description": "Die Person ist eine Frau.",
-            "salutation": "Liebe",
-            "greeting": "Frau",
-            "formal": "Sehr geehrte Frau"
-        },
-        "male": {
-            "label": "männlich",
-            "description": "Die Person ist ein Mann.",
-            "salutation": "Lieber",
-            "greeting": "Herr",
-            "formal": "Sehr geehrter Herr"
-        },
-        "other": {
-            "label": "divers",
-            "description": "Die Person ist Transgender.",
-            "salutation": "Liebe_r",
-            "greeting": "Miko",
-            "formal": "Sehr geehrt* ",
-            "name": "Bezeichnung"
-        }
+    "validation": {
+      "email_required_either": "E-Mail ist erforderlich (entweder Antragsteller/in oder Elternteil).",
+      "phone_required_either": "Telefon ist erforderlich (entweder Antragsteller/in oder Elternteil)."
     },
-    "org_type": {
-        "legalEntity": {
-            "label": "Firmenname",
-            "placeholder": "Firmenname",
-            "error": "Die Eingabe des Firmennamens ist obligatorisch. Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
-        },
-        "association": {
-            "label": "Vereinsname",
-            "placeholder": "Vereinsname",
-            "helper": "Der offizielle Name des Vereins oder der Organisation.",
-            "error": "Die Eingabe des Vereinsnamens ist obligatorisch. Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
-        },
-        "authority": {
-            "label": "Name der Behörde",
-            "placeholder": "Name der Behörde",
-            "helper": "Der offizielle Name einer Behörde, Amts, Departements oder einer Verwaltungseinheit.",
-            "error": "Die Eingabe des Namens der Behörde ist obligatorisch. Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
-        },
-        "group": {
-            "label": "Gruppenname",
-            "placeholder": "Name der Gruppe",
-            "helper": "Der offizielle Name einer Gruppe oder eines Teams.",
-            "error": "Die Eingabe des Gruppennamens ist obligatorisch. Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
-        },
-        "other": {
-            "label": "Andere"
-        },
-        "all": {
-            "label": "Alle"
-        }
+    "section": {
+      "person": "Person",
+      "contact": "Kontakt",
+      "address": "Adresse",
+      "parent": "Eltern (Pflicht für Jugendliche)",
+      "application": "Antrag"
     },
+    "kind_youth": "Jugendliche/r",
+    "kind_adult": "Erwachsene/r",
+    "kind_transfer": "Übertritt",
+    "state_applied": "Eingegangen",
+    "state_reviewing": "In Bearbeitung",
+    "state_closed_approved": "Angenommen",
+    "state_closed_denied": "Abgelehnt",
+    "state_closed_cancelled": "Zurückgezogen",
+    "cancel": "Abbrechen"
+  },
+  "avatar": "Avatar",
+  "boat": "Boot",
+  "cancel": "Abbrechen",
+  "chat": "Chat",
+  "comment": "Kommentar",
+  "confirm": "Bestätigen",
+  "date": "Datum",
+  "description": "Beschreibung",
+  "document": "Dokument",
+  "email": "E-Mail",
+  "error": "Fehler",
+  "event": "Anlass",
+  "file": "Datei",
+  "group": "Gruppe",
+  "key": "ID",
+  "location": "Ort",
+  "loading": "Wird geladen...",
+  "membership": "Mitgliedschaft",
+  "message": "Mitteilung",
+  "more": "mehr...",
+  "name": "Name",
+  "notes": "Notizen",
+  "nyi": "Diese Funktion ist noch nicht implementiert.",
+  "ok": "OK",
+  "org": "Organisation",
+  "ownership": "Nutzung",
+  "page": "Seite",
+  "person": "Person",
+  "personalrel": "Beziehung",
+  "phone": "Tel.",
+  "reservation": "Reservation",
+  "responsibility": "Verantwortung",
+  "resource": "Resource",
+  "section": "Sektion",
+  "subtitle": "Untertitel",
+  "task": "Todo",
+  "title": "Titel",
+  "topic": "Thema",
+  "transfer": "Transfer",
+  "trip": "Trip",
+  "type": "Typ",
+  "url": "URL",
+  "user": "Benutzer",
+  "value": "Wert",
+  "website": "Website",
+  "workrel": "Beschäftigung",
+  "year": "Jahr",
+  "select": {
+    "label": "Auswählen",
+    "tag": "Tag auswählen"
+  },
+  "copy": {
+    "label": "Kopieren",
+    "conf": "Der Wert wurde kopiert.",
+    "error": "Der Wert konnte nicht kopiert werden."
+  },
+  "save": {
+    "label": "Speichern",
+    "conf": "Der Wert wurde gespeichert.",
+    "error": "Der Wert konnte nicht gespeichert werden."
+  },
+  "delete": {
+    "label": "Löschen",
+    "askconf": "Soll der Wert wirklich gelöscht werden ?",
+    "conf": "Der Wert wurde gelöscht.",
+    "error": "Der Wert konnte nicht gelöscht werden."
+  },
+  "search": {
+    "label": "Suchen...",
+    "tag": "Tag"
+  },
+  "filter": {
+    "all": "Alle"
+  },
+  "actionsheet": {
+    "title": "Wähle eine Aktion"
+  },
+  "gender": {
+    "label": "Geschlecht",
+    "name": "Geschlecht",
+    "all": {
+      "label": "Alle Geschlechter",
+      "icon": "gender_diverse"
+    },
+    "female": {
+      "label": "weiblich",
+      "description": "Die Person ist eine Frau.",
+      "salutation": "Liebe",
+      "greeting": "Frau",
+      "formal": "Sehr geehrte Frau"
+    },
+    "male": {
+      "label": "männlich",
+      "description": "Die Person ist ein Mann.",
+      "salutation": "Lieber",
+      "greeting": "Herr",
+      "formal": "Sehr geehrter Herr"
+    },
+    "other": {
+      "label": "divers",
+      "description": "Die Person ist Transgender.",
+      "salutation": "Liebe_r",
+      "greeting": "Miko",
+      "formal": "Sehr geehrt* ",
+      "name": "Bezeichnung"
+    }
+  },
+  "org_type": {
+    "legalEntity": {
+      "label": "Firmenname",
+      "placeholder": "Firmenname",
+      "error": "Die Eingabe des Firmennamens ist obligatorisch. Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
+    },
+    "association": {
+      "label": "Vereinsname",
+      "placeholder": "Vereinsname",
+      "helper": "Der offizielle Name des Vereins oder der Organisation.",
+      "error": "Die Eingabe des Vereinsnamens ist obligatorisch. Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
+    },
+    "authority": {
+      "label": "Name der Behörde",
+      "placeholder": "Name der Behörde",
+      "helper": "Der offizielle Name einer Behörde, Amts, Departements oder einer Verwaltungseinheit.",
+      "error": "Die Eingabe des Namens der Behörde ist obligatorisch. Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
+    },
+    "group": {
+      "label": "Gruppenname",
+      "placeholder": "Name der Gruppe",
+      "helper": "Der offizielle Name einer Gruppe oder eines Teams.",
+      "error": "Die Eingabe des Gruppennamens ist obligatorisch. Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
+    },
+    "other": {
+      "label": "Andere"
+    },
+    "all": {
+      "label": "Alle"
+    }
+  },
   "tag": {
     "advertiser": "Inserent",
     "album": "Album",
@@ -214,83 +296,83 @@
     "valid": "Gültig",
     "vs": "VS"
   },
-      "mcat_scs": {
-        "all": {
-          "label": "Alle Kategorien"
-        },
-        "active": {
-          "label": "Aktive 1",
-          "description": "Aktiv 1 Mitglied"
-        },
-        "active2": {
-          "label": "Aktive 2",
-          "description": "Aktiv 2 Mitgliedschaft stammt noch aus früheren Zeiten."
-        },
-        "active3": {
-          "label": "Aktive 3",
-          "description": "Aktiv 3 Mitgliedschaft stammt noch aus früheren Zeiten"
-        },
-        "junior": {
-          "label": "Junior/in",
-          "description": "Junior oder Junior bis max 18 Jahre."
-        },
-        "free": {
-          "label": "Freimitglieder",
-          "description": "Freies Mitgliedschaft stammt noch aus frühreren Zeiten."
-        },
-        "honorary": {
-          "label": "Ehrenmitglieder",
-          "description": "Von der GV gewählte Ehrenmitglieder."
-        },
-        "candidate": {
-          "label": "Kandidaten",
-          "description": "Neumitglieder in Ausbildung."
-        },
-        "passive": {
-          "label": "Passiv",
-          "description": "Passiv Mitglied"
-        }
-      },
-      "mcat_srv": {
-        "all": {
-          "label": "Alle Kategorien"
-        },
-        "active": {
-          "label": "Aktiv",
-          "description": "Die Person ist ein Aktiv-Mitglied."
-        },
-        "junior": {
-          "label": "Junior/in",
-          "description": "Junior oder Juniorin bis max 18 Jahre."
-        },
-        "double": {
-          "label": "Doppel",
-          "description": "Doppelmitglied, welches über einen anderen Club gemeldet ist."
-        },
-        "honorary": {
-          "label": "Ehrenmitglieder",
-          "description": "Ehrenmitglieder beim SRV"
-        },
-        "passive": {
-          "label": "Passiv",
-          "description": "Passiv Mitglied"
-        }
-      },
-      "mcat_default": {
-        "all": {
-          "label": "Alle Kategorien"
-        },
-        "active": {
-          "label": "Aktiv",
-          "description": "Die Person ist ein Aktiv-Mitglied."
-        },
-        "passive": {
-          "label": "Passiv",
-          "description": "Passiv Mitglied"
-        },
-        "junior": {
-          "label": "Jugendliche",
-          "description": "Junior oder Juniorin bis max 18 Jahre."
-        }
-      }
+  "mcat_scs": {
+    "all": {
+      "label": "Alle Kategorien"
+    },
+    "active": {
+      "label": "Aktive 1",
+      "description": "Aktiv 1 Mitglied"
+    },
+    "active2": {
+      "label": "Aktive 2",
+      "description": "Aktiv 2 Mitgliedschaft stammt noch aus früheren Zeiten."
+    },
+    "active3": {
+      "label": "Aktive 3",
+      "description": "Aktiv 3 Mitgliedschaft stammt noch aus früheren Zeiten"
+    },
+    "junior": {
+      "label": "Junior/in",
+      "description": "Junior oder Junior bis max 18 Jahre."
+    },
+    "free": {
+      "label": "Freimitglieder",
+      "description": "Freies Mitgliedschaft stammt noch aus frühreren Zeiten."
+    },
+    "honorary": {
+      "label": "Ehrenmitglieder",
+      "description": "Von der GV gewählte Ehrenmitglieder."
+    },
+    "candidate": {
+      "label": "Kandidaten",
+      "description": "Neumitglieder in Ausbildung."
+    },
+    "passive": {
+      "label": "Passiv",
+      "description": "Passiv Mitglied"
+    }
+  },
+  "mcat_srv": {
+    "all": {
+      "label": "Alle Kategorien"
+    },
+    "active": {
+      "label": "Aktiv",
+      "description": "Die Person ist ein Aktiv-Mitglied."
+    },
+    "junior": {
+      "label": "Junior/in",
+      "description": "Junior oder Juniorin bis max 18 Jahre."
+    },
+    "double": {
+      "label": "Doppel",
+      "description": "Doppelmitglied, welches über einen anderen Club gemeldet ist."
+    },
+    "honorary": {
+      "label": "Ehrenmitglieder",
+      "description": "Ehrenmitglieder beim SRV"
+    },
+    "passive": {
+      "label": "Passiv",
+      "description": "Passiv Mitglied"
+    }
+  },
+  "mcat_default": {
+    "all": {
+      "label": "Alle Kategorien"
+    },
+    "active": {
+      "label": "Aktiv",
+      "description": "Die Person ist ein Aktiv-Mitglied."
+    },
+    "passive": {
+      "label": "Passiv",
+      "description": "Passiv Mitglied"
+    },
+    "junior": {
+      "label": "Jugendliche",
+      "description": "Junior oder Juniorin bis max 18 Jahre."
+    }
+  }
 }
