@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" viewBox="0 0 680 740" role="img" font-family="Helvetica, Arial, sans-serif">
+<title>Datenfluss der Lohnbuchhaltung aoc-salary</title>
+<desc>Stammdaten und jahresgültige Konfiguration fliessen in die Lohnberechnungs-Engine, die Lohnabrechnungen, Buchungssätze und Swissdec-Meldungen erzeugt.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#5F5E5A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<style>
+text { fill: #2C2C2A; }
+.th { font-size: 14px; font-weight: 500; }
+.ts { font-size: 12px; font-weight: 400; }
+.section { font-size: 14px; font-weight: 500; fill: #2C2C2A; }
+.arr { stroke: #5F5E5A; stroke-width: 1.5px; fill: none; }
+</style>
+
+<text class="section" x="40" y="32">Eingangsdaten</text>
+
+<rect x="40" y="48" width="180" height="56" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+<text class="th" x="130" y="72" text-anchor="middle" fill="#2C2C2A">Stammdaten</text>
+<text class="ts" x="130" y="90" text-anchor="middle" fill="#5F5E5A">Person, Organisation</text>
+
+<rect x="250" y="48" width="180" height="56" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+<text class="th" x="340" y="72" text-anchor="middle" fill="#2C2C2A">WorkRel</text>
+<text class="ts" x="340" y="90" text-anchor="middle" fill="#5F5E5A">Konfig pro Mitarbeiter</text>
+
+<rect x="460" y="48" width="180" height="56" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+<text class="th" x="550" y="72" text-anchor="middle" fill="#2C2C2A">Periodendaten</text>
+<text class="ts" x="550" y="90" text-anchor="middle" fill="#5F5E5A">Stunden, Zuschlaege, Spesen</text>
+
+<text class="section" x="40" y="148">Konfiguration (aoc-salary, historisiert)</text>
+
+<rect x="40" y="164" width="280" height="56" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+<text class="th" x="180" y="188" text-anchor="middle" fill="#633806">ContributionRate, QstTariff</text>
+<text class="ts" x="180" y="206" text-anchor="middle" fill="#854F0B">jahresgueltig, min. 10 Jahre</text>
+
+<rect x="360" y="164" width="280" height="56" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+<text class="th" x="500" y="188" text-anchor="middle" fill="#633806">Quell-PDFs (BSV, Kanton)</text>
+<text class="ts" x="500" y="206" text-anchor="middle" fill="#854F0B">Download in Document-Store</text>
+
+<line x1="130" y1="104" x2="240" y2="290" class="arr" marker-end="url(#arrow)"/>
+<line x1="340" y1="104" x2="320" y2="290" class="arr" marker-end="url(#arrow)"/>
+<line x1="550" y1="104" x2="400" y2="290" class="arr" marker-end="url(#arrow)"/>
+<line x1="180" y1="220" x2="300" y2="290" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="150" y="294" width="380" height="76" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text class="th" x="340" y="324" text-anchor="middle" fill="#3C3489">Lohnberechnungs-Engine</text>
+<text class="ts" x="340" y="346" text-anchor="middle" fill="#534AB7">Brutto - SV-Abzuege, QST - Netto</text>
+
+<line x1="200" y1="370" x2="130" y2="446" class="arr" marker-end="url(#arrow)"/>
+<line x1="340" y1="370" x2="340" y2="446" class="arr" marker-end="url(#arrow)"/>
+<line x1="480" y1="370" x2="550" y2="446" class="arr" marker-end="url(#arrow)"/>
+
+<text class="section" x="40" y="430">Ergebnisse</text>
+
+<rect x="40" y="446" width="180" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="th" x="130" y="466" text-anchor="middle" fill="#085041">Lohnabrechnung</text>
+<text class="ts" x="130" y="484" text-anchor="middle" fill="#0F6E56">PDF, Delivery pro WorkRel</text>
+
+<rect x="250" y="446" width="180" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="th" x="340" y="466" text-anchor="middle" fill="#085041">Buchungssaetze</text>
+<text class="ts" x="340" y="484" text-anchor="middle" fill="#0F6E56">an Accounting</text>
+
+<rect x="460" y="446" width="180" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="th" x="550" y="466" text-anchor="middle" fill="#085041">Lohnzahlung</text>
+<text class="ts" x="550" y="484" text-anchor="middle" fill="#0F6E56">via Account</text>
+
+<text class="section" x="40" y="546">Swissdec ELM</text>
+
+<line x1="130" y1="502" x2="200" y2="586" class="arr" marker-end="url(#arrow)"/>
+<line x1="340" y1="502" x2="340" y2="586" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="100" y="590" width="480" height="56" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text class="th" x="340" y="610" text-anchor="middle" fill="#0C447C">ELM-Meldungen (validiert, via Distributor)</text>
+<text class="ts" x="340" y="628" text-anchor="middle" fill="#185FA5">Lohnausweis, Lohnsumme, QST, Mutation</text>
+
+<line x1="340" y1="646" x2="340" y2="676" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="140" y="680" width="400" height="44" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text class="ts" x="340" y="706" text-anchor="middle" fill="#0C447C">Ausgleichskasse, Versicherer, Steuerverwaltung, BFS</text>
+</svg>
