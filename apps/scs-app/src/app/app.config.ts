@@ -9,6 +9,7 @@ import { GroupEditModal } from '@bk2/subject-group-feature';
 import { GROUP_EDIT_MODAL } from '@bk2/subject-group-ui';
 import { PersonEditModal } from '@bk2/subject-person-feature';
 import { PERSON_EDIT_MODAL } from '@bk2/subject-person-ui';
+import { AnalyticsLoaderService } from '@bk2/consent-data-access';
 import { environment } from '../environments/environment';
 
 import { appRoutes } from './app.routes';
@@ -101,6 +102,21 @@ export const appConfig: ApplicationConfig = {
               const service = injector.get(MatrixInitializationService);
               service.startEarlyInitialization();
             }, 10000);
+          }
+        };
+      },
+      deps: [PLATFORM_ID, Injector],
+      multi: true,
+    },
+
+    // Initialize Analytics only after consent is granted.
+    // firebase/analytics is NOT in the initial bundle — lazily imported by AnalyticsLoaderService.
+    {
+      provide: APP_BOOTSTRAP_LISTENER,
+      useFactory: (platformId: object, injector: Injector) => {
+        return () => {
+          if (isBrowser(platformId)) {
+            injector.get(AnalyticsLoaderService).init();
           }
         };
       },

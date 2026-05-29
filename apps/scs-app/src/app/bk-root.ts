@@ -12,10 +12,12 @@ import { coerceBoolean, getImgixUrlWithAutoParams, hasRole } from '@bk2/shared-u
 import { AuthInfo } from '@bk2/auth-ui';
 import { Menu } from '@bk2/cms-menu-feature';
 import { ProfileEditModal } from '@bk2/profile-feature';
+import { CookieBanner } from '@bk2/consent-ui';
+import { ConsentService } from '@bk2/consent-data-access';
 
 @Component({
   imports: [
-    Menu, AuthInfo, Spinner, ConnectionStatusButton, AvatarUser,
+    Menu, AuthInfo, Spinner, ConnectionStatusButton, AvatarUser, CookieBanner,
     IonApp, IonSplitPane, IonMenu, IonHeader, IonContent, IonToolbar, IonRouterOutlet, IonButtons,
     IonLabel, IonItem
 ],
@@ -89,6 +91,7 @@ import { ProfileEditModal } from '@bk2/profile-feature';
         use MenuController with this.menu.enable(true, menuId) to switch the menus
       -->
     <ion-app>
+      <bk-cookie-banner />
       <ion-split-pane contentId="main" [disabled]="!showMenu()">
         @if(showMenu()) {
         <ion-menu side="start" menuId="main" contentId="main" type="overlay">
@@ -116,6 +119,9 @@ import { ProfileEditModal } from '@bk2/profile-feature';
             @if(showDebugInfo()) {
               <bk-auth-info [currentUser]="appStore.currentUser()" [fbUser]="appStore.fbUser()" [isAuthenticated]="appStore.isAuthenticated()" [isAdmin]="hasRole('admin')" />
             }
+          <ion-item lines="none" button detail="false" (click)="openCookieSettings()">
+            <ion-label color="medium" style="font-size: 13px;">Cookie-Einstellungen</ion-label>
+          </ion-item>
           </ion-content>
         </ion-menu>
         }
@@ -136,6 +142,7 @@ import { ProfileEditModal } from '@bk2/profile-feature';
 export class BkRoot {
   protected appStore = inject(AppStore);
   private readonly modalController = inject(ModalController);
+  protected readonly consentService = inject(ConsentService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly queryParamMap = toSignal(this.route.queryParamMap);
@@ -188,6 +195,10 @@ export class BkRoot {
 
   protected hasRole(role: RoleName | undefined): boolean {
     return hasRole(role, this.appStore.currentUser());
+  }
+
+  protected openCookieSettings(): void {
+    this.consentService.reset();
   }
 
   protected async openProfile(): Promise<void> {
