@@ -249,8 +249,28 @@
           },
           {
             "glob": "*.json",
+            "input": "libs/finance/accounting/data-access/src/i18n",
+            "output": "./assets/i18n/finance/accounting/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/finance/accounting/feature/src/i18n",
+            "output": "./assets/i18n/finance/accounting/feature"
+          },
+          {
+            "glob": "*.json",
             "input": "libs/finance/bill/feature/src/i18n",
             "output": "./assets/i18n/finance/bill/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/finance/booking/data-access/src/i18n",
+            "output": "./assets/i18n/finance/booking/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/finance/booking/feature/src/i18n",
+            "output": "./assets/i18n/finance/booking/feature"
           },
           {
             "glob": "*.json",
@@ -718,7 +738,7 @@
       "options": {
         "port": 4201,
         "headers": {
-          "Content-Security-Policy": "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://www.gstatic.com https://www.google.com https://apis.google.com https://static.imgix.net https://maps.googleapis.com https://cdn.tailwindcss.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
+          "Content-Security-Policy": "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://www.gstatic.com https://www.google.com https://apis.google.com https://static.imgix.net https://maps.googleapis.com https://cdn.tailwindcss.com https://www.googletagmanager.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; connect-src 'self' blob: https://*.firebaseio.com https://*.googleapis.com https://www.google.com https://www.gstatic.com https://*.imgix.net https://www.google-analytics.com https://analytics.google.com;"
         }
       }
     },
@@ -730,6 +750,13 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{workspaceRoot}/coverage/apps/scs-app"],
+      "options": {
+        "configFile": "apps/scs-app/vite.config.ts"
+      }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
