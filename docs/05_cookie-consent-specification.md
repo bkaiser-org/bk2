@@ -119,15 +119,23 @@ When `decided` is `false`, the banner must be displayed.
 
 ## 7\. Architecture
 
-### 7.1 ConsentService (`src/app/services/consent.service.ts`)
+The consent feature lives in a shared Nx library (`libs/consent/`) so all apps in the monorepo get the same implementation without duplication. The library has two layers:
 
-A singleton Angular service that:
+| Layer | Import alias | Responsibility |
+| :---- | :---- | :---- |
+| `data-access` | `@bk2/consent-data-access` | `ConsentService`, `AnalyticsLoaderService` |
+| `ui` | `@bk2/consent-ui` | `CookieBanner` component |
+
+### 7.1 ConsentService (`libs/consent/data-access/src/lib/consent.service.ts`)
+
+A singleton Angular service (`providedIn: 'root'`) that:
 
 - Loads consent state from `localStorage` on construction.  
-- Exposes the current state as both a synchronous getter and an `Observable` (`consent$`) so consumers can react to changes.  
+- Exposes the current state as an `Observable` (`consent$`) so consumers can react to changes.  
 - Provides methods: `acceptAll()`, `rejectAll()`, `setCustom(partial)`, `reset()`.  
-- Provides query helpers: `hasAnalyticsConsent()`, `hasMarketingConsent()`, `needsBanner()`.  
+- Provides query helpers: `hasAnalyticsConsent()`, `hasMarketingConsent()`, `needsBanner()`, `getState()`.  
 - Persists every change immediately to `localStorage` with a fresh `timestamp`.
+- Guards all `localStorage` access with `isBrowser(platformId)` for SSR safety.
 
 ### 7.2 Firebase initialization (`src/app/app.config.ts`)
 
@@ -139,7 +147,7 @@ Essential Firebase modules are always initialized:
 
 Analytics is **not** provided in the static config. It is initialized dynamically by `AnalyticsLoaderService` only after consent is granted.
 
-### 7.3 AnalyticsLoaderService (`src/app/services/analytics-loader.service.ts`)
+### 7.3 AnalyticsLoaderService (`libs/consent/data-access/src/lib/analytics-loader.service.ts`)
 
 Subscribes to `ConsentService.consent$` and:
 
@@ -149,18 +157,19 @@ Subscribes to `ConsentService.consent$` and:
 
 Dynamic `import('firebase/analytics')` keeps the analytics bundle out of the initial app bundle until needed.
 
-### 7.4 CookieBannerComponent (`src/app/components/cookie-banner/`)
+### 7.4 CookieBanner (`libs/consent/ui/src/lib/cookie-banner.ts`)
 
 A standalone Angular/Ionic component that:
 
-- Is rendered globally from `app.component.html`.  
-- Is visible only when `ConsentService.needsBanner()` returns `true`.  
-- Provides three primary actions: **Accept all**, **Reject non-essential**, **Customize**.  
-- Exposes a link to the privacy policy and to a settings page where consent can be revisited.
+- Is rendered globally from `bk-root.ts`.  
+- Is visible only when `ConsentService.needsBanner()` is `true` (reactive via `toSignal(consent$)`).  
+- Provides three primary actions: **Alle akzeptieren**, **Nur notwendige**, **Anpassen**.  
+- The "Anpassen" (Customize) action expands an inline preferences section with per-category toggles.
+- Equal visual weight on all action buttons (GDPR dark-pattern prohibition).
 
 ### 7.5 PreferencesModalComponent (future)
 
-A modal with granular toggles per category, accessible from:
+A full-screen modal with granular toggles per category, accessible from:
 
 - The banner's "Customize" action.  
 - A "Cookie settings" link in the app footer / settings page.
