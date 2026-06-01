@@ -52,7 +52,7 @@ export const appRoutes: Route[] = [
     path: 'section',
     canActivate: [isAuthenticatedGuard],
     children: [
-      { path: 'all', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/cms-section-feature').then(m => m.SectionAllListComponent) },
+      { path: 'all', canActivate: [isPrivilegedGuard], loadComponent: () => import('@bk2/cms-section-feature').then(m => m.SectionAllList) },
     ],
   },
   {
