@@ -1264,24 +1264,6 @@
         "connecting": "Verbindung wird hergestellt..."
       }
     },
-    "survey": {
-      "title": "Umfrage erstellen",
-      "questionLabel": "Frage oder Thema",
-      "questionPlaceholder": "Schreibe etwas ...",
-      "answers": "Antwortmöglichkeiten erstellen",
-      "addAnswer": "Antwortmöglichkeit verfassen",
-      "create": "Umfrage erstellen",
-      "totalVotes": "Stimmen gesamt",
-      "voted": "Du hast abgestimmt",
-      "ended": "Umfrage beendet",
-      "end": "Umfrage beenden",
-      "chooseOne": "Wähle eine Option aus",
-      "chooseMultiple": "Wähle mindestens eine Option aus",
-      "viewVotes": {
-        "title": "Abstimmungsergebnis",
-        "noVotes": "Noch keine Stimmen"
-      }
-    },
     "fields": {
       "selectRoom": "Wähle einen Chat-Raum, um den Chat zu starten",
       "reconnecting": "Wieder verbinden...",
@@ -7058,8 +7040,8 @@
     "labelNotUndefined": "Das Label muss definiert sein.",
     "lastNameRequired": "Der Nachname ist obligatorisch.",
     "locationModelType": "Der ModelType muss LocationModel sein.",
-    "loginEmailRequired": "Die E-Mail Adresse ist obligatorisch.",
-    "loginPasswordRequired": "Das Passwort ist obligatorisch.",
+    "emailRequired": "Die E-Mail Adresse ist obligatorisch.",
+    "passwordRequired": "Das Passwort ist obligatorisch.",
     "loginPasswordTypeString": "Das Passwort muss ein String sein.",
     "loginPasswordNotNull": "Das Passwort darf nicht null sein.",
     "loginPasswordNotUndefined": "Das Passwort darf nicht undefined sein.",
