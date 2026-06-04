@@ -103,8 +103,6 @@
   "membership": "Mitgliedschaft",
   "message": "Mitteilung",
   "more": "mehr...",
-  "name": "Name",
-  "notes": "Notizen",
   "nyi": "Diese Funktion ist noch nicht implementiert.",
   "ok": "OK",
   "org": "Organisation",
@@ -124,12 +122,34 @@
   "transfer": "Transfer",
   "trip": "Trip",
   "type": "Typ",
-  "url": "URL",
   "user": "Benutzer",
   "value": "Wert",
   "website": "Website",
   "workrel": "Beschäftigung",
   "year": "Jahr",
+
+  "altText": {
+    "label": "Alt Text",
+    "placeholder": "Text",
+    "helper": "Eine Beschreibung, die z.B. sehbehinderten Anwendern hilft, den Inhalt der Website zu verstehen."
+  },
+  "name": {
+    "label": "Name",
+    "placeholder": "Name",
+    "error": "Der Name ist obligatorisch und muss aus alphanumerischen Zeichen bestehen.",
+    "helper": "Ein Name kann aus mehreren Wörtern bestehen. Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen.",
+    "lowercaseWord": "Der Name besteht aus einem Wort in Kleinbuchstaben."
+  },
+  "notes": {
+    "label": "Notizen",
+    "placeholder": "Text"
+  },
+  "url": {
+    "label": "URL",
+    "placeholder": "https://...",
+    "helper": "Uniform Resource Locator, ein HTML Link"
+  },
+
   "select": {
     "label": "Auswählen",
     "tag": "Tag auswählen"
@@ -469,6 +489,7 @@
     "valueMandatory": "Der Wert ist obligatorisch",
     "valueTooLong": "Der Wert ist zu lang",
     "valueTooShort": "Der Wert ist zu kurz",
+    "tooShort": "Der Wert ist zu kurz.",
     "relModelType": "Der ModelType muss RelationshipModel sein.",
     "relCorrectSubjectType": "Der Typ des Subjekts muss Person, Org oder Group sein.",
     "relSubjectCatGender": "Die SubjectCategory einer Person muss Gender sein.",

@@ -1,3 +1,38 @@
+# Section i18n to Util Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Move `SECTION_I18N_KEYS` and `SectionI18n` from `section.store.ts` (feature layer) into a new `section-i18n.ts` file in `section/util`, so both the feature store and the ui form can import the shared type.
+
+**Architecture:** Create `libs/cms/section/util/src/lib/section-i18n.ts` with the const and type, export it from the util barrel, update the store to import from util, and fix `section.form.ts` to import `SectionI18n` from util (removing the dead `SectionFormI18n` interface).
+
+**Tech Stack:** Angular 20, TypeScript strict, NgRx Signal Stores, `@ngrx/signals`, Nx monorepo.
+
+---
+
+## File Map
+
+| Action | File |
+|--------|------|
+| Create | `libs/cms/section/util/src/lib/section-i18n.ts` |
+| Modify | `libs/cms/section/util/src/public-api.ts` |
+| Modify | `libs/cms/section/feature/src/lib/section.store.ts` |
+| Modify | `libs/cms/section/ui/src/lib/section.form.ts` |
+
+---
+
+### Task 1: Create section-i18n.ts in util
+
+**Files:**
+- Create: `libs/cms/section/util/src/lib/section-i18n.ts`
+
+Context: `SECTION_I18N_KEYS` is currently at lines 25–437 of `section.store.ts`. The prefix `'@cms/section/feature.'` is used for all keys (from feature's `scope.ts`). We duplicate the prefix string here — no import from feature.
+
+- [ ] **Step 1: Create the file**
+
+Create `libs/cms/section/util/src/lib/section-i18n.ts` with the full contents below. Copy the entire `SECTION_I18N_KEYS` const from `section.store.ts` lines 25–437, replacing the `PFX` variable with the hardcoded prefix string `'@cms/section/feature.'`.
+
+```ts
 import { Signal } from '@angular/core';
 
 const PFX = '@cms/section/feature.';
@@ -7,10 +42,11 @@ export const SECTION_I18N_KEYS = {
   description:               PFX + 'description',
   empty:                     PFX + 'empty',
   key:                       '@key',
-  name:                      '@name.label',
+  name:                      '@name',
   type:                      '@type',
   no_images:                  PFX + 'noImages',
   no_such_section:            PFX + 'noSuchSection',
+  empty_table:                PFX + 'emptyTable',
   select_label:               PFX + 'select.label',
   view:                       PFX + 'view',
   edit:                       PFX + 'edit',
@@ -19,44 +55,103 @@ export const SECTION_I18N_KEYS = {
   delete_confirm:             PFX + 'delete.confirm',
   send_confirm1:              PFX + 'send.confirm1',
   send_confirm2:              PFX + 'send.confirm2',
+  activity_empty:             PFX + 'activity.empty',
+  emergency_needs_help:       PFX + 'emergency.needsHelp',
+  emergency_unknown_location: PFX + 'emergency.needsHelpUnknownLocation',
+  calevents:                  PFX + 'calevent.calevents',
+  calevent_update:            PFX + 'calevent.update.label',
+  calevent_update_conf:       PFX + 'calevent.update.conf',
+  calevent_update_error:      PFX + 'calevent.update.error',
+  calevent_subscribe:         PFX + 'calevent.subscribe',
+  calevent_unsubscribe:       PFX + 'calevent.unsubscribe',
+  calevent_edit:              PFX + 'calevent.edit',
+  calevent_view:              PFX + 'calevent.view',
+  calevent_download:          PFX + 'calevent.download',
+
+  invitation_update:          PFX + 'invitation.update.label',
+  invitation_update_conf:     PFX + 'invitation.update.conf',
+  invitation_update_error:    PFX + 'invitation.update.error',
+  invitation_subscribe:       PFX + 'invitation.subscribe',
+  invitation_unsubscribe:     PFX + 'invitation.unsubscribe',
+
+  context_title:              PFX + 'context.title',
+  context_show_avatar:        PFX + 'context.show.avatar',
+  context_show_name:          PFX + 'context.show.name',
+  context_show_members:       PFX + 'context.show.members',
+  context_show_memberships:   PFX + 'context.show.memberships',
+  context_show_responsibilities: PFX + 'context.show.responsibilities',
+  context_show_personrels:    PFX + 'context.show.personrels',
+  context_show_workrels:      PFX + 'context.show.workrels',
+  context_show_save:          PFX + 'context.show.save',
+  context_edit:               PFX + 'context.edit',
+  context_center:             PFX + 'context.center',
+  context_displayConfig:      PFX + 'context.displayConfig',
+
+  messages_empty:             PFX + 'messages.empty',
+  news_empty:                 PFX + 'news.empty',
+  news_view:                  PFX + 'news.view',
+  news_edit:                  PFX + 'news.edit',
+
+  orgchart_accordion:         PFX + 'orgchart.accordion',
+  orgchart_chart:             PFX + 'orgchart.chart',
+  orgchart_addNewGroup:       PFX + 'orgchart.group.add.new',
+  orgchart_addExistingGroup:  PFX + 'orgchart.group.add.existing',
+  orgchart_editGroup:         PFX + 'orgchart.group.edit',
+  orgchart_removeGroup:       PFX + 'orgchart.group.remove',
+
+  rag_placeholder:            PFX + 'rag.placeholder',
+  rag_upload:                 PFX + 'rag.upload',
+
+  album_zoomed:               PFX + 'album.zoomed',
+  album_style:                PFX + 'album.style',
+
   email_conf:                 PFX + 'email.conf',
   email_error:                PFX + 'email.error',
 
-  // activity
-  activity_empty:                           PFX + 'activity.empty',
+  group_detach_confirm:       PFX + 'group.detach.confirm',
+
+  member_age_group:           PFX + 'member.age.group',
+  member_age_male:            PFX + 'member.age.male',
+  member_age_female:          PFX + 'member.age.female',
+  member_age_total:           PFX + 'member.age.total',
+  member_age_empty:           PFX + 'member.age.empty',
+
+  member_cat_category:        PFX + 'member.cat.category',
+  member_cat_male:            PFX + 'member.cat.male',
+  member_cat_female:          PFX + 'member.cat.female',
+  member_cat_total:           PFX + 'member.cat.total',
+  member_cat_empty:           PFX + 'member.cat.empty',
+
+  notes_label:                PFX + 'notes.label',
+  notes_placeholder:          PFX + 'notes.placeholder',
 
   // album
-  album_title:                              PFX + 'album.title',
-  album_zoomed:                             PFX + 'album.zoomed',
-  album_edit:                               PFX + 'album.edit',
-  album_directory_label:                    PFX + 'album.directory.label',
-  album_directory_placeholder:              PFX + 'album.directory.placeholder',
-  album_directory_helper:                   PFX + 'album.directory.helper',
-  album_style_label:                        PFX + 'album.style.label',
-  album_effect_label:                       PFX + 'album.effect.label',
-  album_recursive_label:                    PFX + 'album.recursive.label',
-  album_recursive_helper:                   PFX + 'album.recursive.helper',
-  album_show_videos_label:                  PFX + 'album.show.videos.label',
-  album_show_videos_helper:                 PFX + 'album.show.videos.helper',
-  album_show_streaming_label:               PFX + 'album.show.streaming.label',
-  album_show_streaming_helper:              PFX + 'album.show.streaming.helper',
-  album_show_docs_label:                    PFX + 'album.show.docs.label',
-  album_show_docs_helper:                   PFX + 'album.show.docs.helper',
-  album_show_pdfs_label:                    PFX + 'album.show.pdfs.label',
-  album_show_pdfs_helper:                   PFX + 'album.show.pdfs.helper',
+  album_title:                              PFX + 'type.album.edit',
+  album_directory_label:                    PFX + 'directory.label',
+  album_directory_placeholder:              PFX + 'directory.placeholder',
+  album_directory_helper:                   PFX + 'directory.helper',
+  album_style_label:                        PFX + 'albumStyle.label',
+  album_effect_label:                       PFX + 'effect.label',
+  album_recursive_label:                    PFX + 'recursive.label',
+  album_recursive_helper:                   PFX + 'recursive.helper',
+  album_show_videos_label:                  PFX + 'showVideos.label',
+  album_show_videos_helper:                 PFX + 'showVideos.helper',
+  album_show_streaming_label:               PFX + 'showStreamingVideos.label',
+  album_show_streaming_helper:              PFX + 'showStreamingVideos.helper',
+  album_show_docs_label:                    PFX + 'showDocs.label',
+  album_show_docs_helper:                   PFX + 'showDocs.helper',
+  album_show_pdfs_label:                    PFX + 'showPdfs.label',
+  album_show_pdfs_helper:                   PFX + 'showPdfs.helper',
 
   // button
-  button_name:                              PFX + 'button.name',
-  button_edit:                              PFX + 'button.edit',
-  button_label_label:                       PFX + 'button.label.label',
-  button_label_placeholder:                 PFX + 'button.label.placeholder',
-  button_label_helper:                      PFX + 'button.label.helper',
-  button_image_zoomed:                      PFX + 'button.image.zoomed',
   button_action_title:                      PFX + 'button.action.title',
   button_action_subtitle:                   PFX + 'button.action.subtitle',
   button_action_label:                      PFX + 'button.action.label',
-  button_style_title:                       PFX + 'button.style.title',
-  button_style_subtitle:                    PFX + 'button.style.subtitle',
+  button_style_title:                       PFX + 'type.button.style.title',
+  button_style_subtitle:                    PFX + 'type.button.style.subtitle',
+  button_label_label:                       PFX + 'label.label',
+  button_label_placeholder:                 PFX + 'label.placeholder',
+  button_label_helper:                      PFX + 'label.helper',
   button_style_width_label:                 PFX + 'button.style.width.label',
   button_style_width_placeholder:           PFX + 'button.style.width.placeholder',
   button_style_width_helper:                PFX + 'button.style.width.helper',
@@ -66,51 +161,26 @@ export const SECTION_I18N_KEYS = {
   button_style_shape_label:                 PFX + 'button.style.shape.label',
   button_style_fill_label:                  PFX + 'button.style.fill.label',
   button_style_color_label:                 PFX + 'button.style.color.label',
-
-  // calendar
-  calevents:                                PFX + 'calendar.calevents',
-  calevent_update:                          PFX + 'calendar.update.label',
-  calevent_update_conf:                     PFX + 'calendar.update.conf',
-  calevent_update_error:                    PFX + 'calendar.update.error',
-  calevent_subscribe:                       PFX + 'calendar.subscribe',
-  calevent_unsubscribe:                     PFX + 'calendar.unsubscribe',
-  calevent_edit:                            PFX + 'calendar.edit',
-  calevent_view:                            PFX + 'calendar.view',
-  calevent_download:                        PFX + 'calendar.download',
+  button_image_zoomed:                      PFX + 'button.image.zoomed',
 
   // chat
-  chat_title:                               PFX + 'chat.title',
-  chat_subtitle:                            PFX + 'chat.subtitle',
-  chat_empty:                               PFX + 'chat.empty',
-  chat_id_label:                            PFX + 'chat.id.label',
-  chat_id_placeholder:                      PFX + 'chat.id.placeholder',
-  chat_id_helper:                           PFX + 'chat.id.helper',
-  chat_name_label:                          PFX + 'chat.name.label',
-  chat_name_placeholder:                    PFX + 'chat.name.placeholder',
-  chat_name_helper:                         PFX + 'chat.name.helper',
-  chat_url_label:                           PFX + 'chat.url.label',
-  chat_url_placeholder:                     PFX + 'chat.url.placeholder',
-  chat_url_helper:                          PFX + 'chat.url.helper',
-  chat_description_label:                   PFX + 'chat.description.label',
-  chat_description_placeholder:             PFX + 'chat.description.placeholder',
-  chat_description_helper:                  PFX + 'chat.description.helper',
-  chat_type_label:                          PFX + 'chat.type.label',
-  chat_showChannelList_label:               PFX + 'chat.showChannelList.label',
-  chat_showChannelList_helper:              PFX + 'chat.showChannelList.helper',
-
-  // context diagram
-  context_title:                            PFX + 'context.title',
-  context_show_avatar:                      PFX + 'context.show.avatar',
-  context_show_name:                        PFX + 'context.show.name',
-  context_show_member:                      PFX + 'context.show.member',
-  context_show_membership:                  PFX + 'context.show.membership',
-  context_show_responsibility:              PFX + 'context.show.responsibility',
-  context_show_personal:                    PFX + 'context.show.personal',
-  context_show_workrel:                     PFX + 'context.show.workrel',
-  context_save:                             PFX + 'context.save',
-  context_edit:                             PFX + 'context.edit',
-  context_center:                           PFX + 'context.center',
-  context_displayConfig:                    PFX + 'context.displayConfig',
+  chat_title:                               PFX + 'type.chat.title',
+  chat_subtitle:                            PFX + 'type.chat.subtitle',
+  chat_id_label:                            PFX + 'id.label',
+  chat_id_placeholder:                      PFX + 'id.placeholder',
+  chat_id_helper:                           PFX + 'id.helper',
+  chat_name_label:                          PFX + 'name.label',
+  chat_name_placeholder:                    PFX + 'name.placeholder',
+  chat_name_helper:                         PFX + 'name.helper',
+  chat_url_label:                           PFX + 'url.label',
+  chat_url_placeholder:                     PFX + 'url.placeholder',
+  chat_url_helper:                          PFX + 'url.helper',
+  chat_description_label:                   PFX + 'type.chat.description.label',
+  chat_description_placeholder:             PFX + 'description.placeholder',
+  chat_description_helper:                  PFX + 'description.helper',
+  chat_type_label:                          PFX + 'chatType.label',
+  chat_showChannelList_label:               PFX + 'showChannelList.label',
+  chat_showChannelList_helper:              PFX + 'showChannelList.helper',
 
   // editor
   editor_title:                             PFX + 'editor.title',
@@ -119,10 +189,6 @@ export const SECTION_I18N_KEYS = {
   editor_colSize_helper:                    PFX + 'editor.colSize.helper',
   editor_position_label:                    PFX + 'editor.position.label',
 
-  // emergency
-  emergency_needs_help:                     PFX + 'emergency.needs.help.atLocation',
-  emergency_needs_help_unknown_location:    PFX + 'emergency.needs.help.unknownLocation',
-  
   // event
   event_title:                              PFX + 'event.title',
   event_subtitle:                           PFX + 'event.subtitle',
@@ -140,18 +206,6 @@ export const SECTION_I18N_KEYS = {
   event_show_time_helper:                   PFX + 'event.show.time.helper',
   event_show_location_label:                PFX + 'event.show.location.label',
   event_show_location_helper:               PFX + 'event.show.location.helper',
-
-  // form
-  form_title:                               PFX + 'form.title',
-  form_content:                             PFX + 'form.content.title',
-  form_image_style:                         PFX + 'form.image.style',
-  form_roleNeeded:                          PFX + 'form.roleNeeded.title',
-  form_state:                               PFX + 'form.state.title',
-  form_submit_label:                        PFX + 'form.submit.label',
-  form_submit_conf:                         PFX + 'form.submit.conf',
-  form_submit_error:                        PFX + 'form.submit.error',
-  form_not_found:                           PFX + 'form.not_found',
-  form_archived:                            PFX + 'form.archived',
 
   // icon
   icon_title:                               PFX + 'icon.title',
@@ -177,14 +231,6 @@ export const SECTION_I18N_KEYS = {
   image_empty:                              PFX + 'image.empty',
   image_delete:                             PFX + 'image.delete',
   image_upload:                             PFX + 'image.upload',
-  image_config_title:                       PFX + 'image.config.title',
-  image_display_title:                      PFX + 'image.display.title',
-  image_add_label:                          PFX + 'image.add.label',
-  image_add_conf:                           PFX + 'image.add.conf',
-  image_add_error:                          PFX + 'image.add.error',
-  image_add_empty:                          PFX + 'image.add.empty',
-  image_add_title:                          PFX + 'image.add.title',
-
   image_edit_title:                         PFX + 'image.edit.title',
   image_edit_title_modal:                   PFX + 'image.edit.title_modal',
   image_edit_label_label:                   PFX + 'image.edit.label.label',
@@ -199,9 +245,7 @@ export const SECTION_I18N_KEYS = {
   image_edit_overlay_label:                 PFX + 'image.edit.overlay.label',
   image_edit_overlay_placeholder:           PFX + 'image.edit.overlay.placeholder',
   image_edit_overlay_helper:                PFX + 'image.edit.overlay.helper',
-  image_edit_type_name:                     PFX + 'image.edit.type.name',
   image_edit_type_label:                    PFX + 'image.edit.type.label',
-  image_edit_type_helper:                   PFX + 'image.edit.type.helper',
 
   // image style
   image_style_title:                        PFX + 'image.style.title',
@@ -238,11 +282,6 @@ export const SECTION_I18N_KEYS = {
   // invitation
   invitation_title:                         PFX + 'invitation.title',
   invitation_subtitle:                      PFX + 'invitation.subtitle',
-  invitation_update:                        PFX + 'invitation.update.label',
-  invitation_update_conf:                   PFX + 'invitation.update.conf',
-  invitation_update_error:                  PFX + 'invitation.update.error',
-  invitation_subscribe:                     PFX + 'invitation.subscribe',
-  invitation_unsubscribe:                   PFX + 'invitation.unsubscribe',
   invitation_more_label:                    PFX + 'invitation.more.label',
   invitation_more_placeholder:              PFX + 'invitation.more.placeholder',
   invitation_more_helper:                   PFX + 'invitation.more.helper',
@@ -269,33 +308,6 @@ export const SECTION_I18N_KEYS = {
   map_center_helper:                        PFX + 'map.center.helper',
   map_coordinates_label:                    PFX + 'map.coordinates.label',
 
-  // member
-  member_age_group:                         PFX + 'member.age.group',
-  member_age_male:                          PFX + 'member.age.male',
-  member_age_female:                        PFX + 'member.age.female',
-  member_age_total:                         PFX + 'member.age.total',
-  member_age_empty:                         PFX + 'member.age.empty',
-
-  member_cat_category:                      PFX + 'member.cat.category',
-  member_cat_male:                          PFX + 'member.cat.male',
-  member_cat_female:                        PFX + 'member.cat.female',
-  member_cat_total:                         PFX + 'member.cat.total',
-  member_cat_empty:                         PFX + 'member.cat.empty',
-
-  // news
-  news_empty:                               PFX + 'news.empty',
-  news_view:                                PFX + 'news.view',
-  news_edit:                                PFX + 'news.edit',
-
-  // orgchart
-  orgchart_accordion:                       PFX + 'orgchart.accordion',
-  orgchart_chart:                           PFX + 'orgchart.chart',
-  orgchart_group_add_new:                   PFX + 'orgchart.group.add.new',
-  orgchart_group_add_existing:              PFX + 'orgchart.group.add.existing',
-  orgchart_group_edit:                      PFX + 'orgchart.group.edit',
-  orgchart_group_remove:                    PFX + 'orgchart.group.remove.label',
-  orgchart_group_confirm:                   PFX + 'orgchart.group.remove.confirm',
-
   // people
   people_empty:                             PFX + 'people.empty',
   people_edit:                              PFX + 'people.edit',
@@ -312,10 +324,6 @@ export const SECTION_I18N_KEYS = {
   people_show_name_helper:                  PFX + 'people.show.name.helper',
   people_show_label_label:                  PFX + 'people.show.label.label',
   people_show_label_helper:                 PFX + 'people.show.label.helper',
-
-  // rag
-  rag_placeholder:                          PFX + 'rag.placeholder',
-  rag_upload:                               PFX + 'rag.upload',
 
   // responsibility-config
   responsibility_edit:                      PFX + 'responsibility.edit',
@@ -361,7 +369,7 @@ export const SECTION_I18N_KEYS = {
   table_grid_backgroundColor_helper:        PFX + 'table.grid.backgroundColor.helper',
   table_grid_padding_label:                 PFX + 'table.grid.padding.label',
   table_grid_padding_placeholder:           PFX + 'table.grid.padding.placeholder',
-  table_grid_padding_helper:               PFX + 'table.grid.padding.helper',
+  table_grid_padding_helper:                PFX + 'table.grid.padding.helper',
   table_grid_showTitleAs_label:             PFX + 'table.grid.showTitleAs.label',
 
   // table header
@@ -426,11 +434,6 @@ export const SECTION_I18N_KEYS = {
   video_baseUrl_placeholder:                PFX + 'video.baseUrl.placeholder',
   video_baseUrl_helper:                     PFX + 'video.baseUrl.helper',
 
-  name_label:                               '@name.label',
-  name_placeholder:                         '@name.placeholder',
-  name_helper:                              '@name.helper',
-  notes_label:                              '@notes.label',
-  notes_placeholder:                        '@notes.placeholder',
   url_label:                                '@url.label',
   url_placeholder:                          '@url.placeholder',
   url_helper:                               '@url.helper',
@@ -445,3 +448,105 @@ export const SECTION_I18N_KEYS = {
 } satisfies Record<string, string>;
 
 export type SectionI18n = { [K in keyof typeof SECTION_I18N_KEYS]: Signal<string> };
+```
+
+- [ ] **Step 2: Verify the file was created correctly**
+
+Run: `npx tsc --noEmit -p libs/cms/section/util/tsconfig.json`
+
+Expected: No errors (or only pre-existing errors unrelated to this file).
+
+---
+
+### Task 2: Export from util barrel
+
+**Files:**
+- Modify: `libs/cms/section/util/src/public-api.ts`
+
+- [ ] **Step 1: Add export line**
+
+In `libs/cms/section/util/src/public-api.ts`, add at the end:
+
+```ts
+export * from './lib/section-i18n';
+```
+
+---
+
+### Task 3: Update section.store.ts to import from util
+
+**Files:**
+- Modify: `libs/cms/section/feature/src/lib/section.store.ts`
+
+- [ ] **Step 1: Remove the local SECTION_I18N_KEYS const and SectionI18n type**
+
+In `section.store.ts`:
+- Delete lines 25–437 (the `const SECTION_I18N_KEYS = { ... } satisfies Record<string, string>;` block)
+- Delete line 439 (`export type SectionI18n = ...`)
+
+- [ ] **Step 2: Add import from util**
+
+In the imports block of `section.store.ts`, add:
+
+```ts
+import { createSection, narrowSection, SECTION_I18N_KEYS, SectionI18n } from '@bk2/cms-section-util';
+```
+
+(Replace the existing `import { createSection, narrowSection } from '@bk2/cms-section-util';` at line 18.)
+
+Note: `SectionI18n` is re-exported from the feature barrel via `export * from './lib/section.store'` — no barrel change needed since the type is now in util but the feature barrel still re-exports it transitively (the store imports and the feature barrel exports `* from section.store`, but the *type* lives in util now). Any consumer that imported `SectionI18n` from `@bk2/cms-section-feature` will still work because the feature barrel re-exports everything from `section.store`, which now re-imports and re-uses `SectionI18n` from util. No barrel changes needed.
+
+- [ ] **Step 3: Type-check the feature layer**
+
+Run: `npx tsc --noEmit -p libs/cms/section/feature/tsconfig.json`
+
+Expected: No new errors.
+
+---
+
+### Task 4: Fix section.form.ts to import SectionI18n from util
+
+**Files:**
+- Modify: `libs/cms/section/ui/src/lib/section.form.ts`
+
+- [ ] **Step 1: Remove the dead SectionFormI18n interface**
+
+In `section.form.ts`, delete lines 9–286 (the `export interface SectionFormI18n { ... }` block). This interface is not imported anywhere else — confirmed by grep.
+
+- [ ] **Step 2: Add import of SectionI18n from util**
+
+In the imports block at the top of `section.form.ts`, add:
+
+```ts
+import { SectionI18n } from '@bk2/cms-section-util';
+```
+
+The `i18n` input at line 589 (now re-numbered after deletion) already uses `SectionI18n` — the import fixes the broken reference.
+
+- [ ] **Step 3: Type-check the ui layer**
+
+Run: `npx tsc --noEmit -p libs/cms/section/ui/tsconfig.json`
+
+Expected: No new errors. The structural subtyping from child components (like `AlbumI18n`, `ChatI18n`, etc.) already matches `SectionI18n` key names.
+
+---
+
+### Task 5: Final type-check and commit
+
+- [ ] **Step 1: Full type-check**
+
+Run: `npx tsc --noEmit -p libs/cms/section/feature/tsconfig.json && npx tsc --noEmit -p libs/cms/section/ui/tsconfig.json && npx tsc --noEmit -p libs/cms/section/util/tsconfig.json`
+
+Expected: All pass with no new errors.
+
+- [ ] **Step 2: Commit**
+
+```bash
+git add libs/cms/section/util/src/lib/section-i18n.ts \
+        libs/cms/section/util/src/public-api.ts \
+        libs/cms/section/feature/src/lib/section.store.ts \
+        libs/cms/section/ui/src/lib/section.form.ts
+git commit -m "refactor(section): move SECTION_I18N_KEYS and SectionI18n to util layer
+
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+```
