@@ -279,7 +279,7 @@ export const appRoutes: Route[] = [
   {
     path: 'icon',
     canActivate: [isAuthenticatedGuard],
-    children: [{ path: ':listId/:contextMenuName', loadComponent: () => import('@bk2/icon-feature').then(m => m.IconList) }],
+    children: [{ path: ':listId/:contextMenuName', loadComponent: () => import('@bk2/cms-icon-feature').then(m => m.IconList) }],
   },
   {
     path: 'invoice',
