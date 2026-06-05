@@ -272,18 +272,13 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/icon/data-access/src/i18n",
-            "output": "./assets/i18n/icon/data-access"
+            "input": "libs/cms/icon/data-access/src/i18n",
+            "output": "./assets/i18n/cms/icon/data-access"
           },
           {
             "glob": "*.json",
-            "input": "libs/icon/feature/src/i18n",
-            "output": "./assets/i18n/icon/feature"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/icon/ui/src/i18n",
-            "output": "./assets/i18n/icon/ui"
+            "input": "libs/cms/icon/feature/src/i18n",
+            "output": "./assets/i18n/cms/icon/feature"
           },
           {
             "glob": "*.json",
