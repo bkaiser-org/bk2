@@ -127,6 +127,7 @@
   "website": "Website",
   "workrel": "Beschäftigung",
   "year": "Jahr",
+  "allYears": "Alle Jahre",
 
   "altText": {
     "label": "Alt Text",
@@ -150,9 +151,21 @@
     "helper": "Uniform Resource Locator, ein HTML Link"
   },
 
+  "empty": {
+    "org": "Keine Organisationen gefunden."
+
+  },
+
   "select": {
     "label": "Auswählen",
-    "tag": "Tag auswählen"
+    "tag": "Tag auswählen",
+    "date": "Datum wählen",
+    "subject": "Subjekt wählen",
+    "category": "Kategorie wählen",
+    "person": "Person wählen",
+    "org": "Organisation wählen",
+    "resource": "Resource wählen",
+    "group": "Gruppe wählen"
   },
   "copy": {
     "label": "Kopieren",
@@ -172,6 +185,7 @@
   },
   "search": {
     "label": "Suchen...",
+    "placeholder": "Suchen...",
     "tag": "Tag"
   },
   "filter": {
@@ -180,67 +194,8 @@
   "actionsheet": {
     "title": "Wähle eine Aktion"
   },
-  "gender": {
-    "label": "Geschlecht",
-    "name": "Geschlecht",
-    "all": {
-      "label": "Alle Geschlechter",
-      "icon": "gender_diverse"
-    },
-    "female": {
-      "label": "weiblich",
-      "description": "Die Person ist eine Frau.",
-      "salutation": "Liebe",
-      "greeting": "Frau",
-      "formal": "Sehr geehrte Frau"
-    },
-    "male": {
-      "label": "männlich",
-      "description": "Die Person ist ein Mann.",
-      "salutation": "Lieber",
-      "greeting": "Herr",
-      "formal": "Sehr geehrter Herr"
-    },
-    "other": {
-      "label": "divers",
-      "description": "Die Person ist Transgender.",
-      "salutation": "Liebe_r",
-      "greeting": "Miko",
-      "formal": "Sehr geehrt* ",
-      "name": "Bezeichnung"
-    }
-  },
-  "org_type": {
-    "legalEntity": {
-      "label": "Firmenname",
-      "placeholder": "Firmenname",
-      "error": "Die Eingabe des Firmennamens ist obligatorisch. Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
-    },
-    "association": {
-      "label": "Vereinsname",
-      "placeholder": "Vereinsname",
-      "helper": "Der offizielle Name des Vereins oder der Organisation.",
-      "error": "Die Eingabe des Vereinsnamens ist obligatorisch. Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
-    },
-    "authority": {
-      "label": "Name der Behörde",
-      "placeholder": "Name der Behörde",
-      "helper": "Der offizielle Name einer Behörde, Amts, Departements oder einer Verwaltungseinheit.",
-      "error": "Die Eingabe des Namens der Behörde ist obligatorisch. Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
-    },
-    "group": {
-      "label": "Gruppenname",
-      "placeholder": "Name der Gruppe",
-      "helper": "Der offizielle Name einer Gruppe oder eines Teams.",
-      "error": "Die Eingabe des Gruppennamens ist obligatorisch. Es sind nur Buchstaben (inkl. -) und Zahlen erlaubt, keine Sonderzeichen."
-    },
-    "other": {
-      "label": "Andere"
-    },
-    "all": {
-      "label": "Alle"
-    }
-  },
+
+
   "tag": {
     "advertiser": "Inserent",
     "album": "Album",
@@ -316,85 +271,8 @@
     "valid": "Gültig",
     "vs": "VS"
   },
-  "mcat_scs": {
-    "all": {
-      "label": "Alle Kategorien"
-    },
-    "active": {
-      "label": "Aktive 1",
-      "description": "Aktiv 1 Mitglied"
-    },
-    "active2": {
-      "label": "Aktive 2",
-      "description": "Aktiv 2 Mitgliedschaft stammt noch aus früheren Zeiten."
-    },
-    "active3": {
-      "label": "Aktive 3",
-      "description": "Aktiv 3 Mitgliedschaft stammt noch aus früheren Zeiten"
-    },
-    "junior": {
-      "label": "Junior/in",
-      "description": "Junior oder Junior bis max 18 Jahre."
-    },
-    "free": {
-      "label": "Freimitglieder",
-      "description": "Freies Mitgliedschaft stammt noch aus frühreren Zeiten."
-    },
-    "honorary": {
-      "label": "Ehrenmitglieder",
-      "description": "Von der GV gewählte Ehrenmitglieder."
-    },
-    "candidate": {
-      "label": "Kandidaten",
-      "description": "Neumitglieder in Ausbildung."
-    },
-    "passive": {
-      "label": "Passiv",
-      "description": "Passiv Mitglied"
-    }
-  },
-  "mcat_srv": {
-    "all": {
-      "label": "Alle Kategorien"
-    },
-    "active": {
-      "label": "Aktiv",
-      "description": "Die Person ist ein Aktiv-Mitglied."
-    },
-    "junior": {
-      "label": "Junior/in",
-      "description": "Junior oder Juniorin bis max 18 Jahre."
-    },
-    "double": {
-      "label": "Doppel",
-      "description": "Doppelmitglied, welches über einen anderen Club gemeldet ist."
-    },
-    "honorary": {
-      "label": "Ehrenmitglieder",
-      "description": "Ehrenmitglieder beim SRV"
-    },
-    "passive": {
-      "label": "Passiv",
-      "description": "Passiv Mitglied"
-    }
-  },
-  "mcat_default": {
-    "all": {
-      "label": "Alle Kategorien"
-    },
-    "active": {
-      "label": "Aktiv",
-      "description": "Die Person ist ein Aktiv-Mitglied."
-    },
-    "passive": {
-      "label": "Passiv",
-      "description": "Passiv Mitglied"
-    },
-    "junior": {
-      "label": "Jugendliche",
-      "description": "Junior oder Juniorin bis max 18 Jahre."
-    }
-  },
+  
+
   "validation": {
     "addressValueMandatoryForNonPostal": "Der Adress-Wert ist für nicht-postalische Adressen obligatorisch.",
     "addressModelType": "Der ModelType muss AddressModel sein.",
