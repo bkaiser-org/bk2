@@ -400,8 +400,8 @@ export class AlertService {
   private readonly alertController = inject(AlertController);
   private readonly toastController = inject(ToastController);
   private readonly i18n = inject(I18nService).translateAll({
-    ok:     '@general.operation.change.ok',
-    cancel: '@general.operation.change.cancel',
+    ok:     '@ok',
+    cancel: '@cancel',
   });
 
   constructor() {
@@ -854,7 +854,7 @@ alertService: inject(AlertService),
 
 Add to existing `translateAll` block (in `i18n: store.i18nService.translateAll({...})`):
 ```typescript
-ok: '@general.operation.change.ok',
+ok: '@ok',
 ```
 (needed for the direct `alertController.create` call at line ~238 which uses `store.i18n.ok()`).
 

@@ -98,7 +98,7 @@ Standalone modal component `PollCreateModal` (`bk-poll-create-modal`):
 
 - Injected: `ModalController`
 - `bk-header` with title `@chat.survey.title`, `[isModal]="true"`
-- `bk-change-confirmation` shown when `formValid()` is true — OK label translates to `@chat.survey.create`, Cancel to `@general.cancel`
+- `bk-change-confirmation` shown when `formValid()` is true — OK label translates to `@chat.survey.create`, Cancel to `@cancel`
 - `ion-content` wrapping `bk-poll-create-form`
 - `formData` signal initialised to `{ kind: 'disclosed', question: '', answers: [] }`
 - `save()` → `modalController.dismiss(formData(), 'confirm')`

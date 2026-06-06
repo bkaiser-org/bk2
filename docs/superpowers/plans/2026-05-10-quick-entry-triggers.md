@@ -352,8 +352,8 @@
           locale="de-ch"
           firstDayOfWeek="1"
           [showDefaultButtons]="true"
-          doneText="{{'@general.operation.change.ok' | translate | async}}"
-          cancelText="{{'@general.operation.change.cancel' | translate | async}}"
+          doneText="{{'@ok' | translate | async}}"
+          cancelText="{{'@cancel' | translate | async}}"
           size="cover"
           [preferWheel]="false"
           style="height: 480px; --padding-start: 0;"
@@ -368,7 +368,7 @@
     protected readonly datetimePicker = viewChild.required<IonDatetime>('datetimePicker');
 
     public isoDateTime = input(getTodayStr(DateFormat.IsoDate) + 'T08:00:00');
-    public headerTitle = input('@general.operation.select.date');
+    public headerTitle = input('@select.date');
 
     protected async onDateTimeChange(event: any): Promise<void> {
       const selected = event.detail.value || this.datetimePicker().value || this.isoDateTime();

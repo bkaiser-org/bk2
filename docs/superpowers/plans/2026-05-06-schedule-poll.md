@@ -277,7 +277,7 @@
         <ion-toolbar>
           <ion-title>{{ '@schedule.title' | transloco }}</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="cancel()">{{ '@general.cancel' | transloco }}</ion-button>
+            <ion-button (click)="cancel()">{{ '@cancel' | transloco }}</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -432,7 +432,7 @@
         <ion-toolbar>
           <ion-title>{{ '@schedule.tableTitle' | transloco }}</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="close()">{{ '@general.close' | transloco }}</ion-button>
+            <ion-button (click)="close()">{{ '@close' | transloco }}</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -836,7 +836,7 @@
       }),
       inputs: [{ name: 'authorMessage', type: 'textarea', placeholder: this.translocoService.translate('@schedule.optionalMessage') }],
       buttons: [
-        { text: this.translocoService.translate('@general.cancel'), role: 'cancel' },
+        { text: this.translocoService.translate('@cancel'), role: 'cancel' },
         {
           text: this.translocoService.translate('@schedule.confirm'),
           handler: async (data: { authorMessage: string }) => {

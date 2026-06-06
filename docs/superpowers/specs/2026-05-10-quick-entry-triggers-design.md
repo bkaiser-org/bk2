@@ -131,7 +131,7 @@ Pattern follows the existing `DateSelectModal` (`date-select.modal.ts`).
 Inputs:
 ```ts
 public isoDateTime = input(new Date().toISOString());
-public headerTitle = input('@general.operation.select.date');
+public headerTitle = input('@select.date');
 ```
 
 ---

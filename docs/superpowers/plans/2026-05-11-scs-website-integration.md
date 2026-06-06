@@ -1339,9 +1339,9 @@ import { deepEqual, safeStructuredClone } from '@bk2/shared-util-core';
 
       <ion-toolbar>
         <ion-buttons slot="end">
-          <ion-button (click)="cancel()">{{ '@general.operation.cancel' | translate | async }}</ion-button>
+          <ion-button (click)="cancel()">{{ '@cancel' | translate | async }}</ion-button>
           <ion-button [disabled]="!isDirty()" (click)="save()" color="primary">
-            {{ '@general.operation.save' | translate | async }}
+            {{ '@save' | translate | async }}
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -1445,7 +1445,7 @@ import { AocWebsiteEditModal } from './aoc-website-edit.modal';
       <ion-toolbar>
         <ion-searchbar
           [value]="store.searchTerm()"
-          [placeholder]="('@general.search.placeholder' | translate | async) ?? ''"
+          [placeholder]="('@search.placeholder' | translate | async) ?? ''"
           (ionInput)="onSearch($event)"
           debounce="300" />
         <ion-buttons slot="end">
@@ -1465,7 +1465,7 @@ import { AocWebsiteEditModal } from './aoc-website-edit.modal';
         <ion-card-content>
           @if (store.isLoading()) {
             <ion-item lines="none">
-              <ion-label>{{ '@general.operation.loading' | translate | async }}</ion-label>
+              <ion-label>{{ '@loading' | translate | async }}</ion-label>
             </ion-item>
           }
           <ion-list lines="inset">

@@ -999,11 +999,11 @@ import { deepEqual, safeStructuredClone } from '@bk2/shared-util-core';
       </ion-item>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button (click)="cancel()">{{ '@general.operation.cancel' | translate | async }}</ion-button>
+          <ion-button (click)="cancel()">{{ '@cancel' | translate | async }}</ion-button>
         </ion-buttons>
         <ion-buttons slot="end">
           <ion-button [disabled]="!isDirty()" (click)="save()" color="primary">
-            {{ '@general.operation.save' | translate | async }}
+            {{ '@save' | translate | async }}
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -1071,7 +1071,7 @@ import { I18nDefaultEditModal } from './i18n-default-edit.modal';
       <ion-toolbar>
         <ion-searchbar
           [value]="store.searchTerm()"
-          [placeholder]="('@general.operation.search.placeholder' | translate | async) ?? ''"
+          [placeholder]="('@search.placeholder' | translate | async) ?? ''"
           (ionInput)="onSearch($event)"
           debounce="300" />
         <ion-buttons slot="end">
@@ -1323,11 +1323,11 @@ import { deepEqual, safeStructuredClone } from '@bk2/shared-util-core';
       </ion-item>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button (click)="cancel()">{{ '@general.operation.cancel' | translate | async }}</ion-button>
+          <ion-button (click)="cancel()">{{ '@cancel' | translate | async }}</ion-button>
         </ion-buttons>
         <ion-buttons slot="end">
           <ion-button [disabled]="!isDirty()" (click)="save()" color="primary">
-            {{ '@general.operation.save' | translate | async }}
+            {{ '@save' | translate | async }}
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -1395,7 +1395,7 @@ import { I18nOverrideEditModal } from './i18n-override-edit.modal';
       <ion-toolbar>
         <ion-searchbar
           [value]="store.searchTerm()"
-          [placeholder]="('@general.operation.search.placeholder' | translate | async) ?? ''"
+          [placeholder]="('@search.placeholder' | translate | async) ?? ''"
           (ionInput)="onSearch($event)"
           debounce="300" />
         <ion-buttons slot="end">
