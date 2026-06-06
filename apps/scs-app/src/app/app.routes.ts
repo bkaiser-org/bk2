@@ -6,7 +6,7 @@ export const appRoutes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'auth/login'
+    redirectTo: 'public/welcome'
   },
   {
     path: 'public',
