@@ -40,13 +40,7 @@ async function initializeApp() {
 
 initializeApp();
 
-if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
-  navigator.serviceWorker
-    .register('/firebase-messaging-sw.js')
-    .then(registration => {
-      console.log('Service Worker registered:', registration);
-    })
-    .catch(error => {
-      console.error('Service Worker registration failed:', error);
-    });
-}
+// firebase-messaging-sw.js is auto-registered by the Firebase Messaging SDK at scope
+// /firebase-cloud-messaging-push-scope/ on the first getToken() call inside FcmService.
+// No manual registration here — leaving root scope (/) free for ngsw-worker.js (see
+// docs/16_spec-pwa-caching.md §5.1).
