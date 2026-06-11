@@ -677,9 +677,11 @@
         ],
         "styles": [
           "apps/scs-app/src/styles.scss",
-          "apps/scs-app/src/theme/variables.scss"
+          "apps/scs-app/src/theme/variables.scss",
+          "node_modules/leaflet/dist/leaflet.css"
         ],
         "allowedCommonJsDependencies": [
+          "leaflet",
           "countries-list",
           "fast-deep-equal",
           "dayjs",
