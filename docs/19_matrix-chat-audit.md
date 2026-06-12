@@ -59,7 +59,17 @@ A second duplicate-DM mechanism exists in `createDirectRoom()`: `findExistingDir
 2. One-time cleanup: remove the wrong `m.direct` entries (account data) for affected users.
 3. In `createDirectRoom()`, wait for `PREPARED` before deciding to create, and/or ask the server (`GET /joined_rooms` + member check, or keep a `dmRooms` map in Firestore) instead of trusting the possibly-cold local cache.
 
-### S3 — `POST /pushers/set` → 400
+> **Status: FIXED (2026-06-12), client-only — ships with the app, no deploy.**
+>
+> The single robust discriminator turned out to be simpler than "exclude the admin account": **a DM never has an `m.room.name` state event; every group room does.** (The admin account isn't configured client-side anyway, and S1 will rename it, so keying off the name is both sufficient and future-proof — a named room the admin was force-joined into can never be a DM.)
+>
+> - `isDirectRoom()` now returns `false` for any room with an `m.room.name`, *before* consulting `m.direct` or the `is_direct` fallback. This alone fixes the reported render: a group room `@bruno` was force-joined into (others pending/left) can no longer appear as a "Matrix Admin" DM, even if `m.direct` still carries a stale entry. New `roomHasName()` helper (reads the state event, not the SDK-synthesised `room.name`, which is non-empty for DMs).
+> - `repairDmRoomsAccountData()` reworked into a two-way **reconcile**: a PRUNE pass drops `m.direct` entries whose synced room is clearly a group (has a name / `#group_` alias / >2 joined members), self-healing prior misclassifications on the next sync for every user; the ADD pass registers only genuine DM-shaped rooms (2 joined members **and** no name). Not-yet-synced rooms are left untouched (absence ≠ deleted).
+> - `createDirectRoom()` now `await`s `waitForSync()` (PREPARED/SYNCING, 8 s cap) before find-or-create, closing the cold-cache race that produced a second DM room with the same person.
+>
+> **Verified against live `m.direct`:** every current entry for `@kaiser` (5 rooms) and `@bruno` (6) is a no-name 2-member room → all correctly kept, **zero false prunes**. The data currently holds no named-room misclassifications, so the fix is primarily preventive + a robust render guard; it self-heals any that appear later.
+>
+> **Out of scope for S2 (belongs to S1 / identity consolidation):** the `m.direct` entries are keyed under **UID-based duplicate accounts** (`@gp8bkee…` etc.) rather than the persons' `personKey` accounts, and one peer (`@scheduler`) maps to 3 separate DM rooms. These are genuine 2-member DMs (correctly kept), but the duplicate *counterpart identity* and duplicate-real-DM collapse require S1 (one Matrix account per person) — not safe to auto-merge here. One of the UID-keyed rooms (`!Ekhj5…`) is also the source of the recurring S4 "No message subject" warning.
 
 The pusher is registered with
 
@@ -203,7 +213,7 @@ Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matri
 
 1. ~~**SEC-1** — switch group-room creation to invite-only + migrate existing rooms' join rules.~~ **Done 2026-06-12** (CF code change + migration of 17 rooms; see status note under SEC-1).
 2. ~~**S5 / ARCH-4** — persist `matrixRoomId` on the group doc; single `resolveGroupRoom()`; unify alias sanitization; clean up duplicate rooms (incl. `!GXmh…`).~~ **Done 2026-06-12** (CF code + schema deployed; 2 twins purged, "Dienstags 4-er" relinked, 0 duplicates remain; authz revised to system-user gate per product owner — see S5 status note).
-3. **S2** — fix `repairDmRoomsAccountData()` heuristic (exclude admin account, require `is_direct` evidence); clean `m.direct` account data. *(High)*
+3. ~~**S2** — fix `repairDmRoomsAccountData()` heuristic; clean `m.direct` account data.~~ **Done 2026-06-12** (client-only: `isDirectRoom()` name-guard + two-way `m.direct` reconcile + `createDirectRoom` sync guard; self-heals on next sync. Duplicate *identities* deferred to S1 — see S2 status note).
 4. **S3** — append `/_matrix/push/v1/notify` to the pusher URL; add gateway shared-secret (**SEC-2**) in the same step since the URL changes anyway. *(Medium)*
 5. **S1** — dedicated service account for `MATRIX_ADMIN_TOKEN`; hide it in the UI; delete `apps/functions/src/matrix/`. *(Medium)*
 6. **SEC-3/4** — AppCheck on all matrix callables, provisioning gate + no UID fallback in `getMatrixCredentials`, server-side logout on credential clear. *(Medium)*
