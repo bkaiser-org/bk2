@@ -61,7 +61,6 @@ export const appRoutes: Route[] = [
       { path: 'login', loadComponent: () => import('@bk2/auth-feature').then(m => m.LoginPage) },
       { path: 'pwdreset', loadComponent: () => import('@bk2/auth-feature').then(m => m.PasswordResetPage) },
       { path: 'confirm', loadComponent: () => import('@bk2/auth-feature').then(m => m.ConfirmPasswordResetPage) },
-      { path: 'matrix-callback', loadComponent: () => import('@bk2/auth-feature').then(m => m.MatrixOidcCallback) },
     ],
   },
   {
