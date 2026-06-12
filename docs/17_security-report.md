@@ -72,7 +72,8 @@ Updated as fixes land. "Pending deploy" = code committed to `main` but not yet p
 | **M-1** | RAG markdown rendered with sanitizer bypass | ✅ **Fixed, pending app build** | dropped `bypassSecurityTrustHtml`; Angular sanitizes the `[innerHTML]` — commit `e5df6dc3` |
 | **M-6** | Admin functions authorize via never-set claims | ✅ **Fixed, pending deploy** | `checkAdminRole` reads `users/{uid}.roles.admin` (legacy claim still accepted) — commit `d2c6ea9d` |
 | **M-10** | `firebase-functions: "latest"`; CLI in prod deps | ✅ **Done** | pinned `^7.0.5`; firebase-tools → devDeps — commit `21378fb8` |
-| **M-3, M-4, M-5, M-7, M-9** | (see sections below) | ⬜ Open | — |
+| **M-3** | Unauthenticated password-reset enumeration/abuse | ✅ **Fixed, pending deploy** | generic success on unknown account (no enumeration); drop caller templateVariables — commit `d52681fb` |
+| **M-4, M-5, M-7, M-9** | (see sections below) | ⬜ Open | — |
 | **L-1…L-4, I-1…I-5** | (see sections below) | ⬜ Open | — |
 
 **Firestore rules (C-1/C-2/M-8/M-11): ✅ DEPLOYED 2026-06-12.** Post-deploy verification to run on the live app:
@@ -209,10 +210,10 @@ Prototype pollution (GHSA-4r6h-8v6p-xvw6) and ReDoS. SheetJS no longer publishes
 `logout()` previously called only Firebase `signOut`, leaving the Matrix token in localStorage — next user on a shared device could resume the chat session; any XSS could exfiltrate a live token.
 **Fix applied:** `AuthService.logout()` now clears the `matrix_*` keys (access token, user/device/homeserver, avatar cache, and the obsolete `matrix_login_token`) after a successful `signOut`. Done inline rather than via `MatrixChatService` to avoid an `auth-data-access → chat-data-access` dependency; `MatrixChatService.clearStoredCredentials()` was extended to the same key set for its own callers. The `matrix_login_token` writer was already removed by C-3. Commit `1d683621`; `auth-data-access` and `chat-data-access` build clean. **Pending deploy** (ship in the next app build).
 
-### M-3 — Unauthenticated password-reset email path is an abuse primitive
-**Location:** `apps/functions/src/auth/index.ts:332` (skip-auth branch at ~L345-348)
-With `template === 'scs_password_reset'`, auth is skipped; with a valid App Check token, arbitrary `to`/`appId` triggers reset emails to any address — enumeration/spam/phishing primitive.
-**Fix:** Rate-limit per IP/recipient; allowlist `appId`/`from` server-side.
+### M-3 — Unauthenticated password-reset email path is an abuse primitive — *FIXED, pending deploy (2026-06-12)*
+**Location:** `apps/functions/src/auth/index.ts` (`sendEmail`, `scs_password_reset` branch)
+With `template === 'scs_password_reset'` auth is skipped. Re-assessed against the code: `generatePasswordResetLink` already throws `auth/user-not-found` for unregistered addresses, so a link is only ever generated for a real account (no "email any address"), and `from`/`subject`/`html` are derived from `getAppEmailConfig(appId)` (no phishing-content injection). The genuine residual was **account enumeration** — the link call sat outside `try`, so registered → success vs unregistered → error let a caller probe which addresses are accounts.
+**Fix applied:** wrapped `generatePasswordResetLink` in try/catch and return the same generic `{ success: true }` (without sending) when no account exists — removing the oracle; also stopped echoing caller-supplied `templateVariables` into the email (only controlled `url`/`email`/`app_name` are passed). Commit `d52681fb`. **Not yet deployed** (`firebase deploy --only functions`). **Follow-up (optional):** a per-recipient rate limit to bound mailbombing of a known account (lower severity — bounded to registered users).
 
 ### M-4 — PDF raw-HTML "sanitizer" is a regex strip of `<script>` only
 **Location:** `apps/functions/src/pdf/sanitize.ts:4`
