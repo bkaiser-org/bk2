@@ -76,7 +76,7 @@ Updated as fixes land. "Pending deploy" = code committed to `main` but not yet p
 | **M-9** | `set-env.js` tracked despite "never commit" rule | ✅ **Done** | `git rm --cached` + gitignored; history-clean (env-var plumbing only) — commit `4b730403` |
 | **M-4** | PDF raw-HTML sanitizer is regex-only | ✅ **Fixed, pending deploy** | sanitize-html allowlist + Puppeteer network-block in raw mode — commit `63627ed1` |
 | **M-5** | Mailtrap webhook accepts unauthenticated POSTs | ✅ **Fixed, pending deploy** | verify `Mailtrap-Signature` HMAC-SHA256 over raw body; 401 on invalid — commit `79da1cee` |
-| **M-7** | (see section below) | ⬜ Open | — |
+| **M-7** | Per-collection RBAC tightening (rules Phase 2) | 🟡 **Partially done, pending deploy** | CMS content (pages/sections/menuItems/categories) → content-role; rest intentionally left authenticated (see analysis) — commit `630c3d5f` |
 | **L-1…L-4, I-1…I-5** | (see sections below) | ⬜ Open | — |
 
 **Firestore rules (C-1/C-2/M-8/M-11): ✅ DEPLOYED 2026-06-12.** Post-deploy verification to run on the live app:
@@ -233,10 +233,15 @@ No signature/secret verification; anyone could flood `emailEvents` with forged d
 The auth admin callables gated on `checkAdminUser` (`request.auth.token.admin`) and `checkAdminClaim` (`customClaims.admin`). No function mints these claims, so the basis was unauditable and out of sync with the app (client guards and Firestore rules authorize from `users/{uid}.roles`). The Firestore-rules half of this split-brain was already eliminated by the C-1 rewrite (rules now use `get()` on the user doc).
 **Fix applied:** replaced both helpers with a single `checkAdminRole()` that reads `users/{uid}.roles.admin` (source of truth) while still accepting a legacy `admin` custom claim, so already-provisioned admins are not locked out; updated all call sites. Functions build verified. Commit `d2c6ea9d`. **Not yet deployed** (`firebase deploy --only functions`). Follow-up: once confirmed, the legacy-claim fallback can be dropped.
 
-### M-7 — Public unauthenticated read of `orgs`, `resources`, `tags` across all tenants
-**Location:** `firestore.rules:30-45`
-Unlike `pages`/`sections`/`menuItems` (defensible pre-login CMS bootstrap), these are operational club data, and none of the public reads are tenant-scoped.
-**Fix:** Require auth (and tenant) for `orgs`/`resources`/`tags`; for CMS collections decide deliberately whether full public exposure is intended.
+### M-7 — Rules Phase 2: per-collection RBAC + public-read scoping — *PARTIALLY DONE (2026-06-12)*
+M-7 has two distinct sub-parts; the C-1 rewrite tagged both "Phase 2 / M-7".
+
+**(a) Per-collection write RBAC — ✅ done for CMS content (commit `630c3d5f`).**
+Investigation found the app enforces only three guard tiers (authenticated / privileged / admin), and route guards gate *management views*, not *writes* (e.g. `activities` are written as an audit side-effect by every user, yet the activity route is admin). So a blind route-guard→write-rule mapping would break legitimate/side-effect writes. The safe, confirmed-no-side-effect set is the CMS content authored only in the privileged CMS UI: `pages`, `sections`, `menuItems`, `categories` — their writes now require `isContentManager()` (`contentAdmin`/`privileged`/`admin`) + tenant membership. All other collections deliberately stay at "authenticated tenant member" (their edit UIs are authenticated-guarded; `docs`/`addresses`/`activities` etc. have user/side-effect write paths). Per-collection RBAC for the rest would need write-call-site analysis + domain confirmation and is **not pursued** (chosen scope: CMS-only).
+
+**(b) Public unauthenticated read of `orgs`, `resources`, `tags` — ⬜ still open.**
+**Location:** `firestore.rules` (`allow read: if true` on `orgs`/`resources`/`tags`)
+These operational collections are world-readable across tenants. The public website reads its data via `publicApi` (Cloud Function / Admin SDK), not direct Firestore, so locking these to auth+tenant (like C-2 did for `persons`) is likely safe — but needs a quick check that no pre-login/public client path reads them directly before flipping `allow read: if true` → `tenantRead()`. Deferred pending that confirmation. (`pages`/`sections`/`menuItems`/`categories`/`app-config`/`app-version` remain intentionally public for the pre-login CMS bootstrap.)
 
 ### M-8 — `sessions` docs updatable without authentication — *DEPLOYED (2026-06-12)*
 **Fix applied:** the `sessions` update rule now requires the tenant to be unchanged AND either `userKey` unchanged (anonymous heartbeat / end-session) or `userKey` set to the authenticated caller's own uid (login upgrade) — so an anonymous client can no longer forge an arbitrary `userKey`. Emulator-verified: anonymous PATCH forging `userKey` → 403; anonymous heartbeat (userKey unchanged) → 200. **Deployed 2026-06-12.**
