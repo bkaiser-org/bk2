@@ -67,7 +67,7 @@ Updated as fixes land. "Pending deploy" = code committed to `main` but not yet p
 | **H-5** | esign callables cross-tenant by guessing `esignId` | ✅ **Fixed, pending deploy** | owner/tenant authz on the 3 by-id callables; `send-document` tenant fix; `scan-predefined` path scoping — commit `bba877c8` |
 | **H-6** | `getMatrixCredentials` no App Check, 30-day tokens | ⬜ Open | — |
 | **H-7** | 4 critical dependency advisories (protobufjs RCE, …) | ✅ **Done** | pnpm overrides → 0 critical (protobufjs 7.6.4, fast-xml-parser 4.5.6, basic-ftp 5.3.1, vitest 3.2.6) — commit `2040c91c` |
-| **H-8** | `xlsx` 0.18.5 unfixable via npm | ⬜ Open | — |
+| **H-8** | `xlsx` 0.18.5 unfixable via npm | ✅ **Done** | `xlsx` removed; export replaced with in-house CSV writer (semicolon/BOM/RFC-4180), 13 tests — commit `4b22d04b` |
 | **M-2** | Matrix creds persist in localStorage after logout | ✅ **Fixed, pending deploy** | `logout()` clears matrix_* keys; `clearStoredCredentials()` completed — commit `1d683621` |
 | **M-1, M-3…M-7, M-9, M-10** | (see sections below) | ⬜ Open | — |
 | **L-1…L-4, I-1…I-5** | (see sections below) | ⬜ Open | — |
@@ -187,10 +187,10 @@ The uid→Matrix mapping itself is sound (derived from the verified token), but 
 - **vitest** < 3.2.6 — file read/exec via UI server (GHSA-5xrq-8626-4rwp), dev-tooling exposure only
 **Fix applied:** added `pnpm.overrides` forcing protobufjs `^7.5.5`, fast-xml-parser `^4.5.4`, basic-ftp `^5.2.0`, and vitest/@vitest/ui/@vitest/coverage-v8 `^3.2.6`. `pnpm install` resolved protobufjs 7.6.4, fast-xml-parser 4.5.6, basic-ftp 5.3.1, vitest 3.2.6; `pnpm audit --prod` now reports **0 critical** (was 4). Commit `2040c91c`. (Effective immediately — no deploy needed; ships with the next functions/app build.) Remaining high/moderate advisories — node-forge, axios, node-tar, jws, `@modelcontextprotocol/sdk`, and **H-8** (xlsx) — are tracked separately.
 
-### H-8 — `xlsx` 0.18.5: two High advisories, unfixable via npm
-**Location:** root `package.json` (`"xlsx": "^0.18.5"`, prod dependency)
-Prototype pollution (GHSA-4r6h-8v6p-xvw6) and ReDoS. SheetJS no longer publishes to npm — no semver update will ever fix this. Risky wherever user-supplied spreadsheets are parsed.
-**Fix:** Repoint to the SheetJS CDN tarball (≥ 0.20.2) or migrate to `exceljs`.
+### H-8 — `xlsx` 0.18.5: two High advisories, unfixable via npm — *FIXED (2026-06-12)*
+**Location:** root `package.json` (was `"xlsx": "^0.18.5"`, prod dependency)
+Prototype pollution (GHSA-4r6h-8v6p-xvw6) and ReDoS. SheetJS no longer publishes patched builds to npm — no semver update could ever fix this.
+**Fix applied:** rather than chase a patched SheetJS build, the dependency was **removed** entirely. It was used only for export (no xlsx reading anywhere) — a single `exportXlsx(string[][], fileName, sheetName)`. Replaced with an in-house `exportCsv` in `download.util.ts`: semicolon-delimited (opens directly in Excel de-CH), UTF-8 BOM (correct umlauts), RFC-4180 quoting, CRLF, downloaded via `Blob` + `saveAs` (works on mobile, unlike `XLSX.writeFile`). Pure helpers `rowsToCsv()`/`toCsvFileName()` are unit-tested (13 green tests); all ~10 callers updated. `pnpm audit --prod` no longer reports the SheetJS advisories. CSV imports cleanly into Excel, Numbers, and Google Sheets. Commit `4b22d04b`. (Ships with the next app build.)
 
 ---
 
