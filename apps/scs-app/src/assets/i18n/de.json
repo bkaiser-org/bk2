@@ -1,4 +1,28 @@
 {
+  "vcard": {
+    "action": { "label": "Als vCard exportieren" },
+    "modal": {
+      "title": "vCard-Export",
+      "intro": "Wähle, welche Daten exportiert werden."
+    },
+    "scope": {
+      "addresses": "Adressen",
+      "phone": "Telefon",
+      "email": "E-Mail",
+      "postal": "Postadresse",
+      "web": "Web/Links",
+      "birthday": "Geburtsdatum",
+      "photo": "Foto",
+      "workRels": "Tätigkeiten / Kontakte",
+      "personalRels": "Beziehungen",
+      "orgLinks": "Verknüpfte Organisationen"
+    },
+    "export": {
+      "conf": "vCard wurde exportiert.",
+      "error": "Export fehlgeschlagen.",
+      "notAllowed": "Keine Berechtigung zum Export."
+    }
+  },
   "account": "Konto",
   "activity": "Ereignis",
   "address": "Adresse",
