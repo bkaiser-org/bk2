@@ -190,9 +190,13 @@ Most Critical/High findings are deployed. Remaining work (as of 2026-06-12):
 
 ## 16. vCard Export — [`17_spec-vcard-export.md`](done/17_spec-vcard-export.md)
 
-The feature is **implemented** (`apps/functions/src/vcard/`, `libs/vcard/util`, `libs/vcard/feature`, person/org list + store entry points). Almost nothing is outstanding:
+The feature is **implemented** (`apps/functions/src/vcard/`, `libs/vcard/util`, `libs/vcard/feature`, person/org list + store entry points) for tiers 1 & 2. Outstanding:
 
 - 🟢 **§11 open item resolved** — the avatar source is concrete in code (`IMGIX_BASE = https://bkaiser.imgix.net`, server-side fetch + base64 in the `vcardExport` callable); no longer a placeholder.
+- 🟡 **Tier 3 (memberAdmin multi-select) — no UI** — the callable already enforces the 100-record cap server-side, but nothing in the selection-mode context menu wires to it (§5, §6.2). Single-target tiers 1 & 2 ship; multi-select export is deferred.
+- 🟡 **`orgLinks` (parent/child orgs) omitted** — org cards still emit their `WorkRel`-linked persons, but the parent/child organization links (§3.2, §5) are not generated.
+- 🟡 **Registered read-model projection (§7) not added** — the spec's denormalized favorite-contact projection for the `registered` role doesn't exist; the callable instead enforces favorites-only for tier 1 itself (defence in depth), which is functionally correct but skips the read-path part of the design.
+- 🟢 **Country names — English form by design** — `ADR` emits the English country name (e.g. "Switzerland") via `countries-list`, matching the spec's §3.3 example. `i18n-iso-countries` has no locale registered server-side, so localized country names are not produced (acceptable per the spec example; note if German names are later wanted).
 - 🔴 **vCard 4.0 profile** (native `RELATED` / `KIND:org`) — explicit non-goal (§2.1, §2). 3.0 + `X-AB*` is the chosen encoding because iCloud rejects 4.0; only revisit if broad non-Apple fidelity ever becomes a priority.
 - 🔴 **Per-platform export profiles** — intentionally not built; the single 3.0 `.vcf` is treated as cross-platform for all *values* (only some *labels* soften on non-Google Android) (§2.1).
 
