@@ -42,6 +42,14 @@ There is also a **third, latent identity scheme**: the legacy module [apps/funct
 2. Filter the bot/admin user out of member lists, read receipts, and `notifyCallees()` in the client (one constant, checked in `updateRoomsList()` / `buildAndEmitReceipts()`).
 3. Delete `apps/functions/src/matrix/` and its three exports — dead code with a conflicting identity scheme.
 
+> **Status: DONE & DEPLOYED (2026-06-12); deep duplicate-identity cleanup deferred.**
+>
+> - **Dedicated bot + token rotation:** created `@bk2-bot:bkchat.etke.host` (server admin, display "SCS Service Bot"), minted a non-expiring token, and rotated `MATRIX_ADMIN_TOKEN` to it (Secret Manager v3; the old `@bruno` token remains as v2 for rollback). Verified live: the admin token now resolves to `@bk2-bot` and performs the CF-critical `make_room_admin` / force-join ops on an invite-only room. All matrix CFs redeployed to bind the new version. Going forward the *bot* (not `@bruno`) is force-joined for admin operations.
+> - **UI hiding (client):** `SERVICE_ACCOUNT_LOCALPARTS = {bk2-bot, bruno}` + `isServiceAccount()` in `MatrixChatService`; applied to the room member list, DM other-member labelling, read receipts, and `notifyCallees()`. This removes the "bruno (Matrix Admin)" clutter from users' views **without** touching messages or memberships (it filters display only). Ships with the app — no deploy by me.
+> - **Legacy module deleted:** `apps/functions/src/matrix/` removed along with its `main.ts` exports; `ensureMatrixUser`, `ensureGroupRoom`, `syncUserProfileToMatrix` deleted from production. This eliminates the third (Firebase-UID-based, `matrix.`-prefixed) identity scheme.
+>
+> **Deferred (separate, riskier data migration):** `@bruno` is still *joined* to 71 rooms (old force-join artifacts) and still holds its own DMs; the UID-based duplicate accounts behind S2's mis-keyed DMs (`@gp8bkee…` etc.) are untouched. Fully consolidating "one Matrix account per person" — removing `@bruno` from rooms, migrating/closing its DMs, and merging UID-accounts into their `personKey` accounts — is a per-person data migration that should be planned and run deliberately, not bundled here. The UI hiding already delivers the user-visible benefit in the meantime.
+
 ### S2 — Duplicate "Matrix Admin" direct chats
 
 `repairDmRoomsAccountData()` ([matrix-chat.service.ts:1069-1105](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L1069-L1105)) runs on every `PREPARED` sync and marks **every joined room with exactly 2 joined members** as a DM in `m.direct`. The exclusions (name starts with `!!`, alias starts with `#group_`) do not cover:
