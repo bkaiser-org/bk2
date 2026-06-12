@@ -59,7 +59,17 @@ A second duplicate-DM mechanism exists in `createDirectRoom()`: `findExistingDir
 2. One-time cleanup: remove the wrong `m.direct` entries (account data) for affected users.
 3. In `createDirectRoom()`, wait for `PREPARED` before deciding to create, and/or ask the server (`GET /joined_rooms` + member check, or keep a `dmRooms` map in Firestore) instead of trusting the possibly-cold local cache.
 
-### S3 — `POST /pushers/set` → 400
+> **Status: FIXED (2026-06-12), client-only — ships with the app, no deploy.**
+>
+> The single robust discriminator turned out to be simpler than "exclude the admin account": **a DM never has an `m.room.name` state event; every group room does.** (The admin account isn't configured client-side anyway, and S1 will rename it, so keying off the name is both sufficient and future-proof — a named room the admin was force-joined into can never be a DM.)
+>
+> - `isDirectRoom()` now returns `false` for any room with an `m.room.name`, *before* consulting `m.direct` or the `is_direct` fallback. This alone fixes the reported render: a group room `@bruno` was force-joined into (others pending/left) can no longer appear as a "Matrix Admin" DM, even if `m.direct` still carries a stale entry. New `roomHasName()` helper (reads the state event, not the SDK-synthesised `room.name`, which is non-empty for DMs).
+> - `repairDmRoomsAccountData()` reworked into a two-way **reconcile**: a PRUNE pass drops `m.direct` entries whose synced room is clearly a group (has a name / `#group_` alias / >2 joined members), self-healing prior misclassifications on the next sync for every user; the ADD pass registers only genuine DM-shaped rooms (2 joined members **and** no name). Not-yet-synced rooms are left untouched (absence ≠ deleted).
+> - `createDirectRoom()` now `await`s `waitForSync()` (PREPARED/SYNCING, 8 s cap) before find-or-create, closing the cold-cache race that produced a second DM room with the same person.
+>
+> **Verified against live `m.direct`:** every current entry for `@kaiser` (5 rooms) and `@bruno` (6) is a no-name 2-member room → all correctly kept, **zero false prunes**. The data currently holds no named-room misclassifications, so the fix is primarily preventive + a robust render guard; it self-heals any that appear later.
+>
+> **Out of scope for S2 (belongs to S1 / identity consolidation):** the `m.direct` entries are keyed under **UID-based duplicate accounts** (`@gp8bkee…` etc.) rather than the persons' `personKey` accounts, and one peer (`@scheduler`) maps to 3 separate DM rooms. These are genuine 2-member DMs (correctly kept), but the duplicate *counterpart identity* and duplicate-real-DM collapse require S1 (one Matrix account per person) — not safe to auto-merge here. One of the UID-keyed rooms (`!Ekhj5…`) is also the source of the recurring S4 "No message subject" warning.
 
 The pusher is registered with
 
@@ -76,6 +86,17 @@ https://europe-west6-bkaiser-org.cloudfunctions.net/matrixPushGateway/_matrix/pu
 ```
 
 `onRequest` functions receive sub-paths, so [matrixPushGateway](../apps/functions/src/matrix-simple/index.ts#L1561) will be invoked unchanged (optionally check `req.path` for safety). Also add a `format` (e.g. `'event_id_only'` is *not* desired here — keep full format, so simply omit) and consider `append: false` semantics (current value is fine — replaces other pushers with the same app_id+pushkey).
+
+> **Status: CODE FIXED & FUNCTIONS DEPLOYED (2026-06-12); needs a one-time hosting deploy to activate.**
+>
+> **Correction to the recommendation above:** appending the suffix to the `cloudfunctions.net/matrixPushGateway` URL does **not** work. Synapse requires the URL *path* to be **exactly** `/_matrix/push/v1/notify` (`urlparse(url).path == '/_matrix/push/v1/notify'`), not merely to end with it — verified live: both the bare URL and `.../matrixPushGateway/<x>/_matrix/push/v1/notify` return 400 (`'url' must have a path of '/_matrix/push/v1/notify'`). The function-name prefix `/matrixPushGateway` can never satisfy this.
+>
+> **Actual fix (S3 + SEC-2 together):**
+> - Added a Firebase Hosting rewrite on `scs-app-54aef`: `/_matrix/push/v1/notify` → `matrixPushGateway` ([firebase.json](../firebase.json)). The public path is then exactly `/_matrix/push/v1/notify`, which Synapse accepts (verified: `/pushers/set` with `https://scs-app-54aef.web.app/_matrix/push/v1/notify?secret=…` → 200).
+> - **SEC-2** secret: a new `MATRIX_PUSH_GATEWAY_SECRET` (Firebase secret) travels as a **query param** (Synapse's path check ignores the query). `matrixPushGateway` rejects any call without it — verified live: no-secret → 403, wrong → 403, correct → 200. The gateway is no longer an open relay. Also added: per-device `app_id` filter (`bkaiser.scs.chat`) and title/body length caps.
+> - Pusher registration moved **server-side** into a new `registerMatrixPusher` CF so the secret never ships in the client bundle: it mints a short-lived user token via the admin API and calls `/pushers/set` with the secret-bearing URL. The client ([matrix-initialization.service.ts](../libs/chat/feature/src/lib/matrix-initialization.service.ts)) now calls this CF instead of `client.setPusher()`; the unused `MatrixChatService.setPusher` was removed.
+>
+> **⚠️ Action required to finish S3:** deploy the hosting rewrite — `firebase deploy --only hosting:scs-app-54aef`. Until then Synapse accepts the pusher URL but POSTs to it hit the SPA catch-all (no notifications). The client re-registers the pusher automatically on next app load once the rewrite is live. No client code change is needed to activate it.
 
 ### S4 — "No message subject found for room …" warnings
 
@@ -99,6 +120,14 @@ The CFs locate a group's room in three steps: canonical alias → Synapse name s
 2. Extract a single shared `resolveGroupRoom(groupId)` helper used by all four CFs; until (1) lands, at least use the *same sanitized* alias everywhere.
 3. One-time cleanup: enumerate `#group_*` rooms, merge/purge duplicates (`deleteMatrixRoom` exists already), and verify `!GXmh…` vs. its duplicate.
 4. Tighten the membership query (check active date range / membership state, not just `relIsLast`).
+
+> **Status: FIXED & DEPLOYED (2026-06-12).**
+>
+> - **Schema:** added `matrixRoomId: string` to `GroupModel`. The field round-trips safely — group reads spread the full Firestore doc (`collectionData(..., { idField: 'bkey' })`) and the client `update()` uses `updateDoc` (field-merge), so it is never clobbered on group edits. CFs write it via the admin SDK (bypasses rules).
+> - **Single resolver:** new module-local `resolveGroupRoom(groupId, …)` in `matrix-simple` resolves in order — (1) `groups/{id}.matrixRoomId` (verified still present), (2) sanitised canonical alias, (3) admin name-search, (4) create — and **persists the resolved/created room ID back to the group doc** so every CF converges on one room and lookups become O(1). All four CFs (`requestGroupRoomAccess`, `invitePersonToGroupRoom`, `kickPersonFromGroupRoom`, `renameMatrixRoom`) now call it; the divergent per-CF alias derivation (some used raw `#group_<bkey>`) is gone, replaced by the single `groupRoomAliasLocalpart()` helper. Provisioning duplication collapsed into `ensureMatrixUserExists()`.
+> - **Authorization change (rec #4, revised per product owner):** the active-membership tightening was **not** applied. Group chats legitimately include non-members and past-members (e.g. training-course participants), so the only access requirement for `requestGroupRoomAccess` is now **being a provisioned system user** (`users/{uid}` exists) — the previous member-OR-visibility-role hard denial was removed. SEC-1 (invite-only rooms) still prevents non-system Matrix accounts from reaching any room, so this does not re-open the SEC-1 hole. This was in fact the real cause of the reported "Dienstags 4-er" access-denied: that group has `visibility: 'registered'` and the reporter failed the old member/role gate before room resolution even ran.
+> - **Cleanup (live):** the reported `!GXmh…` is **"Dienstags 4-er"** (group bkey `Dienstags 4-er`, display name "4X-Dienstag"); it exists and was created by a legacy UID-based account with no alias. Relinked: `matrixRoomId` set on the group doc and a directory alias `#group_dienstags_4-er` added (verified resolving). The **2 confirmed spurious twins** (no-alias "Schlüsselverwaltung" / "Trainer" rooms, duplicates of `#group_resourceAdmin` / `#group_trainer`) were purged; `matrixRoomId` set on `groups/resourceAdmin` and `groups/trainer` to their canonical rooms. Post-cleanup scan: **0 duplicate group rooms remain**. The many other no-alias rooms (Signal-bridge experiments under `@signalbot`, DMs, test rooms) were intentionally left untouched.
+> - **Follow-up (not done):** group bkeys are human-readable strings with spaces/hyphens (e.g. `Dienstags 4-er`). `groupRoomAliasLocalpart()` sanitises them safely for aliases, and `matrixRoomId` makes alias derivation non-load-bearing — but auto-generating or masking group bkeys at creation would remove the special-char fragility at the source. Tracked as a separate change (touches group-creation UX and would require migrating bkeys used as foreign keys across the DB).
 
 ---
 
@@ -125,6 +154,8 @@ The CFs locate a group's room in three steps: canonical alias → Synapse name s
 
 [matrixPushGateway](../apps/functions/src/matrix-simple/index.ts#L1561-L1634) accepts any POST and forwards `title`/`body` to any FCM token in the payload. An attacker who obtains/guesses an FCM token can push arbitrary spoofed notifications to your users; even without tokens it is an open relay endpoint.
 **Fix:** require a shared secret (path segment or header) configured in Synapse's pusher `data.url` and verify it in the function; optionally validate `app_id === 'bkaiser.scs.chat'` and cap notification body length.
+
+> **Status: FIXED & DEPLOYED (2026-06-12), with S3.** `matrixPushGateway` now requires the `MATRIX_PUSH_GATEWAY_SECRET` query param (403 otherwise — verified), filters by `app_id`, and caps title/body length. The secret is server-side only (set by `registerMatrixPusher`, never in the client bundle). See the S3 status note for the full mechanism. Header-based secret isn't possible — Synapse pushers can't add custom headers — hence the query param.
 
 ### SEC-3 (High): `getMatrixCredentials` has no AppCheck and no provisioning gate
 
@@ -172,7 +203,7 @@ Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matri
 
 **ARCH-3 — Legacy module `apps/functions/src/matrix/`** is dead but deployed (3 callable endpoints with a conflicting identity scheme, one of which — `ensureGroupRoom` — can still create rooms with the *unsanitized* alias and UID-based invitees). Delete the module and its `main.ts` exports.
 
-**ARCH-4 — Identity by convention.** personKey→localpart, groupId→alias, name→room are each re-derived in 6+ places (client + 4 CFs) with slightly different rules (lowercasing, sanitizing, `matrix.` stripping). Centralize: one shared helper in `@bk2/shared-util-core` for the client, one module-local helper for CFs — and persist `matrixRoomId` on groups (see S5) so derivation is only needed at creation time.
+**ARCH-4 — Identity by convention.** personKey→localpart, groupId→alias, name→room are each re-derived in 6+ places (client + 4 CFs) with slightly different rules (lowercasing, sanitizing, `matrix.` stripping). Centralize: one shared helper in `@bk2/shared-util-core` for the client, one module-local helper for CFs — and persist `matrixRoomId` on groups (see S5) so derivation is only needed at creation time. **Partially done 2026-06-12** (see S5 status): the four CFs' groupId→alias→room derivation is unified behind `resolveGroupRoom()` + `groupRoomAliasLocalpart()`, and `matrixRoomId` is persisted. The *client-side* personKey→localpart / homeserver derivation is still duplicated and remains open.
 
 **ARCH-5 — CF code duplication.** The provision-user block and the find-room block are copy-pasted 3–4× inside `matrix-simple/index.ts` (~1 600 lines). Extract `ensureMatrixUser(personKey)`, `resolveGroupRoom(groupId)`, `ensureAdminInRoom(roomId)` helpers; the file shrinks by roughly a third and the S5 inconsistency becomes impossible.
 
@@ -194,9 +225,9 @@ Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matri
 ## 7. Prioritized Action Plan
 
 1. ~~**SEC-1** — switch group-room creation to invite-only + migrate existing rooms' join rules.~~ **Done 2026-06-12** (CF code change + migration of 17 rooms; see status note under SEC-1).
-2. **S5 / ARCH-4** — persist `matrixRoomId` on the group doc; single `resolveGroupRoom()`; unify alias sanitization; clean up duplicate rooms (incl. `!GXmh…`). *(High)*
-3. **S2** — fix `repairDmRoomsAccountData()` heuristic (exclude admin account, require `is_direct` evidence); clean `m.direct` account data. *(High)*
-4. **S3** — append `/_matrix/push/v1/notify` to the pusher URL; add gateway shared-secret (**SEC-2**) in the same step since the URL changes anyway. *(Medium)*
+2. ~~**S5 / ARCH-4** — persist `matrixRoomId` on the group doc; single `resolveGroupRoom()`; unify alias sanitization; clean up duplicate rooms (incl. `!GXmh…`).~~ **Done 2026-06-12** (CF code + schema deployed; 2 twins purged, "Dienstags 4-er" relinked, 0 duplicates remain; authz revised to system-user gate per product owner — see S5 status note).
+3. ~~**S2** — fix `repairDmRoomsAccountData()` heuristic; clean `m.direct` account data.~~ **Done 2026-06-12** (client-only: `isDirectRoom()` name-guard + two-way `m.direct` reconcile + `createDirectRoom` sync guard; self-heals on next sync. Duplicate *identities* deferred to S1 — see S2 status note).
+4. ~~**S3** — append `/_matrix/push/v1/notify` to the pusher URL; add gateway shared-secret (**SEC-2**) in the same step.~~ **Code done + functions deployed 2026-06-12** (hosting rewrite + query-param secret + server-side `registerMatrixPusher`; the bare suffix doesn't work — Synapse needs the exact path). **Remaining: run `firebase deploy --only hosting:scs-app-54aef` to activate.** See S3 / SEC-2 status notes.
 5. **S1** — dedicated service account for `MATRIX_ADMIN_TOKEN`; hide it in the UI; delete `apps/functions/src/matrix/`. *(Medium)*
 6. **SEC-3/4** — AppCheck on all matrix callables, provisioning gate + no UID fallback in `getMatrixCredentials`, server-side logout on credential clear. *(Medium)*
 7. **ARCH-1/2, C-1…C-9, P-1/P-2/P-5** — consolidation and hygiene, best done as a follow-up refactor once behavior is stabilized. *(Ongoing)*
