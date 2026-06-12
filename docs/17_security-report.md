@@ -74,7 +74,8 @@ Updated as fixes land. "Pending deploy" = code committed to `main` but not yet p
 | **M-10** | `firebase-functions: "latest"`; CLI in prod deps | ✅ **Done** | pinned `^7.0.5`; firebase-tools → devDeps — commit `21378fb8` |
 | **M-3** | Unauthenticated password-reset enumeration/abuse | ✅ **Fixed, pending deploy** | generic success on unknown account (no enumeration); drop caller templateVariables — commit `d52681fb` |
 | **M-9** | `set-env.js` tracked despite "never commit" rule | ✅ **Done** | `git rm --cached` + gitignored; history-clean (env-var plumbing only) — commit `4b730403` |
-| **M-4, M-5, M-7** | (see sections below) | ⬜ Open | — |
+| **M-4** | PDF raw-HTML sanitizer is regex-only | ✅ **Fixed, pending deploy** | sanitize-html allowlist + Puppeteer network-block in raw mode — commit `63627ed1` |
+| **M-5, M-7** | (see sections below) | ⬜ Open | — |
 | **L-1…L-4, I-1…I-5** | (see sections below) | ⬜ Open | — |
 
 **Firestore rules (C-1/C-2/M-8/M-11): ✅ DEPLOYED 2026-06-12.** Post-deploy verification to run on the live app:
@@ -216,10 +217,10 @@ Prototype pollution (GHSA-4r6h-8v6p-xvw6) and ReDoS. SheetJS no longer publishes
 With `template === 'scs_password_reset'` auth is skipped. Re-assessed against the code: `generatePasswordResetLink` already throws `auth/user-not-found` for unregistered addresses, so a link is only ever generated for a real account (no "email any address"), and `from`/`subject`/`html` are derived from `getAppEmailConfig(appId)` (no phishing-content injection). The genuine residual was **account enumeration** — the link call sat outside `try`, so registered → success vs unregistered → error let a caller probe which addresses are accounts.
 **Fix applied:** wrapped `generatePasswordResetLink` in try/catch and return the same generic `{ success: true }` (without sending) when no account exists — removing the oracle; also stopped echoing caller-supplied `templateVariables` into the email (only controlled `url`/`email`/`app_name` are passed). Commit `d52681fb`. **Not yet deployed** (`firebase deploy --only functions`). **Follow-up (optional):** a per-recipient rate limit to bound mailbombing of a known account (lower severity — bounded to registered users).
 
-### M-4 — PDF raw-HTML "sanitizer" is a regex strip of `<script>` only
-**Location:** `apps/functions/src/pdf/sanitize.ts:4`
-Puppeteer `setContent` still executes `<img onerror>`, `<iframe>`, `<link>` and fires outbound requests → SSRF/exfiltration from the function's network. Gated to admin/contentAdmin, which bounds exposure.
-**Fix:** Real sanitizer (sanitize-html/DOMPurify) with allowlist, and/or request interception blocking network in raw mode.
+### M-4 — PDF raw-HTML "sanitizer" is a regex strip of `<script>` only — *FIXED, pending deploy (2026-06-12)*
+**Location:** `apps/functions/src/pdf/sanitize.ts`, `apps/functions/src/pdf/generate-document.ts`
+Puppeteer `setContent` still executed `<img onerror>`, `<iframe>`, `<link>`, `<style>` `url()` etc. and fired outbound requests → SSRF/exfiltration from the function's network (admin/contentAdmin-gated, which bounded exposure).
+**Fix applied (both halves of the recommendation):** (1) replaced the regex with `sanitize-html` using a document-oriented allowlist — keeps rich formatting + inline styles, drops `script`/`iframe`/`object`/`embed`/`form`/`base`/`link`/`meta` and event handlers, limits schemes to `https`/`data`/`mailto`; imported dynamically and esbuild-`external` so cold start stays lean. (2) In raw-HTML mode, Puppeteer request interception aborts every non-`data:` request, so any residual `url()` cannot reach the network; template/asset mode keeps network for its server-signed asset URLs. `sanitizeHtml` is now async. Functions build verified; `sanitize-html ^2.13.0` resolves cloud-side via `generatePackageJson`. Commit `63627ed1`. **Not yet deployed** (`firebase deploy --only functions`).
 
 ### M-5 — Mailtrap webhook accepts unauthenticated POSTs
 **Location:** `apps/functions/src/email/index.ts:25`
