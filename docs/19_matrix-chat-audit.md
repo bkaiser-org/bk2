@@ -170,11 +170,19 @@ The CFs locate a group's room in three steps: canonical alias → Synapse name s
 Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matrix-simple` enforces AppCheck, and `getMatrixCredentials` does not call `requireProvisionedUser`. Any Firebase-authenticated identity (if signup is reachable) receives a Matrix account and a **30-day** access token; on `personKey` lookup failure it silently falls back to a **UID-based localpart** ([matrix-simple/index.ts:40-48](../apps/functions/src/matrix-simple/index.ts#L40-L48)) — a second avenue for duplicate accounts (S1).
 **Fix:** add `enforceAppCheck: true` to all matrix-simple callables; require a `users/{uid}` doc with a `personKey` in `getMatrixCredentials` (fail loudly instead of falling back to UID); shorten token validity (e.g. 7 days) — refresh already works via the `M_UNKNOWN_TOKEN` → re-auth path.
 
+> **Status: FIXED 2026-06-12 (needs functions deploy).** AppCheck (`enforceAppCheck: true`) and the 7-day token TTL were already in place from prior work. The remaining gap — the provisioning gate and UID fallback — is now closed: the lax `getMatrixLocalpart` (which fell back to the raw Firebase UID) was replaced by `requireMatrixLocalpart(uid, fnName)`, which **throws** (`permission-denied` / `failed-precondition`) when the caller has no `users/{uid}` doc or no `personKey`. All three minting paths (`getMatrixCredentials`, `syncFirebaseProfileToMatrix`, `registerMatrixPusher`) use it, so a Firebase identity without a provisioned, person-linked profile can no longer mint a stray `@<uid>` Matrix account. **Action required: `firebase deploy --only functions`.**
+
 ### SEC-4 (Medium): token lifecycle
 
 - 30-day access tokens live in `localStorage` (XSS-readable; you already have CSP, keep it strict).
 - `clearStoredCredentials()` never calls `/logout`, so every re-auth **accumulates valid tokens server-side** (each admin `/login` call mints a new one; `MatrixChatStore.getMatrixToken` and `MatrixInitializationService.getMatrixCredentials` can both mint on the same day).
+
 **Fix:** call `client.logout()` before clearing credentials where the token is still valid; deduplicate the two credential-fetch paths (see ARCH-1) so only one token is minted.
+
+> **Status: FIXED 2026-06-12 (token TTL already 7 days), client-only — ships with the app.**
+>
+> - **Server-side revoke on logout:** `AuthService.clearMatrixCredentials()` (the deliberate-logout path, where the token is still valid) now best-effort POSTs to Matrix `/_matrix/client/v3/logout` with the stored token *before* purging localStorage, so the session is revoked on Synapse instead of lingering. It is a raw `fetch` (not the SDK) to keep auth-data-access free of a chat dependency, and failures (offline / already-dead token) never block logout. The `M_UNKNOWN_TOKEN` expiry paths are intentionally left alone — that token is already dead, so `/logout` would only 401.
+> - **One token per session (ARCH-1):** the two near-duplicate credential-fetch paths were collapsed into a single promise-cached `MatrixChatService.ensureInitialized()` (see ARCH-1 status), so the early-init service and the chat component can no longer race to mint two tokens on the same day.
 
 ### SEC-5 (Medium): notification & enumeration vectors
 
@@ -201,11 +209,25 @@ Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matri
 | C-8 | `currentRoom` falls back to matching `roomId` against a room **name** (`r.name?.toLowerCase() === roomId.toLowerCase()`) — works by accident for aliases, but conflates the two ID spaces in yet another place. | [matrix-chat.store.ts:196-197](../libs/chat/feature/src/lib/matrix-chat.store.ts#L196-L197) |
 | C-9 | The store's `isMatrixInitialized` is only patched by `initializeMatrix()`; when `MatrixInitializationService` initializes first, the store relies on the `withState` factory snapshot — if the store is instantiated *before* early init completes, the flag stays `false` until the component path re-initializes. Drive this from a service-level observable instead of two write paths. | [matrix-chat.store.ts:36-41](../libs/chat/feature/src/lib/matrix-chat.store.ts#L36-L41) |
 
+> **Status: C-1, C-2, C-3, C-4, C-6, C-7, C-8, C-9 FIXED 2026-06-12 (client-only). C-5 deferred.**
+>
+> - **C-1:** the `rooms` `distinctUntilChanged` comparator now also compares `name`, `avatar`, `isDirect`, `lastMessage` (eventId/timestamp/body/redacted) and `typingUsers`, so renames/avatar/typing changes propagate.
+> - **C-2:** `updateRoomsList()` is serialized — one build at a time, with mid-build triggers coalescing into exactly one follow-up build, so emits can't land out of order.
+> - **C-3:** the message-load retry now keys on `value === null` (never loaded) instead of `!value?.length`, so a genuinely-empty room no longer re-paginates on every subscription; added an in-flight `loadingRooms` guard against double-loads.
+> - **C-4:** an edit arriving before its original is now buffered (`pendingEdits`) and replayed by `handleNewMessage` once the original is added, instead of being dropped. **(S4** folded in: the "No message subject found" `console.warn` is downgraded to `debugMessage`.)
+> - **C-6:** `computePollTally`/`isPollEnded` use the SDK relations API (`room.relations.getChildEventsForEvent(pollId, Reference, …)`) instead of scanning only the live timeline, so votes/end events outside the loaded window count.
+> - **C-7:** `reportMessage` identifies the support room by its immutable canonical alias (`#support`/`#group_support`, carried in `MatrixRoom.topic`) and only falls back to the display name for an alias-less room.
+> - **C-8:** `currentRoom` matches strictly by `roomId`; the accidental roomId-vs-name fallback was removed (the SDK-stub sync-delay fallback is kept).
+> - **C-9:** see ARCH-1 status.
+> - **C-5 (deferred):** scroll-back pagination is a UI feature (new service method + `ion-infinite-scroll` + scroll-anchoring on prepend) needing in-app verification; not bundled with these localized fixes.
+
 ---
 
 ## 5. Architecture Findings
 
 **ARCH-1 — Two parallel initialization/credential paths.** `MatrixInitializationService.getMatrixCredentials()` and `MatrixChatStore.getMatrixToken()` are near-duplicates (same caching, same validation, same CF call), and both `startEarlyInitialization()` and the component `effect` in [matrix-chat.ts:572-578](../libs/chat/feature/src/lib/matrix-chat.ts#L572-L578) can race to initialize. Consolidate into **one** `ensureInitialized()` on the service (idempotent, promise-cached); store and init service both call it.
+
+> **Status: DONE 2026-06-12, client-only.** Both credential-fetch implementations were deleted and replaced by a single `MatrixChatService.fetchCredentials()` + promise-cached `MatrixChatService.ensureInitialized()`: concurrent callers share one in-flight init, a failed attempt clears the cache for retry, and `disconnect()` resets it. `MatrixInitializationService.initializeMatrix()` and the chat component (via the store's thin `ensureInitialized()` delegate) both call it; the store's old `getMatrixToken`/`initializeMatrix` pair and the init service's private `getMatrixCredentials` are gone. Also fixes **C-9**: `isMatrixInitialized` is now a computed derived from a single `MatrixChatService.initialized` observable (flipped in `initialize()`/`disconnect()`), so the store can no longer hold a stale flag from a second write path.
 
 **ARCH-2 — `MatrixChatService` is a 1 740-line god service** (auth/storage, sync, rooms, messages, media cache, polls, receipts, typing, WebRTC, pushers, CF bridging). Split along existing seams: `MatrixSessionService` (client lifecycle + credentials), `MatrixRoomService`, `MatrixMessageService` (incl. polls/reactions), `MatrixCallService`. This also untangles testing — there are currently no unit tests for any of this logic (`libs/chat/util` has tests; data-access does not).
 
@@ -228,6 +250,12 @@ Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matri
 | P-5 | Every disconnect calls `clearStores()`, discarding the sync cache → every app start is a *full* initial sync. Consider `IndexedDBStore` persistence to make restarts incremental (also reduces the S2 cold-cache window). | Medium |
 | P-6 | `listMatrixRooms` with `personKey` fetches **all** rooms (≤1000) then filters by the user's joined set; the per-room admin endpoint would be O(joined). Admin-only, so acceptable for now. | Low |
 
+> **Status: P-1, P-2 FIXED 2026-06-12 (client-only). P-5 partially done; remainder deferred.**
+>
+> - **P-1:** `_mediaCache` is now an LRU bounded at 200 entries — on overflow the least-recently-used blob URL is revoked and evicted; cache hits refresh recency.
+> - **P-2:** `updateRoomsList()` no longer builds the per-room `members` array (it was O(rooms × members) every 300 ms and consumed by no list/preview UI — DM detection/naming read `room.getMembers()` directly). `MatrixRoom.members` is now `[]` in the list.
+> - **P-5:** the IndexedDB persistent store (the incremental-sync win) is already in place. The remaining part — *not* calling `clearStores()` on routine disconnect — is **deferred**: the store uses a fixed, non-user-scoped `dbName: 'bk2-matrix'`, so keeping the cache across disconnects would leak the previous user's rooms to the next user on a shared device. Doing it safely needs user-scoped store keying, and it is the explicit E2EE Step-1 prerequisite (Section 9) to land with that work.
+
 ---
 
 ## 7. Prioritized Action Plan
@@ -237,8 +265,8 @@ Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matri
 3. ~~**S2** — fix `repairDmRoomsAccountData()` heuristic; clean `m.direct` account data.~~ **Done 2026-06-12** (client-only: `isDirectRoom()` name-guard + two-way `m.direct` reconcile + `createDirectRoom` sync guard; self-heals on next sync. Duplicate *identities* deferred to S1 — see S2 status note).
 4. ~~**S3** — append `/_matrix/push/v1/notify` to the pusher URL; add gateway shared-secret (**SEC-2**) in the same step.~~ **Code done + functions deployed 2026-06-12** (hosting rewrite + query-param secret + server-side `registerMatrixPusher`; the bare suffix doesn't work — Synapse needs the exact path). **Remaining: run `firebase deploy --only hosting:scs-app-54aef` to activate.** See S3 / SEC-2 status notes.
 5. **S1** — dedicated service account for `MATRIX_ADMIN_TOKEN`; hide it in the UI; delete `apps/functions/src/matrix/`. *(Medium)*
-6. **SEC-3/4** — AppCheck on all matrix callables, provisioning gate + no UID fallback in `getMatrixCredentials`, server-side logout on credential clear. *(Medium)*
-7. **ARCH-1/2, C-1…C-9, P-1/P-2/P-5** — consolidation and hygiene, best done as a follow-up refactor once behavior is stabilized. *(Ongoing)*
+6. ~~**SEC-3/4** — AppCheck on all matrix callables, provisioning gate + no UID fallback in `getMatrixCredentials`, server-side logout on credential clear.~~ **Done 2026-06-12** (AppCheck + 7-day TTL were already in place; added the `requireMatrixLocalpart` provisioning gate across all minting CFs and a server-side `/logout` on deliberate logout; one-token-per-session via ARCH-1). **Remaining: `firebase deploy --only functions`** to activate the gate. See SEC-3 / SEC-4 status notes. *(Medium)*
+7. **ARCH-1, C-1…C-9, P-1/P-2/P-5** — consolidation and hygiene. **Done 2026-06-12 (client-only, ships with the app):** ARCH-1 (single `ensureInitialized()`), C-1/C-2/C-3/C-4/C-6/C-7/C-8/C-9, P-1, P-2, and S4. **Deferred:** **ARCH-2** (split the 1837-line god service — separate deliberate refactor, do once behavior is stabilized), **C-5** (scroll-back pagination — UI feature), and the **P-5 remainder** (stop `clearStores()` on disconnect — needs user-scoped store keying; lands with E2EE Step 1). See the status notes in §4/§5/§6. *(Ongoing)*
 8. **E2EE by default** — see Section 9. Depends on items 1 (invite-only rooms), 6 (auth rework) and P-5 (persistent stores); do not start it before those land. *(Large)*
 
 ---
