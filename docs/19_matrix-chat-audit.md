@@ -87,6 +87,17 @@ https://europe-west6-bkaiser-org.cloudfunctions.net/matrixPushGateway/_matrix/pu
 
 `onRequest` functions receive sub-paths, so [matrixPushGateway](../apps/functions/src/matrix-simple/index.ts#L1561) will be invoked unchanged (optionally check `req.path` for safety). Also add a `format` (e.g. `'event_id_only'` is *not* desired here — keep full format, so simply omit) and consider `append: false` semantics (current value is fine — replaces other pushers with the same app_id+pushkey).
 
+> **Status: CODE FIXED & FUNCTIONS DEPLOYED (2026-06-12); needs a one-time hosting deploy to activate.**
+>
+> **Correction to the recommendation above:** appending the suffix to the `cloudfunctions.net/matrixPushGateway` URL does **not** work. Synapse requires the URL *path* to be **exactly** `/_matrix/push/v1/notify` (`urlparse(url).path == '/_matrix/push/v1/notify'`), not merely to end with it — verified live: both the bare URL and `.../matrixPushGateway/<x>/_matrix/push/v1/notify` return 400 (`'url' must have a path of '/_matrix/push/v1/notify'`). The function-name prefix `/matrixPushGateway` can never satisfy this.
+>
+> **Actual fix (S3 + SEC-2 together):**
+> - Added a Firebase Hosting rewrite on `scs-app-54aef`: `/_matrix/push/v1/notify` → `matrixPushGateway` ([firebase.json](../firebase.json)). The public path is then exactly `/_matrix/push/v1/notify`, which Synapse accepts (verified: `/pushers/set` with `https://scs-app-54aef.web.app/_matrix/push/v1/notify?secret=…` → 200).
+> - **SEC-2** secret: a new `MATRIX_PUSH_GATEWAY_SECRET` (Firebase secret) travels as a **query param** (Synapse's path check ignores the query). `matrixPushGateway` rejects any call without it — verified live: no-secret → 403, wrong → 403, correct → 200. The gateway is no longer an open relay. Also added: per-device `app_id` filter (`bkaiser.scs.chat`) and title/body length caps.
+> - Pusher registration moved **server-side** into a new `registerMatrixPusher` CF so the secret never ships in the client bundle: it mints a short-lived user token via the admin API and calls `/pushers/set` with the secret-bearing URL. The client ([matrix-initialization.service.ts](../libs/chat/feature/src/lib/matrix-initialization.service.ts)) now calls this CF instead of `client.setPusher()`; the unused `MatrixChatService.setPusher` was removed.
+>
+> **⚠️ Action required to finish S3:** deploy the hosting rewrite — `firebase deploy --only hosting:scs-app-54aef`. Until then Synapse accepts the pusher URL but POSTs to it hit the SPA catch-all (no notifications). The client re-registers the pusher automatically on next app load once the rewrite is live. No client code change is needed to activate it.
+
 ### S4 — "No message subject found for room …" warnings
 
 [handleNewMessage()](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L629-L686) fires for *every* live timeline message in *every* joined room. The `messages$` subject only exists for rooms the user has actually opened, so each incoming message in any other room logs a `console.warn`. This is normal operation, not an error — at most a `debugMessage`.
@@ -143,6 +154,8 @@ The CFs locate a group's room in three steps: canonical alias → Synapse name s
 
 [matrixPushGateway](../apps/functions/src/matrix-simple/index.ts#L1561-L1634) accepts any POST and forwards `title`/`body` to any FCM token in the payload. An attacker who obtains/guesses an FCM token can push arbitrary spoofed notifications to your users; even without tokens it is an open relay endpoint.
 **Fix:** require a shared secret (path segment or header) configured in Synapse's pusher `data.url` and verify it in the function; optionally validate `app_id === 'bkaiser.scs.chat'` and cap notification body length.
+
+> **Status: FIXED & DEPLOYED (2026-06-12), with S3.** `matrixPushGateway` now requires the `MATRIX_PUSH_GATEWAY_SECRET` query param (403 otherwise — verified), filters by `app_id`, and caps title/body length. The secret is server-side only (set by `registerMatrixPusher`, never in the client bundle). See the S3 status note for the full mechanism. Header-based secret isn't possible — Synapse pushers can't add custom headers — hence the query param.
 
 ### SEC-3 (High): `getMatrixCredentials` has no AppCheck and no provisioning gate
 
@@ -214,7 +227,7 @@ Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matri
 1. ~~**SEC-1** — switch group-room creation to invite-only + migrate existing rooms' join rules.~~ **Done 2026-06-12** (CF code change + migration of 17 rooms; see status note under SEC-1).
 2. ~~**S5 / ARCH-4** — persist `matrixRoomId` on the group doc; single `resolveGroupRoom()`; unify alias sanitization; clean up duplicate rooms (incl. `!GXmh…`).~~ **Done 2026-06-12** (CF code + schema deployed; 2 twins purged, "Dienstags 4-er" relinked, 0 duplicates remain; authz revised to system-user gate per product owner — see S5 status note).
 3. ~~**S2** — fix `repairDmRoomsAccountData()` heuristic; clean `m.direct` account data.~~ **Done 2026-06-12** (client-only: `isDirectRoom()` name-guard + two-way `m.direct` reconcile + `createDirectRoom` sync guard; self-heals on next sync. Duplicate *identities* deferred to S1 — see S2 status note).
-4. **S3** — append `/_matrix/push/v1/notify` to the pusher URL; add gateway shared-secret (**SEC-2**) in the same step since the URL changes anyway. *(Medium)*
+4. ~~**S3** — append `/_matrix/push/v1/notify` to the pusher URL; add gateway shared-secret (**SEC-2**) in the same step.~~ **Code done + functions deployed 2026-06-12** (hosting rewrite + query-param secret + server-side `registerMatrixPusher`; the bare suffix doesn't work — Synapse needs the exact path). **Remaining: run `firebase deploy --only hosting:scs-app-54aef` to activate.** See S3 / SEC-2 status notes.
 5. **S1** — dedicated service account for `MATRIX_ADMIN_TOKEN`; hide it in the UI; delete `apps/functions/src/matrix/`. *(Medium)*
 6. **SEC-3/4** — AppCheck on all matrix callables, provisioning gate + no UID fallback in `getMatrixCredentials`, server-side logout on credential clear. *(Medium)*
 7. **ARCH-1/2, C-1…C-9, P-1/P-2/P-5** — consolidation and hygiene, best done as a follow-up refactor once behavior is stabilized. *(Ongoing)*
