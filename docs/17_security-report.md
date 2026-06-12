@@ -75,7 +75,8 @@ Updated as fixes land. "Pending deploy" = code committed to `main` but not yet p
 | **M-3** | Unauthenticated password-reset enumeration/abuse | ✅ **Fixed, pending deploy** | generic success on unknown account (no enumeration); drop caller templateVariables — commit `d52681fb` |
 | **M-9** | `set-env.js` tracked despite "never commit" rule | ✅ **Done** | `git rm --cached` + gitignored; history-clean (env-var plumbing only) — commit `4b730403` |
 | **M-4** | PDF raw-HTML sanitizer is regex-only | ✅ **Fixed, pending deploy** | sanitize-html allowlist + Puppeteer network-block in raw mode — commit `63627ed1` |
-| **M-5, M-7** | (see sections below) | ⬜ Open | — |
+| **M-5** | Mailtrap webhook accepts unauthenticated POSTs | ✅ **Fixed, pending deploy** | verify `Mailtrap-Signature` HMAC-SHA256 over raw body; 401 on invalid — commit `79da1cee` |
+| **M-7** | (see section below) | ⬜ Open | — |
 | **L-1…L-4, I-1…I-5** | (see sections below) | ⬜ Open | — |
 
 **Firestore rules (C-1/C-2/M-8/M-11): ✅ DEPLOYED 2026-06-12.** Post-deploy verification to run on the live app:
@@ -222,10 +223,10 @@ With `template === 'scs_password_reset'` auth is skipped. Re-assessed against th
 Puppeteer `setContent` still executed `<img onerror>`, `<iframe>`, `<link>`, `<style>` `url()` etc. and fired outbound requests → SSRF/exfiltration from the function's network (admin/contentAdmin-gated, which bounded exposure).
 **Fix applied (both halves of the recommendation):** (1) replaced the regex with `sanitize-html` using a document-oriented allowlist — keeps rich formatting + inline styles, drops `script`/`iframe`/`object`/`embed`/`form`/`base`/`link`/`meta` and event handlers, limits schemes to `https`/`data`/`mailto`; imported dynamically and esbuild-`external` so cold start stays lean. (2) In raw-HTML mode, Puppeteer request interception aborts every non-`data:` request, so any residual `url()` cannot reach the network; template/asset mode keeps network for its server-signed asset URLs. `sanitizeHtml` is now async. Functions build verified; `sanitize-html ^2.13.0` resolves cloud-side via `generatePackageJson`. Commit `63627ed1`. **Not yet deployed** (`firebase deploy --only functions`).
 
-### M-5 — Mailtrap webhook accepts unauthenticated POSTs
-**Location:** `apps/functions/src/email/index.ts:25`
-No signature/secret verification; anyone can flood `emailEvents` with forged delivery/bounce telemetry (cost + integrity).
-**Fix:** Verify Mailtrap's HMAC signing secret before persisting.
+### M-5 — Mailtrap webhook accepts unauthenticated POSTs — *FIXED, pending deploy (2026-06-12)*
+**Location:** `apps/functions/src/email/index.ts`
+No signature/secret verification; anyone could flood `emailEvents` with forged delivery/bounce telemetry (cost + integrity).
+**Fix applied:** verify Mailtrap's `Mailtrap-Signature` header — HMAC-SHA256 (hex) of the **raw** request body computed with the per-webhook signing secret — via a constant-time compare on `req.rawBody`; reject with `401` on missing/invalid signature. (Confirmed the exact header/algorithm against the official Mailtrap docs; this is the same class of bug as the Symfony Mailtrap mailer CVE-2026-45755 where the HMAC was never verified.) Commit `79da1cee`. **Deploy prerequisite:** `firebase functions:secrets:set MAILTRAP_WEBHOOK_SECRET` (value from Mailtrap dashboard → webhook details), then `firebase deploy --only functions` — Firebase requires the secret to exist, so the deploy will prompt for it if unset.
 
 ### M-6 — Role model split-brain: rules check custom claims; app checks Firestore roles — *FIXED, pending deploy (2026-06-12)*
 **Location:** `apps/functions/src/auth/index.ts`, `libs/shared/util-functions/src/lib/general.util.ts`
