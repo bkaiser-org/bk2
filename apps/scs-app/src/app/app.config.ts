@@ -2,6 +2,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, inject, Injector, isDevMode, PLATFORM_ID, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter, RouteReuseStrategy, withComponentInputBinding } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
+import { provideServiceWorker } from '@angular/service-worker';
 
 import { ENV } from '@bk2/shared-config';
 import { isBrowser, VersionCheckService } from '@bk2/shared-util-angular';
@@ -32,6 +33,19 @@ try {
   console.error('Firebase initialization error (can happen with HMR, ignore "already exists" error', e);
 }
 
+// One-time cleanup of the stale root-scope FCM service worker registration.
+// Older builds eagerly registered firebase-messaging-sw.js at scope '/', which now
+// blocks ngsw from owning the root scope. This unregisters only that root-scoped FCM
+// worker; the FCM SDK re-registers it under /firebase-cloud-messaging-push-scope/ on
+// the next getToken() call. See docs/16_spec-pwa-caching.md §5.1.
+if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs
+      .filter(r => r.active?.scriptURL.endsWith('/firebase-messaging-sw.js') && r.scope.endsWith('/'))
+      .forEach(r => r.unregister());
+  }).catch(() => { /* ignore — cleanup is best-effort */ });
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
@@ -42,6 +56,16 @@ export const appConfig: ApplicationConfig = {
     provideIonicAngular({ useSetInputAPI: true, innerHTMLTemplatesEnabled: true }),
     // provideClientHydration disabled - Ionic doesn't fully support SSR hydration yet
     provideRouter(appRoutes, withComponentInputBinding()),
+
+    // Register the Angular service worker (ngsw) to cache the app shell + static assets.
+    // Deferred until the app is stable (or 30 s) so it stays off the critical path with
+    // Matrix init (10 s deferred) and Analytics. The SSR guard keeps the registrar's
+    // lifecycle code off the server render path. See docs/16_spec-pwa-caching.md §4.
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode() && typeof window !== 'undefined',
+      registrationStrategy: 'registerWhenStable:30000',
+      scope: '/',
+    }),
 
     importProvidersFrom(TranslateModule.forRoot()),
     provideHttpClient(),

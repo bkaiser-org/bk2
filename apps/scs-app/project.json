@@ -55,6 +55,7 @@
         "polyfills": [],
         "tsConfig": "apps/scs-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
+        "serviceWorker": "apps/scs-app/ngsw-config.json",
         "assets": [
           "apps/scs-app/src/assets",
           {
@@ -659,11 +660,6 @@
           },
           "apps/scs-app/src/firebase-messaging-sw.js",
           "apps/scs-app/src/firebase-config.js",
-          {
-            "glob": "**/*.svg",
-            "input": "node_modules/ionicons/dist/ionicons/svg",
-            "output": "./svg"
-          },
           {
             "glob": "manifest.webmanifest",
             "input": "apps/scs-app/src",

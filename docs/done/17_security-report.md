@@ -75,7 +75,8 @@ Updated as fixes land. "Pending deploy" = code committed to `main` but not yet p
 | **M-3** | Unauthenticated password-reset enumeration/abuse | ✅ **Fixed, pending deploy** | generic success on unknown account (no enumeration); drop caller templateVariables — commit `d52681fb` |
 | **M-9** | `set-env.js` tracked despite "never commit" rule | ✅ **Done** | `git rm --cached` + gitignored; history-clean (env-var plumbing only) — commit `4b730403` |
 | **M-4** | PDF raw-HTML sanitizer is regex-only | ✅ **Fixed, pending deploy** | sanitize-html allowlist + Puppeteer network-block in raw mode — commit `63627ed1` |
-| **M-5, M-7** | (see sections below) | ⬜ Open | — |
+| **M-5** | Mailtrap webhook accepts unauthenticated POSTs | ✅ **Fixed, pending deploy** | verify `Mailtrap-Signature` HMAC-SHA256 over raw body; 401 on invalid — commit `79da1cee` |
+| **M-7** | Per-collection RBAC + public-read scoping + public-website audit | 🟢 **Done, pending deploy** | (a) CMS writes → content-role (`630c3d5f`); (b) `orgs`/`resources`/`tags` read → `tenantRead()`, + publicApi hardened (server-side HTML sanitizer, `/contact` rate limit, CORS/tenant config) — see analysis |
 | **L-1…L-4, I-1…I-5** | (see sections below) | ⬜ Open | — |
 
 **Firestore rules (C-1/C-2/M-8/M-11): ✅ DEPLOYED 2026-06-12.** Post-deploy verification to run on the live app:
@@ -222,20 +223,36 @@ With `template === 'scs_password_reset'` auth is skipped. Re-assessed against th
 Puppeteer `setContent` still executed `<img onerror>`, `<iframe>`, `<link>`, `<style>` `url()` etc. and fired outbound requests → SSRF/exfiltration from the function's network (admin/contentAdmin-gated, which bounded exposure).
 **Fix applied (both halves of the recommendation):** (1) replaced the regex with `sanitize-html` using a document-oriented allowlist — keeps rich formatting + inline styles, drops `script`/`iframe`/`object`/`embed`/`form`/`base`/`link`/`meta` and event handlers, limits schemes to `https`/`data`/`mailto`; imported dynamically and esbuild-`external` so cold start stays lean. (2) In raw-HTML mode, Puppeteer request interception aborts every non-`data:` request, so any residual `url()` cannot reach the network; template/asset mode keeps network for its server-signed asset URLs. `sanitizeHtml` is now async. Functions build verified; `sanitize-html ^2.13.0` resolves cloud-side via `generatePackageJson`. Commit `63627ed1`. **Not yet deployed** (`firebase deploy --only functions`).
 
-### M-5 — Mailtrap webhook accepts unauthenticated POSTs
-**Location:** `apps/functions/src/email/index.ts:25`
-No signature/secret verification; anyone can flood `emailEvents` with forged delivery/bounce telemetry (cost + integrity).
-**Fix:** Verify Mailtrap's HMAC signing secret before persisting.
+### M-5 — Mailtrap webhook accepts unauthenticated POSTs — *FIXED, pending deploy (2026-06-12)*
+**Location:** `apps/functions/src/email/index.ts`
+No signature/secret verification; anyone could flood `emailEvents` with forged delivery/bounce telemetry (cost + integrity).
+**Fix applied:** verify Mailtrap's `Mailtrap-Signature` header — HMAC-SHA256 (hex) of the **raw** request body computed with the per-webhook signing secret — via a constant-time compare on `req.rawBody`; reject with `401` on missing/invalid signature. (Confirmed the exact header/algorithm against the official Mailtrap docs; this is the same class of bug as the Symfony Mailtrap mailer CVE-2026-45755 where the HMAC was never verified.) Commit `79da1cee`. **Deploy prerequisite:** `firebase functions:secrets:set MAILTRAP_WEBHOOK_SECRET` (value from Mailtrap dashboard → webhook details), then `firebase deploy --only functions` — Firebase requires the secret to exist, so the deploy will prompt for it if unset.
 
 ### M-6 — Role model split-brain: rules check custom claims; app checks Firestore roles — *FIXED, pending deploy (2026-06-12)*
 **Location:** `apps/functions/src/auth/index.ts`, `libs/shared/util-functions/src/lib/general.util.ts`
 The auth admin callables gated on `checkAdminUser` (`request.auth.token.admin`) and `checkAdminClaim` (`customClaims.admin`). No function mints these claims, so the basis was unauditable and out of sync with the app (client guards and Firestore rules authorize from `users/{uid}.roles`). The Firestore-rules half of this split-brain was already eliminated by the C-1 rewrite (rules now use `get()` on the user doc).
 **Fix applied:** replaced both helpers with a single `checkAdminRole()` that reads `users/{uid}.roles.admin` (source of truth) while still accepting a legacy `admin` custom claim, so already-provisioned admins are not locked out; updated all call sites. Functions build verified. Commit `d2c6ea9d`. **Not yet deployed** (`firebase deploy --only functions`). Follow-up: once confirmed, the legacy-claim fallback can be dropped.
 
-### M-7 — Public unauthenticated read of `orgs`, `resources`, `tags` across all tenants
-**Location:** `firestore.rules:30-45`
-Unlike `pages`/`sections`/`menuItems` (defensible pre-login CMS bootstrap), these are operational club data, and none of the public reads are tenant-scoped.
-**Fix:** Require auth (and tenant) for `orgs`/`resources`/`tags`; for CMS collections decide deliberately whether full public exposure is intended.
+### M-7 — Rules Phase 2: per-collection RBAC + public-read scoping — *PARTIALLY DONE (2026-06-12)*
+M-7 has two distinct sub-parts; the C-1 rewrite tagged both "Phase 2 / M-7".
+
+**(a) Per-collection write RBAC — ✅ done for CMS content (commit `630c3d5f`).**
+Investigation found the app enforces only three guard tiers (authenticated / privileged / admin), and route guards gate *management views*, not *writes* (e.g. `activities` are written as an audit side-effect by every user, yet the activity route is admin). So a blind route-guard→write-rule mapping would break legitimate/side-effect writes. The safe, confirmed-no-side-effect set is the CMS content authored only in the privileged CMS UI: `pages`, `sections`, `menuItems`, `categories` — their writes now require `isContentManager()` (`contentAdmin`/`privileged`/`admin`) + tenant membership. All other collections deliberately stay at "authenticated tenant member" (their edit UIs are authenticated-guarded; `docs`/`addresses`/`activities` etc. have user/side-effect write paths). Per-collection RBAC for the rest would need write-call-site analysis + domain confirmation and is **not pursued** (chosen scope: CMS-only).
+
+**(b) Public unauthenticated read of `orgs`, `resources`, `tags` — ✅ FIXED + full public-website-generation audit (2026-06-12).**
+**Location:** `firestore.rules`; `apps/functions/src/publicApi/**`; `apps/scs-website/**`
+
+*Mechanism confirmed.* The public-facing static websites (`apps/*-website`) do **not** read Firestore directly — `apps/scs-website/assets/api.js` fetches curated, field-mapped JSON only from the `publicApi` Cloud Function (Admin SDK, the single public gateway). The **only** browser path that reads Firestore anonymously is the PWA's `public/*` landing (`cms-page` `PageDispatcher` → `pages` + `sections`, whose `PageStore` resources are *ungated*). Every other reference collection (`orgs`/`resources`/`tags`/`categories`/`groups`/`persons`/`appConfig`) is loaded by `AppStore` **only after login** — each `rxResource` is gated on `fbUser` (`if (!params.fbUser …) return of([])`). So `orgs`/`resources`/`tags` had no anonymous reader and were needlessly world-readable across tenants (whole docs, all fields).
+
+*Fixes applied:*
+1. **Rules (lock read):** `orgs`/`resources`/`tags` `allow read: if true` → `tenantRead()` (authenticated + tenant-scoped). `pages`/`sections` kept public (PWA anonymous landing renders them); `categories`/`menuItems` kept public (low-sensitivity CMS nav; `menuItems` is read ungated by the app-shell menu store); `app-config`/`app-version` kept public (bootstrap). Emulator-verified: anon GET `orgs`/`resources`/`tags` → 403; tenant member → allowed; cross-tenant → 403; `pages`/`sections` anon → allowed. **42 Firestore + 21 Storage rules-tests pass.**
+2. **publicApi — stored-XSS chokepoint (new finding):** the static sites render API HTML (`htmlContent`/`contentI18n`/`excerpt`) via raw `innerHTML` (`seite.html`, `news-artikel.html`, `impressum.html`, `datenschutz.html`, `index.html`, `news.html`) — **no client-side sanitizer** (unlike the PWA, which is protected by Angular's `DomSanitizer`). A content author could otherwise store `<script>`/`<img onerror>`/`<iframe>` that runs on every public visitor. Added `apps/functions/src/publicApi/sanitize.ts` (reuses the `sanitize-html` dep from M-4) with an article-fragment allowlist (drops script/iframe/object/embed/form/style + inline event handlers + `style` attrs; only `https`/`mailto`/`data:` schemes; forces `rel=noopener noreferrer` on `target=_blank`). Applied server-side in the `pages` and `news` routes — one chokepoint protects all four sites. Unit-tested (9 cases).
+3. **publicApi — `/contact` relay abuse:** the contact route relayed email with only a honeypot — no rate limiting. Added `apps/functions/src/publicApi/rateLimit.ts`: Firestore fixed-window limiter in `_rateLimits` (Admin-SDK only) — per-IP (5/h, best-effort) **plus** a global backstop (100/h) that bounds total volume even if the `X-Forwarded-For` IP is spoofed; fails **open** on a datastore error so a Firestore blip can't take the form offline; returns `429` + `Retry-After`. Unit-tested (`clientIp`, 5 cases). *Deploy note: configure a Firestore TTL policy on `_rateLimits.expiresAt` to auto-purge buckets.*
+4. **publicApi — CORS + tenant scoping + hardening:** `ALLOWED_ORIGINS` is now env-configurable (`PUBLIC_API_ALLOWED_ORIGINS`, comma-separated, merged with the firebase-domain defaults) so production custom domains (e.g. `seeclub.org`) can be added at deploy time without a code edit — fixes the latent CORS breakage noted in L-4. Optional tenant allowlist (`PUBLIC_API_ALLOWED_TENANTS`, default off to never break a newly onboarded tenant) rejects unknown `?tenantId=` to stop arbitrary-tenant probing. Also: `x-powered-by` disabled, `express.json({ limit: '64kb' })`, JSON 404 catch-all, and a last-resort error handler that never leaks stack traces.
+
+*Verified:* `pnpm nx build functions --configuration production` clean; `sanitize-html` correctly externalized and present in the generated `dist/apps/functions/package.json`; `pnpm nx vite:test functions` → **43 tests pass**.
+
+*Deploy prerequisites:* `firebase deploy --only firestore:rules` (read lock) + `firebase deploy --only functions` (publicApi). Optional: set `PUBLIC_API_ALLOWED_ORIGINS` / `PUBLIC_API_ALLOWED_TENANTS`; add a `_rateLimits.expiresAt` TTL policy.
 
 ### M-8 — `sessions` docs updatable without authentication — *DEPLOYED (2026-06-12)*
 **Fix applied:** the `sessions` update rule now requires the tenant to be unchanged AND either `userKey` unchanged (anonymous heartbeat / end-session) or `userKey` set to the authenticated caller's own uid (login upgrade) — so an anonymous client can no longer forge an arbitrary `userKey`. Emulator-verified: anonymous PATCH forging `userKey` → 403; anonymous heartbeat (userKey unchanged) → 200. **Deployed 2026-06-12.**
@@ -281,7 +298,7 @@ Reverse-tabnabbing.
 ### L-4 — Public API CORS reflects any origin — *FIXED, pending deploy (2026-06-12)*
 **Location:** `apps/functions/src/publicApi/index.ts`
 No credentials, content is public; impact limited to cross-origin contact-form spam (already honeypot-protected) — so CORS adds little security here, but the report's recommendation was applied.
-**Fix applied:** replaced `origin: true` with an origin callback allowing only known site origins, while still permitting same-origin (`/web/api` rewrite) and server-side (no `Origin`) callers, so the primary consumer is unaffected. Commit `c5d358d2`. **Verify:** add any production custom domain that fetches this API cross-origin from a browser to `ALLOWED_ORIGINS`.
+**Fix applied:** replaced `origin: true` with an origin callback allowing only known site origins, while still permitting same-origin (`/web/api` rewrite) and server-side (no `Origin`) callers, so the primary consumer is unaffected. Commit `c5d358d2`. **Further hardened in M-7(b):** `ALLOWED_ORIGINS` is now env-configurable via `PUBLIC_API_ALLOWED_ORIGINS` so production custom domains can be added at deploy time without a code edit (closes the "add custom domain" follow-up).
 
 ---
 
