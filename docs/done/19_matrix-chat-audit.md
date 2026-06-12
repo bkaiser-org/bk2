@@ -28,13 +28,13 @@ Additionally, the audit found a **critical security gap**: group rooms are creat
 
 Evidence:
 
-- `MATRIX_ADMIN_TOKEN` belongs to a *personal* admin account (`@bruno`, display name "Matrix Admin"). The code itself acknowledges this: *"the MATRIX_ADMIN_TOKEN may belong to a regular user, not a dedicated service account"* ([matrix-simple/index.ts:452](../apps/functions/src/matrix-simple/index.ts#L452)).
+- `MATRIX_ADMIN_TOKEN` belongs to a *personal* admin account (`@bruno`, display name "Matrix Admin"). The code itself acknowledges this: *"the MATRIX_ADMIN_TOKEN may belong to a regular user, not a dedicated service account"* ([matrix-simple/index.ts:452](../../apps/functions/src/matrix-simple/index.ts#L452)).
 - Every group-room CF (`requestGroupRoomAccess`, `invitePersonToGroupRoom`, `kickPersonFromGroupRoom`, `renameMatrixRoom`) runs `whoami` + `make_room_admin` / admin-join to get this account **into the room** before it can invite/kick. So `@bruno` accumulates membership in every room and shows up in every member list.
-- Your app account is provisioned separately as `@<personKey>:<server>` (`@kaiser…`) by `getMatrixCredentials` ([matrix-simple/index.ts:108-252](../apps/functions/src/matrix-simple/index.ts#L108-L252)).
+- Your app account is provisioned separately as `@<personKey>:<server>` (`@kaiser…`) by `getMatrixCredentials` ([matrix-simple/index.ts:108-252](../../apps/functions/src/matrix-simple/index.ts#L108-L252)).
 
 So there genuinely are two accounts, by design — the problem is that the admin account is (a) a personal account and (b) visible everywhere.
 
-There is also a **third, latent identity scheme**: the legacy module [apps/functions/src/matrix/index.ts](../apps/functions/src/matrix/index.ts) derives user IDs from the **Firebase UID** and — worse — uses `matrix.bkchat.etke.host` (with the `matrix.` prefix) as the server name, while everything else strips the prefix (`bkchat.etke.host`). These three functions (`ensureMatrixUser`, `ensureGroupRoom`, `syncUserProfileToMatrix`) are still exported in [main.ts:79-82](../apps/functions/src/main.ts#L79-L82) but have **no client callers**. If they were ever called in the past, they are the origin of stray UID-based accounts.
+There is also a **third, latent identity scheme**: the legacy module [apps/functions/src/matrix/index.ts](../../apps/functions/src/matrix/index.ts) derives user IDs from the **Firebase UID** and — worse — uses `matrix.bkchat.etke.host` (with the `matrix.` prefix) as the server name, while everything else strips the prefix (`bkchat.etke.host`). These three functions (`ensureMatrixUser`, `ensureGroupRoom`, `syncUserProfileToMatrix`) are still exported in [main.ts:79-82](../../apps/functions/src/main.ts#L79-L82) but have **no client callers**. If they were ever called in the past, they are the origin of stray UID-based accounts.
 
 **Recommendation:**
 
@@ -52,14 +52,14 @@ There is also a **third, latent identity scheme**: the legacy module [apps/funct
 
 ### S2 — Duplicate "Matrix Admin" direct chats
 
-`repairDmRoomsAccountData()` ([matrix-chat.service.ts:1069-1105](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L1069-L1105)) runs on every `PREPARED` sync and marks **every joined room with exactly 2 joined members** as a DM in `m.direct`. The exclusions (name starts with `!!`, alias starts with `#group_`) do not cover:
+`repairDmRoomsAccountData()` ([matrix-chat.service.ts:1069-1105](../../libs/chat/data-access/src/lib/matrix-chat.service.ts#L1069-L1105)) runs on every `PREPARED` sync and marks **every joined room with exactly 2 joined members** as a DM in `m.direct`. The exclusions (name starts with `!!`, alias starts with `#group_`) do not cover:
 
-- group rooms created client-side via `createGroupRoom()` — these get **no alias** at all ([matrix-chat.service.ts:1443-1459](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L1443-L1459));
+- group rooms created client-side via `createGroupRoom()` — these get **no alias** at all ([matrix-chat.service.ts:1443-1459](../../libs/chat/data-access/src/lib/matrix-chat.service.ts#L1443-L1459));
 - any room where, right now, only *you and the admin account* happen to be joined (other members invited but not yet joined, or kicked).
 
 Each such room becomes a DM keyed to `@bruno` → the room list renders it with the other member's display name: "Matrix Admin". Two such rooms ⇒ two "Matrix Admin" direct chats. (`m.direct` allows multiple room IDs per user, and `updateRoomsList()` renders each one.)
 
-A second duplicate-DM mechanism exists in `createDirectRoom()`: `findExistingDirectRoom()` ([matrix-chat.service.ts:1357-1379](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L1357-L1379)) skips rooms that aren't in the local cache yet. If a DM is created before the initial sync completes (or from a second device with fresh storage — note `clearStores()` on every disconnect), a second DM room with the same person is created.
+A second duplicate-DM mechanism exists in `createDirectRoom()`: `findExistingDirectRoom()` ([matrix-chat.service.ts:1357-1379](../../libs/chat/data-access/src/lib/matrix-chat.service.ts#L1357-L1379)) skips rooms that aren't in the local cache yet. If a DM is created before the initial sync completes (or from a second device with fresh storage — note `clearStores()` on every disconnect), a second DM room with the same person is created.
 
 **Recommendation:**
 
@@ -85,7 +85,7 @@ The pusher is registered with
 data: { url: 'https://europe-west6-bkaiser-org.cloudfunctions.net/matrixPushGateway' }
 ```
 
-([matrix-initialization.service.ts:105-116](../libs/chat/feature/src/lib/matrix-initialization.service.ts#L105-L116)). The Matrix spec/Synapse **require the HTTP pusher URL to end with `/_matrix/push/v1/notify`**; Synapse rejects anything else with 400 (`Invalid value for 'url'`). The push gateway has therefore *never* been registered, and background push for chat messages has never worked (you may not have noticed because `sendCallNotification` pushes via FCM directly).
+([matrix-initialization.service.ts:105-116](../../libs/chat/feature/src/lib/matrix-initialization.service.ts#L105-L116)). The Matrix spec/Synapse **require the HTTP pusher URL to end with `/_matrix/push/v1/notify`**; Synapse rejects anything else with 400 (`Invalid value for 'url'`). The push gateway has therefore *never* been registered, and background push for chat messages has never worked (you may not have noticed because `sendCallNotification` pushes via FCM directly).
 
 **Recommendation:** register the pusher with
 
@@ -93,22 +93,22 @@ data: { url: 'https://europe-west6-bkaiser-org.cloudfunctions.net/matrixPushGate
 https://europe-west6-bkaiser-org.cloudfunctions.net/matrixPushGateway/_matrix/push/v1/notify
 ```
 
-`onRequest` functions receive sub-paths, so [matrixPushGateway](../apps/functions/src/matrix-simple/index.ts#L1561) will be invoked unchanged (optionally check `req.path` for safety). Also add a `format` (e.g. `'event_id_only'` is *not* desired here — keep full format, so simply omit) and consider `append: false` semantics (current value is fine — replaces other pushers with the same app_id+pushkey).
+`onRequest` functions receive sub-paths, so [matrixPushGateway](../../apps/functions/src/matrix-simple/index.ts#L1561) will be invoked unchanged (optionally check `req.path` for safety). Also add a `format` (e.g. `'event_id_only'` is *not* desired here — keep full format, so simply omit) and consider `append: false` semantics (current value is fine — replaces other pushers with the same app_id+pushkey).
 
 > **Status: CODE FIXED & FUNCTIONS DEPLOYED (2026-06-12); needs a one-time hosting deploy to activate.**
 >
 > **Correction to the recommendation above:** appending the suffix to the `cloudfunctions.net/matrixPushGateway` URL does **not** work. Synapse requires the URL *path* to be **exactly** `/_matrix/push/v1/notify` (`urlparse(url).path == '/_matrix/push/v1/notify'`), not merely to end with it — verified live: both the bare URL and `.../matrixPushGateway/<x>/_matrix/push/v1/notify` return 400 (`'url' must have a path of '/_matrix/push/v1/notify'`). The function-name prefix `/matrixPushGateway` can never satisfy this.
 >
 > **Actual fix (S3 + SEC-2 together):**
-> - Added a Firebase Hosting rewrite on `scs-app-54aef`: `/_matrix/push/v1/notify` → `matrixPushGateway` ([firebase.json](../firebase.json)). The public path is then exactly `/_matrix/push/v1/notify`, which Synapse accepts (verified: `/pushers/set` with `https://scs-app-54aef.web.app/_matrix/push/v1/notify?secret=…` → 200).
+> - Added a Firebase Hosting rewrite on `scs-app-54aef`: `/_matrix/push/v1/notify` → `matrixPushGateway` ([firebase.json](../../firebase.json)). The public path is then exactly `/_matrix/push/v1/notify`, which Synapse accepts (verified: `/pushers/set` with `https://scs-app-54aef.web.app/_matrix/push/v1/notify?secret=…` → 200).
 > - **SEC-2** secret: a new `MATRIX_PUSH_GATEWAY_SECRET` (Firebase secret) travels as a **query param** (Synapse's path check ignores the query). `matrixPushGateway` rejects any call without it — verified live: no-secret → 403, wrong → 403, correct → 200. The gateway is no longer an open relay. Also added: per-device `app_id` filter (`bkaiser.scs.chat`) and title/body length caps.
-> - Pusher registration moved **server-side** into a new `registerMatrixPusher` CF so the secret never ships in the client bundle: it mints a short-lived user token via the admin API and calls `/pushers/set` with the secret-bearing URL. The client ([matrix-initialization.service.ts](../libs/chat/feature/src/lib/matrix-initialization.service.ts)) now calls this CF instead of `client.setPusher()`; the unused `MatrixChatService.setPusher` was removed.
+> - Pusher registration moved **server-side** into a new `registerMatrixPusher` CF so the secret never ships in the client bundle: it mints a short-lived user token via the admin API and calls `/pushers/set` with the secret-bearing URL. The client ([matrix-initialization.service.ts](../../libs/chat/feature/src/lib/matrix-initialization.service.ts)) now calls this CF instead of `client.setPusher()`; the unused `MatrixChatService.setPusher` was removed.
 >
 > **⚠️ Action required to finish S3:** deploy the hosting rewrite — `firebase deploy --only hosting:scs-app-54aef`. Until then Synapse accepts the pusher URL but POSTs to it hit the SPA catch-all (no notifications). The client re-registers the pusher automatically on next app load once the rewrite is live. No client code change is needed to activate it.
 
 ### S4 — "No message subject found for room …" warnings
 
-[handleNewMessage()](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L629-L686) fires for *every* live timeline message in *every* joined room. The `messages$` subject only exists for rooms the user has actually opened, so each incoming message in any other room logs a `console.warn`. This is normal operation, not an error — at most a `debugMessage`.
+[handleNewMessage()](../../libs/chat/data-access/src/lib/matrix-chat.service.ts#L629-L686) fires for *every* live timeline message in *every* joined room. The `messages$` subject only exists for rooms the user has actually opened, so each incoming message in any other room logs a `console.warn`. This is normal operation, not an error — at most a `debugMessage`.
 
 **Recommendation:** drop the warning (or route through `debugMessage`). No functional change needed; the room-list preview is handled separately via `roomsUpdateTrigger$`.
 
@@ -116,10 +116,10 @@ https://europe-west6-bkaiser-org.cloudfunctions.net/matrixPushGateway/_matrix/pu
 
 The CFs locate a group's room in three steps: canonical alias → Synapse name search (`r.name === groupId`) → **create a new room**. This chain breaks in several documented ways:
 
-1. **Alias derivation is inconsistent.** `requestGroupRoomAccess` sanitizes the alias localpart (`group_${groupId.toLowerCase().replace(/[^a-z0-9._~-]/g,'_')}`, [matrix-simple/index.ts:391](../apps/functions/src/matrix-simple/index.ts#L391)), but `invitePersonToGroupRoom`, `kickPersonFromGroupRoom` and `renameMatrixRoom` use the **raw** `#group_${groupId}` ([:652](../apps/functions/src/matrix-simple/index.ts#L652), [:760](../apps/functions/src/matrix-simple/index.ts#L760), [:856](../apps/functions/src/matrix-simple/index.ts#L856)). Any groupId containing uppercase or special characters resolves to *different aliases in different functions*.
+1. **Alias derivation is inconsistent.** `requestGroupRoomAccess` sanitizes the alias localpart (`group_${groupId.toLowerCase().replace(/[^a-z0-9._~-]/g,'_')}`, [matrix-simple/index.ts:391](../../apps/functions/src/matrix-simple/index.ts#L391)), but `invitePersonToGroupRoom`, `kickPersonFromGroupRoom` and `renameMatrixRoom` use the **raw** `#group_${groupId}` ([:652](../../apps/functions/src/matrix-simple/index.ts#L652), [:760](../../apps/functions/src/matrix-simple/index.ts#L760), [:856](../../apps/functions/src/matrix-simple/index.ts#L856)). Any groupId containing uppercase or special characters resolves to *different aliases in different functions*.
 2. **Name search breaks after rename.** Fallback matching requires `room.name === groupId`. As soon as `renameMatrixRoom` gives the room a friendly name, the name search can never match again.
 3. When both lookups fail, the function **creates a fresh room**. Result: two (or more) rooms for the same group; members are split across them. A user joined in room A is "not a member" of room B and vice versa — exactly the reported behavior for `!GXmhXU…`.
-4. For *old* rooms created with the former `private_chat` preset, the admin bootstrap (`make_room_admin` → invite → admin force-join) can fail (e.g. no joined local member with enough power), in which case step 6 throws `Room access denied for group …` ([matrix-simple/index.ts:495-507](../apps/functions/src/matrix-simple/index.ts#L495-L507)) even for legitimate members.
+4. For *old* rooms created with the former `private_chat` preset, the admin bootstrap (`make_room_admin` → invite → admin force-join) can fail (e.g. no joined local member with enough power), in which case step 6 throws `Room access denied for group …` ([matrix-simple/index.ts:495-507](../../apps/functions/src/matrix-simple/index.ts#L495-L507)) even for legitimate members.
 5. The Firestore membership check itself only filters `relIsLast == true` — it does **not** check that the membership is still active (no end-date / state check), so the gate is loose in the other direction too.
 
 **Recommendation (this is the most important fix):**
@@ -143,7 +143,7 @@ The CFs locate a group's room in three steps: canonical alias → Synapse name s
 
 ### SEC-1 (Critical): group rooms are effectively public on the homeserver
 
-`requestGroupRoomAccess` and `invitePersonToGroupRoom` create rooms with `preset: 'public_chat'` ([matrix-simple/index.ts:438](../apps/functions/src/matrix-simple/index.ts#L438), [:685](../apps/functions/src/matrix-simple/index.ts#L685)) so the admin API can force-join users. `public_chat` sets `join_rule: public` and `history_visibility: shared`. Consequence: **any user with an account on the homeserver can `joinRoom()` any group room directly via the SDK and read its full history**, bypassing the Firestore membership/visibility check entirely. The CF authorization is decorative. This may also be how the "wrong" users end up in rooms.
+`requestGroupRoomAccess` and `invitePersonToGroupRoom` create rooms with `preset: 'public_chat'` ([matrix-simple/index.ts:438](../../apps/functions/src/matrix-simple/index.ts#L438), [:685](../../apps/functions/src/matrix-simple/index.ts#L685)) so the admin API can force-join users. `public_chat` sets `join_rule: public` and `history_visibility: shared`. Consequence: **any user with an account on the homeserver can `joinRoom()` any group room directly via the SDK and read its full history**, bypassing the Firestore membership/visibility check entirely. The CF authorization is decorative. This may also be how the "wrong" users end up in rooms.
 
 **Fix:** create rooms with `join_rule: invite` (`preset: 'private_chat'`) **plus** an `initial_state` power level that gives the service account PL 100, and join members via *invite + admin force-join* (the invite makes force-join work on invite-only rooms — the code already does invite-then-join in steps 5–6, so the public preset is unnecessary). Then migrate existing rooms: set `m.room.join_rules` to `invite` on every `#group_*` room (admin script or one-off CF).
 
@@ -160,14 +160,14 @@ The CFs locate a group's room in three steps: canonical alias → Synapse name s
 
 ### SEC-2 (High): `matrixPushGateway` is unauthenticated
 
-[matrixPushGateway](../apps/functions/src/matrix-simple/index.ts#L1561-L1634) accepts any POST and forwards `title`/`body` to any FCM token in the payload. An attacker who obtains/guesses an FCM token can push arbitrary spoofed notifications to your users; even without tokens it is an open relay endpoint.
+[matrixPushGateway](../../apps/functions/src/matrix-simple/index.ts#L1561-L1634) accepts any POST and forwards `title`/`body` to any FCM token in the payload. An attacker who obtains/guesses an FCM token can push arbitrary spoofed notifications to your users; even without tokens it is an open relay endpoint.
 **Fix:** require a shared secret (path segment or header) configured in Synapse's pusher `data.url` and verify it in the function; optionally validate `app_id === 'bkaiser.scs.chat'` and cap notification body length.
 
 > **Status: FIXED & DEPLOYED (2026-06-12), with S3.** `matrixPushGateway` now requires the `MATRIX_PUSH_GATEWAY_SECRET` query param (403 otherwise — verified), filters by `app_id`, and caps title/body length. The secret is server-side only (set by `registerMatrixPusher`, never in the client bundle). See the S3 status note for the full mechanism. Header-based secret isn't possible — Synapse pushers can't add custom headers — hence the query param.
 
 ### SEC-3 (High): `getMatrixCredentials` has no AppCheck and no provisioning gate
 
-Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matrix-simple` enforces AppCheck, and `getMatrixCredentials` does not call `requireProvisionedUser`. Any Firebase-authenticated identity (if signup is reachable) receives a Matrix account and a **30-day** access token; on `personKey` lookup failure it silently falls back to a **UID-based localpart** ([matrix-simple/index.ts:40-48](../apps/functions/src/matrix-simple/index.ts#L40-L48)) — a second avenue for duplicate accounts (S1).
+Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matrix-simple` enforces AppCheck, and `getMatrixCredentials` does not call `requireProvisionedUser`. Any Firebase-authenticated identity (if signup is reachable) receives a Matrix account and a **30-day** access token; on `personKey` lookup failure it silently falls back to a **UID-based localpart** ([matrix-simple/index.ts:40-48](../../apps/functions/src/matrix-simple/index.ts#L40-L48)) — a second avenue for duplicate accounts (S1).
 **Fix:** add `enforceAppCheck: true` to all matrix-simple callables; require a `users/{uid}` doc with a `personKey` in `getMatrixCredentials` (fail loudly instead of falling back to UID); shorten token validity (e.g. 7 days) — refresh already works via the `M_UNKNOWN_TOKEN` → re-auth path.
 
 > **Status: FIXED 2026-06-12 (needs functions deploy).** AppCheck (`enforceAppCheck: true`) and the 7-day token TTL were already in place from prior work. The remaining gap — the provisioning gate and UID fallback — is now closed: the lax `getMatrixLocalpart` (which fell back to the raw Firebase UID) was replaced by `requireMatrixLocalpart(uid, fnName)`, which **throws** (`permission-denied` / `failed-precondition`) when the caller has no `users/{uid}` doc or no `personKey`. All three minting paths (`getMatrixCredentials`, `syncFirebaseProfileToMatrix`, `registerMatrixPusher`) use it, so a Firebase identity without a provisioned, person-linked profile can no longer mint a stray `@<uid>` Matrix account. **Action required: `firebase deploy --only functions`.**
@@ -199,15 +199,15 @@ Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matri
 
 | ID | Finding | Location |
 | --- | --- | --- |
-| C-1 | `rooms` `distinctUntilChanged` comparator only compares `roomId`/`unreadCount`/`lastMessage.timestamp` — room **renames, avatar changes and typing updates are swallowed** until an unrelated field changes. | [matrix-chat.service.ts:70-78](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L70-L78) |
-| C-2 | `updateRoomsList()` is `async` and triggered concurrently (debounce only batches the trigger); two overlapping runs can emit out of order (older list last). Guard with an in-flight flag or serialize via `exhaustMap`. | [matrix-chat.service.ts:902](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L902) |
-| C-3 | `getMessagesForRoom()` retry heuristic re-loads whenever the subject is empty — an actually-empty room re-paginates on every subscription. Track "loaded" state separately from "empty". | [matrix-chat.service.ts:498-508](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L498-L508) |
-| C-4 | Edits arriving *before* the original message is in the list are dropped (`applyMessageEdit` returns when the original isn't found) — message shows stale text until reload. | [matrix-chat.service.ts:733-749](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L733-L749) |
-| C-5 | `loadMessagesForRoom` paginates only when `< 20` events and only **once** — no scroll-back pagination for older history; users can never read past ~50 events. | [matrix-chat.service.ts:567-576](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L567-L576) |
-| C-6 | `computePollTally`/`isPollEnded` scan only the live timeline — poll votes outside the loaded window silently disappear from the tally. Use the SDK relations API instead. | [matrix-chat.service.ts:778-834](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L778-L834) |
-| C-7 | `reportMessage` finds the support channel by `name === 'support'` — same name-as-identity fragility as S5. | [matrix-chat.store.ts:679](../libs/chat/feature/src/lib/matrix-chat.store.ts#L679) |
-| C-8 | `currentRoom` falls back to matching `roomId` against a room **name** (`r.name?.toLowerCase() === roomId.toLowerCase()`) — works by accident for aliases, but conflates the two ID spaces in yet another place. | [matrix-chat.store.ts:196-197](../libs/chat/feature/src/lib/matrix-chat.store.ts#L196-L197) |
-| C-9 | The store's `isMatrixInitialized` is only patched by `initializeMatrix()`; when `MatrixInitializationService` initializes first, the store relies on the `withState` factory snapshot — if the store is instantiated *before* early init completes, the flag stays `false` until the component path re-initializes. Drive this from a service-level observable instead of two write paths. | [matrix-chat.store.ts:36-41](../libs/chat/feature/src/lib/matrix-chat.store.ts#L36-L41) |
+| C-1 | `rooms` `distinctUntilChanged` comparator only compares `roomId`/`unreadCount`/`lastMessage.timestamp` — room **renames, avatar changes and typing updates are swallowed** until an unrelated field changes. | [matrix-chat.service.ts:70-78](../../libs/chat/data-access/src/lib/matrix-chat.service.ts#L70-L78) |
+| C-2 | `updateRoomsList()` is `async` and triggered concurrently (debounce only batches the trigger); two overlapping runs can emit out of order (older list last). Guard with an in-flight flag or serialize via `exhaustMap`. | [matrix-chat.service.ts:902](../../libs/chat/data-access/src/lib/matrix-chat.service.ts#L902) |
+| C-3 | `getMessagesForRoom()` retry heuristic re-loads whenever the subject is empty — an actually-empty room re-paginates on every subscription. Track "loaded" state separately from "empty". | [matrix-chat.service.ts:498-508](../../libs/chat/data-access/src/lib/matrix-chat.service.ts#L498-L508) |
+| C-4 | Edits arriving *before* the original message is in the list are dropped (`applyMessageEdit` returns when the original isn't found) — message shows stale text until reload. | [matrix-chat.service.ts:733-749](../../libs/chat/data-access/src/lib/matrix-chat.service.ts#L733-L749) |
+| C-5 | `loadMessagesForRoom` paginates only when `< 20` events and only **once** — no scroll-back pagination for older history; users can never read past ~50 events. | [matrix-chat.service.ts:567-576](../../libs/chat/data-access/src/lib/matrix-chat.service.ts#L567-L576) |
+| C-6 | `computePollTally`/`isPollEnded` scan only the live timeline — poll votes outside the loaded window silently disappear from the tally. Use the SDK relations API instead. | [matrix-chat.service.ts:778-834](../../libs/chat/data-access/src/lib/matrix-chat.service.ts#L778-L834) |
+| C-7 | `reportMessage` finds the support channel by `name === 'support'` — same name-as-identity fragility as S5. | [matrix-chat.store.ts:679](../../libs/chat/feature/src/lib/matrix-chat.store.ts#L679) |
+| C-8 | `currentRoom` falls back to matching `roomId` against a room **name** (`r.name?.toLowerCase() === roomId.toLowerCase()`) — works by accident for aliases, but conflates the two ID spaces in yet another place. | [matrix-chat.store.ts:196-197](../../libs/chat/feature/src/lib/matrix-chat.store.ts#L196-L197) |
+| C-9 | The store's `isMatrixInitialized` is only patched by `initializeMatrix()`; when `MatrixInitializationService` initializes first, the store relies on the `withState` factory snapshot — if the store is instantiated *before* early init completes, the flag stays `false` until the component path re-initializes. Drive this from a service-level observable instead of two write paths. | [matrix-chat.store.ts:36-41](../../libs/chat/feature/src/lib/matrix-chat.store.ts#L36-L41) |
 
 > **Status: C-1, C-2, C-3, C-4, C-6, C-7, C-8, C-9 FIXED 2026-06-12 (client-only). C-5 deferred.**
 >
@@ -225,7 +225,7 @@ Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matri
 
 ## 5. Architecture Findings
 
-**ARCH-1 — Two parallel initialization/credential paths.** `MatrixInitializationService.getMatrixCredentials()` and `MatrixChatStore.getMatrixToken()` are near-duplicates (same caching, same validation, same CF call), and both `startEarlyInitialization()` and the component `effect` in [matrix-chat.ts:572-578](../libs/chat/feature/src/lib/matrix-chat.ts#L572-L578) can race to initialize. Consolidate into **one** `ensureInitialized()` on the service (idempotent, promise-cached); store and init service both call it.
+**ARCH-1 — Two parallel initialization/credential paths.** `MatrixInitializationService.getMatrixCredentials()` and `MatrixChatStore.getMatrixToken()` are near-duplicates (same caching, same validation, same CF call), and both `startEarlyInitialization()` and the component `effect` in [matrix-chat.ts:572-578](../../libs/chat/feature/src/lib/matrix-chat.ts#L572-L578) can race to initialize. Consolidate into **one** `ensureInitialized()` on the service (idempotent, promise-cached); store and init service both call it.
 
 > **Status: DONE 2026-06-12, client-only.** Both credential-fetch implementations were deleted and replaced by a single `MatrixChatService.fetchCredentials()` + promise-cached `MatrixChatService.ensureInitialized()`: concurrent callers share one in-flight init, a failed attempt clears the cache for retry, and `disconnect()` resets it. `MatrixInitializationService.initializeMatrix()` and the chat component (via the store's thin `ensureInitialized()` delegate) both call it; the store's old `getMatrixToken`/`initializeMatrix` pair and the init service's private `getMatrixCredentials` are gone. Also fixes **C-9**: `isMatrixInitialized` is now a computed derived from a single `MatrixChatService.initialized` observable (flipped in `initialize()`/`disconnect()`), so the store can no longer hold a stale flag from a second write path.
 
@@ -314,14 +314,14 @@ This step also resolves SEC-4's token-accumulation issue, since real devices can
 
 ### Step 1 — Persist the stores (undo `clearStores()` on disconnect)
 
-[disconnect()](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L254-L271) calls `client.clearStores()` on every disconnect. With E2EE this would **destroy the local Megolm key store** — every reconnect loses the ability to decrypt history until backup restore. Change:
+[disconnect()](../../libs/chat/data-access/src/lib/matrix-chat.service.ts#L254-L271) calls `client.clearStores()` on every disconnect. With E2EE this would **destroy the local Megolm key store** — every reconnect loses the ability to decrypt history until backup restore. Change:
 
 - Only clear stores on *logout of a different user* (compare stored `matrix_user_id`), never on routine disconnect/token refresh.
 - Let Rust crypto use its default IndexedDB store (it does automatically in browsers). This also fixes P-5 (full re-sync on every start).
 
 ### Step 2 — Initialize crypto in the client
 
-In [initialize()](../libs/chat/data-access/src/lib/matrix-chat.service.ts#L148-L198), between `createClient()` and `startClient()`:
+In [initialize()](../../libs/chat/data-access/src/lib/matrix-chat.service.ts#L148-L198), between `createClient()` and `startClient()`:
 
 ```ts
 this.client = createClient({

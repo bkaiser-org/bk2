@@ -1,0 +1,222 @@
+# Pending & Deferred Functionality
+
+**Purpose:** A single reference of all functionality that the specs in [`docs/done/`](done/) describe as
+deferred, out of scope, postponed to a follow-up project, or otherwise not yet implemented.
+Use it to plan follow-up work. Each entry links back to its source spec.
+
+**Last compiled:** 2026-06-12 (from the 16 specs in `docs/done/`).
+
+> Legend: 🔴 not started / explicitly out of scope · 🟡 partially done, work remaining ·
+> 🚀 fixed in code, awaiting deploy/app build · ❓ open question / decision needed.
+
+---
+
+## 1. PDF Generator — [`01_pdf-generator-spezifikation.md`](done/01_pdf-generator-spezifikation.md)
+
+All original open points are resolved. Remaining deferrals are explicit non-goals of the iteration:
+
+- 🔴 **WYSIWYG template editing** — only an HTML/Handlebars source editor with preview ships; no visual editor (§1.3).
+- 🔴 **Client-side document generation** — intentionally excluded (privacy, layout consistency, template protection) (§1.3).
+- 🔴 **Integrated email dispatch in the CF** — sending stays client-side over the existing Mailgun transport (§1.3, §8.4).
+- 🔴 **Electronic signature (DeepSign)** — flagged as a follow-up project; see spec 02 (§1.3, §11.1).
+
+## 2. DeepSign E-Signature — [`02_deepsign-integration-spec.md`](done/02_deepsign-integration-spec.md)
+
+Out of scope for **v1** (§1):
+
+- 🔴 Hash signing.
+- 🔴 Company seals.
+- 🔴 Ad-hoc signee/observer management via API.
+- 🔴 Manual placement of signature fields (relies on embedded Text Field Patterns only).
+- 🔴 Batch upload and attachments.
+- 🔴 Non-PDF MIME types (DOCX/XLSX) — only `application/pdf` accepted in v1 (§9).
+
+## 3. Accounting / Buchhaltung — [`03_buchhaltungssystem-spezifikation.md`](done/03_buchhaltungssystem-spezifikation.md)
+
+Explicit follow-up projects ("Folgeprojekt") and open points (§1, §3, §7):
+
+- 🔴 **Lohnbuchhaltung (payroll)** — separate scope; see spec 11.
+- 🔴 **Kostenrechnung** (cost centres / cost objects) — Folgeprojekt; cost-centre report filter also deferred (§3, report filters).
+- 🔴 **EBICS direct connection** — Folgeprojekt; expansion stage (T / T+S / TS) still undecided. `PaymentOrderModel.deliveryMethod` already reserves `'ebics'`; Phase 7 ships only `pain001_download`.
+- 🔴 **Bexio Payments API direct upload** (`deliveryMethod = 'bexio_api'`) — later expansion stage.
+- 🔴 **Supplier-invoice platform integration** (eBill, Peppol BIS Billing 3.0) — Folgeprojekt.
+- 🔴 **Lagerbuchhaltung** (inventory accounting) — out of scope.
+- 🔴 **Multi-mandant consolidation** (consolidated balance across accounting mandates) — Folgeprojekt.
+- 🔴 **Sozialabgaben configuration** (Card §3.8.7) — separate spec, depends on payroll being in scope.
+- 🟡 **Invoice templates (layout, logo) for PDF generation** — detailed design still outstanding.
+- 🟡 **Migration `journallogs` → `bookings`** and rename `BookingJournalModel` → `BookingModel` — must be performed before implementation start.
+- 🟡 **CF adjustments for the Journal feature** — flagged as part of Phase 2 (Core Bookkeeping) (§ note at L75).
+
+## 4. Expense Feature — [`04_expense-feature-spezifikation.md`](done/04_expense-feature-spezifikation.md)
+
+Out of scope this iteration (§1.2) and open points (§9):
+
+- 🔴 **Approval-workflow module** — no dedicated approval step before booking creation.
+- 🔴 **Travel-expense flat rates** (mileage, per-diem) — Folgeprojekt.
+- 🔴 **Credit-card integration.**
+- ❓ Auto-payout to employee from the liability (pain.001 generation)?
+- ❓ VAT handling for foreign receipts without Swiss VAT — default behaviour undecided.
+- ❓ Multiple currencies within a single expense (e.g. EUR receipt, CHF form value)?
+- ❓ OCR learning loop — feed manual corrections back to improve recognition?
+- ❓ Duplicate-receipt behaviour (same content hash): warn or block?
+
+## 5. CMS Implementation — [`06_cms-review.md`](done/06_cms-review.md)
+
+Review-identified gaps in `cms/menu`, `cms/page`, `cms/section`:
+
+- 🔴 **Calendar & Chart sections: no edit UI** — `cal` and `chart` cases in `section.form.ts` are empty; configure-only via code (HIGH).
+- 🔴 **Files & Links sections** — defined in the model but have no feature components, no `SectionDispatcher` entry, no `createSection()` case ("exist only on paper") (HIGH).
+- 🔴 **Export methods are stubs** — `export()` in `page.store.ts` and `section.store.ts` only log "not yet implemented" (LOW: JSON/CSV export).
+- 🔴 **No error state in stores** — `MenuStore`, `PageStore`, `SectionStore` lack `isError`/`error` signals; no UI feedback on Firestore failure (HIGH).
+- 🟡 **Missing tests** — only 3 spec files; no service/store/form/component tests (MEDIUM).
+- 🟡 **No pagination / virtual scrolling** — lists load all items (MEDIUM).
+- 🟡 **No circular-menu-reference guard** — recursive sub-menu rendering can stack-overflow (MEDIUM).
+- 🟡 **`SectionForm` has no Vest validation** — inconsistent with `MenuForm`/`PageForm`; section validations in `util/` go unused (MEDIUM).
+- 🟡 **No loading skeletons** — empty state only while loading (LOW).
+- 🟡 **`member-age` / `member-cat` sections** — read-only; no edit-configuration components (LOW).
+- 🟡 **RAG section has no configuration** — model hardcoded (`gemini-3-flash-preview`), no edit UI; proof-of-concept status (LOW).
+- 🟡 **Blog layouts** — 6 `BlogLayoutType` variants defined; implementation status unclear (LOW).
+- 🟡 **Search-index quality** — index-string only; no full-text/fuzzy search over title/subtitle/content (LOW).
+- 🟡 **`@VERSION@` magic-string replacement** in `menu.store.ts` — wants a dedicated token/convention (LOW).
+
+## 6. Trip Feature — [`07_trip-feature-spec.md`](done/07_trip-feature-spec.md)
+
+Out of scope this iteration (§1.2) and open questions (§17):
+
+- 🔴 **Multi-stop trip recording** — single destination per trip only.
+- 🔴 **Automated distance calculation from GPS tracks.**
+- 🔴 **Guest management** beyond adding a non-member person as a participant.
+- ❓ Add `kiosk` to `RoleName`/`Roles` — confirm before implementing (model change).
+- ❓ Add `flagged: boolean` field to `TripModel` — confirm before implementing (model change).
+- ❓ Notification mechanism for `trip_responsibility`: Firestore task document or Cloud Function call?
+- ❓ Map library for `LocationSelect`: Leaflet or Google Maps? (See spec 15 — resolved there.)
+- ❓ `dev_responsibility`: `ResponsibilityModel` or hardcoded admin contact?
+- ❓ Should `aoc/trip` also be accessible to `trip_responsibility`, not only admin?
+
+## 7. Trip Statistics (Firestore) — [`08_trip-stats-firestore-spec.md`](done/08_trip-stats-firestore-spec.md)
+
+Open questions (§8):
+
+- ❓ Exact set of `COUNTING_STATES` — should `open` (and `open.rev`) count toward live YTD numbers?
+- ❓ May the kiosk edit an `open` trip in place, or must every revision use the `.rev` postfix?
+- ❓ Audit log of state transitions — only latest `deletedAt`/`deletedBy` kept; a `/trips/{id}/history` subcollection could capture every transition if full audit is required.
+
+## 8. Forms Builder — [`09_forms-builder-spec.md`](done/09_forms-builder-spec.md)
+
+Out of scope for **v1** (§1, §16) and later implementation phases (§18):
+
+- 🔴 **Multi-page / multi-step forms** — data model reserves a future `pageIndex`; editor/renderer treat all fields as one page in v1.
+- 🔴 **Generic third-party integrations** (Zapier, Salesforce, …) — URL target is the escape hatch.
+- 🔴 **Inbound email parsing / non-HTTP submission channels.**
+- 🔴 **Conditional-logic editor for `visibleIf`** — data structure exists, no UI in v1.
+- 🔴 **A/B testing / form-completion analytics.**
+- 🔴 **Server-side e-signature flows** — uses existing client-side DeepSign.
+- 🟡 **Phasing remainder** — later phases ship: URL target + submission CF + audit + CSV export (P2); spam protection (P3); CAPTCHA + encrypted file upload (P4); approval workflow + email notifications (P5); PDF export single/batch + PDF-form template fill (P6).
+- 🟡 **Encrypted file-upload key derivation** — PBKDF2 chosen; exact parameters to be confirmed with security review before implementing §9.2.
+
+## 9. Application Feature — [`10_application-feature-spec.md`](done/10_application-feature-spec.md)
+
+Out of scope this iteration (§1.2):
+
+- 🔴 **Public submission page** — rendered by FormSection/FormsBuilder, built later (spec 09).
+- 🔴 **Anonymous CAPTCHA / rate-limiting** — handled by FormsBuilder spam protection.
+- 🔴 **Document upload** (e.g. parental-consent PDF) — follow-up task after acceptance.
+- 🔴 **Payment collection at application time.**
+- 🔴 **Multi-tenant cross-club transfer flows** beyond the single `applicationAs = 'transfer'` marker.
+- 🔴 **Automatic account creation** — approvers open accounts manually via the finance feature.
+- 🟡 **Per-membership-category responsibility routing** — generic `application` responsibility for now; per-kind split can be added later.
+
+## 10. Lohnbuchhaltung (Payroll) — [`11_spec-lohnbuchhaltung.md`](11_spec-lohnbuchhaltung.md)
+
+*(Spec lives in `docs/`, not `docs/done/` — listed here because spec 03 defers payroll to it.)*
+Status: dependent on payroll being taken into scope; drives the deferred Sozialabgaben config in spec 03.
+
+## 11. Vest → Signal Forms Migration — [`12_vest-to-signal-forms-migration-spec.md`](done/12_vest-to-signal-forms-migration-spec.md)
+
+A phased migration; most of it is future work (§11 rollout, §12 risks):
+
+- 🟡 **Phase 0** — land `vest-bridge.ts`, async helper, global `NG_STATUS_CLASSES`.
+- 🟡 **Phase 1** — pilot-migrate 1–2 synchronous forms.
+- 🟡 **Phase 2** — bulk-migrate remaining synchronous forms.
+- 🟡 **Phase 3** — migrate async suites, form arrays, `warn()` forms.
+- 🟡 **Phase 4** — remove ngx-vest-forms dependency and leftover `validationConfig`/wrapper components.
+- ❓ **Async Signal Forms API (§5.2)** unconfirmed — must be validated against installed Angular before Phase 3. *Owner TBD.*
+- ❓ **FieldTree array indexing (`resolveFieldRef`, §5.4)** needs confirmation for form-array forms. *Owner TBD.*
+- ❓ **`warn()` forms** must be flagged so advisory messages aren't downgraded to blocking errors. *Owner TBD.*
+- ❓ **Performance** — whole-suite-per-change runs need profiling on large forms; per-field scoping as fallback.
+
+## 12. LocationSelect — Free-text route — [`14_spec-location-select-custom.md`](done/14_spec-location-select-custom.md)
+
+- ❓ **Recently-used / promoted free-text routes** — caching frequently-used custom routes or promoting them into the `locations` collection is explicitly out of scope for this spec (§9).
+
+## 13. LocationSelect — Map view — [`15_spec-location-select-map.md`](done/15_spec-location-select-map.md)
+
+- 🟡 **Marker clustering** (`leaflet.markercluster`) — deferred until a tenant exceeds the threshold (§ marker handling).
+
+## 14. PWA Caching — [`16_spec-pwa-caching.md`](done/16_spec-pwa-caching.md)
+
+Explicit out-of-scope items and follow-ups:
+
+- 🔴 **`test-app` and the static websites** — out of scope this iteration (§scope).
+- 🔴 **Imgix `dataGroup` caching** — only helps true-offline use; out of scope (long HTTP cache already covers reload-warm) (§ images).
+- 🔴 **Dedicated bundle-size spec** — §10 recommendations remain informational only; a separate spec is out of scope.
+- 🟡 **Multi-tab IndexedDB manager** — kept as an option for a future desktop-multi-tab use case; gate behind `isSafariBrowser` when needed (§7).
+- 🟡 **`IndexedDBCryptoStore` for Matrix E2EE device keys** — file as a follow-up if/when E2EE is enabled (§ Matrix).
+- 🟡 **Force-reload-on-every-build strategy** — revisit in a follow-up if needed; swap-in is small.
+- 🟡 **Bundle-size investigations** — diagnosed, not yet validated; treated as a backlog of investigations (confirm `matrix-js-sdk` chunk doesn't pull `crypto-js`, etc.).
+
+## 15. Security Review — [`17_security-report.md`](done/17_security-report.md)
+
+Most Critical/High findings are deployed. Remaining work (as of 2026-06-12):
+
+### Awaiting deploy / app build 🚀
+- **H-5** esign tenant authz, **H-6** App Check + 7-day Matrix tokens, **M-3** password-reset enumeration fix, **M-4** PDF raw-HTML sanitizer, **M-5** Mailtrap webhook HMAC, **M-6** `checkAdminRole` — all need a **Cloud Functions redeploy** (`firebase deploy --only functions`).
+  - **M-5 deploy prerequisite:** `firebase functions:secrets:set MAILTRAP_WEBHOOK_SECRET`.
+  - **M-7(b) deploy prerequisites:** redeploy rules + functions; optionally set `PUBLIC_API_ALLOWED_ORIGINS` / `PUBLIC_API_ALLOWED_TENANTS`; add a `_rateLimits.expiresAt` TTL policy.
+- **H-3** CMS iframe/video URL allowlist, **M-1** RAG markdown sanitizer, **M-2** Matrix-creds logout cleanup, **C-3** client route/component removal — ship with the **next app build**.
+- **L-2** CSP hardening directives, **L-3** `rel=noopener`, **L-4** public-API CORS allowlist — ship on next hosting/app deploy.
+
+### Deferred / open 🔴🟡
+- **C-3 verification** — confirm the 6 `oidc*` functions are actually deleted in the project; remove stale OIDC provider config from the Matrix homeserver.
+- **C-4 follow-up** — optional git-history rewrite (secret already dead); regenerate e2e auth state from a non-admin test user.
+- **C-5 / H-6 — App Check on `matrix-simple` callables** was applied under H-6; the separate **`matrixPushGateway` shared-secret review** remains a new follow-up.
+- **H-1 / M-9 — Storage content-type allowlist** deferred to Phase 2; M-9 (client-side-only MIME restriction) remains open until the exact MIME set is confirmed against real SDK uploads in staging.
+- **M-7(a) — Per-collection write RBAC** done for CMS content only; RBAC for the remaining collections is **not pursued** (needs write-call-site analysis + domain confirmation).
+- **M-10 follow-up** — move `matrix-js-sdk` from the pre-release to a stable release (test-heavier change, deferred).
+- **M-11 / rules CI** — emulator-based Firestore-rules tests exist (27-case harness) but are **not yet wired into CI**.
+- **L-1 — CSP `unsafe-inline` + `unsafe-eval`** in `script-src` — **DEFERRED, blocked by `/web`**: requires migrating `scs-website` off the Tailwind Play CDN and inline scripts (or per-path CSP split) first.
+- **Info items I-1…I-5** — OIDC callback state check (moot if bridge gone); FCM SW Firebase version lockstep; hardcoded API-key fallback fail-fast; cap/trim unbounded esign `events` array; (I-5 already-defended `[innerHTML]` paths — no action).
+- **Post-deploy verification** — smoke-test the live app and watch production logs for `permission-denied` after the rules rewrite (a read-only-classified collection with a real client write path needs flipping to privileged write).
+
+## 16. vCard Export — [`17_spec-vcard-export.md`](done/17_spec-vcard-export.md)
+
+The feature is **implemented** (`apps/functions/src/vcard/`, `libs/vcard/util`, `libs/vcard/feature`, person/org list + store entry points). Almost nothing is outstanding:
+
+- 🟢 **§11 open item resolved** — the avatar source is concrete in code (`IMGIX_BASE = https://bkaiser.imgix.net`, server-side fetch + base64 in the `vcardExport` callable); no longer a placeholder.
+- 🔴 **vCard 4.0 profile** (native `RELATED` / `KIND:org`) — explicit non-goal (§2.1, §2). 3.0 + `X-AB*` is the chosen encoding because iCloud rejects 4.0; only revisit if broad non-Apple fidelity ever becomes a priority.
+- 🔴 **Per-platform export profiles** — intentionally not built; the single 3.0 `.vcf` is treated as cross-platform for all *values* (only some *labels* soften on non-Google Android) (§2.1).
+
+## 17. Matrix Chat Audit — [`19_matrix-chat-audit.md`](done/19_matrix-chat-audit.md)
+
+The symptom fixes (S1–S5), SEC-1/2, SEC-3/4, ARCH-1 and the C-*/P-* hygiene batch are done (mostly client-side, shipping with the app). Remaining work:
+
+### Awaiting deploy 🚀
+
+- **SEC-3 provisioning gate** (`requireMatrixLocalpart` in the matrix callables) — needs **`firebase deploy --only functions`** to activate.
+- **S3 push gateway** — the Firebase Hosting rewrite (`/_matrix/push/v1/notify` → `matrixPushGateway`) needs **`firebase deploy --only hosting:scs-app-54aef`**; until then Synapse accepts the pusher URL but POSTs hit the SPA catch-all and no chat push notifications arrive.
+
+### Deferred / open 🔴🟡❓
+
+- 🟡 **S1 / S2 — duplicate-identity data migration** — the UI now hides the service/bot accounts, but `@bruno` is still *joined* to ~71 rooms (old force-join artifacts) and holds its own DMs, and UID-based duplicate accounts (`@gp8bkee…`, `@scheduler` mapping to 3 DM rooms) still exist. Consolidating "one Matrix account per person" — removing `@bruno` from rooms, migrating/closing its DMs, merging UID-accounts into their `personKey` accounts — is a deliberate per-person data migration, not yet run.
+- 🔴 **ARCH-2 — split the 1837-line `MatrixChatService`** into `MatrixSessionService` / `MatrixRoomService` / `MatrixMessageService` / `MatrixCallService`. Deferred as a separate refactor (no test coverage today); do once behavior is stabilized. Would also enable unit testing of this logic.
+- 🟡 **ARCH-4 — client-side identity-by-convention** — the four CFs' groupId→alias→room derivation is unified (`resolveGroupRoom` + `groupRoomAliasLocalpart`, `matrixRoomId` persisted), but the **client-side** personKey→localpart / homeserver derivation is still duplicated across the service/store/init.
+- 🟡 **ARCH-5 — CF helper extraction** — `resolveGroupRoom`/`ensureMatrixUserExists` extracted; an `ensureAdminInRoom(roomId)` helper for the repeated make-admin/force-join block is still open.
+- 🔴 **C-5 — scroll-back pagination** — `loadMessagesForRoom` paginates once; no infinite scroll for older history. A UI feature (new service method + `ion-infinite-scroll` + scroll-anchoring on prepend) needing in-app verification.
+- 🔴 **P-3 — `sendCallNotification`** runs sequential Firestore queries per callee; parallelize with `Promise.all`.
+- 🔴 **P-4 — `matrixPushGateway`** sends FCM sequentially per device; use `sendEachForMulticast` (as `sendCallNotification` already does).
+- 🟡 **P-5 remainder — stop `clearStores()` on routine disconnect** — the IndexedDB persistent store is in place, but clearing on every disconnect still forces a near-full re-sync. Cannot land safely until the store `dbName` is user-scoped (currently fixed `bk2-matrix` → cross-user leak on shared devices); it is the E2EE Step-1 prerequisite.
+- 🔴 **P-6 — `listMatrixRooms`** fetches all rooms (≤1000) then filters by joined set (admin-only; acceptable for now).
+- 🔴 **SEC-5 — notification & enumeration vectors** — `sendCallNotification` doesn't verify the caller shares a room with the callees; `provisionMatrixUser` lets any provisioned user create an account for any personKey; `getRoomByName` resolves any room via the admin search API. Scope/verify each server-side.
+- ❓ **SEC-6 — role source of truth** — cross-check `firestore.rules` actually prevents users writing their own `users/{uid}.roles` field (the `requireRole` CF gate trusts it).
+- 🔴 **S5 follow-up — group bkeys** — human-readable bkeys with spaces/hyphens are sanitised for aliases and made non-load-bearing via `matrixRoomId`; auto-generating/masking bkeys at creation would remove the special-char fragility at the source (touches group-creation UX + cross-DB foreign-key migration).
+- 🔴 **E2EE by default (§9)** — a large multi-step project (Steps 0–8: device-bound tokens via JWT login, persistent stores, client crypto init, encrypt new rooms, key backup/recovery, migrate existing rooms). Depends on SEC-1 (done), item 6 (SEC-3/4, done) and the P-5 store remainder; realistic scope ~1 focused week, not started.
