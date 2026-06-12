@@ -100,6 +100,14 @@ The CFs locate a group's room in three steps: canonical alias → Synapse name s
 3. One-time cleanup: enumerate `#group_*` rooms, merge/purge duplicates (`deleteMatrixRoom` exists already), and verify `!GXmh…` vs. its duplicate.
 4. Tighten the membership query (check active date range / membership state, not just `relIsLast`).
 
+> **Status: FIXED & DEPLOYED (2026-06-12).**
+>
+> - **Schema:** added `matrixRoomId: string` to `GroupModel`. The field round-trips safely — group reads spread the full Firestore doc (`collectionData(..., { idField: 'bkey' })`) and the client `update()` uses `updateDoc` (field-merge), so it is never clobbered on group edits. CFs write it via the admin SDK (bypasses rules).
+> - **Single resolver:** new module-local `resolveGroupRoom(groupId, …)` in `matrix-simple` resolves in order — (1) `groups/{id}.matrixRoomId` (verified still present), (2) sanitised canonical alias, (3) admin name-search, (4) create — and **persists the resolved/created room ID back to the group doc** so every CF converges on one room and lookups become O(1). All four CFs (`requestGroupRoomAccess`, `invitePersonToGroupRoom`, `kickPersonFromGroupRoom`, `renameMatrixRoom`) now call it; the divergent per-CF alias derivation (some used raw `#group_<bkey>`) is gone, replaced by the single `groupRoomAliasLocalpart()` helper. Provisioning duplication collapsed into `ensureMatrixUserExists()`.
+> - **Authorization change (rec #4, revised per product owner):** the active-membership tightening was **not** applied. Group chats legitimately include non-members and past-members (e.g. training-course participants), so the only access requirement for `requestGroupRoomAccess` is now **being a provisioned system user** (`users/{uid}` exists) — the previous member-OR-visibility-role hard denial was removed. SEC-1 (invite-only rooms) still prevents non-system Matrix accounts from reaching any room, so this does not re-open the SEC-1 hole. This was in fact the real cause of the reported "Dienstags 4-er" access-denied: that group has `visibility: 'registered'` and the reporter failed the old member/role gate before room resolution even ran.
+> - **Cleanup (live):** the reported `!GXmh…` is **"Dienstags 4-er"** (group bkey `Dienstags 4-er`, display name "4X-Dienstag"); it exists and was created by a legacy UID-based account with no alias. Relinked: `matrixRoomId` set on the group doc and a directory alias `#group_dienstags_4-er` added (verified resolving). The **2 confirmed spurious twins** (no-alias "Schlüsselverwaltung" / "Trainer" rooms, duplicates of `#group_resourceAdmin` / `#group_trainer`) were purged; `matrixRoomId` set on `groups/resourceAdmin` and `groups/trainer` to their canonical rooms. Post-cleanup scan: **0 duplicate group rooms remain**. The many other no-alias rooms (Signal-bridge experiments under `@signalbot`, DMs, test rooms) were intentionally left untouched.
+> - **Follow-up (not done):** group bkeys are human-readable strings with spaces/hyphens (e.g. `Dienstags 4-er`). `groupRoomAliasLocalpart()` sanitises them safely for aliases, and `matrixRoomId` makes alias derivation non-load-bearing — but auto-generating or masking group bkeys at creation would remove the special-char fragility at the source. Tracked as a separate change (touches group-creation UX and would require migrating bkeys used as foreign keys across the DB).
+
 ---
 
 ## 3. Security Findings
@@ -172,7 +180,7 @@ Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matri
 
 **ARCH-3 — Legacy module `apps/functions/src/matrix/`** is dead but deployed (3 callable endpoints with a conflicting identity scheme, one of which — `ensureGroupRoom` — can still create rooms with the *unsanitized* alias and UID-based invitees). Delete the module and its `main.ts` exports.
 
-**ARCH-4 — Identity by convention.** personKey→localpart, groupId→alias, name→room are each re-derived in 6+ places (client + 4 CFs) with slightly different rules (lowercasing, sanitizing, `matrix.` stripping). Centralize: one shared helper in `@bk2/shared-util-core` for the client, one module-local helper for CFs — and persist `matrixRoomId` on groups (see S5) so derivation is only needed at creation time.
+**ARCH-4 — Identity by convention.** personKey→localpart, groupId→alias, name→room are each re-derived in 6+ places (client + 4 CFs) with slightly different rules (lowercasing, sanitizing, `matrix.` stripping). Centralize: one shared helper in `@bk2/shared-util-core` for the client, one module-local helper for CFs — and persist `matrixRoomId` on groups (see S5) so derivation is only needed at creation time. **Partially done 2026-06-12** (see S5 status): the four CFs' groupId→alias→room derivation is unified behind `resolveGroupRoom()` + `groupRoomAliasLocalpart()`, and `matrixRoomId` is persisted. The *client-side* personKey→localpart / homeserver derivation is still duplicated and remains open.
 
 **ARCH-5 — CF code duplication.** The provision-user block and the find-room block are copy-pasted 3–4× inside `matrix-simple/index.ts` (~1 600 lines). Extract `ensureMatrixUser(personKey)`, `resolveGroupRoom(groupId)`, `ensureAdminInRoom(roomId)` helpers; the file shrinks by roughly a third and the S5 inconsistency becomes impossible.
 
@@ -194,7 +202,7 @@ Unlike the legacy module (which sets `enforceAppCheck: true`), nothing in `matri
 ## 7. Prioritized Action Plan
 
 1. ~~**SEC-1** — switch group-room creation to invite-only + migrate existing rooms' join rules.~~ **Done 2026-06-12** (CF code change + migration of 17 rooms; see status note under SEC-1).
-2. **S5 / ARCH-4** — persist `matrixRoomId` on the group doc; single `resolveGroupRoom()`; unify alias sanitization; clean up duplicate rooms (incl. `!GXmh…`). *(High)*
+2. ~~**S5 / ARCH-4** — persist `matrixRoomId` on the group doc; single `resolveGroupRoom()`; unify alias sanitization; clean up duplicate rooms (incl. `!GXmh…`).~~ **Done 2026-06-12** (CF code + schema deployed; 2 twins purged, "Dienstags 4-er" relinked, 0 duplicates remain; authz revised to system-user gate per product owner — see S5 status note).
 3. **S2** — fix `repairDmRoomsAccountData()` heuristic (exclude admin account, require `is_direct` evidence); clean `m.direct` account data. *(High)*
 4. **S3** — append `/_matrix/push/v1/notify` to the pusher URL; add gateway shared-secret (**SEC-2**) in the same step since the URL changes anyway. *(Medium)*
 5. **S1** — dedicated service account for `MATRIX_ADMIN_TOKEN`; hide it in the UI; delete `apps/functions/src/matrix/`. *(Medium)*
