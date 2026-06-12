@@ -263,25 +263,25 @@ The `applications` block calls `isAuthenticated()`, `belongsToTenant()`, `isAdmi
 
 ## Low
 
-### L-1 — CSP neutralized by `unsafe-inline` + `unsafe-eval` in `script-src`
-**Location:** `firebase.json:78` (scs-app), `:122` (test-app)
-Any injected inline script executes freely, so CSP provides no XSS backstop for H-3/M-1. `'unsafe-eval'` should be unnecessary for Angular (uses `'wasm-unsafe-eval'`, already present); the Tailwind CDN script is itself an external-script dependency requiring eval.
-**Fix:** Drop `'unsafe-eval'`; replace Tailwind CDN with precompiled CSS; migrate inline scripts to hashes/nonces, then drop `'unsafe-inline'`.
+### L-1 — CSP neutralized by `unsafe-inline` + `unsafe-eval` in `script-src` — *DEFERRED (blocked by /web)*
+**Location:** `firebase.json` (scs-app, test-app)
+Any injected inline script executes freely, so CSP provides no XSS backstop for H-3/M-1.
+**Status:** Not changed — investigation showed the bundled `/web` static site (`apps/scs-website`) loads the **Tailwind Play CDN** (`cdn.tailwindcss.com`, needs `'unsafe-eval'`) and contains inline `<script>` blocks (need `'unsafe-inline'`), all served under the scs-app CSP. Dropping either directive would break `/web` in production. **Prerequisite/follow-up:** migrate `scs-website` off the Tailwind Play CDN (precompiled CSS) and its inline scripts (or split the CSP per-path so the Angular app gets a strict `script-src` while `/web/**` keeps the loose one), then drop `'unsafe-eval'`/`'unsafe-inline'`.
 
-### L-2 — CSP missing hardening directives
-**Location:** `firebase.json:78, 122`
+### L-2 — CSP missing hardening directives — *FIXED, pending deploy (2026-06-12)*
+**Location:** `firebase.json` (scs-app, test-app)
 No `object-src 'none'`, `base-uri 'self'`, or `frame-ancestors 'none'` (clickjacking).
-**Fix:** Add all three to both CSPs.
+**Fix applied:** added all three to the scs-app and test-app production CSPs. Commit `c5d358d2`. **Ships on the next `firebase deploy --only hosting`.** (The marketing-site CSPs could get the same three — low-risk follow-up.)
 
-### L-3 — `target="_blank"` on user/DB-controlled URLs without `rel="noopener"`
-**Location:** `libs/chat/ui/src/lib/matrix-message-list.ts:404-409` (other users' location links), `libs/calevent/feature/src/lib/calevent-view.modal.ts:102` (DB `url`)
-Reverse-tabnabbing; the Matrix `maps_link` is attacker-controlled and should also be validated as http(s).
-**Fix:** Add `rel="noopener noreferrer"`; validate scheme.
+### L-3 — `target="_blank"` on user/DB-controlled URLs without `rel="noopener"` — *FIXED, pending app build (2026-06-12)*
+**Location:** `libs/chat/ui/src/lib/matrix-message-list.ts` (Matrix location link), `libs/calevent/feature/src/lib/calevent-view.modal.ts` (DB `url`)
+Reverse-tabnabbing.
+**Fix applied:** added `rel="noopener noreferrer"` to both. Commit `c5d358d2`. (Angular's URL sanitizer already neutralizes `javascript:` on `[href]` bindings, so scheme validation was not separately needed.)
 
-### L-4 — Public API CORS reflects any origin
-**Location:** `apps/functions/src/publicApi/index.ts:13` (`corsLib({ origin: true })`)
-No credentials involved, content is public; impact limited to cross-origin contact-form spam (already honeypot-protected).
-**Fix:** Restrict to known site origins.
+### L-4 — Public API CORS reflects any origin — *FIXED, pending deploy (2026-06-12)*
+**Location:** `apps/functions/src/publicApi/index.ts`
+No credentials, content is public; impact limited to cross-origin contact-form spam (already honeypot-protected) — so CORS adds little security here, but the report's recommendation was applied.
+**Fix applied:** replaced `origin: true` with an origin callback allowing only known site origins, while still permitting same-origin (`/web/api` rewrite) and server-side (no `Origin`) callers, so the primary consumer is unaffected. Commit `c5d358d2`. **Verify:** add any production custom domain that fetches this API cross-origin from a browser to `ALLOWED_ORIGINS`.
 
 ---
 
