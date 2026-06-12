@@ -62,10 +62,10 @@ Updated as fixes land. "Pending deploy" = code committed to `main` but not yet p
 | **C-3** | OIDC bridge insecure (unsigned tokens, no `client_secret`, XSS/redirect) | ✅ **DEPLOYED (2026-06-12)** | Bridge functions removed — commit `858e02d0`. ⚠ verify the 6 `oidc*` functions are deleted in the project; client cleanup (route/component) ships with the app build |
 | **H-1** | Storage rules catch-all | ✅ **DEPLOYED (2026-06-12)** | Tenant-scoped per-prefix rules + size cap + default-deny; 21 emulator tests — commit `f3020843` |
 | **H-2** | → reclassified to **M-11** | ↪ Moved | Production verification showed the undefined rule helpers fail-closed (not a deploy blocker) — see M-11 |
-| **H-3** | Stored XSS via CMS iframe/video URLs | ⬜ Open | — |
+| **H-3** | Stored XSS via CMS iframe/video URLs | ✅ **Fixed, pending app build** | `getSafeEmbedUrl` host/scheme allowlist before trusting editor URLs; 7 tests — commit `e5bba4bc` |
 | **H-4** | Custom auth token logged to Cloud Logging | ✅ **DEPLOYED (2026-06-12)** | Logs only the target uid now — commit `7850f0d6` (purge pre-deploy tokens from existing logs) |
 | **H-5** | esign callables cross-tenant by guessing `esignId` | ✅ **Fixed, pending deploy** | owner/tenant authz on the 3 by-id callables; `send-document` tenant fix; `scan-predefined` path scoping — commit `bba877c8` |
-| **H-6** | `getMatrixCredentials` no App Check, 30-day tokens | ⬜ Open | — |
+| **H-6** | `getMatrixCredentials` no App Check, 30-day tokens | ✅ **Fixed, pending deploy** | `enforceAppCheck` on all matrix callables; token 30d→7d — commit `5ffa1682` |
 | **H-7** | 4 critical dependency advisories (protobufjs RCE, …) | ✅ **Done** | pnpm overrides → 0 critical (protobufjs 7.6.4, fast-xml-parser 4.5.6, basic-ftp 5.3.1, vitest 3.2.6) — commit `2040c91c` |
 | **H-8** | `xlsx` 0.18.5 unfixable via npm | ✅ **Done** | `xlsx` removed; export replaced with in-house CSV writer (semicolon/BOM/RFC-4180), 13 tests — commit `4b22d04b` |
 | **M-2** | Matrix creds persist in localStorage after logout | ✅ **Fixed, pending deploy** | `logout()` clears matrix_* keys; `clearStoredCredentials()` completed — commit `1d683621` |
@@ -159,10 +159,10 @@ Validated with 21 emulator probes (`firestore-rules-tests/storage.test.py`): ten
 
 **Deferred to Phase 2:** a content-type allowlist (the report's original suggestion). It risks blocking legitimate uploads whose browser-inferred MIME type is empty, and cannot be exercised in the Storage emulator (which doesn't populate `request.resource.contentType`). The app already restricts document MIME types client-side, and Storage serves cross-origin, so the residual risk is low. M-9 (client-side-only MIME restriction) therefore remains open — re-introduce a per-prefix allowlist once the exact MIME set is confirmed against real SDK uploads in staging.
 
-### H-3 — Stored XSS via CMS iframe/video sections (sanitizer bypass on editor-supplied URLs)
-**Location:** `libs/cms/section/feature/src/lib/iframe-section.ts:48`, `libs/cms/section/feature/src/lib/video-section.ts:61`
-Both call `bypassSecurityTrustResourceUrl()` on a URL taken verbatim from the section's DB `properties.url`, rendered to every visitor. An editor (or anyone who can write sections — see C-1) can set `javascript:` / `data:text/html` URLs → stored XSS against all page viewers in the app origin.
-**Fix:** Validate scheme/host against an allowlist (https + youtube/vimeo/openstreetmap, matching the CSP `frame-src`) before trusting.
+### H-3 — Stored XSS via CMS iframe/video sections (sanitizer bypass on editor-supplied URLs) — *FIXED, pending app build (2026-06-12)*
+**Location:** `libs/cms/section/feature/src/lib/iframe-section.ts`, `libs/cms/section/feature/src/lib/video-section.ts`
+Both called `bypassSecurityTrustResourceUrl()` on a URL taken verbatim from the section's DB `properties.url` (iframe) / `baseUrl + url` (video), rendered to every visitor — an editor (or anyone who can write sections) could set a `javascript:` / `data:text/html` URL → stored XSS against all page viewers.
+**Fix applied:** new `getSafeEmbedUrl()` in `@bk2/shared-util-core` returns the URL only when it is an `https:` URL on an allowlisted host (youtube / youtube-nocookie / vimeo / openstreetmap, matching the CSP `frame-src`), else `null`. Both components validate before trusting; an invalid URL renders an empty iframe. Unit-tested (7 cases incl. `javascript:`/`data:`/`http:`/look-alike-host rejection). Since the allowlist already matches what the CSP permits, no legitimate embed is lost. Commit `e5bba4bc`. Ships with the next app build. (Related M-1 — RAG markdown bypass — remains open.)
 
 ### H-4 — Custom auth token written to Cloud Logging — *DEPLOYED (2026-06-12)*
 **Location:** `apps/functions/src/auth/index.ts:39`
@@ -174,10 +174,10 @@ Both call `bypassSecurityTrustResourceUrl()` on a URL taken verbatim from the se
 Authenticated-only but never compared the record's `tenantId`/`ownerUserId` to the caller — any authenticated user could read signing details, resend invitations, or destroy another tenant's signature workflow (incl. stored signed PDFs) by guessing the document id.
 **Fix applied:** added `assertEsignAccess(uid, record)` in `esign/shared.ts` (authorizes the record `ownerUserId` or a member of the record's `tenant`) and applied it after the record load in all three by-id callables. Also: `esign-send-document` now derives `tenantId` from the caller's user doc instead of the never-minted `token.tenantId` claim (records previously stored an empty tenant); `esign-scan-predefined`'s client-supplied `storagePath` (downloaded via Admin SDK, bypassing Storage rules) is now restricted to the caller's tenant prefix. Owner-based access keeps legacy empty-tenant records reachable by their owner. `esignArchiveSigned` is an `onDocumentUpdated` trigger (not user-callable) — no change. Functions build verified. Commit `bba877c8`. **Not yet deployed** (`firebase deploy --only functions`).
 
-### H-6 — `getMatrixCredentials`: no App Check, 30-day tokens
-**Location:** `apps/functions/src/matrix-simple/index.ts:62`
-The uid→Matrix mapping itself is sound (derived from the verified token), but without `enforceAppCheck` a stolen/replayed Firebase ID token from outside the app yields a 30-day chat credential.
-**Fix:** `enforceAppCheck: true`; shorten token validity.
+### H-6 — `getMatrixCredentials`: no App Check, 30-day tokens — *FIXED, pending deploy (2026-06-12)*
+**Location:** `apps/functions/src/matrix-simple/index.ts`
+The uid→Matrix mapping is sound (derived from the verified token), but without `enforceAppCheck` a stolen/replayed Firebase ID token from outside the app yielded a 30-day chat credential.
+**Fix applied:** added `enforceAppCheck: true` to all matrix-simple callables (15 secrets-based + `sendCallNotification`); the app already attaches App Check tokens, and other callables enforce it in prod. `matrixPushGateway` (an `onRequest` endpoint called by the Matrix homeserver) is intentionally left unenforced. Shortened the minted Matrix access-token validity from 30 days to 7 days — the client re-fetches credentials on each init, so the leak window shrinks with no UX cost. Functions build verified. Commit `5ffa1682`. **Not yet deployed** (`firebase deploy --only functions`).
 
 ### H-7 — Dependency audit: 4 critical advisories on production paths — *FIXED (2026-06-12)*
 **Location:** dependency tree (was 4 critical / 79 high / 41 moderate / 6 low)
