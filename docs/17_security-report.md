@@ -64,9 +64,9 @@ Updated as fixes land. "Pending deploy" = code committed to `main` but not yet p
 | **H-2** | → reclassified to **M-11** | ↪ Moved | Production verification showed the undefined rule helpers fail-closed (not a deploy blocker) — see M-11 |
 | **H-3** | Stored XSS via CMS iframe/video URLs | ⬜ Open | — |
 | **H-4** | Custom auth token logged to Cloud Logging | ✅ **DEPLOYED (2026-06-12)** | Logs only the target uid now — commit `7850f0d6` (purge pre-deploy tokens from existing logs) |
-| **H-5** | esign callables cross-tenant by guessing `esignId` | ⬜ Open | — |
+| **H-5** | esign callables cross-tenant by guessing `esignId` | ✅ **Fixed, pending deploy** | owner/tenant authz on the 3 by-id callables; `send-document` tenant fix; `scan-predefined` path scoping — commit `bba877c8` |
 | **H-6** | `getMatrixCredentials` no App Check, 30-day tokens | ⬜ Open | — |
-| **H-7** | 4 critical dependency advisories (protobufjs RCE, …) | ⬜ Open | — |
+| **H-7** | 4 critical dependency advisories (protobufjs RCE, …) | ✅ **Done** | pnpm overrides → 0 critical (protobufjs 7.6.4, fast-xml-parser 4.5.6, basic-ftp 5.3.1, vitest 3.2.6) — commit `2040c91c` |
 | **H-8** | `xlsx` 0.18.5 unfixable via npm | ⬜ Open | — |
 | **M-2** | Matrix creds persist in localStorage after logout | ✅ **Fixed, pending deploy** | `logout()` clears matrix_* keys; `clearStoredCredentials()` completed — commit `1d683621` |
 | **M-1, M-3…M-7, M-9, M-10** | (see sections below) | ⬜ Open | — |
@@ -77,7 +77,7 @@ Updated as fixes land. "Pending deploy" = code committed to `main` but not yet p
 2. Smoke-test the live app: load lists (persons, members, calendar), create/edit a record, open chat, submit an anonymous membership application.
 3. Watch production client logs for `permission-denied` — the likeliest culprit is a collection classified read-only (`write: if false`) that actually has a client write path; flip it to `isPrivileged() && belongsToTenant(request.resource.data)`, re-test, and redeploy.
 
-**Deployed so far:** Firestore rules (C-1, C-2, M-8, M-11), Cloud Functions (C-3, C-5, H-4), and Storage rules (H-1). **Still pending deploy:** the client app build only (M-2 logout cleanup, C-3 route/component removal).
+**Deployed so far:** Firestore rules (C-1, C-2, M-8, M-11), Cloud Functions (C-3, C-5, H-4), and Storage rules (H-1). H-7 dependency overrides are effective in the repo (no deploy needed). **Still pending deploy:** a Cloud Functions redeploy for H-5 (esign authz) and the client app build (M-2 logout cleanup, C-3 route/component removal).
 
 ---
 
@@ -169,23 +169,23 @@ Both call `bypassSecurityTrustResourceUrl()` on a URL taken verbatim from the se
 `createCustomToken` logged the full custom token. Custom tokens exchange for a full session of the impersonated user; anyone with log read access (broad GCP IAM, log sinks) gets impersonation capability.
 **Fix applied:** the log line now records only the target uid, not the token. Commit `7850f0d6`. **Deployed 2026-06-12.** Note: tokens minted before this deploy may still be present in existing Cloud Logging history — consider purging those log entries.
 
-### H-5 — esign callables: cross-tenant access by guessing `esignId`
-**Location:** `apps/functions/src/esign/esign-delete.ts:15`, `esign-get-document-details.ts`, `esign-resend-invitation.ts`, `esign-archive-signed.ts`
-Authenticated-only but never compare the record's `tenantId`/`ownerUserId` to the caller. Any authenticated user can read signing details, resend invitations, archive, or destroy another tenant's signature workflow including stored signed PDFs.
-**Fix:** Load the record and reject when tenant/owner doesn't match the caller (or require admin).
+### H-5 — esign callables: cross-tenant access by guessing `esignId` — *FIXED, pending deploy (2026-06-12)*
+**Location:** `apps/functions/src/esign/esign-delete.ts`, `esign-get-document-details.ts`, `esign-resend-invitation.ts`
+Authenticated-only but never compared the record's `tenantId`/`ownerUserId` to the caller — any authenticated user could read signing details, resend invitations, or destroy another tenant's signature workflow (incl. stored signed PDFs) by guessing the document id.
+**Fix applied:** added `assertEsignAccess(uid, record)` in `esign/shared.ts` (authorizes the record `ownerUserId` or a member of the record's `tenant`) and applied it after the record load in all three by-id callables. Also: `esign-send-document` now derives `tenantId` from the caller's user doc instead of the never-minted `token.tenantId` claim (records previously stored an empty tenant); `esign-scan-predefined`'s client-supplied `storagePath` (downloaded via Admin SDK, bypassing Storage rules) is now restricted to the caller's tenant prefix. Owner-based access keeps legacy empty-tenant records reachable by their owner. `esignArchiveSigned` is an `onDocumentUpdated` trigger (not user-callable) — no change. Functions build verified. Commit `bba877c8`. **Not yet deployed** (`firebase deploy --only functions`).
 
 ### H-6 — `getMatrixCredentials`: no App Check, 30-day tokens
 **Location:** `apps/functions/src/matrix-simple/index.ts:62`
 The uid→Matrix mapping itself is sound (derived from the verified token), but without `enforceAppCheck` a stolen/replayed Firebase ID token from outside the app yields a 30-day chat credential.
 **Fix:** `enforceAppCheck: true`; shorten token validity.
 
-### H-7 — Dependency audit: 4 critical advisories on production paths (fixes available)
-**Location:** dependency tree (`pnpm audit --prod`: 4 critical / 79 high / 41 moderate / 6 low = 130)
+### H-7 — Dependency audit: 4 critical advisories on production paths — *FIXED (2026-06-12)*
+**Location:** dependency tree (was 4 critical / 79 high / 41 moderate / 6 low)
 - **protobufjs** < 7.5.5 — arbitrary code execution (GHSA-xq3m-2v4x-88gg), 39 paths via `firebase`, `firebase-admin`, `@google/genai`
-- **fast-xml-parser** 4.5.3 — entity bypass (GHSA-m7jm-9gc2-mpf2), via `firebase-admin` → `@google-cloud/storage`
-- **basic-ftp** 5.1.0 — path traversal (GHSA-5rq4-664w-9x2c), via `firebase-tools`
-- **vitest** 3.2.4 — file read/exec via UI server (GHSA-5xrq-8626-4rwp), dev-tooling exposure only
-**Fix:** pnpm `overrides` for protobufjs ≥ 7.5.5 and fast-xml-parser ≥ 4.5.4; update firebase-tools and vitest.
+- **fast-xml-parser** < 4.5.4 — entity bypass (GHSA-m7jm-9gc2-mpf2), via `firebase-admin` → `@google-cloud/storage`
+- **basic-ftp** < 5.2.0 — path traversal (GHSA-5rq4-664w-9x2c), via `firebase-tools`
+- **vitest** < 3.2.6 — file read/exec via UI server (GHSA-5xrq-8626-4rwp), dev-tooling exposure only
+**Fix applied:** added `pnpm.overrides` forcing protobufjs `^7.5.5`, fast-xml-parser `^4.5.4`, basic-ftp `^5.2.0`, and vitest/@vitest/ui/@vitest/coverage-v8 `^3.2.6`. `pnpm install` resolved protobufjs 7.6.4, fast-xml-parser 4.5.6, basic-ftp 5.3.1, vitest 3.2.6; `pnpm audit --prod` now reports **0 critical** (was 4). Commit `2040c91c`. (Effective immediately — no deploy needed; ships with the next functions/app build.) Remaining high/moderate advisories — node-forge, axios, node-tar, jws, `@modelcontextprotocol/sdk`, and **H-8** (xlsx) — are tracked separately.
 
 ### H-8 — `xlsx` 0.18.5: two High advisories, unfixable via npm
 **Location:** root `package.json` (`"xlsx": "^0.18.5"`, prod dependency)
