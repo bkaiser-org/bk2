@@ -69,7 +69,10 @@ Updated as fixes land. "Pending deploy" = code committed to `main` but not yet p
 | **H-7** | 4 critical dependency advisories (protobufjs RCE, …) | ✅ **Done** | pnpm overrides → 0 critical (protobufjs 7.6.4, fast-xml-parser 4.5.6, basic-ftp 5.3.1, vitest 3.2.6) — commit `2040c91c` |
 | **H-8** | `xlsx` 0.18.5 unfixable via npm | ✅ **Done** | `xlsx` removed; export replaced with in-house CSV writer (semicolon/BOM/RFC-4180), 13 tests — commit `4b22d04b` |
 | **M-2** | Matrix creds persist in localStorage after logout | ✅ **Fixed, pending deploy** | `logout()` clears matrix_* keys; `clearStoredCredentials()` completed — commit `1d683621` |
-| **M-1, M-3…M-7, M-9, M-10** | (see sections below) | ⬜ Open | — |
+| **M-1** | RAG markdown rendered with sanitizer bypass | ✅ **Fixed, pending app build** | dropped `bypassSecurityTrustHtml`; Angular sanitizes the `[innerHTML]` — commit `e5df6dc3` |
+| **M-6** | Admin functions authorize via never-set claims | ✅ **Fixed, pending deploy** | `checkAdminRole` reads `users/{uid}.roles.admin` (legacy claim still accepted) — commit `d2c6ea9d` |
+| **M-10** | `firebase-functions: "latest"`; CLI in prod deps | ✅ **Done** | pinned `^7.0.5`; firebase-tools → devDeps — commit `21378fb8` |
+| **M-3, M-4, M-5, M-7, M-9** | (see sections below) | ⬜ Open | — |
 | **L-1…L-4, I-1…I-5** | (see sections below) | ⬜ Open | — |
 
 **Firestore rules (C-1/C-2/M-8/M-11): ✅ DEPLOYED 2026-06-12.** Post-deploy verification to run on the live app:
@@ -196,10 +199,10 @@ Prototype pollution (GHSA-4r6h-8v6p-xvw6) and ReDoS. SheetJS no longer publishes
 
 ## Medium
 
-### M-1 — RAG answers rendered with sanitizer bypass
-**Location:** `libs/cms/section/feature/src/lib/rag-section.ts:219-220` (rendered at :157)
-`bypassSecurityTrustHtml(marked.parse(markdown))` — `marked` does not sanitize, and the bypass disables Angular's sanitizer. Prompt/corpus injection → XSS in the answer bubble.
-**Fix:** DOMPurify the parsed HTML, or drop the bypass and use plain `[innerHTML]`.
+### M-1 — RAG answers rendered with sanitizer bypass — *FIXED, pending app build (2026-06-12)*
+**Location:** `libs/cms/section/feature/src/lib/rag-section.ts` (rendered via `[innerHTML]`)
+`bypassSecurityTrustHtml(marked.parse(markdown))` disabled Angular's sanitizer — prompt/corpus injection in a RAG answer → XSS in the answer bubble.
+**Fix applied:** dropped the bypass — `toHtml()` returns the parsed-markdown string and the template binds it via `[innerHTML]`, so Angular's `DomSanitizer` strips scripts / event handlers / `javascript:` URLs while keeping markdown's safe formatting. No new dependency; removed the now-unused `DomSanitizer`/`SafeHtml`. Commit `e5df6dc3`. Ships with the next app build.
 
 ### M-2 — Matrix credentials persist in localStorage after logout — *FIXED, pending deploy (2026-06-12)*
 **Location:** `libs/auth/data-access/src/lib/auth.service.ts`, `libs/chat/data-access/src/lib/matrix-chat.service.ts`
@@ -221,10 +224,10 @@ Puppeteer `setContent` still executes `<img onerror>`, `<iframe>`, `<link>` and 
 No signature/secret verification; anyone can flood `emailEvents` with forged delivery/bounce telemetry (cost + integrity).
 **Fix:** Verify Mailtrap's HMAC signing secret before persisting.
 
-### M-6 — Role model split-brain: rules check custom claims; app checks Firestore roles
-**Location:** `firestore.rules:49-54, 57-64, 91-92`; `apps/functions/src` (no `setCustomUserClaims` found)
-Rules gate `templates`/`esignList` on `request.auth.token.admin` / `token.contentAdmin` / `token.tenantId`, but no function in the repo mints these claims — at least one production user does carry `"admin": true` (per the token in C-4), so claims are being set out-of-band, unauditable from the repo. Meanwhile the app's authorization uses `users/{uid}.roles`. Two sources of truth that can drift.
-**Fix:** Pick one mechanism — mint claims in a Cloud Function on role change, or use `get()` on the caller's user doc in rules — and use it consistently.
+### M-6 — Role model split-brain: rules check custom claims; app checks Firestore roles — *FIXED, pending deploy (2026-06-12)*
+**Location:** `apps/functions/src/auth/index.ts`, `libs/shared/util-functions/src/lib/general.util.ts`
+The auth admin callables gated on `checkAdminUser` (`request.auth.token.admin`) and `checkAdminClaim` (`customClaims.admin`). No function mints these claims, so the basis was unauditable and out of sync with the app (client guards and Firestore rules authorize from `users/{uid}.roles`). The Firestore-rules half of this split-brain was already eliminated by the C-1 rewrite (rules now use `get()` on the user doc).
+**Fix applied:** replaced both helpers with a single `checkAdminRole()` that reads `users/{uid}.roles.admin` (source of truth) while still accepting a legacy `admin` custom claim, so already-provisioned admins are not locked out; updated all call sites. Functions build verified. Commit `d2c6ea9d`. **Not yet deployed** (`firebase deploy --only functions`). Follow-up: once confirmed, the legacy-claim fallback can be dropped.
 
 ### M-7 — Public unauthenticated read of `orgs`, `resources`, `tags` across all tenants
 **Location:** `firestore.rules:30-45`
@@ -242,10 +245,10 @@ Update rule has no `request.auth` check and no field whitelist — anyone on the
 Full history scanned: no secrets ever present (env-var plumbing only), so nothing leaked — but the guardrail is missing; a future edit embedding a key would be silently committed.
 **Fix:** `git rm --cached set-env.js` + gitignore entry, or update CLAUDE.md if tracking the secret-free script is now intentional.
 
-### M-10 — Supply-chain hygiene: `firebase-functions: "latest"`, CLI/test tooling in prod deps
+### M-10 — Supply-chain hygiene: `firebase-functions: "latest"`, CLI/test tooling in prod deps — *FIXED (2026-06-12)*
 **Location:** root `package.json`
-`"latest"` is non-reproducible and auto-adopts any release including a compromised one. `firebase-tools` and the vitest/analog chain sit in `dependencies` (this is how the basic-ftp and vitest criticals enter the prod audit). `matrix-js-sdk` pinned to a pre-release (`40.3.0-rc.0`).
-**Fix:** Pin `firebase-functions` to a semver range; move CLI/test tooling to `devDependencies`; move matrix-js-sdk to stable when available.
+`"latest"` is non-reproducible and auto-adopts any release including a compromised one. `firebase-tools` (a CLI) sat in `dependencies`. `matrix-js-sdk` pinned to a pre-release (`40.3.0-rc.0`).
+**Fix applied:** pinned `firebase-functions` to `^7.0.5`; moved `firebase-tools` to `devDependencies`. `pnpm install` clean, functions build verified. Commit `21378fb8`. **Follow-up (not done):** move `matrix-js-sdk` to a stable release — a test-heavier change deferred on its own.
 
 ### M-11 (was H-2) — `applications` rules call four undefined functions — *DEPLOYED (2026-06-12)*
 **Fix applied (as part of the C-1 rewrite):** the undefined helpers are gone; `applications` now uses real `get()`-based role helpers. `create` is shape-constrained (`state=='applied'`, empty `taskKey`/`personKey`, single tenant) and allows the anonymous membership-application flow to actually work; `read`/`update` require `isPrivileged()` + tenant. Note: rules CI still does not exist — adding emulator-based rules tests to CI remains a follow-up (a 27-case harness was used for this change and can be committed).
