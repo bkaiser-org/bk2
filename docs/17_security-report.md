@@ -73,7 +73,8 @@ Updated as fixes land. "Pending deploy" = code committed to `main` but not yet p
 | **M-6** | Admin functions authorize via never-set claims | ✅ **Fixed, pending deploy** | `checkAdminRole` reads `users/{uid}.roles.admin` (legacy claim still accepted) — commit `d2c6ea9d` |
 | **M-10** | `firebase-functions: "latest"`; CLI in prod deps | ✅ **Done** | pinned `^7.0.5`; firebase-tools → devDeps — commit `21378fb8` |
 | **M-3** | Unauthenticated password-reset enumeration/abuse | ✅ **Fixed, pending deploy** | generic success on unknown account (no enumeration); drop caller templateVariables — commit `d52681fb` |
-| **M-4, M-5, M-7, M-9** | (see sections below) | ⬜ Open | — |
+| **M-9** | `set-env.js` tracked despite "never commit" rule | ✅ **Done** | `git rm --cached` + gitignored; history-clean (env-var plumbing only) — commit `4b730403` |
+| **M-4, M-5, M-7** | (see sections below) | ⬜ Open | — |
 | **L-1…L-4, I-1…I-5** | (see sections below) | ⬜ Open | — |
 
 **Firestore rules (C-1/C-2/M-8/M-11): ✅ DEPLOYED 2026-06-12.** Post-deploy verification to run on the live app:
@@ -241,10 +242,10 @@ Unlike `pages`/`sections`/`menuItems` (defensible pre-login CMS bootstrap), thes
 Update rule has no `request.auth` check and no field whitelist — anyone on the internet can rewrite session docs (forge `userKey`, flip `isActive`, stuff junk). The pre-auth `create` rule does constrain `isActive == true`, `userKey == ''`, and `tenants.size() == 1`, but has no field whitelist or size cap beyond that (spam vector). **Empirically confirmed:** an unauthenticated PATCH setting `userKey: "forged-user"` on an existing session returned 200 in the emulator probe.
 **Fix:** Whitelist mutable fields via `affectedKeys()`; bind sessions to `request.auth.uid` once upgraded; cap size.
 
-### M-9 — `set-env.js` is tracked in git despite the project's "never commit" rule
-**Location:** repo root; `.gitignore` lacks an entry
-Full history scanned: no secrets ever present (env-var plumbing only), so nothing leaked — but the guardrail is missing; a future edit embedding a key would be silently committed.
-**Fix:** `git rm --cached set-env.js` + gitignore entry, or update CLAUDE.md if tracking the secret-free script is now intentional.
+### M-9 — `set-env.js` is tracked in git despite the project's "never commit" rule — *FIXED (2026-06-12)*
+**Location:** repo root; `.gitignore` lacked an entry
+Full history scanned: no secrets ever present (env-var plumbing only — token fields are `'${servicesConfig.…}'` template placeholders interpolated from `process.env` at runtime), so nothing leaked — but the guardrail was missing; a future edit embedding a key would be silently committed.
+**Fix applied:** `git rm --cached set-env.js` (working copy kept) and added `set-env.js` / `**/set-env.js` to `.gitignore` next to `environment.ts`/`.env`/`firebase-config.js`. Commit `4b730403`. **Operational note:** the script is now provisioned locally/per-deploy like `environment.ts` — ensure CI generates or supplies `set-env.js` (a fresh clone no longer contains it).
 
 ### M-10 — Supply-chain hygiene: `firebase-functions: "latest"`, CLI/test tooling in prod deps — *FIXED (2026-06-12)*
 **Location:** root `package.json`
