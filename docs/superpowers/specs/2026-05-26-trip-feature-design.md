@@ -1,7 +1,7 @@
 # Trip Feature Design
 
 **Date:** 2026-05-26
-**Spec reference:** `docs/07_trip-feature-spec.md`
+**Spec reference:** `docs/2026-05-25-trip-feature-spec.md`
 **Implementation:** Plan 1 (core kiosk flow) + Plan 2 (LocationSelect + AocTrip full + suspicious activity)
 
 ---
@@ -238,7 +238,7 @@ When `softDelete()` or `reportDamage()` or `reportBug()` is called:
 
 ## i18n
 
-`libs/geo/trip/feature/src/i18n/de.json` — full content per `docs/07_trip-feature-spec.md` §14.
+`libs/geo/trip/feature/src/i18n/de.json` — full content per `docs/2026-05-25-trip-feature-spec.md` §14.
 
 ---
 

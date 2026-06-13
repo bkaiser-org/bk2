@@ -1,14 +1,14 @@
 # CMS Improvements — Implementation Specification
 
 **Project:** bk2  **Status:** Draft  **Last updated:** 2026-05-26  **Stack:** Angular 20 \+ Ionic \+ Firebase  
-**Source review:** [docs/06_cms-review.md](06_cms-review.md)
+**Source review:** [docs/2026-05-25-cms-review.md](2026-05-25-cms-review.md)
 **Scope:** `libs/cms/menu`, `libs/cms/page`, `libs/cms/section`
 
 ---
 
 ## 1. Overview
 
-This specification describes the work required to address every finding in the CMS review (`06_cms-review.md`). The review concluded that the CMS architecture is solid (4-layer libs, dispatcher pattern, discriminated unions, soft deletes, store-driven i18n) but identified gaps in functionality, robustness, and test coverage.
+This specification describes the work required to address every finding in the CMS review (`2026-05-25-cms-review.md`). The review concluded that the CMS architecture is solid (4-layer libs, dispatcher pattern, discriminated unions, soft deletes, store-driven i18n) but identified gaps in functionality, robustness, and test coverage.
 
 This spec breaks the work into self-contained workstreams that can be implemented and verified independently, prioritized in the order recommended by the review.
 

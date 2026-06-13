@@ -2,7 +2,7 @@
 
 **Date:** 2026-05-28  
 **Status:** Approved  
-**Source spec:** `docs/04_expense-feature-spezifikation.md`
+**Source spec:** `docs/2026-05-25-expense-feature-spezifikation.md`
 
 ---
 

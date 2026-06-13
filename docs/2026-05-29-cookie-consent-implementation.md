@@ -1,6 +1,6 @@
 # Cookie Consent — Implementation Guide
 
-**Spec:** `docs/05_cookie-consent-specification.md`
+**Spec:** `docs/2026-05-25-cookie-consent-specification.md`
 **Library:** `@bk2/consent-data-access`, `@bk2/consent-ui`
 
 ---
@@ -232,7 +232,7 @@ hasMyNewCategoryConsent(): boolean {
 ```
 
 4. Update `saveCustom()` in `cookie-banner.ts` to include the new toggle.
-5. Update the cookie/storage inventory in the spec (`docs/05_cookie-consent-specification.md`, §5).
+5. Update the cookie/storage inventory in the spec (`docs/2026-05-25-cookie-consent-specification.md`, §5).
 6. Bump the storage key to `cookie_consent_v2` to avoid conflicts with old stored values.
 
 ---
@@ -265,7 +265,7 @@ Tests use Angular `TestBed` with `PLATFORM_ID` stubbed to `'browser'` or `'serve
 
 ### Where the inventory lives
 
-The authoritative inventory is the Markdown table in **`docs/05_cookie-consent-specification.md` §5**. It lists every cookie, `localStorage` key, and `IndexedDB` store that the app writes, with its category, purpose, and source SDK.
+The authoritative inventory is the Markdown table in **`docs/2026-05-25-cookie-consent-specification.md` §5**. It lists every cookie, `localStorage` key, and `IndexedDB` store that the app writes, with its category, purpose, and source SDK.
 
 Keep the inventory in sync with the codebase — it is a legal document, not just a comment.
 
@@ -336,7 +336,7 @@ Is it required for the app to function at all without the user doing anything?
 
 ### How to add a new entry to the inventory
 
-Open `docs/05_cookie-consent-specification.md` and add a row to the appropriate table in §5.
+Open `docs/2026-05-25-cookie-consent-specification.md` and add a row to the appropriate table in §5.
 
 Each row must have:
 

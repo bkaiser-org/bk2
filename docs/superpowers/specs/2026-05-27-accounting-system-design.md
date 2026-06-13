@@ -2,7 +2,7 @@
 
 **Date:** 2026-05-27
 **Status:** Approved
-**Spec source:** docs/03_buchhaltungssystem-spezifikation.md v1.4
+**Spec source:** docs/2026-05-27-buchhaltungssystem-spezifikation.md v1.4
 
 ---
 

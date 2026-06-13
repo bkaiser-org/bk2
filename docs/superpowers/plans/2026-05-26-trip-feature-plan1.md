@@ -9,7 +9,7 @@
 **Tech Stack:** Angular 20 (standalone, zoneless), Ionic 8.7, NgRx Signal Stores (`@ngrx/signals`), Firebase/Firestore, `rxfire`, vest, ngx-vest-forms, Capacitor Camera, date-fns.
 
 **Design doc:** `docs/superpowers/specs/2026-05-26-trip-feature-design.md`
-**Spec:** `docs/07_trip-feature-spec.md`
+**Spec:** `docs/2026-05-25-trip-feature-spec.md`
 
 ---
 

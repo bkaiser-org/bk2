@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the full membership-application approval workflow — model, service, store, list, edit modal, form, i18n, routes, and Firestore rules — per spec `docs/10_application-feature-spec.md`.
+**Goal:** Build the full membership-application approval workflow — model, service, store, list, edit modal, form, i18n, routes, and Firestore rules — per spec `docs/2026-05-27-application-feature-spec.md`.
 
 **Architecture:** Four-layer Nx lib under `libs/subject/application/` (util → data-access → ui → feature). `ApplicationService` owns all Firestore writes and workflow transitions; `ApplicationStore` (NgRx Signal Store) drives the approver UI; `ApplicationList` and `ApplicationEditModal` are the two approver-facing components.
 

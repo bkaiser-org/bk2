@@ -9,7 +9,7 @@
 
 ## 1. Overview
 
-The application feature lets prospective members submit a membership application. Submissions arrive through a public CMS page rendered by **FormSection** (see [09_forms-builder-spec.md](09_forms-builder-spec.md)); how the form is rendered and posted is owned by the FormsBuilder feature and is **out of scope** here. Each successful submission is persisted as an `ApplicationModel` and triggers a task for the responsible approver (`ResponsibilityModel` with `name = 'application'`). The approver reviews the data, optionally edits it after clarifying with the applicant, and either accepts or denies the application.
+The application feature lets prospective members submit a membership application. Submissions arrive through a public CMS page rendered by **FormSection** (see [2026-05-27-forms-builder-spec.md](2026-05-27-forms-builder-spec.md)); how the form is rendered and posted is owned by the FormsBuilder feature and is **out of scope** here. Each successful submission is persisted as an `ApplicationModel` and triggers a task for the responsible approver (`ResponsibilityModel` with `name = 'application'`). The approver reviews the data, optionally edits it after clarifying with the applicant, and either accepts or denies the application.
 
 Acceptance creates only the `PersonModel` (plus its `AddressModel`). Membership creation and group invitations are deliberately **separate, explicit actions** (`add-membership`, `add-to-group`) on the list, so the approver can decide case by case.
 

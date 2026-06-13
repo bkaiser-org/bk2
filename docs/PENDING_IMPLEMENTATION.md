@@ -11,7 +11,7 @@ Use it to plan follow-up work. Each entry links back to its source spec.
 
 ---
 
-## 1. PDF Generator — [`01_pdf-generator-spezifikation.md`](done/01_pdf-generator-spezifikation.md)
+## 1. PDF Generator — [`2026-05-25-pdf-generator-spezifikation.md`](done/2026-05-25-pdf-generator-spezifikation.md)
 
 All original open points are resolved. Remaining deferrals are explicit non-goals of the iteration:
 
@@ -20,7 +20,7 @@ All original open points are resolved. Remaining deferrals are explicit non-goal
 - 🔴 **Integrated email dispatch in the CF** — sending stays client-side over the existing Mailgun transport (§1.3, §8.4).
 - 🔴 **Electronic signature (DeepSign)** — flagged as a follow-up project; see spec 02 (§1.3, §11.1).
 
-## 2. DeepSign E-Signature — [`02_deepsign-integration-spec.md`](done/02_deepsign-integration-spec.md)
+## 2. DeepSign E-Signature — [`2026-05-25-deepsign-integration-spec.md`](done/2026-05-25-deepsign-integration-spec.md)
 
 Out of scope for **v1** (§1):
 
@@ -31,7 +31,7 @@ Out of scope for **v1** (§1):
 - 🔴 Batch upload and attachments.
 - 🔴 Non-PDF MIME types (DOCX/XLSX) — only `application/pdf` accepted in v1 (§9).
 
-## 3. Accounting / Buchhaltung — [`03_buchhaltungssystem-spezifikation.md`](done/03_buchhaltungssystem-spezifikation.md)
+## 3. Accounting / Buchhaltung — [`2026-05-27-buchhaltungssystem-spezifikation.md`](done/2026-05-27-buchhaltungssystem-spezifikation.md)
 
 Explicit follow-up projects ("Folgeprojekt") and open points (§1, §3, §7):
 
@@ -47,7 +47,7 @@ Explicit follow-up projects ("Folgeprojekt") and open points (§1, §3, §7):
 - 🟡 **Migration `journallogs` → `bookings`** and rename `BookingJournalModel` → `BookingModel` — must be performed before implementation start.
 - 🟡 **CF adjustments for the Journal feature** — flagged as part of Phase 2 (Core Bookkeeping) (§ note at L75).
 
-## 4. Expense Feature — [`04_expense-feature-spezifikation.md`](done/04_expense-feature-spezifikation.md)
+## 4. Expense Feature — [`2026-05-25-expense-feature-spezifikation.md`](done/2026-05-25-expense-feature-spezifikation.md)
 
 Out of scope this iteration (§1.2) and open points (§9):
 
@@ -60,7 +60,7 @@ Out of scope this iteration (§1.2) and open points (§9):
 - ❓ OCR learning loop — feed manual corrections back to improve recognition?
 - ❓ Duplicate-receipt behaviour (same content hash): warn or block?
 
-## 5. CMS Implementation — [`06_cms-review.md`](done/06_cms-review.md)
+## 5. CMS Implementation — [`2026-05-25-cms-review.md`](done/2026-05-25-cms-review.md)
 
 Review-identified gaps in `cms/menu`, `cms/page`, `cms/section`:
 
@@ -79,7 +79,7 @@ Review-identified gaps in `cms/menu`, `cms/page`, `cms/section`:
 - 🟡 **Search-index quality** — index-string only; no full-text/fuzzy search over title/subtitle/content (LOW).
 - 🟡 **`@VERSION@` magic-string replacement** in `menu.store.ts` — wants a dedicated token/convention (LOW).
 
-## 6. Trip Feature — [`07_trip-feature-spec.md`](done/07_trip-feature-spec.md)
+## 6. Trip Feature — [`2026-05-25-trip-feature-spec.md`](done/2026-05-25-trip-feature-spec.md)
 
 Out of scope this iteration (§1.2) and open questions (§17):
 
@@ -93,7 +93,7 @@ Out of scope this iteration (§1.2) and open questions (§17):
 - ❓ `dev_responsibility`: `ResponsibilityModel` or hardcoded admin contact?
 - ❓ Should `aoc/trip` also be accessible to `trip_responsibility`, not only admin?
 
-## 7. Trip Statistics (Firestore) — [`08_trip-stats-firestore-spec.md`](done/08_trip-stats-firestore-spec.md)
+## 7. Trip Statistics (Firestore) — [`2026-05-25-trip-stats-firestore-spec.md`](done/2026-05-25-trip-stats-firestore-spec.md)
 
 Open questions (§8):
 
@@ -101,7 +101,7 @@ Open questions (§8):
 - ❓ May the kiosk edit an `open` trip in place, or must every revision use the `.rev` postfix?
 - ❓ Audit log of state transitions — only latest `deletedAt`/`deletedBy` kept; a `/trips/{id}/history` subcollection could capture every transition if full audit is required.
 
-## 8. Forms Builder — [`09_forms-builder-spec.md`](done/09_forms-builder-spec.md)
+## 8. Forms Builder — [`2026-05-27-forms-builder-spec.md`](done/2026-05-27-forms-builder-spec.md)
 
 Out of scope for **v1** (§1, §16) and later implementation phases (§18):
 
@@ -114,7 +114,7 @@ Out of scope for **v1** (§1, §16) and later implementation phases (§18):
 - 🟡 **Phasing remainder** — later phases ship: URL target + submission CF + audit + CSV export (P2); spam protection (P3); CAPTCHA + encrypted file upload (P4); approval workflow + email notifications (P5); PDF export single/batch + PDF-form template fill (P6).
 - 🟡 **Encrypted file-upload key derivation** — PBKDF2 chosen; exact parameters to be confirmed with security review before implementing §9.2.
 
-## 9. Application Feature — [`10_application-feature-spec.md`](done/10_application-feature-spec.md)
+## 9. Application Feature — [`2026-05-27-application-feature-spec.md`](done/2026-05-27-application-feature-spec.md)
 
 Out of scope this iteration (§1.2):
 
@@ -126,34 +126,32 @@ Out of scope this iteration (§1.2):
 - 🔴 **Automatic account creation** — approvers open accounts manually via the finance feature.
 - 🟡 **Per-membership-category responsibility routing** — generic `application` responsibility for now; per-kind split can be added later.
 
-## 10. Lohnbuchhaltung (Payroll) — [`11_spec-lohnbuchhaltung.md`](11_spec-lohnbuchhaltung.md)
+## 10. Lohnbuchhaltung (Payroll) — [`2026-05-28-spec-lohnbuchhaltung.md`](2026-05-28-spec-lohnbuchhaltung.md)
 
 *(Spec lives in `docs/`, not `docs/done/` — listed here because spec 03 defers payroll to it.)*
 Status: dependent on payroll being taken into scope; drives the deferred Sozialabgaben config in spec 03.
 
-## 11. Vest → Signal Forms Migration — [`12_vest-to-signal-forms-migration-spec.md`](done/12_vest-to-signal-forms-migration-spec.md)
+## 11. Vest → Signal Forms Migration — [`2026-06-12-vest-to-signal-forms-migration-spec.md`](done/2026-06-12-vest-to-signal-forms-migration-spec.md)
 
-A phased migration; most of it is future work (§11 rollout, §12 risks):
+**✅ Done (completed 2026-06-12).** The phased migration shipped in full; all five phases are complete:
 
-- 🟡 **Phase 0** — land `vest-bridge.ts`, async helper, global `NG_STATUS_CLASSES`.
-- 🟡 **Phase 1** — pilot-migrate 1–2 synchronous forms.
-- 🟡 **Phase 2** — bulk-migrate remaining synchronous forms.
-- 🟡 **Phase 3** — migrate async suites, form arrays, `warn()` forms.
-- 🟡 **Phase 4** — remove ngx-vest-forms dependency and leftover `validationConfig`/wrapper components.
-- ❓ **Async Signal Forms API (§5.2)** unconfirmed — must be validated against installed Angular before Phase 3. *Owner TBD.*
-- ❓ **FieldTree array indexing (`resolveFieldRef`, §5.4)** needs confirmation for form-array forms. *Owner TBD.*
-- ❓ **`warn()` forms** must be flagged so advisory messages aren't downgraded to blocking errors. *Owner TBD.*
-- ❓ **Performance** — whole-suite-per-change runs need profiling on large forms; per-field scoping as fallback.
+- 🟢 **Phase 0** — `vest-bridge.ts` (`validateVestTree`) landed in `@bk2/shared-util-angular`, with dev warnings and improved type safety.
+- 🟢 **Phases 1–3** — every form migrated to Angular Signal Forms (`@angular/forms/signals`) across all domains (subject, relationship, cms, geo, calevent, document, resource, task, finance, user, profile, application, ownership, category, folder, chat, auth, trip). Forms now bind via `[control]`/`form(...)` and reuse the existing Vest suites through `validateVestTree`.
+- 🟢 **Phase 4** — `ngx-vest-forms` dependency removed from `package.json`/`pnpm-lock.yaml` (commit `da3c328b`); `vestFormsViewProviders` removed from all `shared/ui` components; no `scVestForm` directive or `validationConfig` remains in source.
 
-## 12. LocationSelect — Free-text route — [`14_spec-location-select-custom.md`](done/14_spec-location-select-custom.md)
+The four open questions (§5.2 async Signal Forms API, §5.4 `FieldTree` array indexing, `warn()` forms, whole-suite performance) were all resolved in the course of completing Phases 3–4 — async suites and form-array forms are migrated and live.
+
+- 🟡 **Cleanup nit (LOW)** — ~29 edit-modal files still carry a stale `// This destroys and recreates the <form scVestForm> → Vest fully resets` comment referencing the removed directive. Harmless; update the comment text when next touching those files.
+
+## 12. LocationSelect — Free-text route — [`2026-06-11-spec-location-select-custom.md`](done/2026-06-11-spec-location-select-custom.md)
 
 - ❓ **Recently-used / promoted free-text routes** — caching frequently-used custom routes or promoting them into the `locations` collection is explicitly out of scope for this spec (§9).
 
-## 13. LocationSelect — Map view — [`15_spec-location-select-map.md`](done/15_spec-location-select-map.md)
+## 13. LocationSelect — Map view — [`2026-06-12-spec-location-select-map.md`](done/2026-06-12-spec-location-select-map.md)
 
 - 🟡 **Marker clustering** (`leaflet.markercluster`) — deferred until a tenant exceeds the threshold (§ marker handling).
 
-## 14. PWA Caching — [`16_spec-pwa-caching.md`](done/16_spec-pwa-caching.md)
+## 14. PWA Caching — [`2026-06-12-spec-pwa-caching.md`](done/2026-06-12-spec-pwa-caching.md)
 
 Explicit out-of-scope items and follow-ups:
 
@@ -165,7 +163,7 @@ Explicit out-of-scope items and follow-ups:
 - 🟡 **Force-reload-on-every-build strategy** — revisit in a follow-up if needed; swap-in is small.
 - 🟡 **Bundle-size investigations** — diagnosed, not yet validated; treated as a backlog of investigations (confirm `matrix-js-sdk` chunk doesn't pull `crypto-js`, etc.).
 
-## 15. Security Review — [`17_security-report.md`](done/17_security-report.md)
+## 15. Security Review — [`2026-06-11-security-report.md`](done/2026-06-11-security-report.md)
 
 Most Critical/High findings are deployed. Remaining work (as of 2026-06-12):
 
@@ -188,7 +186,7 @@ Most Critical/High findings are deployed. Remaining work (as of 2026-06-12):
 - **Info items I-1…I-5** — OIDC callback state check (moot if bridge gone); FCM SW Firebase version lockstep; hardcoded API-key fallback fail-fast; cap/trim unbounded esign `events` array; (I-5 already-defended `[innerHTML]` paths — no action).
 - **Post-deploy verification** — smoke-test the live app and watch production logs for `permission-denied` after the rules rewrite (a read-only-classified collection with a real client write path needs flipping to privileged write).
 
-## 16. vCard Export — [`17_spec-vcard-export.md`](done/17_spec-vcard-export.md)
+## 16. vCard Export — [`2026-06-12-spec-vcard-export.md`](done/2026-06-12-spec-vcard-export.md)
 
 The feature is **implemented** (`apps/functions/src/vcard/`, `libs/vcard/util`, `libs/vcard/feature`, person/org list + store entry points) for tiers 1 & 2. Outstanding:
 
@@ -200,7 +198,7 @@ The feature is **implemented** (`apps/functions/src/vcard/`, `libs/vcard/util`, 
 - 🔴 **vCard 4.0 profile** (native `RELATED` / `KIND:org`) — explicit non-goal (§2.1, §2). 3.0 + `X-AB*` is the chosen encoding because iCloud rejects 4.0; only revisit if broad non-Apple fidelity ever becomes a priority.
 - 🔴 **Per-platform export profiles** — intentionally not built; the single 3.0 `.vcf` is treated as cross-platform for all *values* (only some *labels* soften on non-Google Android) (§2.1).
 
-## 17. Matrix Chat Audit — [`19_matrix-chat-audit.md`](done/19_matrix-chat-audit.md)
+## 17. Matrix Chat Audit — [`2026-06-12-matrix-chat-audit.md`](done/2026-06-12-matrix-chat-audit.md)
 
 The symptom fixes (S1–S5), SEC-1/2, SEC-3/4, ARCH-1 and the C-*/P-* hygiene batch are done (mostly client-side, shipping with the app). Remaining work:
 
