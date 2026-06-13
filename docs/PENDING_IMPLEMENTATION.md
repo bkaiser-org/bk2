@@ -168,7 +168,7 @@ Explicit out-of-scope items and follow-ups:
 Most Critical/High findings are deployed. Remaining work (as of 2026-06-12):
 
 ### Awaiting deploy / app build 🚀
-- **H-5** esign tenant authz, **H-6** App Check + 7-day Matrix tokens, **M-3** password-reset enumeration fix, **M-4** PDF raw-HTML sanitizer, **M-5** Mailtrap webhook HMAC, **M-6** `checkAdminRole` — all need a **Cloud Functions redeploy** (`firebase deploy --only functions`).
+- **H-5** esign tenant authz, **H-6** App Check + 7-day Matrix tokens, **M-3** password-reset enumeration fix, **M-4** PDF raw-HTML sanitizer, **M-5** Mailtrap webhook HMAC, **M-6** `checkAdminRole` — all need a **Cloud Functions redeploy** (`pnpm run deploy:functions`).
   - **M-5 deploy prerequisite:** `firebase functions:secrets:set MAILTRAP_WEBHOOK_SECRET`.
   - **M-7(b) deploy prerequisites:** redeploy rules + functions; optionally set `PUBLIC_API_ALLOWED_ORIGINS` / `PUBLIC_API_ALLOWED_TENANTS`; add a `_rateLimits.expiresAt` TTL policy.
 - **H-3** CMS iframe/video URL allowlist, **M-1** RAG markdown sanitizer, **M-2** Matrix-creds logout cleanup, **C-3** client route/component removal — ship with the **next app build**.
@@ -204,7 +204,7 @@ The symptom fixes (S1–S5), SEC-1/2, SEC-3/4, ARCH-1 and the C-*/P-* hygiene ba
 
 ### Awaiting deploy 🚀
 
-- **SEC-3 provisioning gate** (`requireMatrixLocalpart` in the matrix callables) — needs **`firebase deploy --only functions`** to activate.
+- **SEC-3 provisioning gate** (`requireMatrixLocalpart` in the matrix callables) — needs **`pnpm run deploy:functions`** to activate.
 - **S3 push gateway** — the Firebase Hosting rewrite (`/_matrix/push/v1/notify` → `matrixPushGateway`) needs **`firebase deploy --only hosting:scs-app-54aef`**; until then Synapse accepts the pusher URL but POSTs hit the SPA catch-all and no chat push notifications arrive.
 
 ### Deferred / open 🔴🟡❓
