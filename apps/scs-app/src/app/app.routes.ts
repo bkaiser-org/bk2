@@ -273,7 +273,9 @@ export const appRoutes: Route[] = [
   {
     path: 'forms',
     canActivate: [isAdminGuard],
-    loadComponent: () => import('@bk2/forms-feature').then(m => m.FormDefinitionList),
+    children: [
+      { path: ':listId/:contextMenuName', loadComponent: () => import('@bk2/forms-feature').then(m => m.FormDefinitionList) },
+    ],
   },
   {
     path: 'icon',
