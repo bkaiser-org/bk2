@@ -1,0 +1,337 @@
+# icon set 'icons' — 335 icons — generated 2026-06-14
+# regenerate: node .claude/skills/icons/scripts/dump-icon-names.mjs
+accordion — accordion icons cms section
+account — account icons bank user finance
+active — icons active member state
+add — icons add
+add-circle — icons add-circle
+address — icons address person org
+admin — icons admin user
+airplane — airplane icons icons airplane traffic transport aerial fast speed
+alarm — icons alarm alert notification
+albums — icons album cms section
+alert — icons alert alarm notification
+alert-circle — icons alert-circle alarm notification
+archive — icons archive
+arrow-back — icons arrow-back navigation
+arrow-back-circle — icons arrow-back-circle navigation
+arrow-down — icons arrow-down navigation
+arrow-down-circle — icons arrow-down-circle
+arrow-forward — icons arrow-forward navigation
+arrow-forward-circle — icons arrow-forward-circle navigation
+arrow-up — icons arrow-up navigation
+arrow-up-circle — icons arrow-up-circle navigation
+assembly — icons assembly meeting
+attachment — icons attachment document file
+avatar-circle — icons avatar-circle people person
+b1x — icons b1x boat rowing skiff sport
+b2m — icons b2m boat rowing skiff sport
+b2mx — icons b2mx boat rowing skiff sport
+b2p — icons b2p boat rowing skiff sport
+b2x — icons b2x boat rowing skiff sport
+b3x — icons b3x boat rowing skiff sport
+b4m — icons b4m boat rowing skiff sport
+b4x — icons b4x boat rowing skiff sport
+b5x — icons b5x boat rowing skiff sport
+b8p — icons b8p boat rowing skiff sport
+bank — bank icons bank icons
+barcode — barcode icons barcode icons
+beer — beer icons beer icons
+bicycle — bicycle icons bicycle icons
+bird — bird icons bird icons
+birthday — birthday icons birthday icons
+biweekly — biweekly icons biweekly icons
+board — board icons board icons
+boat — boat icons boat icons
+booking — booking icons booking icons
+branch — branch icons branch icons
+browser — browser icons browser icons
+bulb — bulb icons bulb icons
+bus — bus icons bus icons
+business — icons business
+button — button icons button icons
+calendar — calendar icons calendar icons
+calendar-number — calendar-number icons calendar-number icons
+camera — camera icons camera icons
+cancel — cancel icons
+cancel-circle — cancel-circle icons cancel-circle icons
+cannon — cannon icons cannon icons
+car — car icons car icons
+card — card icons card icons
+cart — cart icons cart icons
+cat — icons cat
+category — category icons category icons
+cc-circle — cc-circle icons cc-circle icons
+cellular — cellular icons cellular icons
+center — center icons center icons
+chart — chart icons chart icons
+chatbox — chatbox icons chatbox icons
+chatbubble — chatbubble icons chatbubble icons
+chatbubble-empty — chatbubble-empty icons chatbubble-empty icons
+chatbubbles — chatbubbles icons chatbubbles icons
+check — check icons check icons
+checkbox — checkbox icons checkbox icons
+checkbox-circle — checkbox-circle icons checkbox-circle icons
+checkbox-circle-double — checkbox-circle-double icons checkbox-circle-double icons
+checkmark — checkmark icons checkmark icons
+chevron-back — chevron-back icons chevron-back icons
+chevron-down — chevron-down icons chevron-down icons
+chevron-expand — chevron-expand icons chevron-expand icons
+chevron-forward — chevron-forward icons chevron-forward icons
+chevron-up — chevron-up icons chevron-up icons
+chf — chf icons chf icons
+circle — circle icons circle icons
+code — code icons code icons
+cog — cog icons cog icons
+collaboration — collaboration icons collaboration icons
+color — color icons color icons
+company — company icons company icons
+compass — compass icons compass icons
+competition — competition icons competition icons
+context — context icons context icons
+context-menu — context-menu icons context-menu icons
+contract — contract icons contract icons
+contrast — contrast icons contrast icons
+copy — copy icons copy icons
+crop — crop icons crop icons
+cube — cube icons cube icons
+daily — daily icons daily icons
+database — database icons database icons
+diverse — diverse icons diverse icons
+doc-safe — doc-safe icons doc-safe icons
+document — document icons document icons
+documents — documents icons documents icons
+dog — dog icons dog icons
+download — download icons download icons
+earth — earth icons earth icons
+eat — eat icons eat icons
+edit — edit icons edit icons
+education — education icons education icons
+ellipsis-horizontal — ellipsis-horizontal icons ellipsis-horizontal icons
+ellipsis-vertical — ellipsis-vertical icons ellipsis-vertical icons
+email — email icons email icons
+english — english icons english icons
+ergometer — ergometer icons ergometer icons
+eur — eur icons eur icons
+expand — expand icons expand icons
+expense — expense icons expense icons
+eye-off — eye-off icons eye-off icons
+eye-on — eye-on icons eye-on icons
+facebook — facebook icons facebook icons
+family — family icons family icons
+faq — faq icons faq icons
+female — female icons female icons
+finance_money-exchange — finance_money-exchange icons finance_money-exchange icons
+fish — fish icons fish icons
+folder — folder icons folder icons
+folder-open — folder-open icons folder-open icons
+form — form icons form icons
+form-edit — form-edit icons form-edit icons
+free — free icons free icons
+french — french icons french icons
+gallery — icons gallery
+german — icons german
+gift — gift icons gift icons
+gifts — gifts icons gifts icons
+github — github icons github icons
+globe — globe icons globe icons
+golf — golf icons golf icons
+gravatar-no — gravatar-no icons gravatar-no icons
+grid — grid icons grid icons
+groom — groom icons groom icons
+group — group icons group icons
+hammer — hammer icons hammer icons
+handshake — handshake icons handshake icons
+heart — heart icons heart icons
+heart-outline — heart-outline icons heart-outline icons
+help — help icons help icons
+help-circle — help-circle icons help-circle icons
+hiking — hiking icons hiking icons
+history — history icons history icons
+home — home icons home icons
+horse — horse icons horse icons
+hourly — hourly icons hourly icons
+icons — icons icons icons icons
+id-card — id-card icons id-card icons
+image — image icons image icons
+images — icons images
+income — income icons income icons
+infinite — infinite icons infinite icons
+info-circle — info-circle icons info-circle icons
+information — information icons information icons
+instagram — instagram icons instagram icons
+invert — invert icons invert icons
+invoice — invoice icons invoice icons
+italian — italian icons italian icons
+js — js icons js icons
+key — key icons key icons
+lease — lease icons lease icons
+legal — legal icons legal icons
+library — library icons library icons
+link — link icons link icons
+linkedin — linkedin icons linkedin icons
+list — list icons list icons
+list-circle — list-circle icons list-circle icons
+locate — locate icons locate icons
+location — location icons location icons
+lock-closed — lock-closed icons lock-closed icons
+lock-open — lock-open icons lock-open icons
+login — icons login
+logout — logout icons logout icons
+m-daily — m-daily icons m-daily icons
+m-monthly — m-monthly icons m-monthly icons
+m-weekly — m-weekly icons m-weekly icons
+mail — mail icons mail icons
+mail-open — mail-open icons mail-open icons
+male — male icons male icons
+map — map icons map icons
+mcatchange — mcatchange icons mcatchange icons
+medal — medal icons medal icons
+meeting — meeting icons meeting icons
+member-active — member-active icons member-active icons
+member-candidate — member-candidate icons member-candidate icons
+member-junior — member-junior icons member-junior icons
+member-passive — member-passive icons member-passive icons
+membership — membership icons membership icons
+menu — menu icons menu icons
+mic — mic icons mic icons
+moneybag — moneybag icons moneybag icons
+monthly — monthly icons monthly icons
+music — music icons music icons
+navigate — navigate icons navigate icons
+navigate-circle — navigate-circle icons navigate-circle icons
+never — never icons never icons
+news — news icons news icons
+note — note icons note icons
+once — once icons once icons
+org — org icons org icons
+other — other icons other icons
+own — own icons own icons
+page — page icons page icons
+pair — pair icons pair icons
+panorama — panorama icons panorama icons
+party — party icons party icons
+passive — passive icons passive icons
+paypal — paypal icons paypal icons
+people — people icons people icons
+people-circle — people-circle icons people-circle icons
+people-group — people-group icons people-group icons
+people-list — people-list icons people-list icons
+person — person icons person icons
+person-add — person-add icons person-add icons
+person-military — person-military icons person-military icons
+person-remove — person-remove icons person-remove icons
+personSearch — personsearch icons personsearch icons
+personal-rel — personal-rel icons personal-rel icons
+persons — persons icons persons icons
+pinterest — pinterest icons pinterest icons
+play — play icons play icons
+play-circle — play-circle icons play-circle icons
+podium — podium icons podium icons
+presentation — presentation icons presentation icons
+process — process icons process icons
+qrcode — qrcode icons qrcode icons
+quarterly — quarterly icons quarterly icons
+rabbit — rabbit icons rabbit icons
+radio-button-off — radio-button-off icons radio-button-off icons
+radio-button-on — radio-button-on icons radio-button-on icons
+rainy — icons rainy
+recording — recording icons recording icons
+reddit — reddit icons reddit icons
+registration-form — registration-form icons registration-form icons
+reload — reload icons reload icons
+remove — remove icons remove icons
+remove-circle — remove-circle icons remove-circle icons
+rent — rent icons rent icons
+reorder-four — reorder-four icons reorder-four icons
+repeat — repeat icons repeat icons
+reply — reply icons reply icons
+reservation — reservation icons reservation icons
+resize — resize icons resize icons
+resource — resource icons resource icons
+responsibility — responsibility icons responsibility icons
+rocket — rocket icons rocket icons
+row_2x_side — row_2x_side icons row_2x_side icons
+rowing_1x_front — rowing_1x_front icons rowing_1x_front icons
+rowing_1x_side — rowing_1x_side icons rowing_1x_side icons
+rowing_2x_side_back — rowing_2x_side_back icons rowing_2x_side_back icons
+rowing_2x_side_front — rowing_2x_side_front icons rowing_2x_side_front icons
+rowing_4+_side — rowing_4+_side icons rowing_4+_side icons
+rowing_4-_side — rowing_4-_side icons rowing_4-_side icons
+rowing_4x_side — rowing_4x_side icons rowing_4x_side icons
+rowing_4x_side2 — rowing_4x_side2 icons rowing_4x_side2 icons
+rowing_4x_top2 — rowing_4x_top2 icons rowing_4x_top2 icons
+rowing_8x_front — rowing_8x_front icons rowing_8x_front icons
+rowing_skulls — rowing_skulls icons rowing_skulls icons
+rowingboat_8-_top — rowingboat_8-_top icons rowingboat_8-_top icons
+scan — scan icons scan icons
+school — school icons school icons
+search — search icons search icons
+secret — secret icons secret icons
+section — section icons section icons
+send — send icons send icons
+settings — settings icons settings icons
+sheep — icons sheep
+shield — shield icons shield icons
+shuffle — shuffle icons shuffle icons
+sign — sign icons sign icons
+skype — skype icons skype icons
+slider — slider icons slider icons
+smiley — smiley icons smiley icons
+sos — sos icons sos icons
+spanish — spanish icons spanish icons
+sparkles — sparkles icons sparkles icons
+square — square icons square icons
+srv — srv icons srv icons
+stackoverflow — stackoverflow icons stackoverflow icons
+star — star icons star icons
+star-outline — star-outline icons star-outline icons
+stop — stop icons stop icons
+stop-circle — stop-circle icons stop-circle icons
+sunny — sunny icons sunny icons
+sunny-partly — sunny-partly icons sunny-partly icons
+swap-horizontal — swap-horizontal icons swap-horizontal icons
+swap-vertical — swap-vertical icons swap-vertical icons
+symbols — symbols icons symbols icons
+sync — sync icons sync icons
+sync-circle — sync-circle icons sync-circle icons
+table — table icons table icons
+tag — tag icons tag icons
+tags — tags icons tags icons
+target — target icons target icons
+tel — tel icons tel icons
+text — text icons text icons
+thermometer — thermometer icons thermometer icons
+thumbs-down — thumbs-down icons thumbs-down icons
+thumbs-up — thumbs-up icons thumbs-up icons
+thunderstorm — thunderstorm icons thunderstorm icons
+time — time icons time icons
+timeline — timeline icons timeline icons
+timer — timer icons timer icons
+todo — icons todo task work
+toggle — icons toggle switch onoff
+track — icons track geo trip journey
+train — icons train traffic transport
+training — icons training sport fitness dumbell hantel weight
+transfer — icons transfer money finance buy sell gift purchase rent
+trash — icons trash delete remove bin
+twint — icons twint payment money finance
+twitter — icons twitter x social media messaging
+umbrella — icons weather umbrella protection safe
+upload — icons upload doc file image
+usd — icons usd currency money finance
+use — icons use car ownership
+vacation — icons vacation offtime holiday island leasure relax palmtree tropic travel
+video — icons video media doc mimetype
+volley — icons volleyball sport
+wallet — icons wallet finance money cash
+warning — icons warning alert alarm notification
+water-temp — icons water-temp weather temperature measurement
+weekly — icons weekly time event calendar
+wine — icons wine social drink enjoy relax
+work — icons work business address
+workday — icons workday time event calendar periodicity
+workrel — icons workrel employee business
+xing — icons xing address social
+yearly — icons yearly periodicity event
+zoom — icons zoom cms
