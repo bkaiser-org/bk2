@@ -28,7 +28,8 @@ the model, the four layers, the routes, and the menu items.
    (e.g. `@bk2/task-feature`). Below, `FEATURE` = the feature name, `ALIAS` = the resolved alias prefix.
 3. **Detail view** — modal (default, preferred) or also a `FEATURE-edit.page`? Only add a
    `:featureKey` route when a `.page` exists.
-4. **listId?** — does the list route need a preset filter segment (`:listId`)? (see `generating-lists`).
+4. **listId** — the route always carries `:listId` (component `input('all')`). Does this feature
+   partition its list now (folder key, tag, calendar), or just use `'all'`? (see `generating-lists`).
 5. **List popover actions** — which context-menu items (e.g. `add`, `exportRaw`)? These drive
    both the ActionSheet and the **call menus** below.
 6. **Route guards** — `isAuthenticatedGuard` (default), `isPrivilegedGuard`, or `isAdminGuard`?
@@ -123,8 +124,9 @@ Inputs: `i18n` (`FeatureI18n`), `formData` (model), `currentUser`, `allTags`, `r
 
 ## Routes — `apps/scs-app/src/app/app.routes.ts`
 
-Add a **list** route (always) and an optional **detail-page** route. `:contextMenuName` carries
-the context-menu name (`c-FEATURE`); `:listId` only if you opted into it.
+Add a **list** route (always) and an optional **detail-page** route. The list route always uses
+`:listId/:contextMenuName`: `:contextMenuName` carries the context-menu name (`FEATURE-context`,
+e.g. `forms-context`), and `:listId` carries the list partition (default `'all'` — see `generating-lists`).
 
 ```ts
 {
@@ -139,8 +141,9 @@ the context-menu name (`c-FEATURE`); `:listId` only if you opted into it.
 },
 ```
 
-(Drop `:listId/` if no listId. CLAUDE.md: always add the `*.list` route; only add the detail
-route when a `*.page` exists — modals never get routes.)
+(The list route always keeps `:listId/:contextMenuName` — pass `all` when the feature has no
+partition yet (`listId = input('all')` in the component). CLAUDE.md: always add the `*.list`
+route; only add the detail route when a `*.page` exists — modals never get routes.)
 
 ## Menus — `menuItems` Firestore collection (firebase MCP)
 
@@ -165,7 +168,7 @@ document ID (stripped on write, re-attached on read). Per [MenuItemModel](../../
 | `action` | `stringValue` | `navigate` / `call` / `context` |
 | `url` | `stringValue` | route or call value |
 | `label` | `stringValue` | i18n key (empty for the context menu) |
-| `icon` | `stringValue` | default `help-circle` (pick one via the `icons` skill) |
+| `icon` | `stringValue` | an `icons`-set name (e.g. `list`, `add`); default `help-circle`. **Pick via the `icons` skill — NOT Ionicon `-outline` names** (they 404 → blank icon) |
 | `roleNeeded` | `stringValue` | `admin` / `privileged` / … |
 | `menuItems` | `arrayValue` of `stringValue` | call-menu names (context menu only; `[]` otherwise) |
 | `tenants` | `arrayValue` of `stringValue` | the tenant IDs |
@@ -183,9 +186,9 @@ firestore_add_document({
     name:        { stringValue: "feature-all" },
     index:       { stringValue: "n:feature-all a:navigate k:" },
     action:      { stringValue: "navigate" },
-    url:         { stringValue: "/feature/all/c-feature" },
+    url:         { stringValue: "/feature/all/feature-context" },
     label:       { stringValue: "@feature/feature.plural" },
-    icon:        { stringValue: "list-outline" },
+    icon:        { stringValue: "list" },
     roleNeeded:  { stringValue: "admin" },
     menuItems:   { arrayValue: { values: [] } },
     tenants:     { arrayValue: { values: [{ stringValue: "scs" }] } },
@@ -207,7 +210,8 @@ There are three kinds:
 | `label` | `@FEATURE/feature.plural` |
 | `roleNeeded` | `admin` |
 | `action` | `navigate` |
-| `url` | `/FEATURE/LIST_ID/c-FEATURE` (omit `LIST_ID/` if no listId) |
+| `url` | `/FEATURE/all/FEATURE-context` (use the real listId instead of `all` if the feature partitions its list) |
+| `icon` | an `icons`-set name (e.g. `list`) — **choose via the `icons` skill, no `-outline` suffix** |
 | `tenants` | (ask user) |
 
 ### 2. Call menu — one per list popover action
@@ -221,16 +225,18 @@ For **each** popover action from the list (step 5), create:
 | `roleNeeded` | `privileged` |
 | `action` | `call` |
 | `url` | `POPOVEROP` (lowercase — matches the `onPopoverDismiss` switch case) |
+| `icon` | an `icons`-set name matching the action (e.g. `add`, `download`) — **choose via the `icons` skill, no `-outline` suffix** |
 | `tenants` | same as navigate menu |
 
 ### 3. Context menu (groups the call menus)
 
 | Field | Value |
 |---|---|
-| `name` | `c-FEATURE` |
+| `name` | `FEATURE-context` (e.g. `forms-context`) |
 | `label` | *(empty)* |
 | `roleNeeded` | `privileged` |
 | `action` | `context` |
+| `icon` | `help-circle` (context menus conventionally keep the default; pick another via the `icons` skill if needed) |
 | `menuItems` | all the call-menu names from step 2 |
 | `tenants` | same as navigate menu |
 
@@ -247,5 +253,6 @@ navigate menu. Verify afterwards with `firestore_query_collection` on `menuItems
 - Giving a route to the edit **modal** (modals never get routes); or omitting the `*.list` route.
 - Call-menu `url` not matching the list's `onPopoverDismiss` switch case (lowercase mismatch).
 - Writing a `bkey` field on a menu document (it **is** the doc ID), or passing raw JSON instead of Firestore-typed `Value`s (`stringValue`/`arrayValue`/`booleanValue`) to `firestore_add_document`.
+- Using Ionicon `-outline`/`-sharp` icon names (e.g. `list-outline`, `add-circle-outline`) for the `icon` field — the DB `icons` set has no such names, so they 404 and render blank. Pick a real name via the **`icons` skill**.
 - Skipping the per-util unit tests (`FEATURE.util.spec.ts`) — required by project QA.
 - Modifying an existing `shared-models` model/schema without asking first.

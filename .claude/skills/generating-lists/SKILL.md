@@ -58,6 +58,7 @@ export class FeatureList {
   private readonly imgixBaseUrl = this.store.appStore.env.services.imgixBaseUrl;
 
   // inputs (see listId / styling sections)
+  public readonly listId = input('all');                  // route segment; default 'all', route binding overrides it
   public readonly contextMenuName = input.required<string>();
 
   // derived
@@ -102,8 +103,12 @@ renders `bk-menu`; selections are handled in `onPopoverDismiss`.
 </ion-header>
 ```
 
+`contextMenuName()` is the **menu document name** loaded by `bk-menu` and is passed in via the
+route `:contextMenuName` param. Convention: name it `FEATURE-context` (e.g. `forms-context`).
+This is distinct from `popupId` below, which is only the local DOM trigger id for the popover.
+
 ```ts
-protected popupId = computed(() => `c_features_${this.listId()}`);  // or a random/static id
+protected popupId = computed(() => `c_features_${this.listId()}`);  // local trigger id only — NOT the menu name
 
 public async onPopoverDismiss($event: CustomEvent): Promise<void> {
   switch ($event.detail.data) {
@@ -117,12 +122,15 @@ public async onPopoverDismiss($event: CustomEvent): Promise<void> {
 To **disable the whole header toolbar** (embedded views), guard it with
 `@if(contextMenuName() !== 'disable')` as calevent-list does.
 
-### 2. listId (optional)
+### 2. listId (standard — always present, default `'all'`)
 
-A preset filter passed by the route/parent. Push it into the store via an `effect`.
+Every list route carries `:listId`. The input **defaults to `'all'`** (so embedded/standalone
+uses work without a route, and route binding overrides it). Even when the feature has no
+partition yet, keep `'all'` — the list is then ready to be extended later (folder key, tag,
+calendar) **without changing the route or its menu URL**. Push it into the store via an `effect`.
 
 ```ts
-public readonly listId = input.required<string>();   // e.g. calendar name, 'all', 'f:folderKey', 't:tag'
+public readonly listId = input('all');   // 'all' | calendar name | 'f:folderKey' | 't:tag' — route binding overrides the default
 constructor() {
   effect(() => this.store.setListId(this.listId()));  // or store.setConfig(...) / setCalendarName(...)
 }
