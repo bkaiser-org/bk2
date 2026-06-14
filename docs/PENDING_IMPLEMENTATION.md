@@ -60,24 +60,34 @@ Out of scope this iteration (§1.2) and open points (§9):
 - ❓ OCR learning loop — feed manual corrections back to improve recognition?
 - ❓ Duplicate-receipt behaviour (same content hash): warn or block?
 
-## 5. CMS Implementation — [`2026-05-25-cms-review.md`](done/2026-05-25-cms-review.md)
+## 5. CMS Implementation — [`2026-05-25-cms-review.md`](done/2026-05-25-cms-review.md) · impl spec [`2026-05-26-cms-improvements-spec.md`](2026-05-26-cms-improvements-spec.md)
 
-Review-identified gaps in `cms/menu`, `cms/page`, `cms/section`:
+The improvements spec (§4–§18) was implemented (2026-06-13/14). All HIGH/MEDIUM/LOW workstreams
+landed in code; only the items below remain. **Not yet committed or deployed.**
 
-- 🔴 **Calendar & Chart sections: no edit UI** — `cal` and `chart` cases in `section.form.ts` are empty; configure-only via code (HIGH).
-- 🔴 **Files & Links sections** — defined in the model but have no feature components, no `SectionDispatcher` entry, no `createSection()` case ("exist only on paper") (HIGH).
-- 🔴 **Export methods are stubs** — `export()` in `page.store.ts` and `section.store.ts` only log "not yet implemented" (LOW: JSON/CSV export).
-- 🔴 **No error state in stores** — `MenuStore`, `PageStore`, `SectionStore` lack `isError`/`error` signals; no UI feedback on Firestore failure (HIGH).
-- 🟡 **Missing tests** — only 3 spec files; no service/store/form/component tests (MEDIUM).
-- 🟡 **No pagination / virtual scrolling** — lists load all items (MEDIUM).
-- 🟡 **No circular-menu-reference guard** — recursive sub-menu rendering can stack-overflow (MEDIUM).
-- 🟡 **`SectionForm` has no Vest validation** — inconsistent with `MenuForm`/`PageForm`; section validations in `util/` go unused (MEDIUM).
-- 🟡 **No loading skeletons** — empty state only while loading (LOW).
-- 🟡 **`member-age` / `member-cat` sections** — read-only; no edit-configuration components (LOW).
-- 🟡 **RAG section has no configuration** — model hardcoded (`gemini-3-flash-preview`), no edit UI; proof-of-concept status (LOW).
-- 🟡 **Blog layouts** — 6 `BlogLayoutType` variants defined; implementation status unclear (LOW).
-- 🟡 **Search-index quality** — index-string only; no full-text/fuzzy search over title/subtitle/content (LOW).
-- 🟡 **`@VERSION@` magic-string replacement** in `menu.store.ts` — wants a dedicated token/convention (LOW).
+### Done 🟢 (in code, awaiting commit)
+
+- 🟢 **Store error state (§4)** — `withErrorState()` feature in `@bk2/shared-feature`; `MenuStore`/`PageStore`/`SectionStore` expose `isError`/`errorMessage`/`clearError`, wrap mutations + stream `catchError`; `<bk-error-banner>` in list/edit views.
+- 🟢 **Calendar & Chart edit UI (§5/§6)** — `bk-calendar-config` / `bk-chart-config`; `cal`/`chart` cases wired; renderers honor `section.properties`.
+- 🟢 **Files & Links removed (§7, Path B)** — deleted from `section.model.ts` (no prod data; approved).
+- 🟢 **Tests (§8)** — service + store specs (Firestore-mock scaffold + TestBed), 15 section-validation specs, registry/tokenizer/menu-cycle/menu-token specs; plus fixed pre-existing `@angular/compiler` JIT test-setups (section/page/menu util).
+- 🟢 **Vest in `SectionForm` (§9)** — per-type suite registry; form runs the active suite, emits `valid`, shows `bk-error-note`; `SectionEditModal` gates save on dirty **and** valid.
+- 🟢 **Pagination (§10)** — Ionic `ion-infinite-scroll` on `PageList`/`MenuList`; `searchByKeys(limit)`. `SectionAllList` cursor-pagination intentionally skipped (admin-only).
+- 🟢 **Circular-menu guard (§11)** — `Menu` threads depth/visited-keys; admin placeholder + `debugData` warning; depth cap 8.
+- 🟢 **Export (§12)** — `PageStore`/`SectionStore` `export()` produce JSON + CSV (filtered) via existing download helpers.
+- 🟢 **Loading skeletons (§13)** — `BkListSkeleton` in `@bk2/shared-ui`; used in all three list views.
+- 🟢 **Search index (§14)** — `buildSearchTokens` tokenizer (HTML-strip/deaccent/stop-words); `getSectionIndex`/`getPageIndex` index title/subTitle.
+- 🟢 **`@VERSION@` cleanup (§18)** — `menu-tokens` registry + `expandMenuTokens`; documented in `MENU.md`.
+- 🟢 **member-age/cat config UI (§16)** — `bk-member-config` (orgId, chartType, sortOrder, +categoryFilter); cases wired; `createSection`/`narrowSection` cases added; stores honor `sortOrder`/`categoryFilter` (`applyCatRowConfig`). *Schema extended (approved): `chartType?`/`sortOrder?` + `categoryFilter?`.*
+- 🟢 **RAG config UI (§15)** — `bk-rag-config` (model, storeName, systemPrompt, documentScope, maxTokens); case wired; `RAG_SECTION_SHAPE` + factory case added. *Schema extended (approved): literals → string + optional fields.*
+
+### Remaining follow-ups
+
+- 🟡 **§16 `chartType='bar'` rendering** — the field is editable/stored, but `member-age`/`member-cat` sections still render a **table**; a bar-chart view needs echarts in those renderers (like `chart-section`).
+- 🔴 **§15 RAG Cloud Function** — `model`/`systemPrompt`/`maxTokens` are editable/saved, but `queryRag` only consumes `storeName`; passing the new fields through (and applying them) is backend work (needs `deploy:functions`).
+- 🟡 **§14 reindex backfill** — `getSectionIndex`/`getPageIndex` enrich on next save; a one-shot `apps/functions/src/tools/reindex-cms.ts` to recompute existing docs' indices was **not** written (operational, run-after-deploy).
+- 🟡 **§17 blog-layout visual smoke test** — all six layouts are implemented + wired (verified statically; documented in `PAGE.md`), but a visual smoke test + screenshots of each layout with sample data still needs the **running app**.
+- 🟡 **`SectionEditModal` stale comment** — see the shared scVestForm-comment cleanup nit in §11 (LOW).
 
 ## 6. Trip Feature — [`2026-05-25-trip-feature-spec.md`](done/2026-05-25-trip-feature-spec.md)
 
