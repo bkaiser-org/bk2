@@ -175,7 +175,7 @@ export const appRoutes: Route[] = [
     children: [{ path: ':listId/:contextMenuName', loadComponent: () => import('@bk2/relationship-personal-rel-feature').then(m => m.PersonalRelList) }],
   },
   {
-    path: 'workingrel',
+    path: 'workrel',
     canActivate: [isAuthenticatedGuard],
     children: [{ path: ':listId/:contextMenuName', loadComponent: () => import('@bk2/relationship-workrel-feature').then(m => m.WorkrelList) }],
   },
