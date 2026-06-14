@@ -19,18 +19,25 @@ async function initializeApp() {
       isTokenAutoRefreshEnabled: true,
     });
 
-    // Wait for App Check token to be ready
+    // Wait for App Check token to be ready — but never let a hang block bootstrap.
+    // On privacy-hardened browsers (e.g. Firefox with Enhanced Tracking Protection) the
+    // reCAPTCHA Enterprise script can be blocked, and getToken() then never settles. A plain
+    // try/catch only handles a rejection, not a hang, so we race getToken against a timeout
+    // to guarantee the app always bootstraps.
     try {
-      await getToken(appCheck);
+      await Promise.race([
+        getToken(appCheck),
+        new Promise<never>((_, reject) => setTimeout(() => reject(new Error('App Check getToken timed out')), 5000)),
+      ]);
       console.log('App Check token ready');
     } catch (error) {
       if (!environment.production) {
-        console.warn('App Check token failed in development - continuing anyway.');
+        console.warn('App Check token failed/timed out in development - continuing anyway.');
         console.warn('To fix: Copy the debug token from console and add it in Firebase Console → App Check → Manage debug tokens');
       } else {
-        console.error('App Check token failed:', error);
+        console.error('App Check token failed/timed out:', error);
       }
-      // Continue bootstrapping even if App Check fails
+      // Continue bootstrapping even if App Check fails or hangs
     }
   }
 
