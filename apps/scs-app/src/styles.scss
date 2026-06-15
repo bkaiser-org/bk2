@@ -274,3 +274,12 @@ ion-popover ion-item.hover {
   --height: 100%;
   --border-radius: 0;
 }
+
+// CDK drag-and-drop appends the drag preview to document.body, which sits behind
+// Ionic modals (z-index ~20000). Lift it above so dragging inside a modal is visible.
+.cdk-drag-preview {
+  z-index: 100000 !important;
+}
+.cdk-drag-placeholder {
+  opacity: 0.3;
+}
