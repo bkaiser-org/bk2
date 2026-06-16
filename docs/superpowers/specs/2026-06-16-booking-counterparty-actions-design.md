@@ -116,7 +116,7 @@ export const BOOKING_ACTIONS: BookingAction[] = [
      **and** whose `trigger.accountId` is among the booking's account ids.
 - `runAction(action, booking)` switches on `action.type`:
   - `generateDocument`:
-    1. Require `booking.counterparty`; if missing, surface a hint (action disabled / routes to edit).
+    1. Require `booking.counterparty`; if missing, the action is disabled with a hint (never reached).
     2. Resolve `counterparty.key` by `modelType`:
        - person → `PersonModel` (firstName, lastName, gender) + favourite `AddressModel`.
        - org → `OrgModel` (name) + favourite `AddressModel`.
@@ -165,7 +165,7 @@ plain interpolation supplied pre-formatted by `buildReceiptPayload`.
 
 | Condition | Behaviour |
 |-----------|-----------|
-| Booking has no `counterparty` | Action is shown disabled with a hint to set the counterparty (or routes into the edit modal). No call made. |
+| Booking has no `counterparty` | Action is shown disabled with a hint to set the counterparty. No call made. |
 | Counterparty has no usable address | Error toast; no PDF generated. |
 | Account `3407` line not found on booking | Action not offered (matching fails). |
 | `generateDocument` call fails | Error toast; failure recorded by the callable's own audit (`DocGenerationModel`). |
@@ -179,9 +179,8 @@ plain interpolation supplied pre-formatted by `buildReceiptPayload`.
 - **Manual:** run the seed script against the emulator, trigger the booking-list action for a gss
   booking on `3407` with a counterparty set, confirm the PDF renders with margin 0.
 
-## Open questions
+## Resolved decisions
 
-- ❓ **Receipt storage mode** — `persist` (audited, default) vs `ephemeral` (preview). Leaning
-  `persist`. Confirm during planning.
-- ❓ **Counterparty when missing at action time** — disable the action vs deep-link into the edit
-  modal to set it. Leaning disable + hint. Confirm during planning.
+- 🟢 **Receipt storage mode** — `persist` (audited; writes a `DocGenerationModel` entry).
+- 🟢 **Counterparty when missing at action time** — the action is shown **disabled with a hint** to
+  set the counterparty first (no deep-link into the edit modal).
