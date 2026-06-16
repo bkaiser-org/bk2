@@ -772,8 +772,8 @@ Merge (preserving existing `actionsheet.title`):
 
 ```ts
 options.buttons.push(createActionSheetButton('journal.view', this.store.i18n.as_view(), base, 'eye-on'));
-options.buttons.push(createActionSheetButton('journal.showDebitAccount', this.store.i18n.as_showDebitAccount(), base, 'information'));
-options.buttons.push(createActionSheetButton('journal.showCreditAccount', this.store.i18n.as_showCreditAccount(), base, 'information'));
+options.buttons.push(createActionSheetButton('journal.showDebitAccount', this.store.i18n.as_showDebitAccount(), base, 'info-circle'));
+options.buttons.push(createActionSheetButton('journal.showCreditAccount', this.store.i18n.as_showCreditAccount(), base, 'info-circle'));
 options.buttons.push(createActionSheetButton('cancel', this.store.i18n.cancel(), base, 'cancel'));
 ```
 
