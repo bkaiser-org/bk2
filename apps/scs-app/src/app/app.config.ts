@@ -1,11 +1,13 @@
-import { provideHttpClient } from '@angular/common/http';
-import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, inject, Injector, isDevMode, PLATFORM_ID, provideZonelessChangeDetection } from '@angular/core';
-import { provideRouter, RouteReuseStrategy, withComponentInputBinding } from '@angular/router';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, ErrorHandler, importProvidersFrom, inject, Injector, isDevMode, PLATFORM_ID, provideAppInitializer, provideZonelessChangeDetection } from '@angular/core';
+import { provideRouter, Router, RouteReuseStrategy, withComponentInputBinding } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { provideServiceWorker } from '@angular/service-worker';
 
+import * as Sentry from '@sentry/angular';
 import { ENV } from '@bk2/shared-config';
-import { isBrowser, VersionCheckService } from '@bk2/shared-util-angular';
+import { isBrowser, httpBreadcrumbInterceptor, VersionCheckService } from '@bk2/shared-util-angular';
+import { AppStore, SentryContextService } from '@bk2/shared-feature';
 import { GroupEditModal } from '@bk2/subject-group-feature';
 import { GROUP_EDIT_MODAL } from '@bk2/subject-group-ui';
 import { PersonEditModal } from '@bk2/subject-person-feature';
@@ -21,7 +23,6 @@ import { initializeApp } from 'firebase/app';
 // i18n with transloco
 import { APP_STORE_MIN, I18nOverrideService } from '@bk2/shared-data-access';
 import { I18nService, TranslocoHttpLoader } from '@bk2/shared-i18n';
-import { AppStore } from '@bk2/shared-feature';
 import { provideTransloco } from '@jsverse/transloco';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -68,7 +69,14 @@ export const appConfig: ApplicationConfig = {
     }),
 
     importProvidersFrom(TranslateModule.forRoot()),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([httpBreadcrumbInterceptor])),
+
+    // Sentry: route uncaught Angular errors through Sentry's ErrorHandler.
+    { provide: ErrorHandler, useValue: Sentry.createErrorHandler({ showDialog: false }) },
+    // Sentry: record router navigations as spans.
+    { provide: Sentry.TraceService, deps: [Router] },
+    provideAppInitializer(() => { inject(Sentry.TraceService); }),
+
     provideTransloco({
       config: {
         availableLangs: ['en', 'de', 'fr', 'es', 'it'],
@@ -145,6 +153,21 @@ export const appConfig: ApplicationConfig = {
         };
       },
       deps: [PLATFORM_ID, Injector],
+      multi: true,
+    },
+
+    // Sentry: start pushing pseudonymous user/tenant/role context after bootstrap (browser only).
+    {
+      provide: APP_BOOTSTRAP_LISTENER,
+      useFactory: (platformId: object) => {
+        const sentryContext = inject(SentryContextService);
+        return () => {
+          if (!isBrowser(platformId)) return;
+          // touch the service so its effect is created
+          void sentryContext;
+        };
+      },
+      deps: [PLATFORM_ID],
       multi: true,
     },
   ],

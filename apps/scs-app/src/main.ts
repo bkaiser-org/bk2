@@ -1,3 +1,4 @@
+import './init-sentry';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { BkRoot } from './app/bk-root';
 import { appConfig } from './app/app.config';
