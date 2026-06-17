@@ -45,7 +45,7 @@ Resolved once per generation when `attachQrSlip` is true:
 2. Read `OrgModel(ownerOrgId)` → `name`.
 3. Query `addresses` where `parentKey == "org.{ownerOrgId}"`, `isFavorite == true`:
    - `addressChannel == bankaccount` → `iban`.
-   - favorite postal address → `streetName`, `streetNumber`, `zipCode`, `city`, `countryCode`.
+   - `addressChannel == postal` → `streetName`, `streetNumber`, `zipCode`, `city`, `countryCode`.
 
 Produces a `payee` object:
 
