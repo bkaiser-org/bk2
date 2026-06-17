@@ -1,10 +1,12 @@
-import { provideHttpClient } from '@angular/common/http';
-import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, importProvidersFrom, inject, isDevMode, PLATFORM_ID, provideZonelessChangeDetection } from '@angular/core';
-import { PreloadAllModules, provideRouter, RouteReuseStrategy, withComponentInputBinding, withPreloading } from '@angular/router';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { APP_BOOTSTRAP_LISTENER, ApplicationConfig, ErrorHandler, importProvidersFrom, inject, isDevMode, PLATFORM_ID, provideAppInitializer, provideZonelessChangeDetection } from '@angular/core';
+import { PreloadAllModules, provideRouter, Router, RouteReuseStrategy, withComponentInputBinding, withPreloading } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
+import * as Sentry from '@sentry/angular';
 import { ENV } from '@bk2/shared-config';
-import { isBrowser, VersionCheckService } from '@bk2/shared-util-angular';
+import { isBrowser, httpBreadcrumbInterceptor, VersionCheckService } from '@bk2/shared-util-angular';
+import { SentryContextService } from '@bk2/shared-feature';
 import { PersonEditModal } from '@bk2/subject-person-feature';
 import { PERSON_EDIT_MODAL } from '@bk2/subject-person-ui';
 import { environment } from '../environments/environment';
@@ -39,7 +41,14 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes, withComponentInputBinding(), withPreloading(PreloadAllModules)),
 
     importProvidersFrom(TranslateModule.forRoot()),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([httpBreadcrumbInterceptor])),
+
+    // Sentry: route uncaught Angular errors through Sentry's ErrorHandler.
+    { provide: ErrorHandler, useValue: Sentry.createErrorHandler({ showDialog: false }) },
+    // Sentry: record router navigations as spans.
+    { provide: Sentry.TraceService, deps: [Router] },
+    provideAppInitializer(() => { inject(Sentry.TraceService); }),
+
     provideTransloco({
       config: {
         availableLangs: ['en', 'de', 'fr', 'es', 'it'],
@@ -75,6 +84,21 @@ export const appConfig: ApplicationConfig = {
             // Check app version
             versionCheck.checkVersion();
           }
+        };
+      },
+      deps: [PLATFORM_ID],
+      multi: true,
+    },
+
+    // Sentry: start pushing pseudonymous user/tenant/role context after bootstrap (browser only).
+    {
+      provide: APP_BOOTSTRAP_LISTENER,
+      useFactory: (platformId: object) => {
+        const sentryContext = inject(SentryContextService);
+        return () => {
+          if (!isBrowser(platformId)) return;
+          // touch the service so its effect is created
+          void sentryContext;
         };
       },
       deps: [PLATFORM_ID],
