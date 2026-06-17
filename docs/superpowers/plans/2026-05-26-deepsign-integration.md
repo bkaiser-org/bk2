@@ -1819,7 +1819,7 @@ import { EsignService } from '@bk2/esign-data-access';
         <ion-title>{{ record()?.documentName }}</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="refresh()">
-            <ion-icon src="{{ 'refresh' | svgIcon }}" slot="icon-only" />
+            <ion-icon src="{{ 'reload' | svgIcon }}" slot="icon-only" />
           </ion-button>
           <ion-button (click)="close()">
             <ion-icon src="{{ 'close' | svgIcon }}" slot="icon-only" />

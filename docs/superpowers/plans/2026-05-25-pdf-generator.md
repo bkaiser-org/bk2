@@ -2531,7 +2531,7 @@ type EditorTab = 'metadata' | 'html' | 'css' | 'preview';
             @if(store.previewLoading()) {
               <ion-spinner name="crescent" slot="start" />
             } @else {
-              <ion-icon src="{{ 'refresh' | svgIcon }}" slot="start" />
+              <ion-icon src="{{ 'reload' | svgIcon }}" slot="start" />
             }
             Vorschau aktualisieren
           </ion-button>

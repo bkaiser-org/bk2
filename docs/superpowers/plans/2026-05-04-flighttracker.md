@@ -1009,7 +1009,7 @@ function zoomForBounds(latSpan: number, lngSpan: number): number {
             {{ '@flighttracker.search.button' | translate | async }}
           </ion-button>
           <ion-button slot="end" fill="outline" (click)="onReload()" [disabled]="isLoading() || !flightData()">
-            <ion-icon slot="icon-only" src="{{'refresh' | svgIcon}}" />
+            <ion-icon slot="icon-only" src="{{'reload' | svgIcon}}" />
           </ion-button>
         </ion-item>
       </ion-toolbar>
