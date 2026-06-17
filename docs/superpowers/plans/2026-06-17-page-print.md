@@ -486,7 +486,12 @@ export class PagePrintService {
     visibleSections: SectionModel[],
     ctx: PagePrintContext,
   ): PagePrintPayload {
-    const hosts = Array.from(root.querySelectorAll('bk-section-dispatcher'));
+    // Only top-level section hosts: a nested accordion section renders as a
+    // <bk-section-dispatcher> inside its parent's host, so we exclude any host
+    // that has an ancestor host. The remaining top-level hosts line up 1:1 with
+    // `visibleSections` (which the caller already filtered for nesting + state).
+    const hosts = Array.from(root.querySelectorAll('bk-section-dispatcher'))
+      .filter(h => h.parentElement?.closest('bk-section-dispatcher') == null);
     const sections: PagePrintSection[] = [];
 
     hosts.forEach((host, i) => {
@@ -599,12 +604,14 @@ with:
       /**
        * Generate a PDF of the current page via the page-print template, using
        * client-side DOM capture of the rendered sections. `root` is the page
-       * content element holding the rendered <bk-section-dispatcher> hosts.
-       * On any failure, falls back to the browser's native print dialog.
+       * content element holding the rendered <bk-section-dispatcher> hosts;
+       * `visibleSections` is exactly the list the page component rendered (already
+       * filtered for accordion-nesting + state), so it lines up 1:1 with the
+       * top-level hosts. On any failure, falls back to the native print dialog.
        */
-      async print(root?: HTMLElement): Promise<void> {
+      async print(root?: HTMLElement, visibleSections?: SectionModel[]): Promise<void> {
         const page = store.page() ?? die('PageStore.print: page is mandatory.');
-        const sections = store.pageSections().filter(s => s.state === 'published' || store.appStore.currentUser() !== undefined);
+        const sections = visibleSections ?? [];
 
         if (!root || sections.length === 0) {
           if (sections.length === 0) error(store.toastController, store.i18n.print_empty());
@@ -622,7 +629,7 @@ with:
           orgName: appConfig.appName,
           logoUrl,
           sourceUrl,
-          printedDate: getTodayStr(DateFormat.viewDate),
+          printedDate: getTodayStr(DateFormat.ViewDate),
         });
 
         try {
@@ -644,7 +651,7 @@ with:
       },
 ```
 
-> `DateFormat.viewDate` yields `DD.MM.YYYY`. If the enum member is named differently in this codebase, use the member that produces the Swiss `DD.MM.YYYY` view format (grep `enum DateFormat` in `@bk2/shared-util-core`).
+> `DateFormat.ViewDate` (`'dd.MM.yyyy'`) yields the Swiss `DD.MM.YYYY` view format. `getTodayStr` and `DateFormat` both come from `@bk2/shared-util-core`.
 
 - [ ] **Step 4: Type-check the feature lib**
 
@@ -687,9 +694,9 @@ In `onPopoverDismiss`, change:
 ```typescript
       case 'print': await this.store.print(); break;
 ```
-to:
+to (pass the rendered element AND the component's already-computed `visibleSections()`, which the store pairs 1:1 with the top-level hosts):
 ```typescript
-      case 'print': await this.store.print(this.printRoot()?.nativeElement); break;
+      case 'print': await this.store.print(this.printRoot()?.nativeElement, this.visibleSections()); break;
 ```
 
 - [ ] **Step 3: blog.page.ts — same wiring**
@@ -702,13 +709,13 @@ Add the viewChild:
 ```typescript
   private printRoot = viewChild<ElementRef<HTMLElement>>('printRoot');
 ```
-And change:
+And change (blog.page renders its list via the `sections()` computed — pass that):
 ```typescript
       case 'print':         await this.store.print(); break;
 ```
 to:
 ```typescript
-      case 'print':         await this.store.print(this.printRoot()?.nativeElement); break;
+      case 'print':         await this.store.print(this.printRoot()?.nativeElement, this.sections()); break;
 ```
 
 - [ ] **Step 4: Type-check the feature lib**
