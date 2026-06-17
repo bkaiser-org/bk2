@@ -54,6 +54,25 @@ firebase deploy --only functions:<functionName>
 
 Functions live in `apps/functions/src/` (sub-modules: `auth`, `matrix`, `matrix-simple`, `oidc-bridge`, `replication`), built with esbuild.
 
+### esbuild bundling gotcha: bare imports colliding with root files
+
+`tsconfig.base.json` sets `baseUrl: "."`, so esbuild resolves **bare imports against the repo root first**. A root-level file whose name matches a package shadows the npm package — e.g. `import cors from 'cors'` resolved to the root `cors.json` (a Storage-CORS config array), so `cors(...)` threw `TypeError: … is not a function` and Firebase's codebase analysis failed for **all** functions. Fix: mark the package **`external`** in [apps/functions/project.json](../../../apps/functions/project.json) (so esbuild emits `require("cors")` instead of resolving it) and ensure it's a dependency in `apps/functions/package.json`.
+
+### PDF generation (`generateDocument`) — Puppeteer/Chromium on Cloud Functions
+
+Two non-obvious requirements, both already wired up — keep them:
+
+1. **Chromium via `@sparticuz/chromium` + `puppeteer-core`** (NOT full `puppeteer`). The deploy uses pnpm, which **skips package build scripts**, so puppeteer's post-install Chrome download never runs (locally or in the buildpack) → `puppeteer.launch()` fails with "Could not find Chrome". `@sparticuz/chromium` ships a serverless Linux Chromium binary *inside* the npm package (no download needed); [browser-pool.ts](../../../apps/functions/src/pdf/browser-pool.ts) launches it via `executablePath: await chromium.executablePath()`. Both packages are `external` in `project.json`.
+2. **Signed-URL IAM grant.** The function stores the PDF in Storage and returns a `getSignedUrl()` link. With the default compute runtime SA, signing needs `iam.serviceAccounts.signBlob` → grant the SA **Token Creator on itself** (one-time, per project):
+   ```sh
+   SA=$(gcloud functions describe generateDocument --region=europe-west6 --gen2 \
+        --project=bkaiser-org --format="value(serviceConfig.serviceAccountEmail)")
+   gcloud iam service-accounts add-iam-policy-binding "$SA" \
+     --member="serviceAccount:$SA" \
+     --role="roles/iam.serviceAccountTokenCreator" --project=bkaiser-org
+   ```
+   Without it, generation succeeds but the response fails with `Permission 'iam.serviceAccounts.signBlob' denied`.
+
 ## Deploy security rules
 
 ```sh
