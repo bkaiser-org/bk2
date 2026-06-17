@@ -232,3 +232,16 @@ The symptom fixes (S1–S5), SEC-1/2, SEC-3/4, ARCH-1 and the C-*/P-* hygiene ba
 - ❓ **SEC-6 — role source of truth** — cross-check `firestore.rules` actually prevents users writing their own `users/{uid}.roles` field (the `requireRole` CF gate trusts it).
 - 🔴 **S5 follow-up — group bkeys** — human-readable bkeys with spaces/hyphens are sanitised for aliases and made non-load-bearing via `matrixRoomId`; auto-generating/masking bkeys at creation would remove the special-char fragility at the source (touches group-creation UX + cross-DB foreign-key migration).
 - 🔴 **E2EE by default (§9)** — a large multi-step project (Steps 0–8: device-bound tokens via JWT login, persistent stores, client crypto init, encrypt new rooms, key backup/recovery, migrate existing rooms). Depends on SEC-1 (done), item 6 (SEC-3/4, done) and the P-5 store remainder; realistic scope ~1 focused week, not started.
+
+## 18. QR Payment Reference & Bank Reconciliation — [`2026-06-17-qr-payment-reference-reconciliation-spec.md`](2026-06-17-qr-payment-reference-reconciliation-spec.md)
+
+New spec, decisions locked. QR slips currently print **without a structured reference**, so reconciliation is fully manual. Plan: add an (optional, per-invoice) reference to the slip, then auto-match incoming bank credits.
+
+- 🔴 **Phase 0 — foundation (ships now, no QR-IBAN needed)** — add `InvoiceModel.paymentReference`, an `isQrIban` classifier + QRR reference generator (pure utils), and dual-IBAN slip logic. With no QR-IBAN configured, slips stay `NON`/regular-IBAN — safe no-op that unblocks invoicing.
+- ✅ **D1 — reference type** — QRR now; SCOR later (generator takes a `type` param).
+- ✅ **D2 — schema change** — `paymentReference: string` on `InvoiceModel` approved.
+- 🟡 **D3 — QR-IBAN procurement** — owner to request a QR-IBAN from ZKB; document it in the spec when obtained. Not a blocker.
+- 🟢 **Reference need is derived from the IBAN** — a QR-IBAN's IID is `30000–31999`; `isQrIban()` decides QRR vs `NON`, so no `qrIban` field and no manual flag.
+- 🔴 **Phase 1 — QRR live** — once QR-IBAN configured, referenced slips render QRR; validate on ZKB's ISO-20022 test platform.
+- 🔴 **Phase 2 — camt reconciliation** — new `reconcileCamt` callable parses uploaded ZKB camt.054/053, matches on `paymentReference`, marks invoices paid. Free, no API.
+- ✅ **D4 — banking integration (phased)** — start manual-camt; **Phase 3** optionally swaps the upload for a **DeepPay** fetch (DeepCloud REST API → 120+ banks incl. ZKB) reusing the same matcher. EBICS/bLink are alternatives.
