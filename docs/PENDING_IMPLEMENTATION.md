@@ -1,247 +1,345 @@
 # Pending & Deferred Functionality
 
-**Purpose:** A single reference of all functionality that the specs in [`docs/done/`](done/) describe as
-deferred, out of scope, postponed to a follow-up project, or otherwise not yet implemented.
-Use it to plan follow-up work. Each entry links back to its source spec.
+**Purpose:** A constantly-updated table of contents over every topic that has been **specified
+but is not yet fully implemented**. Use it to see, at a glance, what is still open and where the
+source doc lives. Each entry links back to its source and lists only the topics that were
+**postponed or excluded** — never a description of what was built.
 
-**Last compiled:** 2026-06-12 (from the 16 specs in `docs/done/`).
+**Last compiled:** 2026-06-17.
 
-> Legend: 🔴 not started / explicitly out of scope · 🟡 partially done, work remaining ·
-> 🚀 fixed in code, awaiting deploy/app build · ❓ open question / decision needed.
+## Document layout (`docs/`)
+
+| Folder | Holds |
+|--------|-------|
+| `ideas/` | seed / stub specs not yet elaborated (chapter 2) |
+| `specs/` | **all** spec & design docs, for their whole life — the *what & how* (chapters 1, 3, 4) |
+| `plans/` | step-by-step implementation plans |
+| `documentation/` | reference docs (not specs) — excluded from this TOC |
+| `done/` | *(retired)* — reserved only for superseded/abandoned docs, if ever needed |
+
+Specs and designs **stay in `specs/` permanently**; implementation status is tracked here via the
+`State:` field, not by moving files. This TOC, grouped by State, is the single source of truth.
+
+> **Status values:** `Open` (specified, not started) · `Partially implemented` (some scope shipped,
+> work remaining) · `Fully implemented` (in-scope work done; only explicit non-goals / future work remain).
+>
+> Open-topic markers: 🔴 not started / explicitly out of scope · 🟡 partially done, work remaining ·
+> ❓ open question / decision needed.
 
 ---
 
-## 1. PDF Generator — [`2026-05-25-pdf-generator-spezifikation.md`](done/2026-05-25-pdf-generator-spezifikation.md)
+## 1. Specs awaiting implementation
 
-All original open points are resolved. Remaining deferrals are explicit non-goals of the iteration:
+Fully-written specs with **no (or only foundational) implementation** yet.
 
-- 🔴 **WYSIWYG template editing** — only an HTML/Handlebars source editor with preview ships; no visual editor (§1.3).
-- 🔴 **Client-side document generation** — intentionally excluded (privacy, layout consistency, template protection) (§1.3).
-- 🔴 **Integrated email dispatch in the CF** — sending stays client-side over the existing Mailgun transport (§1.3, §8.4).
-- 🔴 **Electronic signature (DeepSign)** — flagged as a follow-up project; see spec 02 (§1.3, §11.1).
+### 1.1 Lohnbuchhaltung (Swissdec payroll) — [`2026-05-28-spec-lohnbuchhaltung.md`](specs/2026-05-28-spec-lohnbuchhaltung.md)
+**State:** Open. No `libs/finance/salary*` exists yet.
+- 🔴 Whole feature open. Drives the deferred Sozialabgaben config (idea 2.3) and depends on the accounting core (Accounting, ch 3).
 
-## 2. DeepSign E-Signature — [`2026-05-25-deepsign-integration-spec.md`](done/2026-05-25-deepsign-integration-spec.md)
+### 1.2 QR Payment Reference & Bank Reconciliation — [`2026-06-17-qr-payment-reference-reconciliation-spec.md`](specs/2026-06-17-qr-payment-reference-reconciliation-spec.md)
+**State:** Partially implemented (slip/Phase 0 work landing via the [QR Payment Slip design](specs/2026-06-17-qr-payment-slip-design.md); reconciliation phases open).
+- 🟡 Phase 0 — `InvoiceModel.paymentReference`, `isQrIban` classifier, QRR generator, dual-IBAN slip logic.
+- 🔴 Phase 1 — QRR live once a QR-IBAN is configured (validate on ZKB ISO-20022 platform).
+- 🔴 Phase 2 — `reconcileCamt` callable (parse camt.054/053, auto-match on reference, mark paid).
+- 🔴 Phase 3 — optional DeepPay fetch (DeepCloud REST) replacing the manual camt upload.
+- 🟡 D3 — QR-IBAN procurement from ZKB.
 
-Out of scope for **v1** (§1):
+### 1.3 PDF "Senden" — email the generated document — [`2026-06-17-pdf-send-email-design.md`](specs/2026-06-17-pdf-send-email-design.md)
+**State:** Open (specified, not yet implemented). Adds a "Senden" action to `PdfPreviewModal` that emails the generated PDF via the existing `sendEmail` CF.
+- 🔴 Bulk / multi-recipient member mailing — stays with `MessageCenterModal` (this is single-document, single-recipient).
+- 🔴 Saving drafts; send history/audit log; scheduling.
+- 🔴 Non-PDF output formats — button offered only when `outputFormat === 'pdf'`.
 
-- 🔴 Hash signing.
-- 🔴 Company seals.
-- 🔴 Ad-hoc signee/observer management via API.
-- 🔴 Manual placement of signature fields (relies on embedded Text Field Patterns only).
-- 🔴 Batch upload and attachments.
-- 🔴 Non-PDF MIME types (DOCX/XLSX) — only `application/pdf` accepted in v1 (§9).
+---
 
-## 3. Accounting / Buchhaltung — [`2026-05-27-buchhaltungssystem-spezifikation.md`](done/2026-05-27-buchhaltungssystem-spezifikation.md)
+## 2. Ideas / backlog (`docs/ideas/`)
 
-Explicit follow-up projects ("Folgeprojekt") and open points (§1, §3, §7):
+Seed specs to be elaborated later. Each links back to the spec it was deferred from (where applicable).
 
-- 🔴 **Lohnbuchhaltung (payroll)** — separate scope; see spec 11.
-- 🔴 **Kostenrechnung** (cost centres / cost objects) — Folgeprojekt; cost-centre report filter also deferred (§3, report filters).
-- 🔴 **EBICS direct connection** — Folgeprojekt; expansion stage (T / T+S / TS) still undecided. `PaymentOrderModel.deliveryMethod` already reserves `'ebics'`; Phase 7 ships only `pain001_download`.
-- 🔴 **Bexio Payments API direct upload** (`deliveryMethod = 'bexio_api'`) — later expansion stage.
-- 🔴 **Supplier-invoice platform integration** (eBill, Peppol BIS Billing 3.0) — Folgeprojekt.
-- 🔴 **Lagerbuchhaltung** (inventory accounting) — out of scope.
-- 🔴 **Multi-mandant consolidation** (consolidated balance across accounting mandates) — Folgeprojekt.
-- 🔴 **Sozialabgaben configuration** (Card §3.8.7) — separate spec, depends on payroll being in scope.
-- 🟡 **Invoice templates (layout, logo) for PDF generation** — detailed design still outstanding.
-- 🟡 **Migration `journallogs` → `bookings`** and rename `BookingJournalModel` → `BookingModel` — must be performed before implementation start.
-- 🟡 **CF adjustments for the Journal feature** — flagged as part of Phase 2 (Core Bookkeeping) (§ note at L75).
+### 2.1 Company Seals — [`2026-06-17-company-seals-spec.md`](ideas/2026-06-17-company-seals-spec.md)
+Org seal on signed PDFs. From DeepSign (ch 4, §1). Needs DeepSign (shipped).
 
-## 4. Expense Feature — [`2026-05-25-expense-feature-spezifikation.md`](done/2026-05-25-expense-feature-spezifikation.md)
+### 2.2 Kostenrechnung — [`2026-06-17-kostenrechnung-spec.md`](ideas/2026-06-17-kostenrechnung-spec.md)
+Cost-centre / cost-object accounting + report filter. From Accounting (ch 3, §3). Needs accounting core.
 
-Out of scope this iteration (§1.2) and open points (§9):
+### 2.3 Sozialabgaben Configuration — [`2026-06-17-sozialabgaben-config-spec.md`](ideas/2026-06-17-sozialabgaben-config-spec.md)
+Effective-dated contribution-rate config. From Accounting (ch 3, §3.8.7). Needs Lohnbuchhaltung (1.1).
 
-- 🔴 **Approval-workflow module** — no dedicated approval step before booking creation.
-- 🔴 **Travel-expense flat rates** (mileage, per-diem) — Folgeprojekt.
-- 🔴 **Credit-card integration.**
-- ❓ Auto-payout to employee from the liability (pain.001 generation)?
-- ❓ VAT handling for foreign receipts without Swiss VAT — default behaviour undecided.
-- ❓ Multiple currencies within a single expense (e.g. EUR receipt, CHF form value)?
-- ❓ OCR learning loop — feed manual corrections back to improve recognition?
-- ❓ Duplicate-receipt behaviour (same content hash): warn or block?
+### 2.4 Approval Workflow Module — [`2026-06-17-approval-workflow-module-spec.md`](ideas/2026-06-17-approval-workflow-module-spec.md)
+Reusable four-eyes approval step. From Expense (ch 4, §1.2); also wanted by Application & Forms Builder.
 
-## 5. CMS Implementation — [`2026-05-25-cms-review.md`](done/2026-05-25-cms-review.md) · impl spec [`2026-05-26-cms-improvements-spec.md`](2026-05-26-cms-improvements-spec.md)
+### 2.5 Chart Bar Rendering — [`2026-06-17-chart-bar-rendering-spec.md`](ideas/2026-06-17-chart-bar-rendering-spec.md)
+Bar-chart view for `member-age`/`member-cat`. From CMS Improvements (ch 3, §16). Needs echarts in those renderers.
 
-The improvements spec (§4–§18) was implemented (2026-06-13/14). All HIGH/MEDIUM/LOW workstreams
-landed in code; only the items below remain. **Not yet committed or deployed.**
+### 2.6 Optimize RAG — [`2026-06-17-optimize-rag-spec.md`](ideas/2026-06-17-optimize-rag-spec.md)
+Apply saved RAG config + improve quality. From CMS Improvements (ch 3, §15). Needs `queryRag` CF changes.
 
-### Done 🟢 (in code, awaiting commit)
+### 2.7 Meeting Management — [`2026-06-17-meeting-management-spec.md`](ideas/2026-06-17-meeting-management-spec.md)
+Agenda, attendees, minutes → action-item tasks. New. Builds on `calevent`/`person`/`task`.
 
-- 🟢 **Store error state (§4)** — `withErrorState()` feature in `@bk2/shared-feature`; `MenuStore`/`PageStore`/`SectionStore` expose `isError`/`errorMessage`/`clearError`, wrap mutations + stream `catchError`; `<bk-error-banner>` in list/edit views.
-- 🟢 **Calendar & Chart edit UI (§5/§6)** — `bk-calendar-config` / `bk-chart-config`; `cal`/`chart` cases wired; renderers honor `section.properties`.
-- 🟢 **Files & Links removed (§7, Path B)** — deleted from `section.model.ts` (no prod data; approved).
-- 🟢 **Tests (§8)** — service + store specs (Firestore-mock scaffold + TestBed), 15 section-validation specs, registry/tokenizer/menu-cycle/menu-token specs; plus fixed pre-existing `@angular/compiler` JIT test-setups (section/page/menu util).
-- 🟢 **Vest in `SectionForm` (§9)** — per-type suite registry; form runs the active suite, emits `valid`, shows `bk-error-note`; `SectionEditModal` gates save on dirty **and** valid.
-- 🟢 **Pagination (§10)** — Ionic `ion-infinite-scroll` on `PageList`/`MenuList`; `searchByKeys(limit)`. `SectionAllList` cursor-pagination intentionally skipped (admin-only).
-- 🟢 **Circular-menu guard (§11)** — `Menu` threads depth/visited-keys; admin placeholder + `debugData` warning; depth cap 8.
-- 🟢 **Export (§12)** — `PageStore`/`SectionStore` `export()` produce JSON + CSV (filtered) via existing download helpers.
-- 🟢 **Loading skeletons (§13)** — `BkListSkeleton` in `@bk2/shared-ui`; used in all three list views.
-- 🟢 **Search index (§14)** — `buildSearchTokens` tokenizer (HTML-strip/deaccent/stop-words); `getSectionIndex`/`getPageIndex` index title/subTitle.
-- 🟢 **`@VERSION@` cleanup (§18)** — `menu-tokens` registry + `expandMenuTokens`; documented in `MENU.md`.
-- 🟢 **member-age/cat config UI (§16)** — `bk-member-config` (orgId, chartType, sortOrder, +categoryFilter); cases wired; `createSection`/`narrowSection` cases added; stores honor `sortOrder`/`categoryFilter` (`applyCatRowConfig`). *Schema extended (approved): `chartType?`/`sortOrder?` + `categoryFilter?`.*
-- 🟢 **RAG config UI (§15)** — `bk-rag-config` (model, storeName, systemPrompt, documentScope, maxTokens); case wired; `RAG_SECTION_SHAPE` + factory case added. *Schema extended (approved): literals → string + optional fields.*
+### 2.8 Stripe Integration — [`2026-06-17-stripe-integration-spec.md`](ideas/2026-06-17-stripe-integration-spec.md)
+Card/online payments + webhook reconciliation. New. Complements QR reconciliation (1.2).
 
-### Remaining follow-ups
+### 2.9 Privacy Audit — [`2026-06-17-privacy-audit-spec.md`](ideas/2026-06-17-privacy-audit-spec.md)
+Real server-side person-data enforcement + DSG checklist. New. Builds on Person Privacy (ch 4).
 
-- 🟡 **§16 `chartType='bar'` rendering** — the field is editable/stored, but `member-age`/`member-cat` sections still render a **table**; a bar-chart view needs echarts in those renderers (like `chart-section`).
-- 🔴 **§15 RAG Cloud Function** — `model`/`systemPrompt`/`maxTokens` are editable/saved, but `queryRag` only consumes `storeName`; passing the new fields through (and applying them) is backend work (needs `deploy:functions`).
-- 🟡 **§14 reindex backfill** — `getSectionIndex`/`getPageIndex` enrich on next save; a one-shot `apps/functions/src/tools/reindex-cms.ts` to recompute existing docs' indices was **not** written (operational, run-after-deploy).
-- 🟡 **§17 blog-layout visual smoke test** — all six layouts are implemented + wired (verified statically; documented in `PAGE.md`), but a visual smoke test + screenshots of each layout with sample data still needs the **running app**.
-- 🟡 **`SectionEditModal` stale comment** — see the shared scVestForm-comment cleanup nit in §11 (LOW).
+### 2.10 UI Audit — [`2026-06-17-ui-audit-spec.md`](ideas/2026-06-17-ui-audit-spec.md)
+Consistency / a11y / responsive / theming review. New. Cross-cutting.
 
-## 6. Trip Feature — [`2026-05-25-trip-feature-spec.md`](done/2026-05-25-trip-feature-spec.md)
+### 2.11 Liquidity Planner — [`2026-06-17-liquidity-planner-spec.md`](ideas/2026-06-17-liquidity-planner-spec.md)
+Cash-position forecast. New. Needs accounting core, invoices, Debt Planner (2.12), reconciliation actuals.
 
-Out of scope this iteration (§1.2) and open questions (§17):
+### 2.12 Debt / Amortisation Planner — [`2026-06-17-debt-amortisation-planner-spec.md`](ideas/2026-06-17-debt-amortisation-planner-spec.md)
+Loan amortisation schedules. New. Needs accounting core; feeds Liquidity Planner (2.11).
 
-- 🔴 **Multi-stop trip recording** — single destination per trip only.
-- 🔴 **Automated distance calculation from GPS tracks.**
-- 🔴 **Guest management** beyond adding a non-member person as a participant.
-- ❓ Add `kiosk` to `RoleName`/`Roles` — confirm before implementing (model change).
-- ❓ Add `flagged: boolean` field to `TripModel` — confirm before implementing (model change).
-- ❓ Notification mechanism for `trip_responsibility`: Firestore task document or Cloud Function call?
-- ❓ Map library for `LocationSelect`: Leaflet or Google Maps? (See spec 15 — resolved there.)
-- ❓ `dev_responsibility`: `ResponsibilityModel` or hardcoded admin contact?
-- ❓ Should `aoc/trip` also be accessible to `trip_responsibility`, not only admin?
+### 2.13 Office Integration — [`2026-06-17-office-integration-spec.md`](ideas/2026-06-17-office-integration-spec.md)
+Google Workspace / Microsoft 365 mail/calendar/docs. New (scope TBC). Extends Email Signature (ch 3, §9).
 
-## 7. Trip Statistics (Firestore) — [`2026-05-25-trip-stats-firestore-spec.md`](done/2026-05-25-trip-stats-firestore-spec.md)
+### Dependency graph
 
-Open questions (§8):
+Edge `A --> B` reads **"A depends on B"** (B is the prerequisite). Dashed = complementary, not blocking.
 
-- ❓ Exact set of `COUNTING_STATES` — should `open` (and `open.rev`) count toward live YTD numbers?
-- ❓ May the kiosk edit an `open` trip in place, or must every revision use the `.rev` postfix?
-- ❓ Audit log of state transitions — only latest `deletedAt`/`deletedBy` kept; a `/trips/{id}/history` subcollection could capture every transition if full audit is required.
+```mermaid
+graph LR
+  %% anchors (existing / shipped or partial)
+  ACCT["Accounting core (ch 3, partial)"]
+  INV["finance/invoice (shipped)"]
+  DEEPSIGN["DeepSign (shipped)"]
+  CMS["CMS sections (shipped)"]
+  EXP["Expense (shipped)"]
+  ESIG["Email Signature (ch 3, partial)"]
+  PRIVD["Person Privacy (shipped, client-side)"]
+  CALPT["calevent / person / task (shipped)"]
 
-## 8. Forms Builder — [`2026-05-27-forms-builder-spec.md`](done/2026-05-27-forms-builder-spec.md)
+  %% awaiting implementation
+  LOHN["1.1 Lohnbuchhaltung"]
+  QR["1.2 QR Reconciliation"]
 
-Out of scope for **v1** (§1, §16) and later implementation phases (§18):
+  %% ideas
+  SEALS["2.1 Company Seals"]
+  KOST["2.2 Kostenrechnung"]
+  SOZ["2.3 Sozialabgaben Config"]
+  APPR["2.4 Approval Workflow"]
+  BAR["2.5 Chart Bar Rendering"]
+  RAG["2.6 Optimize RAG"]
+  MEET["2.7 Meeting Mgmt"]
+  STRIPE["2.8 Stripe"]
+  PAUDIT["2.9 Privacy Audit"]
+  UIAUDIT["2.10 UI Audit"]
+  LIQ["2.11 Liquidity Planner"]
+  DEBT["2.12 Debt/Amortisation"]
+  OFFICE["2.13 Office Integration"]
 
-- 🔴 **Multi-page / multi-step forms** — data model reserves a future `pageIndex`; editor/renderer treat all fields as one page in v1.
-- 🔴 **Generic third-party integrations** (Zapier, Salesforce, …) — URL target is the escape hatch.
-- 🔴 **Inbound email parsing / non-HTTP submission channels.**
-- 🔴 **Conditional-logic editor for `visibleIf`** — data structure exists, no UI in v1.
-- 🔴 **A/B testing / form-completion analytics.**
-- 🔴 **Server-side e-signature flows** — uses existing client-side DeepSign.
-- 🟡 **Phasing remainder** — later phases ship: URL target + submission CF + audit + CSV export (P2); spam protection (P3); CAPTCHA + encrypted file upload (P4); approval workflow + email notifications (P5); PDF export single/batch + PDF-form template fill (P6).
-- 🟡 **Encrypted file-upload key derivation** — PBKDF2 chosen; exact parameters to be confirmed with security review before implementing §9.2.
+  LOHN --> ACCT
+  QR --> INV
+  SEALS --> DEEPSIGN
+  KOST --> ACCT
+  SOZ --> LOHN
+  APPR --> EXP
+  BAR --> CMS
+  RAG --> CMS
+  MEET --> CALPT
+  STRIPE --> INV
+  STRIPE -.complements.- QR
+  PAUDIT --> PRIVD
+  DEBT --> ACCT
+  LIQ --> ACCT
+  LIQ --> INV
+  LIQ --> DEBT
+  LIQ -.actuals.- QR
+  OFFICE --> ESIG
+```
 
-## 9. Application Feature — [`2026-05-27-application-feature-spec.md`](done/2026-05-27-application-feature-spec.md)
+---
 
-Out of scope this iteration (§1.2):
+## 3. Partially implemented
 
-- 🔴 **Public submission page** — rendered by FormSection/FormsBuilder, built later (spec 09).
-- 🔴 **Anonymous CAPTCHA / rate-limiting** — handled by FormsBuilder spam protection.
-- 🔴 **Document upload** (e.g. parental-consent PDF) — follow-up task after acceptance.
-- 🔴 **Payment collection at application time.**
-- 🔴 **Multi-tenant cross-club transfer flows** beyond the single `applicationAs = 'transfer'` marker.
-- 🔴 **Automatic account creation** — approvers open accounts manually via the finance feature.
-- 🟡 **Per-membership-category responsibility routing** — generic `application` responsibility for now; per-kind split can be added later.
+Specs/designs with some scope shipped and concrete work remaining.
 
-## 10. Lohnbuchhaltung (Payroll) — [`2026-05-28-spec-lohnbuchhaltung.md`](2026-05-28-spec-lohnbuchhaltung.md)
+### 3.1 SCS Website Integration — [`2026-05-11-scs-website-integration-design.md`](specs/2026-05-11-scs-website-integration-design.md)
+- 🔴 Courses & competition-results models/endpoints; App Check rate-limiting; full `I18nString` migration of section/CalEvent text; website preview/live-edit; SEO sitemap; asset image CDN (§8).
 
-*(Spec lives in `docs/`, not `docs/done/` — listed here because spec 03 defers payroll to it.)*
-Status: dependent on payroll being taken into scope; drives the deferred Sozialabgaben config in spec 03.
+### 3.2 CMS Improvements — [`2026-05-26-cms-improvements-spec.md`](specs/2026-05-26-cms-improvements-spec.md) · review [`2026-05-25-cms-review.md`](specs/2026-05-25-cms-review.md)
+- 🔴 §16 `chartType='bar'` rendering — see idea 2.5.
+- 🔴 §15 RAG optimisation (apply saved config, quality) — see idea 2.6.
+- 🟡 §14 reindex backfill — one-shot `reindex-cms.ts` to recompute existing indices not written.
+- 🟡 §17 blog-layout visual smoke test — needs the running app.
 
-## 11. Vest → Signal Forms Migration — [`2026-06-12-vest-to-signal-forms-migration-spec.md`](done/2026-06-12-vest-to-signal-forms-migration-spec.md)
+### 3.3 Accounting / Buchhaltung — [`2026-05-27-buchhaltungssystem-spezifikation.md`](specs/2026-05-27-buchhaltungssystem-spezifikation.md)
+`libs/finance/booking`, `libs/finance/journal` exist; advanced phases open.
+- 🔴 Lohnbuchhaltung (1.1); Kostenrechnung (idea 2.2); Sozialabgaben config (idea 2.3).
+- 🔴 EBICS direct connection; Bexio Payments API upload (`bexio_api`) — later stages.
+- 🔴 Supplier-invoice platforms (eBill, Peppol BIS Billing 3.0); Lagerbuchhaltung; multi-mandant consolidation (§1, §7).
+- 🟡 `journallogs`→`bookings` migration + `BookingJournalModel`→`BookingModel` rename — **not done**; old `booking-journal.model.ts` is still used by `finance/journal` alongside the new `booking.model.ts`.
 
-**✅ Done (completed 2026-06-12).** The phased migration shipped in full; all five phases are complete:
+### 3.4 Accounting System (design) — [`2026-05-27-accounting-system-design.md`](specs/2026-05-27-accounting-system-design.md)
+Mirrors 3.3.
+- 🔴 Lohnbuchhaltung/Sozialabgaben; Kostenrechnung; EBICS; eBill/Peppol; Spesenabrechnung; konsolidierte Bilanz (Folgeprojekte).
 
-- 🟢 **Phase 0** — `vest-bridge.ts` (`validateVestTree`) landed in `@bk2/shared-util-angular`, with dev warnings and improved type safety.
-- 🟢 **Phases 1–3** — every form migrated to Angular Signal Forms (`@angular/forms/signals`) across all domains (subject, relationship, cms, geo, calevent, document, resource, task, finance, user, profile, application, ownership, category, folder, chat, auth, trip). Forms now bind via `[control]`/`form(...)` and reuse the existing Vest suites through `validateVestTree`.
-- 🟢 **Phase 4** — `ngx-vest-forms` dependency removed from `package.json`/`pnpm-lock.yaml` (commit `da3c328b`); `vestFormsViewProviders` removed from all `shared/ui` components; no `scVestForm` directive or `validationConfig` remains in source.
+### 3.5 Forms Builder — [`2026-05-27-forms-builder-spec.md`](specs/2026-05-27-forms-builder-spec.md)
+v1 scope shipped; phased remainder open.
+- 🔴 Multi-page/multi-step forms; generic 3rd-party integrations; inbound email parsing; `visibleIf` editor; A/B testing; server-side e-signature (§1, §16).
+- 🟡 Later phases P2–P6 — URL target/submission CF/audit/CSV (P2), spam protection (P3), CAPTCHA + encrypted upload (P4), approval (idea 2.4) + email (P5), PDF export/template fill (P6) (§18).
+- 🟡 Encrypted file-upload PBKDF2 parameters — confirm with security review (§9.2).
 
-The four open questions (§5.2 async Signal Forms API, §5.4 `FieldTree` array indexing, `warn()` forms, whole-suite performance) were all resolved in the course of completing Phases 3–4 — async suites and form-array forms are migrated and live.
+### 3.6 Sentry Integration — [`2026-06-06-spec-sentry-integration.md`](specs/2026-06-06-spec-sentry-integration.md)
+Phase 1 in progress (`init-sentry.ts`); see plan [`2026-06-17-sentry-integration.md`](plans/2026-06-17-sentry-integration.md); setup guide in [`documentation/2026-06-17-sentry-setup-design.md`](documentation/2026-06-17-sentry-setup-design.md).
+- 🔴 Phase 2 — CI source-map upload + releases / release health.
+- 🔴 Phase 3 — native symbolication (Gradle/dSYM).
+- 🔴 Phase 4 — Cloud Functions backend (`@sentry/node`); Session Replay stays off (§11, §12).
 
-- 🟡 **Cleanup nit (LOW)** — ~29 edit-modal files still carry a stale `// This destroys and recreates the <form scVestForm> → Vest fully resets` comment referencing the removed directive. Harmless; update the comment text when next touching those files.
+### 3.7 Security Review — [`2026-06-11-security-report.md`](specs/2026-06-11-security-report.md)
+All Critical/High fixes deployed; the items below are genuine remaining work, not deploy steps.
+- 🔴 C-3 verify the 6 `oidc*` functions are actually deleted + remove stale OIDC provider config from Synapse.
+- 🔴 H-1/M-9 Storage content-type allowlist (Phase 2; confirm MIME set against real SDK uploads).
+- 🔴 M-7(a) per-collection write RBAC for collections beyond CMS (needs write-call-site analysis).
+- 🔴 M-10 move `matrix-js-sdk` from pre-release to a stable release.
+- 🔴 M-11 wire the emulator Firestore-rules tests (27-case harness) into CI.
+- 🔴 L-1 CSP `unsafe-inline`/`unsafe-eval` removal — blocked by `/web` (Tailwind Play CDN + inline scripts).
+- 🟡 C-4 optional git-history rewrite; C-5/H-6 `matrixPushGateway` shared-secret review; info items I-1…I-5.
 
-## 12. LocationSelect — Free-text route — [`2026-06-11-spec-location-select-custom.md`](done/2026-06-11-spec-location-select-custom.md)
+### 3.8 PWA Caching — [`2026-06-12-spec-pwa-caching.md`](specs/2026-06-12-spec-pwa-caching.md)
+- 🔴 `test-app` and static websites; Imgix `dataGroup` caching; dedicated bundle-size spec (§scope, §images, §10).
+- 🟡 Multi-tab IndexedDB manager; `IndexedDBCryptoStore` for Matrix E2EE; force-reload-on-build; bundle-size investigations (§7, §Matrix).
 
-- ❓ **Recently-used / promoted free-text routes** — caching frequently-used custom routes or promoting them into the `locations` collection is explicitly out of scope for this spec (§9).
+### 3.9 vCard Export — [`2026-06-12-spec-vcard-export.md`](specs/2026-06-12-spec-vcard-export.md)
+Tiers 1 & 2 ship.
+- 🟡 Tier 3 (memberAdmin multi-select) — callable enforces cap, no UI wired (§5, §6.2).
+- 🟡 `orgLinks` (parent/child orgs) omitted; registered read-model projection (§7) not added.
+- 🔴 vCard 4.0 profile; per-platform export profiles — explicit non-goals (§2.1).
 
-## 13. LocationSelect — Map view — [`2026-06-12-spec-location-select-map.md`](done/2026-06-12-spec-location-select-map.md)
+### 3.10 Matrix Chat Audit — [`2026-06-12-matrix-chat-audit.md`](specs/2026-06-12-matrix-chat-audit.md)
+Symptom fixes, SEC/ARCH/C-*/P-* hygiene deployed.
+- 🟡 S1/S2 duplicate-identity data migration; ARCH-4 client-side identity dedup; ARCH-5 `ensureAdminInRoom` helper; P-5 user-scoped store.
+- 🔴 ARCH-2 split 1837-line `MatrixChatService`; C-5 scroll-back pagination; P-3/P-4/P-6 perf; SEC-5 notification/enumeration vectors; S5 group-bkey masking; E2EE by default (§9).
+- ❓ SEC-6 role source-of-truth (rules vs `requireRole`).
 
-- 🟡 **Marker clustering** (`leaflet.markercluster`) — deferred until a tenant exceeds the threshold (§ marker handling).
+### 3.11 Email Signature — [`2026-06-16-spec-email-signature.md`](specs/2026-06-16-spec-email-signature.md)
+`signature.service.ts`, `email-signature.accordion.ts`, signature util/model landing.
+- 🔴 Org-managed/enforced signatures; dark-mode logo variant; multiple signatures per org (§9).
+- 🔴 Direct Gmail API / Outlook Graph install — see idea 2.13 Office Integration (§9).
 
-## 14. PWA Caching — [`2026-06-12-spec-pwa-caching.md`](done/2026-06-12-spec-pwa-caching.md)
+---
 
-Explicit out-of-scope items and follow-ups:
+## 4. Fully implemented
 
-- 🔴 **`test-app` and the static websites** — out of scope this iteration (§scope).
-- 🔴 **Imgix `dataGroup` caching** — only helps true-offline use; out of scope (long HTTP cache already covers reload-warm) (§ images).
-- 🔴 **Dedicated bundle-size spec** — §10 recommendations remain informational only; a separate spec is out of scope.
-- 🟡 **Multi-tab IndexedDB manager** — kept as an option for a future desktop-multi-tab use case; gate behind `isSafariBrowser` when needed (§7).
-- 🟡 **`IndexedDBCryptoStore` for Matrix E2EE device keys** — file as a follow-up if/when E2EE is enabled (§ Matrix).
-- 🟡 **Force-reload-on-every-build strategy** — revisit in a follow-up if needed; swap-in is small.
-- 🟡 **Bundle-size investigations** — diagnosed, not yet validated; treated as a backlog of investigations (confirm `matrix-js-sdk` chunk doesn't pull `crypto-js`, etc.).
+In-scope work complete; only explicit non-goals / future work remain.
 
-## 15. Security Review — [`2026-06-11-security-report.md`](done/2026-06-11-security-report.md)
+### 4.1 Poll Create — [`2026-04-29-poll-create-design.md`](specs/2026-04-29-poll-create-design.md)
+🔴 result display in message list; poll end; multiple-choice (`max_selections>1`); thread-aware sending.
 
-Most Critical/High findings are deployed. Remaining work (as of 2026-06-12):
+### 4.2 Poll Display — [`2026-04-29-poll-display-design.md`](specs/2026-04-29-poll-display-design.md)
+🔴 multiple-choice; per-voter identity; thread-aware voting.
 
-### Awaiting deploy / app build 🚀
-- **H-5** esign tenant authz, **H-6** App Check + 7-day Matrix tokens, **M-3** password-reset enumeration fix, **M-4** PDF raw-HTML sanitizer, **M-5** Mailtrap webhook HMAC, **M-6** `checkAdminRole` — all need a **Cloud Functions redeploy** (`pnpm run deploy:functions`).
-  - **M-5 deploy prerequisite:** `firebase functions:secrets:set MAILTRAP_WEBHOOK_SECRET`.
-  - **M-7(b) deploy prerequisites:** redeploy rules + functions; optionally set `PUBLIC_API_ALLOWED_ORIGINS` / `PUBLIC_API_ALLOWED_TENANTS`; add a `_rateLimits.expiresAt` TTL policy.
-- **H-3** CMS iframe/video URL allowlist, **M-1** RAG markdown sanitizer, **M-2** Matrix-creds logout cleanup, **C-3** client route/component removal — ship with the **next app build**.
-- **L-2** CSP hardening directives, **L-3** `rel=noopener`, **L-4** public-API CORS allowlist — ship on next hosting/app deploy.
+### 4.3 Flighttracker — [`2026-05-04-flighttracker-design.md`](specs/2026-05-04-flighttracker-design.md)
+🔴 polling/auto-refresh; lookup history; search by route; SSR map rendering.
 
-### Deferred / open 🔴🟡
-- **C-3 verification** — confirm the 6 `oidc*` functions are actually deleted in the project; remove stale OIDC provider config from the Matrix homeserver.
-- **C-4 follow-up** — optional git-history rewrite (secret already dead); regenerate e2e auth state from a non-admin test user.
-- **C-5 / H-6 — App Check on `matrix-simple` callables** was applied under H-6; the separate **`matrixPushGateway` shared-secret review** remains a new follow-up.
-- **H-1 / M-9 — Storage content-type allowlist** deferred to Phase 2; M-9 (client-side-only MIME restriction) remains open until the exact MIME set is confirmed against real SDK uploads in staging.
-- **M-7(a) — Per-collection write RBAC** done for CMS content only; RBAC for the remaining collections is **not pursued** (needs write-call-site analysis + domain confirmation).
-- **M-10 follow-up** — move `matrix-js-sdk` from the pre-release to a stable release (test-heavier change, deferred).
-- **M-11 / rules CI** — emulator-based Firestore-rules tests exist (27-case harness) but are **not yet wired into CI**.
-- **L-1 — CSP `unsafe-inline` + `unsafe-eval`** in `script-src` — **DEFERRED, blocked by `/web`**: requires migrating `scs-website` off the Tailwind Play CDN and inline scripts (or per-path CSP split) first.
-- **Info items I-1…I-5** — OIDC callback state check (moot if bridge gone); FCM SW Firebase version lockstep; hardcoded API-key fallback fail-fast; cap/trim unbounded esign `events` array; (I-5 already-defended `[innerHTML]` paths — no action).
-- **Post-deploy verification** — smoke-test the live app and watch production logs for `permission-denied` after the rules rewrite (a read-only-classified collection with a real client write path needs flipping to privileged write).
+### 4.4 Flighttracker — Icon rotation — [`2026-05-04-flighttracker-icon-rotation-design.md`](specs/2026-05-04-flighttracker-icon-rotation-design.md)
+🔴 snapping to discrete headings; animating rotation on reload.
 
-## 16. vCard Export — [`2026-06-12-spec-vcard-export.md`](done/2026-06-12-spec-vcard-export.md)
+### 4.5 Flighttracker — Route line — [`2026-05-04-flighttracker-route-line-design.md`](specs/2026-05-04-flighttracker-route-line-design.md)
+🔴 animated plane movement; actual filed path (great-circle only); dashed line.
 
-The feature is **implemented** (`apps/functions/src/vcard/`, `libs/vcard/util`, `libs/vcard/feature`, person/org list + store entry points) for tiers 1 & 2. Outstanding:
+### 4.6 News Thumbnail — [`2026-05-05-news-thumbnail-design.md`](specs/2026-05-05-news-thumbnail-design.md)
+Single-file change, no deferred topics.
 
-- 🟢 **§11 open item resolved** — the avatar source is concrete in code (`IMGIX_BASE = https://bkaiser.imgix.net`, server-side fetch + base64 in the `vcardExport` callable); no longer a placeholder.
-- 🟡 **Tier 3 (memberAdmin multi-select) — no UI** — the callable already enforces the 100-record cap server-side, but nothing in the selection-mode context menu wires to it (§5, §6.2). Single-target tiers 1 & 2 ship; multi-select export is deferred.
-- 🟡 **`orgLinks` (parent/child orgs) omitted** — org cards still emit their `WorkRel`-linked persons, but the parent/child organization links (§3.2, §5) are not generated.
-- 🟡 **Registered read-model projection (§7) not added** — the spec's denormalized favorite-contact projection for the `registered` role doesn't exist; the callable instead enforces favorites-only for tier 1 itself (defence in depth), which is functionally correct but skips the read-path part of the design.
-- 🟢 **Country names — English form by design** — `ADR` emits the English country name (e.g. "Switzerland") via `countries-list`, matching the spec's §3.3 example. `i18n-iso-countries` has no locale registered server-side, so localized country names are not produced (acceptable per the spec example; note if German names are later wanted).
-- 🔴 **vCard 4.0 profile** (native `RELATED` / `KIND:org`) — explicit non-goal (§2.1, §2). 3.0 + `X-AB*` is the chosen encoding because iCloud rejects 4.0; only revisit if broad non-Apple fidelity ever becomes a priority.
-- 🔴 **Per-platform export profiles** — intentionally not built; the single 3.0 `.vcf` is treated as cross-platform for all *values* (only some *labels* soften on non-Google Android) (§2.1).
+### 4.7 Notification Badges — [`2026-05-05-notification-badges-design.md`](specs/2026-05-05-notification-badges-design.md)
+🔴 messages-section badge not wired (per-room unread shown instead); no model/AppStore change.
 
-## 17. Matrix Chat Audit — [`2026-06-12-matrix-chat-audit.md`](done/2026-06-12-matrix-chat-audit.md)
+### 4.8 Session Analytics — [`2026-05-05-session-analytics-design.md`](specs/2026-05-05-session-analytics-design.md)
+🔴 retention/auto-cleanup; aggregated stats charts; BigQuery/Sheets export.
 
-The symptom fixes (S1–S5), SEC-1/2, SEC-3/4, ARCH-1 and the C-*/P-* hygiene batch are done (mostly client-side, shipping with the app). Remaining work:
+### 4.9 Members Accordion — membertype filter — [`2026-05-06-members-accordion-membertype-filter-design.md`](specs/2026-05-06-members-accordion-membertype-filter-design.md)
+🔴 store-level filter state; `'all'` option.
 
-### Awaiting deploy 🚀
+### 4.10 Schedule Poll — [`2026-05-06-schedule-poll-design.md`](specs/2026-05-06-schedule-poll-design.md)
+🔴 public/open-event scheduling; external participants; recurring schedules; persisted draft.
 
-- **SEC-3 provisioning gate** (`requireMatrixLocalpart` in the matrix callables) — needs **`pnpm run deploy:functions`** to activate.
-- **S3 push gateway** — the Firebase Hosting rewrite (`/_matrix/push/v1/notify` → `matrixPushGateway`) needs **`firebase deploy --only hosting:scs-app-54aef`**; until then Synapse accepts the pusher URL but POSTs hit the SPA catch-all and no chat push notifications arrive.
+### 4.11 Chat Image Thumbnails — [`2026-05-07-chat-image-thumbnails-design.md`](specs/2026-05-07-chat-image-thumbnails-design.md)
+No deferred topics noted.
 
-### Deferred / open 🔴🟡❓
+### 4.12 Matrix Read Receipts — [`2026-05-08-matrix-read-receipts-design.md`](specs/2026-05-08-matrix-read-receipts-design.md)
+No deferred topics noted.
 
-- 🟡 **S1 / S2 — duplicate-identity data migration** — the UI now hides the service/bot accounts, but `@bruno` is still *joined* to ~71 rooms (old force-join artifacts) and holds its own DMs, and UID-based duplicate accounts (`@gp8bkee…`, `@scheduler` mapping to 3 DM rooms) still exist. Consolidating "one Matrix account per person" — removing `@bruno` from rooms, migrating/closing its DMs, merging UID-accounts into their `personKey` accounts — is a deliberate per-person data migration, not yet run.
-- 🔴 **ARCH-2 — split the 1837-line `MatrixChatService`** into `MatrixSessionService` / `MatrixRoomService` / `MatrixMessageService` / `MatrixCallService`. Deferred as a separate refactor (no test coverage today); do once behavior is stabilized. Would also enable unit testing of this logic.
-- 🟡 **ARCH-4 — client-side identity-by-convention** — the four CFs' groupId→alias→room derivation is unified (`resolveGroupRoom` + `groupRoomAliasLocalpart`, `matrixRoomId` persisted), but the **client-side** personKey→localpart / homeserver derivation is still duplicated across the service/store/init.
-- 🟡 **ARCH-5 — CF helper extraction** — `resolveGroupRoom`/`ensureMatrixUserExists` extracted; an `ensureAdminInRoom(roomId)` helper for the repeated make-admin/force-join block is still open.
-- 🔴 **C-5 — scroll-back pagination** — `loadMessagesForRoom` paginates once; no infinite scroll for older history. A UI feature (new service method + `ion-infinite-scroll` + scroll-anchoring on prepend) needing in-app verification.
-- 🔴 **P-3 — `sendCallNotification`** runs sequential Firestore queries per callee; parallelize with `Promise.all`.
-- 🔴 **P-4 — `matrixPushGateway`** sends FCM sequentially per device; use `sendEachForMulticast` (as `sendCallNotification` already does).
-- 🟡 **P-5 remainder — stop `clearStores()` on routine disconnect** — the IndexedDB persistent store is in place, but clearing on every disconnect still forces a near-full re-sync. Cannot land safely until the store `dbName` is user-scoped (currently fixed `bk2-matrix` → cross-user leak on shared devices); it is the E2EE Step-1 prerequisite.
-- 🔴 **P-6 — `listMatrixRooms`** fetches all rooms (≤1000) then filters by joined set (admin-only; acceptable for now).
-- 🔴 **SEC-5 — notification & enumeration vectors** — `sendCallNotification` doesn't verify the caller shares a room with the callees; `provisionMatrixUser` lets any provisioned user create an account for any personKey; `getRoomByName` resolves any room via the admin search API. Scope/verify each server-side.
-- ❓ **SEC-6 — role source of truth** — cross-check `firestore.rules` actually prevents users writing their own `users/{uid}.roles` field (the `requireRole` CF gate trusts it).
-- 🔴 **S5 follow-up — group bkeys** — human-readable bkeys with spaces/hyphens are sanitised for aliases and made non-load-bearing via `matrixRoomId`; auto-generating/masking bkeys at creation would remove the special-char fragility at the source (touches group-creation UX + cross-DB foreign-key migration).
-- 🔴 **E2EE by default (§9)** — a large multi-step project (Steps 0–8: device-bound tokens via JWT login, persistent stores, client crypto init, encrypt new rooms, key backup/recovery, migrate existing rooms). Depends on SEC-1 (done), item 6 (SEC-3/4, done) and the P-5 store remainder; realistic scope ~1 focused week, not started.
+### 4.13 Quick-Entry Triggers — [`2026-05-10-quick-entry-triggers-design.md`](specs/2026-05-10-quick-entry-triggers-design.md)
+🔴 `!!` location trigger (separate spec); task quick entry (separate feature).
 
-## 18. QR Payment Reference & Bank Reconciliation — [`2026-06-17-qr-payment-reference-reconciliation-spec.md`](2026-06-17-qr-payment-reference-reconciliation-spec.md)
+### 4.14 i18n per-module — [`2026-05-12-i18n-per-module-design.md`](specs/2026-05-12-i18n-per-module-design.md)
+🟡 `test-app` scoped translations; auto-generate asset globs; CI check for declared-but-empty scopes.
 
-New spec, decisions locked. QR slips currently print **without a structured reference**, so reconciliation is fully manual. Plan: add an (optional, per-invoice) reference to the slip, then auto-match incoming bank credits.
+### 4.15 Alert Service — [`2026-05-15-alert-service-design.md`](specs/2026-05-15-alert-service-design.md)
+No deferred topics noted.
 
-- 🔴 **Phase 0 — foundation (ships now, no QR-IBAN needed)** — add `InvoiceModel.paymentReference`, an `isQrIban` classifier + QRR reference generator (pure utils), and dual-IBAN slip logic. With no QR-IBAN configured, slips stay `NON`/regular-IBAN — safe no-op that unblocks invoicing.
-- ✅ **D1 — reference type** — QRR now; SCOR later (generator takes a `type` param).
-- ✅ **D2 — schema change** — `paymentReference: string` on `InvoiceModel` approved.
-- 🟡 **D3 — QR-IBAN procurement** — owner to request a QR-IBAN from ZKB; document it in the spec when obtained. Not a blocker.
-- 🟢 **Reference need is derived from the IBAN** — a QR-IBAN's IID is `30000–31999`; `isQrIban()` decides QRR vs `NON`, so no `qrIban` field and no manual flag.
-- 🔴 **Phase 1 — QRR live** — once QR-IBAN configured, referenced slips render QRR; validate on ZKB's ISO-20022 test platform.
-- 🔴 **Phase 2 — camt reconciliation** — new `reconcileCamt` callable parses uploaded ZKB camt.054/053, matches on `paymentReference`, marks invoices paid. Free, no API.
-- ✅ **D4 — banking integration (phased)** — start manual-camt; **Phase 3** optionally swaps the upload for a **DeepPay** fetch (DeepCloud REST API → 120+ banks incl. ZKB) reusing the same matcher. EBICS/bLink are alternatives.
+### 4.16 Member-Age Section — [`2026-05-21-member-age-section-design.md`](specs/2026-05-21-member-age-section-design.md)
+🟡 bar-chart rendering still open (idea 2.5); unknown-gender members excluded silently; export/print formatting.
+
+### 4.17 CMS Section i18n pattern — [`2026-05-22-cms-section-i18n-pattern-design.md`](specs/2026-05-22-cms-section-i18n-pattern-design.md)
+No deferred topics noted.
+
+### 4.18 PDF Generator — [`2026-05-25-pdf-generator-spezifikation.md`](specs/2026-05-25-pdf-generator-spezifikation.md)
+🔴 WYSIWYG template editing (source/preview editor only); client-side document generation; integrated email dispatch in the CF — stays client-side over Mailgun (§1.3, §8.4).
+
+### 4.19 DeepSign E-Signature — [`2026-05-25-deepsign-integration-spec.md`](specs/2026-05-25-deepsign-integration-spec.md)
+v1.
+🔴 Company seals (idea 2.1); hash signing; ad-hoc signee/observer API; manual field placement; batch upload & attachments (§1); non-PDF MIME types — only `application/pdf` (§9).
+
+### 4.20 Expense Feature — [`2026-05-25-expense-feature-spezifikation.md`](specs/2026-05-25-expense-feature-spezifikation.md)
+`libs/finance/expense`.
+🔴 Approval-workflow module (idea 2.4); travel-expense flat rates; credit-card integration (§1.2).
+❓ Auto-payout (pain.001); foreign-VAT default; multi-currency per expense; OCR learning loop; duplicate-receipt behaviour (§9).
+
+### 4.21 Trip Feature — [`2026-05-25-trip-feature-spec.md`](specs/2026-05-25-trip-feature-spec.md)
+🔴 Multi-stop trip recording; automated GPS-track distance; guest management (§1.2).
+❓ `kiosk` role; `flagged` field; `trip_responsibility` notification mechanism; `dev_responsibility` source; `aoc/trip` access (§17).
+
+### 4.22 Trip Statistics (Firestore) — [`2026-05-25-trip-stats-firestore-spec.md`](specs/2026-05-25-trip-stats-firestore-spec.md)
+❓ Exact `COUNTING_STATES`; kiosk in-place edit of `open` trips; full state-transition audit log (§8).
+
+### 4.23 Trip Feature (design) — [`2026-05-26-trip-feature-design.md`](specs/2026-05-26-trip-feature-design.md)
+Open topics tracked under 4.21; map library resolved (Capacitor Google Maps).
+
+### 4.24 Trip Stats (design) — [`2026-05-26-trip-stats-design.md`](specs/2026-05-26-trip-stats-design.md)
+Open questions tracked under 4.22; design decisions all resolved.
+
+### 4.25 Application Feature — [`2026-05-27-application-feature-spec.md`](specs/2026-05-27-application-feature-spec.md)
+Iteration scope.
+🔴 Public submission page (→ Forms Builder); anonymous CAPTCHA/rate-limiting; document upload; payment at application; cross-club transfer flows; automatic account creation (§1.2).
+🟡 Per-membership-category responsibility routing — generic for now.
+
+### 4.26 Expense Feature (design) — [`2026-05-28-expense-feature-design.md`](specs/2026-05-28-expense-feature-design.md)
+See 4.20.
+🔴 OCR extraction; approval workflow (idea 2.4); OCR VAT lines; multi-currency; auto pain.001; offline draft caching; duplicate-receipt detection; amount-diff dialog; expense-account admin config.
+
+### 4.27 Cookie Consent — [`2026-05-25-cookie-consent-specification.md`](specs/2026-05-25-cookie-consent-specification.md) · impl [`2026-05-29-cookie-consent-implementation.md`](specs/2026-05-29-cookie-consent-implementation.md)
+🔴 Granular preferences modal (§7.5); server-side consent sync to Firestore (audit); Google Consent Mode v2; geo-aware banner; re-prompt interval (§12).
+
+### 4.28 Validation i18n refactor — [`2026-05-30-validation-i18n-refactor-design.md`](specs/2026-05-30-validation-i18n-refactor-design.md)
+🔴 adding `de.json` to libs already working via `@key`; translating to en/fr/es/it; changing `I18nService.translate()`.
+
+### 4.29 Move Icon into CMS — [`2026-06-05-move-icon-into-cms-design.md`](specs/2026-06-05-move-icon-into-cms-design.md)
+No deferred topics noted.
+
+### 4.30 LocationSelect — Free-text route — [`2026-06-11-spec-location-select-custom.md`](specs/2026-06-11-spec-location-select-custom.md)
+🔴 Recently-used / promoted free-text routes (caching or promotion to `locations`) (§9).
+
+### 4.31 LocationSelect — Map view — [`2026-06-12-spec-location-select-map.md`](specs/2026-06-12-spec-location-select-map.md)
+🟡 Marker clustering (`leaflet.markercluster`) — deferred until a tenant exceeds the threshold.
+
+### 4.32 Vest → Signal Forms Migration — [`2026-06-12-vest-to-signal-forms-migration-spec.md`](specs/2026-06-12-vest-to-signal-forms-migration-spec.md)
+All five phases done.
+🟡 Cleanup nit — ~29 edit-modals carry a stale `scVestForm` comment; update when next touched.
+
+### 4.33 Person Privacy on PersonModel — [`2026-06-14-person-privacy-on-personmodel-design.md`](specs/2026-06-14-person-privacy-on-personmodel-design.md)
+Client-side.
+🔴 real server-side enforcement (`getPersonView` CF, locked reads, `iban` flag) — see idea 2.9 Privacy Audit.
+
+### 4.34 Booking Counterparty Actions — [`2026-06-16-booking-counterparty-actions-design.md`](specs/2026-06-16-booking-counterparty-actions-design.md)
+`generateDocument` action.
+🔴 runtime/admin CRUD for the action registry; multi-currency receipts; `createTask` action (marked future).
+
+### 4.35 Page Print — [`2026-06-17-page-print-design.md`](specs/2026-06-17-page-print-design.md)
+🔴 faithful rendering of interactive sections (`chat`/`rag`/`form`/`tracker`) — skipped with placeholder; maps/iframes best-effort (may render blank).
+
+### 4.36 QR Payment Slip — [`2026-06-17-qr-payment-slip-design.md`](specs/2026-06-17-qr-payment-slip-design.md)
+Unstructured slip.
+🔴 structured QR references (QRR/SCOR) + QR-IBAN → see awaiting-impl spec 1.2; per-generation QR-setting override; non-CHF currencies.

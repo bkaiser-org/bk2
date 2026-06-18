@@ -21,44 +21,45 @@ No leading numbers (`01_`, `17_`). No `Component`/CamelCase. Lowercase, hyphen-s
 
 ## What each type is, and where it lives
 
+`docs/` is organised by **document type**, not by status. **There is no `docs/superpowers/` tree** —
+these are the project locations, and they override the superpowers skills' defaults (see below).
+
 | Type | Purpose | Location |
 |------|---------|----------|
-| `-spec` | The *what & why* — requirements, scope, open questions | `docs/` while active → move to `docs/done/` once implemented |
-| `-design` | The *how* — technical/architecture design | `docs/superpowers/specs/` |
-| `-plan` | Step-by-step implementation plan | `docs/superpowers/plans/` |
+| idea / stub | seed spec, not yet elaborated | `docs/ideas/` |
+| `-spec` | The *what & why* — requirements, scope, open questions | `docs/specs/` |
+| `-design` | The *how* — technical/architecture design | `docs/specs/` |
+| `-plan` | Step-by-step implementation plan | `docs/plans/` |
+| reference | guides, inventories, non-spec docs | `docs/documentation/` |
 
-When a spec is fully implemented, `git mv` it from `docs/` to `docs/done/` (keep the filename).
+**Specs and designs stay in `docs/specs/` for their whole life — do not move them on completion.**
+Implementation status is tracked in `PENDING_IMPLEMENTATION.md` via each entry's `State:` field, not by
+the folder. An idea that gets elaborated graduates from `docs/ideas/` to `docs/specs/`. `docs/done/` is
+**retired** — use it only to archive a superseded or abandoned doc, never for "implemented".
+
+## Superpowers writes here too
+
+The superpowers `brainstorming` and `writing-plans` skills default to `docs/superpowers/specs/` and
+`docs/superpowers/plans/`, **but both explicitly defer to user-configured locations**. This project's
+locations override them: brainstorming designs → `docs/specs/`, plans → `docs/plans/`. (Do not edit the
+plugin skill files — they live in the read-only plugin cache and are overwritten on update.)
 
 ## PENDING_IMPLEMENTATION.md is the TOC
 
-`docs/PENDING_IMPLEMENTATION.md` is the single table of contents tracking the **current implementation state** of each spec. Whenever you create, advance, or complete a spec, update its entry there.
+`docs/PENDING_IMPLEMENTATION.md` is the single table of contents tracking the **current implementation
+state** of every specified-but-not-fully-implemented topic. Whenever you create, advance, or complete a
+spec, update its entry there.
 
-Each entry: a numbered `##` heading with the title and a markdown link to the source spec, followed by status-marked bullet items.
-
-```markdown
-## 18. vCard Export — [`2026-06-12-spec-vcard-export.md`](done/2026-06-12-spec-vcard-export.md)
-
-- 🟢 **Avatar source** — resolved in code.
-- 🟡 **Tier 3 multi-select** — callable enforces cap; no UI wired yet.
-- 🔴 **vCard 4.0 profile** — explicit non-goal.
-```
-
-Status legend (keep consistent with the file's own legend block):
-
-| Marker | Meaning |
-|--------|---------|
-| 🔴 | not started / explicitly out of scope |
-| 🟡 | partially done, work remaining |
-| 🟢 | done / resolved |
-| 🚀 | fixed in code, awaiting deploy / app build |
-| ❓ | open question / decision needed |
+**Use the [`pending-implementation`](../pending-implementation/SKILL.md) skill** for its structure
+(four State-driven chapters: awaiting implementation, ideas, partially implemented, fully implemented),
+the per-entry format (name, backlink, `State:`, postponed/excluded topics only), and how to (re)compile it.
 
 ## Workflow when creating a new doc
 
 1. Pick type (`spec` / `design` / `plan`) and place it in the matching directory above.
 2. Name it `yyyy-mm-dd-topic-<type>.md` using **today's** date.
 3. Put a `**Date:** yyyy-mm-dd` line near the top so the date survives outside the filename.
-4. For a **spec**: add an entry to `docs/PENDING_IMPLEMENTATION.md` with status bullets and a link to the new file.
+4. For a **spec**: add an entry to `docs/PENDING_IMPLEMENTATION.md` (see the `pending-implementation` skill).
 5. If the doc references another spec/design/plan, link by its full current filename.
 
 ## Common mistakes
@@ -67,4 +68,5 @@ Status legend (keep consistent with the file's own legend block):
 - Forgetting the type suffix, or using two (`-spec-plan`).
 - Creating a spec but not registering it in `PENDING_IMPLEMENTATION.md`.
 - Renaming/re-dating an existing doc on later edits — the date is the *creation* date and stays fixed.
-- Putting a design or plan in `docs/` instead of `docs/superpowers/{specs,plans}/`.
+- Putting a design in `docs/` root or a plan outside `docs/plans/` — use `docs/specs/` and `docs/plans/`.
+- Re-creating a `docs/superpowers/` tree — it no longer exists; specs/designs live in `docs/specs/`.
