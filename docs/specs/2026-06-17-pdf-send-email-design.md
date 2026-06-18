@@ -144,11 +144,14 @@ public readonly outputFormat  = input<'pdf' | 'docx' | 'html'>('pdf');
 **confirm() / send()**
 
 ```ts
-const branding = this.appStore.appConfig() // org name, logoUrl, opEmail
+const cfg = this.appStore.appConfig();                  // org name, logoUrl, opEmail
+const imgixBaseUrl = this.appStore.env.services.imgixBaseUrl;
+const rel = getImgixUrl(cfg.logoUrl, 'fm=png&w=240&auto=compress');
+const logoUrl = rel.startsWith('tenant') ? `${imgixBaseUrl}/${rel}` : rel;
 const html = buildBrandedEmailHtml(this.body(), {
-  orgName: branding.name,
-  logoUrl: branding.logoUrl,
-  contactEmail: branding.opEmail,
+  orgName: cfg.name,
+  logoUrl,                       // absolute PNG imgix URL
+  contactEmail: cfg.opEmail,
   attachmentFilename: this.filename(),
 });
 await this.docEmailService.sendDocumentByEmail({
@@ -182,14 +185,21 @@ export function buildBrandedEmailHtml(bodyHtml: string, opts: BrandedEmailOption
 
 Returns a self-contained, **inline-CSS**, table-based responsive HTML email:
 
-- **Header bar** — logo (if a usable absolute `logoUrl`) + `orgName`, brand colour background
-  (`#25265e`, matching the editor heading colour already used in the app).
-  - **Note:** `AppConfig.logoUrl` is a **Storage-relative path** (e.g. `tenant/<id>/logo/logo_round.svg`),
-    not a public HTTP URL. An email is rendered outside the app, so the header must use a fully-qualified,
-    publicly reachable URL. The caller must pass an absolute URL (resolved download URL / public CDN URL),
-    or omit it — when `logoUrl` is empty or not absolute (`!/^https?:\/\//`), `buildBrandedEmailHtml`
-    degrades gracefully to a **text-only** header (org name on the brand-colour bar). SVG logos may also
-    not render in some email clients, which is another reason text-only is the safe default.
+- **Header bar** — logo + `orgName`, brand colour background (`#25265e`, matching the editor heading
+  colour already used in the app).
+  - **Logo resolution:** `AppConfig.logoUrl` is a **Storage-relative path** (e.g.
+    `tenant/<id>/logo/logo_round.svg`) and is typically an **SVG**, which many email clients don't render.
+    The composer resolves it to an absolute, **PNG** imgix URL before passing it to the template, using the
+    existing pattern (cf. [img.ts:220-223](../../libs/shared/ui/src/lib/img.ts#L220-L223)):
+
+    ```ts
+    // in EmailComposerModal, using AppStore.env.services.imgixBaseUrl
+    const rel = getImgixUrl(appConfig.logoUrl, 'fm=png&w=240&auto=compress'); // SVG → PNG via imgix
+    const logoUrl = rel.startsWith('tenant') ? `${imgixBaseUrl}/${rel}` : rel;
+    ```
+
+    `buildBrandedEmailHtml` receives this already-absolute PNG URL and renders an `<img>`; if `logoUrl`
+    is empty it degrades to a **text-only** header (org name on the brand-colour bar).
 - **Body** — the `bodyHtml` from the editor, inside a max-width (600px) white card.
 - **Attachment note** — `📎 Beilage: <attachmentFilename>` line (only when provided).
 - **Footer** — muted small text with `orgName` and `contactEmail` (mailto link).
@@ -307,5 +317,5 @@ German strings; wire to the store i18n if the surrounding components adopt it.)
 - **Provider:** `mailtrap_api` (not `mailgun_smtp`).
 - **Storage allow-list prefix:** `generated-docs/` and `generated-docs-ephemeral/` (see 3.3).
 - **From / contact:** `AppConfig.opEmail`.
-- **Logo:** `AppConfig.logoUrl` is a Storage-relative path; the branded header degrades to text-only
-  unless an absolute public URL is supplied (see 2.4).
+- **Logo:** resolved to an absolute **PNG** imgix URL via `getImgixUrl(logoUrl, 'fm=png&…')` +
+  `imgixBaseUrl` (SVG → PNG so email clients render it); empty `logoUrl` → text-only header (see 2.4).
