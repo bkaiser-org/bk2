@@ -47,6 +47,18 @@ All four existing sync CFs (`syncBexioAccounts`, `syncBexioJournal`, `syncBexioI
 - `journal.ts`: write to `bookings` (not `journallogs`); write `BookingModel` header + two `BookingLineModel` docs per entry (debit + credit) in the same Firestore batch; add `status: 'posted'`, `bookingNo = Bexio id`
 - `shared.ts`: replace `toStoreDate()` with `convertDateFormatToString` from `@bk2/shared-util-core` (CLAUDE.md convention)
 
+#### Incremental sync semantics & status freshness (bills / invoices)
+
+Both `syncBexioBills` and `syncBexioInvoices` run as a daily scheduled CF (06:00 Europe/Zurich) plus an on-demand `onCall` for manual backfill. Each persists with `batch.set(doc, { merge: true })` keyed by the Bexio id, so re-fetching an already-synced record **overwrites** its mutable fields — including the mapped `state` (`bill.status` → lowercase; invoice `kb_item_status_id` → `mapInvoiceStatus`). The merge write is therefore not the limiting factor for status freshness — **what gets re-fetched is.** The two integrations differ in how they bound the incremental fetch:
+
+- **Invoices** filter server-side on Bexio's **modification** timestamp: `kb_invoice/search` with `[{ field: 'updated_at', value: lastSyncedAt, criteria: '>' }]`. Any invoice modified since the last run — including a pure status change on an old invoice — is re-fetched and its `state` refreshed. ✅ Status changes always propagate.
+
+- **Bills** use the v4 `/purchase/bills` endpoint, which exposes no `updated_at` query filter. The freshness-correct predicate is a **client-side** filter on `b.updated_at > lastBillSyncedAt` (NOT `created_at` — `created_at` is immutable, so a status change on an existing bill would never re-emit; this was the original bug). To avoid paging the entire bill history on every run, a **server-side `bill_date_start` lookback window** bounds the fetch:
+  - **Scheduled sync** → `bill_date_start = today − 12 months` (computed via `addDuration(getTodayStr(IsoDate), { months: -12 }, IsoDate)`; the codebase `subDuration` is buggy — it calls `add` not `sub` — so use `addDuration` with a negative duration). Trade-off: a bill with a `bill_date` older than 12 months whose status changes afterwards is **not** caught by the daily job.
+  - **Manual `syncBexioBills`** → `bill_date_start` defaults to full history (`2000-01-01`); the call accepts optional `{ fromDate, billDateStart }` to narrow it. Use a manual full-history run to backfill or to repair stale statuses on bills outside the 12-month window.
+
+  Net: server-side `bill_date_start` limits **paging**; client-side `updated_at` limits **writes** to only changed bills within the window. `bill_date_start` filters on the document date and is **not** a substitute for the `updated_at` freshness filter — the two serve different purposes and are combined.
+
 ### ResourceModel / AssetModel separation
 
 `AssetModel` is the financial ledger entry. `ResourceModel` is the physical catalog. They are linked via optional `AssetModel.resourceKey`. `ResourceModel` has no knowledge of `AssetModel`. `ResourceModel.currentValue` (market estimate) is not auto-synced from book value.
