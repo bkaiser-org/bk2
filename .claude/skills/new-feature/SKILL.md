@@ -98,6 +98,35 @@ export const FeatureModelName = 'feature';     // singular model name
   Components, Library Path). Model it on [TASK.md](../../../libs/task/feature/src/lib/TASK.md).
   **Use the `authoring-docs` skill** conventions.
 
+### Store ↔ edit-modal DI contract (avoids `NG0201` + circular-import crashes)
+
+The feature `signalStore` is **component-provided** — listed in `providers: [FeatureStore]` on
+`FEATURE-list.ts`, **not** `providedIn: 'root'`. Ionic presents modals via
+`ModalController.create()` using the **root environment injector**, which cannot see the list
+component's providers. So any edit/view modal that does `inject(FeatureStore)` MUST follow BOTH
+rules — getting one without the other still crashes:
+
+1. **The modal declares its own `providers: [FeatureStore]`** in its `@Component` decorator.
+   Otherwise opening it throws `NG0201: No provider found for SignalStore`. (The modal gets its
+   own store instance; that's fine — it only reads `i18n`/labels/`tags`/`tenantId`, all derived
+   from the root `AppStore`. The list's store instance still does the actual save on `confirm`.)
+2. **The store imports the modal dynamically** inside `add()`/`edit()`:
+   `const { FeatureEditModal } = await import('./feature-edit.modal');` — **never** a top-level
+   `import { FeatureEditModal }`.
+
+Why #2: the modal already statically imports the store (needed for `providers` + `inject`). A
+top-level `import` of the modal *from the store* closes a static import cycle. Because
+`providers: [FeatureStore]` is evaluated at the modal's **module-load time** (when its
+`@Component` decorator runs), that cycle can leave `FeatureStore` in its temporal-dead-zone →
+`ReferenceError: Cannot access 'FeatureStore' before initialization` (or a silent
+`providers: [undefined]`), depending on load order. The dynamic `import()` breaks the cycle so
+the store finishes initializing first.
+
+If a modal instead receives its data via `input()`s and does **not** inject the store (e.g. the
+`booking`/`invoice` view modals), neither rule applies and a plain top-level import is fine.
+
+Canonical correct examples: `trip`, `person`, `org`, `location`.
+
 ## ui — `FEATURE.form.ts` (pure, Signal Forms)
 
 Pure presentational form. **Use Angular Signal Forms** per CLAUDE.md (NOT the legacy
@@ -251,6 +280,12 @@ navigate menu. Verify afterwards with `firestore_query_collection` on `menuItems
 - Forgetting `FeatureCollection` / `FeatureModelName` exports, or not exporting the model from the `@bk2/shared-models` barrel.
 - Using the **legacy** form pattern (`task.form.ts`) instead of Signal Forms (`folder.form.ts`).
 - Giving a route to the edit **modal** (modals never get routes); or omitting the `*.list` route.
+- An edit/view modal that `inject()`s the component-provided `FeatureStore` but omits
+  `providers: [FeatureStore]` → `NG0201: No provider found for SignalStore` when opened (Ionic
+  modals use the **root** injector, not the list's). And if the store top-level-`import`s the
+  modal, switch it to a dynamic `await import('./feature-edit.modal')` — otherwise adding
+  `providers` closes a module cycle that crashes with a `FeatureStore` TDZ `ReferenceError`. See
+  *Store ↔ edit-modal DI contract* above.
 - Call-menu `url` not matching the list's `onPopoverDismiss` switch case (lowercase mismatch).
 - Writing a `bkey` field on a menu document (it **is** the doc ID), or passing raw JSON instead of Firestore-typed `Value`s (`stringValue`/`arrayValue`/`booleanValue`) to `firestore_add_document`.
 - Using Ionicon `-outline`/`-sharp` icon names (e.g. `list-outline`, `add-circle-outline`) for the `icon` field — the DB `icons` set has no such names, so they 404 and render blank. Pick a real name via the **`icons` skill**.
