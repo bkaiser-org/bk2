@@ -38,7 +38,7 @@ const PFX = '@<domain>/<layer>.';            // matches the Transloco scope
 
 export const FEATURE_I18N_KEYS = {
   list_title:  PFX + 'list.title',
-  field_empty: PFX + 'field.empty',
+  empty: PFX + 'empty',
 } satisfies Record<string, string>;
 
 export type FeatureI18n = { [K in keyof typeof FEATURE_I18N_KEYS]: Signal<string> };

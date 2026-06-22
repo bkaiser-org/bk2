@@ -5,7 +5,7 @@ but is not yet fully implemented**. Use it to see, at a glance, what is still op
 source doc lives. Each entry links back to its source and lists only the topics that were
 **postponed or excluded** — never a description of what was built.
 
-**Last compiled:** 2026-06-17.
+**Last compiled:** 2026-06-22.
 
 ## Document layout (`docs/`)
 
@@ -49,6 +49,27 @@ Fully-written specs with **no (or only foundational) implementation** yet.
 - 🔴 Bulk / multi-recipient member mailing — stays with `MessageCenterModal` (this is single-document, single-recipient).
 - 🔴 Saving drafts; send history/audit log; scheduling.
 - 🔴 Non-PDF output formats — button offered only when `outputFormat === 'pdf'`.
+
+### 1.4 Vertragsverwaltung (Contract Lifecycle Management) — [`2026-06-17-spec-vertragsverwaltung.md`](specs/2026-06-17-spec-vertragsverwaltung.md)
+**State:** Open. No `libs/contract*` exists yet. Extends the `documents`/`Document` model; uses persons/orgs/memberships and the RAG/Gemini setup.
+- 🔴 Whole feature open — `ContractModel` aggregate, lifecycle state machine, Fristen/Kündigung/Verlängerung reminders, contract hierarchy (§1).
+- 🔴 Multi-stage approval workflow — v1 is status-tracking only (idea 2.4) (§1, §11.3).
+- 🔴 Recurring bookings/receivables from contracts; clause library / contract generation (§1).
+- 🔴 DeepSign coupling — `signatureType`/`signatories` stay manual in v1 (§11.7).
+- ❓ Reminder channels (email/push), deliverables embedding vs subcollection, per-version workflow (§11).
+
+### 1.5 GeBüV Archiving (documents + year-end package) — [`2026-06-17-spec-gebuev-archivierung.md`](specs/2026-06-17-spec-gebuev-archivierung.md)
+**State:** Open. No `archiveDocument` / `buildFiscalYearArchive` CF or WORM bucket exists yet. Teil B depends on the accounting core (ch 3).
+- 🔴 Teil A — tag-based per-document WORM archival (`onWrite` copy, SHA-256, Object Retention) (§2).
+- 🔴 Teil B — per-fiscal-year package (signed PDF/A reports, ledgers, structured booking export + audit trail) (§B2).
+- ❓ Teil A — `storagePath` source ref, multi-tenant copies, working-copy lifecycle cleanup (§11).
+- ❓ Teil B — export format (JSON/CSV/XML), PDF/A generation, qualified signature, four-eyes before sealing (§B7).
+
+### 1.6 External Office Integration (DocSpace / M365 / Workspace) — [`2026-06-17-spec-external-office-integration.md`](specs/2026-06-17-spec-external-office-integration.md)
+**State:** Open. Elaborates idea 2.13 Office Integration; bk2 stays a pure API peer (never hosts an editor). Reuses the DeepSign webhook-HMAC pattern; snapshots may flow into GeBüV archival (1.5).
+- 🔴 Whole feature open — `ExternalDocRef` + `DocumentSnapshot`, manual import, view-only sharing; phased Google → 2nd provider → cross-tenant → write-back (§10).
+- 🔴 Non-goals — no embedded editor / Document Server / WOPI host; no real-time co-editing; Apple programmatic round-trip (§1, §11).
+- ❓ Manual vs auto snapshot import; write-back scopes; automatic GeBüV WORM hook (§9).
 
 ---
 
@@ -110,10 +131,15 @@ graph LR
   ESIG["Email Signature (ch 3, partial)"]
   PRIVD["Person Privacy (shipped, client-side)"]
   CALPT["calevent / person / task (shipped)"]
+  DOCS["documents / Document (shipped)"]
+  PDFGEN["PDF Generator (shipped)"]
 
   %% awaiting implementation
   LOHN["1.1 Lohnbuchhaltung"]
   QR["1.2 QR Reconciliation"]
+  VTR["1.4 Vertragsverwaltung"]
+  GEBUEV["1.5 GeBüV Archiving"]
+  OFFEXT["1.6 External Office Integration"]
 
   %% ideas
   SEALS["2.1 Company Seals"]
@@ -148,6 +174,16 @@ graph LR
   LIQ --> DEBT
   LIQ -.actuals.- QR
   OFFICE --> ESIG
+
+  VTR --> DOCS
+  VTR -.signature.- DEEPSIGN
+  VTR -.approval.- APPR
+  GEBUEV --> DOCS
+  GEBUEV --> ACCT
+  GEBUEV --> PDFGEN
+  OFFEXT --> DOCS
+  OFFEXT -.elaborates.- OFFICE
+  OFFEXT -.archival.- GEBUEV
 ```
 
 ---

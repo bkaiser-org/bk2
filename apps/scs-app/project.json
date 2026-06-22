@@ -80,11 +80,6 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/aoc/util/src/i18n",
-            "output": "./assets/i18n/aoc/util"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/auth/data-access/src/i18n",
             "output": "./assets/i18n/auth/data-access"
           },
@@ -92,16 +87,6 @@
             "glob": "*.json",
             "input": "libs/auth/feature/src/i18n",
             "output": "./assets/i18n/auth/feature"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/auth/ui/src/i18n",
-            "output": "./assets/i18n/auth/ui"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/auth/util/src/i18n",
-            "output": "./assets/i18n/auth/util"
           },
           {
             "glob": "*.json",
@@ -125,11 +110,6 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/calevent/ui/src/i18n",
-            "output": "./assets/i18n/calevent/ui"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/category/data-access/src/i18n",
             "output": "./assets/i18n/category/data-access"
           },
@@ -150,13 +130,13 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/chat/ui/src/i18n",
-            "output": "./assets/i18n/chat/ui"
+            "input": "libs/cms/icon/data-access/src/i18n",
+            "output": "./assets/i18n/cms/icon/data-access"
           },
           {
             "glob": "*.json",
-            "input": "libs/chat/util/src/i18n",
-            "output": "./assets/i18n/chat/util"
+            "input": "libs/cms/icon/feature/src/i18n",
+            "output": "./assets/i18n/cms/icon/feature"
           },
           {
             "glob": "*.json",
@@ -170,11 +150,6 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/cms/menu/ui/src/i18n",
-            "output": "./assets/i18n/cms/menu/ui"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/cms/page/data-access/src/i18n",
             "output": "./assets/i18n/cms/page/data-access"
           },
@@ -185,11 +160,6 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/cms/page/ui/src/i18n",
-            "output": "./assets/i18n/cms/page/ui"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/cms/section/data-access/src/i18n",
             "output": "./assets/i18n/cms/section/data-access"
           },
@@ -197,11 +167,6 @@
             "glob": "*.json",
             "input": "libs/cms/section/feature/src/i18n",
             "output": "./assets/i18n/cms/section/feature"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/cms/section/ui/src/i18n",
-            "output": "./assets/i18n/cms/section/ui"
           },
           {
             "glob": "*.json",
@@ -225,13 +190,8 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/document/ui/src/i18n",
-            "output": "./assets/i18n/document/ui"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/document/util/src/i18n",
-            "output": "./assets/i18n/document/util"
+            "input": "libs/esign/feature/src/i18n",
+            "output": "./assets/i18n/esign/feature"
           },
           {
             "glob": "*.json",
@@ -275,6 +235,16 @@
           },
           {
             "glob": "*.json",
+            "input": "libs/finance/expense/data-access/src/i18n",
+            "output": "./assets/i18n/finance/expense/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/finance/expense/feature/src/i18n",
+            "output": "./assets/i18n/finance/expense/feature"
+          },
+          {
+            "glob": "*.json",
             "input": "libs/finance/invoice/feature/src/i18n",
             "output": "./assets/i18n/finance/invoice/feature"
           },
@@ -290,18 +260,13 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/finance/expense/data-access/src/i18n",
-            "output": "./assets/i18n/finance/expense/data-access"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/finance/expense/feature/src/i18n",
-            "output": "./assets/i18n/finance/expense/feature"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/folder/data-access/src/i18n",
             "output": "./assets/i18n/folder/data-access"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/folder/feature/src/i18n",
+            "output": "./assets/i18n/folder/feature"
           },
           {
             "glob": "*.json",
@@ -310,8 +275,8 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/folder/feature/src/i18n",
-            "output": "./assets/i18n/folder/feature"
+            "input": "libs/forms/feature/src/i18n",
+            "output": "./assets/i18n/forms/feature"
           },
           {
             "glob": "*.json",
@@ -325,13 +290,13 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/geo/location/ui/src/i18n",
-            "output": "./assets/i18n/geo/location/ui"
+            "input": "libs/geo/location/feature/src/i18n",
+            "output": "./assets/i18n/geo/location/feature"
           },
           {
             "glob": "*.json",
-            "input": "libs/geo/location/feature/src/i18n",
-            "output": "./assets/i18n/geo/location/feature"
+            "input": "libs/geo/location/ui/src/i18n",
+            "output": "./assets/i18n/geo/location/ui"
           },
           {
             "glob": "*.json",
@@ -350,13 +315,13 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/cms/icon/data-access/src/i18n",
-            "output": "./assets/i18n/cms/icon/data-access"
+            "input": "libs/pdf-template/data-access/src/i18n",
+            "output": "./assets/i18n/pdf-template/data-access"
           },
           {
             "glob": "*.json",
-            "input": "libs/cms/icon/feature/src/i18n",
-            "output": "./assets/i18n/cms/icon/feature"
+            "input": "libs/pdf-template/feature/src/i18n",
+            "output": "./assets/i18n/pdf-template/feature"
           },
           {
             "glob": "*.json",
@@ -370,38 +335,8 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/profile/ui/src/i18n",
-            "output": "./assets/i18n/profile/ui"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/pdf-template/data-access/src/i18n",
-            "output": "./assets/i18n/pdf-template/data-access"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/pdf-template/feature/src/i18n",
-            "output": "./assets/i18n/pdf-template/feature"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/esign/feature/src/i18n",
-            "output": "./assets/i18n/esign/feature"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/forms/feature/src/i18n",
-            "output": "./assets/i18n/forms/feature"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/relationship/invitation/data-access/src/i18n",
             "output": "./assets/i18n/relationship/invitation/data-access"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/invitation/ui/src/i18n",
-            "output": "./assets/i18n/relationship/invitation/ui"
           },
           {
             "glob": "*.json",
@@ -420,18 +355,8 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/relationship/membership/ui/src/i18n",
-            "output": "./assets/i18n/relationship/membership/ui"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/relationship/ownership/data-access/src/i18n",
             "output": "./assets/i18n/relationship/ownership/data-access"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/ownership/ui/src/i18n",
-            "output": "./assets/i18n/relationship/ownership/ui"
           },
           {
             "glob": "*.json",
@@ -450,11 +375,6 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/relationship/personal-rel/ui/src/i18n",
-            "output": "./assets/i18n/relationship/personal-rel/ui"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/relationship/reservation/data-access/src/i18n",
             "output": "./assets/i18n/relationship/reservation/data-access"
           },
@@ -465,18 +385,8 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/relationship/reservation/ui/src/i18n",
-            "output": "./assets/i18n/relationship/reservation/ui"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/relationship/responsibility/data-access/src/i18n",
             "output": "./assets/i18n/relationship/responsibility/data-access"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/relationship/responsibility/ui/src/i18n",
-            "output": "./assets/i18n/relationship/responsibility/ui"
           },
           {
             "glob": "*.json",
@@ -510,18 +420,13 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/relationship/workrel/ui/src/i18n",
-            "output": "./assets/i18n/relationship/workrel/ui"
+            "input": "libs/resource/data-access/src/i18n",
+            "output": "./assets/i18n/resource/data-access"
           },
           {
             "glob": "*.json",
             "input": "libs/resource/feature/src/i18n",
             "output": "./assets/i18n/resource/feature"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/resource/ui/src/i18n",
-            "output": "./assets/i18n/resource/ui"
           },
           {
             "glob": "*.json",
@@ -540,23 +445,8 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/shared/i18n/src/i18n",
-            "output": "./assets/i18n/shared/i18n"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/shared/ui/src/i18n",
             "output": "./assets/i18n/shared/ui"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/shared/util-angular/src/i18n",
-            "output": "./assets/i18n/shared/util-angular"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/shared/util-core/src/i18n",
-            "output": "./assets/i18n/shared/util-core"
           },
           {
             "glob": "*.json",
@@ -565,18 +455,13 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/subject/address/ui/src/i18n",
-            "output": "./assets/i18n/subject/address/ui"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/subject/address/feature/src/i18n",
             "output": "./assets/i18n/subject/address/feature"
           },
           {
             "glob": "*.json",
-            "input": "libs/subject/address/util/src/i18n",
-            "output": "./assets/i18n/subject/address/util"
+            "input": "libs/subject/application/feature/src/i18n",
+            "output": "./assets/i18n/subject/application/feature"
           },
           {
             "glob": "*.json",
@@ -590,18 +475,8 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/subject/group/ui/src/i18n",
-            "output": "./assets/i18n/subject/group/ui"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/subject/org/data-access/src/i18n",
             "output": "./assets/i18n/subject/org/data-access"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/org/ui/src/i18n",
-            "output": "./assets/i18n/subject/org/ui"
           },
           {
             "glob": "*.json",
@@ -620,16 +495,6 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/subject/person/ui/src/i18n",
-            "output": "./assets/i18n/subject/person/ui"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/subject/person/util/src/i18n",
-            "output": "./assets/i18n/subject/person/util"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/task/data-access/src/i18n",
             "output": "./assets/i18n/task/data-access"
           },
@@ -640,11 +505,6 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/task/ui/src/i18n",
-            "output": "./assets/i18n/task/ui"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/user/data-access/src/i18n",
             "output": "./assets/i18n/user/data-access"
           },
@@ -652,11 +512,6 @@
             "glob": "*.json",
             "input": "libs/user/feature/src/i18n",
             "output": "./assets/i18n/user/feature"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/user/ui/src/i18n",
-            "output": "./assets/i18n/user/ui"
           },
           "apps/scs-app/src/firebase-messaging-sw.js",
           "apps/scs-app/src/firebase-config.js",
@@ -762,7 +617,9 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["{workspaceRoot}/coverage/apps/scs-app"],
+      "outputs": [
+        "{workspaceRoot}/coverage/apps/scs-app"
+      ],
       "options": {
         "configFile": "apps/scs-app/vite.config.ts"
       }

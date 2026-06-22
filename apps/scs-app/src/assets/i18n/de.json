@@ -219,7 +219,14 @@
     "title": "Wähle eine Aktion"
   },
 
-
+  "chip": {
+    "tag": {
+      "label": "Tag"
+    },
+    "role": {
+      "label": "Rolle"
+    }
+  },
   "tag": {
     "advertiser": "Inserent",
     "album": "Album",
