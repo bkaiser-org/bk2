@@ -283,11 +283,6 @@ export const appRoutes: Route[] = [
     children: [{ path: ':listId/:contextMenuName', loadComponent: () => import('@bk2/cms-icon-feature').then(m => m.IconList) }],
   },
   {
-    path: 'invoice',
-    canActivate: [isAuthenticatedGuard],
-    children: [{ path: ':listId/:contextMenuName', loadComponent: () => import('@bk2/finance-invoice-feature').then(m => m.InvoiceList) }],
-  },
-  {
     path: 'invoice-aging',
     canActivate: [isAuthenticatedGuard],
     loadComponent: () => import('@bk2/finance-invoice-feature').then(m => m.InvoiceAging),
@@ -298,24 +293,9 @@ export const appRoutes: Route[] = [
     children: [{ path: ':contextMenuName', loadComponent: () => import('@bk2/relationship-membership-feature').then(m => m.ScsMemberFees) }],
   },
   {
-    path: 'bill',
-    canActivate: [isAuthenticatedGuard],
-    children: [{ path: ':listId', loadComponent: () => import('@bk2/finance-bill-feature').then(m => m.BillList) }],
-  },
-  {
     path: 'expense',
     canActivate: [isAuthenticatedGuard],
     loadComponent: () => import('@bk2/finance-expense-feature').then(m => m.ExpenseList),
-  },
-  {
-    path: 'account',
-    canActivate: [isAuthenticatedGuard],
-    children: [{ path: ':contextMenuName', loadComponent: () => import('@bk2/finance-account-feature').then(m => m.AccountList) }],
-  },
-  {
-    path: 'journal',
-    canActivate: [isAuthenticatedGuard],
-    loadComponent: () => import('@bk2/finance-journal-feature').then(m => m.JournalList),
   },
   {
     path: 'accounting/:accountingTenantId',
@@ -325,6 +305,18 @@ export const appRoutes: Route[] = [
       {
         path: 'journal',
         loadComponent: () => import('@bk2/finance-booking-feature').then(m => m.BookingList),
+      },
+      {
+        path: 'invoice',
+        children: [{ path: ':listId/:contextMenuName', loadComponent: () => import('@bk2/finance-invoice-feature').then(m => m.InvoiceList) }],
+      },
+      {
+        path: 'bill',
+        children: [{ path: ':listId', loadComponent: () => import('@bk2/finance-bill-feature').then(m => m.BillList) }],
+      },
+      {
+        path: 'account',
+        children: [{ path: ':contextMenuName', loadComponent: () => import('@bk2/finance-account-feature').then(m => m.AccountList) }],
       },
       {
         path: 'periods',

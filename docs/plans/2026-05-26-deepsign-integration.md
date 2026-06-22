@@ -1654,7 +1654,7 @@ const STATUS_COLORS: Record<EsignDocumentStatus, string> = {
       @if(store.esignResource.isLoading()) {
         <bk-spinner />
       } @else if(store.filteredRecords().length === 0) {
-        <bk-empty-list message="@esign/list.empty" />
+        <bk-empty-list [message]="store.i18n.empty()" />
       } @else {
         <ion-list>
           @for(record of store.filteredRecords(); track record.esignId) {
