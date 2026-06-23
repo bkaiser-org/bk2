@@ -45,12 +45,16 @@ Hosting site IDs (from `firebase.json`):
 pnpm run deploy:functions      # build + prune + deploy ALL functions
 ```
 
-To deploy a **single** function (no wrapper equivalent — build first, then target it):
+To deploy **one or a few** functions, you still need the **same prune step** the wrapper does — building alone is not enough. `firebase deploy --only functions:<name>` skips the prune, leaving the dev `pnpm-lock.yaml` in `dist/apps/functions`, and the Cloud Build buildpack then fails with `[ERR_PNPM_LOCKFILE_CONFIG_MISMATCH] Cannot proceed with the frozen installation. The current "overrides" configuration doesn't match the value found in the lockfile`. Run the wrapper's build + pin + prune, then target your function(s):
 
 ```sh
 pnpm run build:functions
-firebase deploy --only functions:<functionName>
+node -e "const fs=require('fs'),p='dist/apps/functions/package.json',j=JSON.parse(fs.readFileSync(p));j.packageManager='pnpm@10.33.2';fs.writeFileSync(p,JSON.stringify(j,null,2))"
+(cd dist/apps/functions && pnpm install --prod --ignore-workspace --no-frozen-lockfile)
+firebase deploy --only functions:<functionA>,functions:<functionB>
 ```
+
+The prune (`pnpm install --prod` inside `dist/apps/functions`) regenerates a prod-only lockfile that matches the pruned `package.json`, which is what the buildpack installs from. Bump the pinned `pnpm@<version>` to match the `packageManager` in the root [package.json](../../../package.json) / `deploy:functions` script if it changes.
 
 Functions live in `apps/functions/src/` (sub-modules: `auth`, `matrix`, `matrix-simple`, `oidc-bridge`, `replication`), built with esbuild.
 
