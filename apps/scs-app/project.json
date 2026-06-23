@@ -205,11 +205,6 @@
           },
           {
             "glob": "*.json",
-            "input": "libs/finance/account/ui/src/i18n",
-            "output": "./assets/i18n/finance/account/ui"
-          },
-          {
-            "glob": "*.json",
             "input": "libs/finance/accounting/data-access/src/i18n",
             "output": "./assets/i18n/finance/accounting/data-access"
           },
@@ -217,6 +212,11 @@
             "glob": "*.json",
             "input": "libs/finance/accounting/feature/src/i18n",
             "output": "./assets/i18n/finance/accounting/feature"
+          },
+          {
+            "glob": "*.json",
+            "input": "libs/finance/asset/feature/src/i18n",
+            "output": "./assets/i18n/finance/asset/feature"
           },
           {
             "glob": "*.json",
@@ -245,18 +245,13 @@
           },
           {
             "glob": "*.json",
+            "input": "libs/finance/invoice/data-access/src/i18n",
+            "output": "./assets/i18n/finance/invoice/data-access"
+          },
+          {
+            "glob": "*.json",
             "input": "libs/finance/invoice/feature/src/i18n",
             "output": "./assets/i18n/finance/invoice/feature"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/finance/invoice/ui/src/i18n",
-            "output": "./assets/i18n/finance/invoice/ui"
-          },
-          {
-            "glob": "*.json",
-            "input": "libs/finance/journal/feature/src/i18n",
-            "output": "./assets/i18n/finance/journal/feature"
           },
           {
             "glob": "*.json",
