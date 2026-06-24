@@ -1,15 +1,21 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
+import type { Brand } from '../types';
+import { rgba } from '../color';
 
 /** Bottom-centred pill for the Plattform-Hinweis einblendung. */
-export const LowerThird: React.FC<{ text: string; opacity: number }> = ({ text, opacity }) => {
+export const LowerThird: React.FC<{ text: string; brand: Brand; opacity: number }> = ({
+  text,
+  brand,
+  opacity,
+}) => {
   return (
     <AbsoluteFill style={{ justifyContent: 'flex-end', alignItems: 'center', paddingBottom: '7%', opacity }}>
       <div
         style={{
           maxWidth: '80%',
-          background: 'rgba(8, 20, 33, 0.86)',
-          border: '1px solid rgba(127, 176, 214, 0.4)',
+          background: 'rgba(6, 16, 28, 0.86)',
+          border: `1px solid ${rgba(brand.primary, 0.55)}`,
           borderRadius: 999,
           padding: '18px 36px',
           color: '#eaf2fa',

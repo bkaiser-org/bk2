@@ -3,6 +3,17 @@
 
 export type Orientation = 'desktop' | 'mobile';
 
+export type Brand = {
+  /** Tenant display name (e.g. "Seeclub Stäfa"). */
+  name: string;
+  /** Brand primary colour (hex), from the app theme. */
+  primary: string;
+  /** Brand secondary colour (hex), from the app theme. */
+  secondary: string;
+  /** Staticfile-relative path to the staged logo svg, or null if unavailable. */
+  logo: string | null;
+};
+
 export type SceneProps = {
   /** Storyboard id, e.g. "0", "A1", "C6". */
   id: string;
@@ -31,6 +42,7 @@ export type SceneProps = {
 
 export type VideoProps = {
   orientation: Orientation;
+  brand: Brand;
   scenes: SceneProps[];
 };
 

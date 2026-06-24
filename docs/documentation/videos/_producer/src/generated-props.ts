@@ -3,4 +3,8 @@
 // `npm run prepare-video`. Running prepare/render overwrites it.
 import type { VideoProps } from './types';
 
-export const generatedProps: VideoProps = { orientation: 'desktop', scenes: [] };
+export const generatedProps: VideoProps = {
+  orientation: 'desktop',
+  brand: { name: 'Seeclub Stäfa', primary: '#009D53', secondary: '#014DA2', logo: null },
+  scenes: [],
+};

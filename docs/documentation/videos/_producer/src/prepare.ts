@@ -1,5 +1,6 @@
 import { copyFileSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { loadBrand } from './brand';
 import { parseScript } from './parse-script';
 import { synthesize } from './tts';
 import { FPS, type Orientation, type SceneProps, type VideoProps } from './types';
@@ -46,6 +47,7 @@ export async function prepare(tenantTopic: string, variant: Orientation): Promis
 
   const voice = process.env.SPEECH_VOICE ?? 'de-CH-LeniNeural';
   const parsed = parseScript(scriptPath);
+  const brand = await loadBrand(tenant, VIDEOS_ROOT, PUBLIC_DIR);
 
   const stageRel = `${tenant}/${topic}/${variant}`;
   const stageDir = join(PUBLIC_DIR, stageRel);
@@ -90,7 +92,7 @@ export async function prepare(tenantTopic: string, variant: Orientation): Promis
     });
   }
 
-  const props: VideoProps = { orientation: variant, scenes };
+  const props: VideoProps = { orientation: variant, brand, scenes };
 
   writeFileSync(
     join(PRODUCER_ROOT, 'src', 'generated-props.ts'),

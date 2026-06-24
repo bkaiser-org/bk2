@@ -58,6 +58,25 @@ Scenes whose screenshot isn't in `…/<variant>/assets/` fall back to the
 `assets/_reference/` sample, and otherwise show a labelled **placeholder** tile.
 A warning lists every placeholder used.
 
+## Branding (applied to every video by default)
+
+Each video is branded automatically from the tenant:
+
+- **Colours** — `videos/<tenant>/brand.json` (`primary`, `secondary`), taken from
+  the app theme (`apps/<tenant>-app/src/theme/variables.scss`). Missing file →
+  Seeclub Stäfa defaults. Used for the title accent, chapter chips, hint pills and
+  the background tint.
+- **Logo** — always downloaded from
+  `https://bkaiser.imgix.net/tenant/<tenant>/logo/logo.svg` and shown on a white
+  badge: large on the title card, small watermark on every other scene. If the
+  fetch fails (offline), the video renders without the logo.
+
+To brand a new tenant, add `videos/<tenant>/brand.json`:
+
+```json
+{ "name": "My Club", "primary": "#009D53", "secondary": "#014DA2" }
+```
+
 ## Live preview / editing
 
 ```sh
