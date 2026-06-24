@@ -24,7 +24,16 @@
     },
     "config": {
       "command": "ts-node ./set-env.js",
-      "cache": true
+      "cache": true,
+      "inputs": [
+        { "runtime": "node -p \"require('./package.json').version\"" },
+        "{workspaceRoot}/set-env.js",
+        "{projectRoot}/.env"
+      ],
+      "outputs": [
+        "{workspaceRoot}/apps/test-app/src/environments/environment.ts",
+        "{workspaceRoot}/apps/test-app/src/firebase-config.js"
+      ]
     },
     "build": {
       "dependsOn": [

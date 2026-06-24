@@ -25,6 +25,15 @@
     "config": {
       "executor": "nx:run-commands",
       "cache": true,
+      "inputs": [
+        { "runtime": "node -p \"require('./package.json').version\"" },
+        "{workspaceRoot}/set-env.js",
+        "{projectRoot}/.env"
+      ],
+      "outputs": [
+        "{workspaceRoot}/apps/scs-app/src/environments/environment.ts",
+        "{workspaceRoot}/apps/scs-app/src/firebase-config.js"
+      ],
       "options": {
         "command": "NODE_ENV=development node ./set-env.js"
       },
