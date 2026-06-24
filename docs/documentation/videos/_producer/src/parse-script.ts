@@ -39,8 +39,21 @@ function isSeparator(cells: string[]): boolean {
  * table row under it is one scene. Columns are matched by header keyword, so
  * tables with or without the "Plattform-Hinweis" column both work.
  */
+/** Derive a clean on-screen title from the document H1, dropping the
+ * "Erklärvideo — " prefix and the trailing "(DESKTOP)"/"(MOBILE)" marker. */
+function cleanDocTitle(h1: string): string {
+  return h1
+    .replace(/^#\s+/, '')
+    .replace(/\s*\((?:DESKTOP|MOBILE)\)\s*$/i, '')
+    .replace(/^Erklärvideo\s*[—–:-]\s*/i, '')
+    .trim();
+}
+
 export function parseScript(path: string): ParsedScene[] {
   const lines = readFileSync(path, 'utf8').split('\n');
+
+  const h1 = lines.find((l) => /^#\s+/.test(l));
+  const docTitle = h1 ? cleanDocTitle(h1) : '';
 
   const startIdx = lines.findIndex((l) => /^##\s+Storyboard/i.test(l));
   if (startIdx === -1) {
@@ -98,7 +111,7 @@ export function parseScript(path: string): ParsedScene[] {
     let title: string | undefined;
     if (images.length === 0) {
       const quoted = actionCell.match(/„([^"“”]+)["“”]/);
-      title = quoted ? quoted[1].trim() : currentPart;
+      title = quoted ? quoted[1].trim() : docTitle || currentPart;
     }
 
     const hintRaw = stripMarkup(at('platformHint'));
