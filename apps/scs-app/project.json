@@ -61,7 +61,8 @@
           {
             "glob": "**/*",
             "input": "apps/scs-website",
-            "output": "./web"
+            "output": "./web",
+            "ignore": ["tailwind.config.js", "tailwind.input.css"]
           },
           {
             "glob": "*.json",
