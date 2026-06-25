@@ -71,6 +71,12 @@ Fully-written specs with **no (or only foundational) implementation** yet.
 - 🔴 Non-goals — no embedded editor / Document Server / WOPI host; no real-time co-editing; Apple programmatic round-trip (§1, §11).
 - ❓ Manual vs auto snapshot import; write-back scopes; automatic GeBüV WORM hook (§9).
 
+### 1.7 Consistent Section Image Handling — [`2026-06-25-section-image-handling-design.md`](specs/2026-06-25-section-image-handling-design.md)
+**State:** Open (specified, not started). Unifies image config across CMS sections (article/slider multi, hero two-named-single), one-time article `image`→`images[]` migration, upload from config modal + section list, single-image overwrite confirm, fixes the broken add-image button and mis-wired hero editor, nicer rich-text editor, and a global "show advanced" form toggle.
+- 🔴 Whole feature open. `SectionImageService`, `showAdvanced` toggle, single-image upload, list ActionSheet upload action.
+- 🔴 One-time `migrate-article-images` admin script must run before the read-time shim in `ArticleStore` is removed.
+- 🔴 Out of scope — album directory model; tiering of non-image type-specific configs (map/chat/etc.); persisting the advanced toggle.
+
 ---
 
 ## 2. Ideas / backlog (`docs/ideas/`)
