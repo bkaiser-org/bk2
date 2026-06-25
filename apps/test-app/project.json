@@ -514,9 +514,11 @@
         ],
         "styles": [
           "apps/test-app/src/styles.scss",
-          "apps/test-app/src/theme/variables.scss"
+          "apps/test-app/src/theme/variables.scss",
+          "node_modules/leaflet/dist/leaflet.css"
         ],
         "allowedCommonJsDependencies": [
+          "leaflet",
           "countries-list",
           "fast-deep-equal",
           "dayjs",
