@@ -125,7 +125,11 @@ import { ConsentService } from '@bk2/consent-data-access';
           </ion-content>
         </ion-menu>
         }
-        <ion-router-outlet id="main" />
+        @if (isAppReady()) {
+          <ion-router-outlet id="main" />
+        } @else {
+          <bk-spinner />
+        }
       </ion-split-pane>
     </ion-app>
     } @placeholder (minimum 1000ms) {
@@ -191,6 +195,17 @@ export class BkRoot {
 
     // Otherwise, we are in a transitional state (e.g., logging in but waiting for data).
     return false;
+  });
+
+  // Gate feature rendering (the router-outlet) until the app is ready. Logged-out
+  // users may render public routes immediately; authenticated users wait until the
+  // UserModel AND the system reference data (categories, read synchronously via
+  // getCategory) have loaded — otherwise feature components crash on a not-yet-loaded
+  // category during the post-login load window (wider on mobile Safari).
+  protected isAppReady = computed(() => {
+    if (!this.isUserSessionReady()) return false;
+    if (this.appStore.fbUser() === null) return true;
+    return this.appStore.areCategoriesReady();
   });
 
   protected hasRole(role: RoleName | undefined): boolean {
