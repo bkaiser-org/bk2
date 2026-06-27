@@ -125,11 +125,24 @@ import { ConsentService } from '@bk2/consent-data-access';
           </ion-content>
         </ion-menu>
         }
-        @if (isAppReady()) {
-          <ion-router-outlet id="main" />
-        } @else {
-          <bk-spinner />
-        }
+        <!--
+          The element with id="main" MUST always be in the DOM. Both ion-split-pane
+          (styleMainElement) and ion-menu (getElementById) resolve contentId="main"
+          exactly once at connect time and never re-check. Gating the outlet out of
+          the DOM during the not-ready window detaches the menu (renders transparent
+          and non-interactive) and triggers the
+          "[ion-split-pane] - Does not have a specified main node." warning. So keep a
+          stable #main wrapper as the split-pane content and gate only the feature
+          content inside it. The .ion-page class fills the pane when the split-pane is
+          disabled/not-visible (matching ion-router-outlet's own absolute fill).
+        -->
+        <div id="main" class="ion-page">
+          @if (isAppReady()) {
+            <ion-router-outlet />
+          } @else {
+            <bk-spinner />
+          }
+        </div>
       </ion-split-pane>
     </ion-app>
     } @placeholder (minimum 1000ms) {
