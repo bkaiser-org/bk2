@@ -66,20 +66,20 @@ Fully-written specs with **no (or only foundational) implementation** yet.
 - 🔴 DeepSign coupling — `signatureType`/`signatories` stay manual in v1 (§11.7).
 - ❓ Reminder channels (email/push), deliverables embedding vs subcollection, per-version workflow (§11).
 
-### 1.5 GeBüV Archiving (documents + year-end package) — [`2026-06-17-spec-gebuev-archivierung.md`](specs/2026-06-17-spec-gebuev-archivierung.md)
+### 1.6 GeBüV Archiving (documents + year-end package) — [`2026-06-17-spec-gebuev-archivierung.md`](specs/2026-06-17-spec-gebuev-archivierung.md)
 **State:** Open. No `archiveDocument` / `buildFiscalYearArchive` CF or WORM bucket exists yet. Teil B depends on the accounting core (ch 3).
 - 🔴 Teil A — tag-based per-document WORM archival (`onWrite` copy, SHA-256, Object Retention) (§2).
 - 🔴 Teil B — per-fiscal-year package (signed PDF/A reports, ledgers, structured booking export + audit trail) (§B2).
 - ❓ Teil A — `storagePath` source ref, multi-tenant copies, working-copy lifecycle cleanup (§11).
 - ❓ Teil B — export format (JSON/CSV/XML), PDF/A generation, qualified signature, four-eyes before sealing (§B7).
 
-### 1.6 External Office Integration (DocSpace / M365 / Workspace) — [`2026-06-17-spec-external-office-integration.md`](specs/2026-06-17-spec-external-office-integration.md)
+### 1.7 External Office Integration (DocSpace / M365 / Workspace) — [`2026-06-17-spec-external-office-integration.md`](specs/2026-06-17-spec-external-office-integration.md)
 **State:** Open. Elaborates idea 2.13 Office Integration; bk2 stays a pure API peer (never hosts an editor). Reuses the DeepSign webhook-HMAC pattern; snapshots may flow into GeBüV archival (1.5).
 - 🔴 Whole feature open — `ExternalDocRef` + `DocumentSnapshot`, manual import, view-only sharing; phased Google → 2nd provider → cross-tenant → write-back (§10).
 - 🔴 Non-goals — no embedded editor / Document Server / WOPI host; no real-time co-editing; Apple programmatic round-trip (§1, §11).
 - ❓ Manual vs auto snapshot import; write-back scopes; automatic GeBüV WORM hook (§9).
 
-### 1.7 Consistent Section Image Handling — [`2026-06-25-section-image-handling-design.md`](specs/2026-06-25-section-image-handling-design.md)
+### 1.8 Consistent Section Image Handling — [`2026-06-25-section-image-handling-design.md`](specs/2026-06-25-section-image-handling-design.md)
 **State:** Open (specified, not started). Unifies image config across CMS sections (article/slider multi, hero two-named-single), one-time article `image`→`images[]` migration, upload from config modal + section list, single-image overwrite confirm, fixes the broken add-image button and mis-wired hero editor, nicer rich-text editor, and a global "show advanced" form toggle.
 - 🔴 Whole feature open. `SectionImageService`, `showAdvanced` toggle, single-image upload, list ActionSheet upload action.
 - 🔴 One-time `migrate-article-images` admin script must run before the read-time shim in `ArticleStore` is removed.
