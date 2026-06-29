@@ -18,7 +18,7 @@ pnpm release functions  # deploy Cloud Functions (all, or a prompted subset)
 pnpm release rules      # deploy firestore + storage rules
 ```
 
-Apps → hosting sites: `scs-app`→`scs-app-54aef`, `test-app`→`test-app-54aef`, `okr-website`→`okr-website-54aef`, `kring-website`→`kring-website-54aef`, `p13-website`→`p13-website-54aef`.
+Apps → hosting sites: `scs-app`→`scs-app-54aef`, `okr-website`→`okr-website-54aef`, `kring-website`→`kring-website-54aef`, `p13-website`→`p13-website-54aef`.
 
 ## What the app-release branch does (and where you decide)
 

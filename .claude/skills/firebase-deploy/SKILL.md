@@ -32,7 +32,6 @@ Hosting site IDs (from `firebase.json`):
 | App | Site ID |
 |-----|---------|
 | scs-app (main) | `scs-app-54aef` |
-| test-app | `test-app-54aef` |
 | okr-website | `okr-website-54aef` |
 | kring-website | `kring-website-54aef` |
 | p13-website | `p13-website-54aef` |
