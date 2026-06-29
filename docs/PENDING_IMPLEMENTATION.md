@@ -85,6 +85,12 @@ Fully-written specs with **no (or only foundational) implementation** yet.
 - 🔴 One-time `migrate-article-images` admin script must run before the read-time shim in `ArticleStore` is removed.
 - 🔴 Out of scope — album directory model; tiering of non-image type-specific configs (map/chat/etc.); persisting the advanced toggle.
 
+### 1.9 Person Duplicate Detection & Reconciliation — [`2026-06-29-person-duplicate-detection-design.md`](specs/2026-06-29-person-duplicate-detection-design.md)
+**State:** Open (specified, not started). Replaces the name-only confirm in `PersonStore.add()` with a cross-tenant `findPersonDuplicates` callable (match on name/dateOfBirth/favEmail/ssnId), a candidate-list modal, a per-field reconcile modal, and a `mergePersonIntoTenant` callable that shares an existing person into the current tenant.
+- 🔴 Whole feature open — two Cloud Functions, two feature modals, `computePersonFieldDiffs` util, new `add()` flow.
+- 🔴 Out of scope — privacy filtering of candidate attributes (memberAdmin-gated, sees all); general merge tool for pre-existing duplicates.
+- 🟡 Accepted simplifications — case-sensitive `lastName` match; fav-field address dedupe heuristic.
+
 ---
 
 ## 2. Ideas / backlog (`docs/ideas/`)
