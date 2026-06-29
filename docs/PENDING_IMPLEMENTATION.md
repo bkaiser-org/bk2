@@ -50,7 +50,15 @@ Fully-written specs with **no (or only foundational) implementation** yet.
 - 🔴 Saving drafts; send history/audit log; scheduling.
 - 🔴 Non-PDF output formats — button offered only when `outputFormat === 'pdf'`.
 
-### 1.4 Vertragsverwaltung (Contract Lifecycle Management) — [`2026-06-17-spec-vertragsverwaltung.md`](specs/2026-06-17-spec-vertragsverwaltung.md)
+### 1.4 Tenant Provisioning (app-first) — [`2026-06-29-tenant-provisioning-design.md`](specs/2026-06-29-tenant-provisioning-design.md)
+**State:** Open. A `provision-tenant` skill + Nx app generator (CMS-minimal template derived from `scs-app`) to set up a new tenant Web App in the shared Firebase project.
+- 🔴 Component A/B — `tools/templates/app/` (CMS-minimal: bootstrap + auth + cms-page/section/menu + profile, all domain features stripped) + `@bk2/tools:app` Nx generator (token substitution, `--dry-run`, idempotent).
+- 🔴 Component C — the `provision-tenant` skill orchestrating Firebase MCP Web App registration, AppConfig doc, starter CMS pages/menu seed, `.env`, generator, build verify.
+- 🔴 Per-use-case building blocks (okr/kring domain features grafted onto the shell) — planned future direction, separate spec.
+- 🔴 Website (`TENANT-web`) scaffolding — deferred to a follow-up spec.
+- 🔴 New Firebase project per tenant; tenant rules/functions/index deploys; per-tenant Sentry — out of scope (shared project reused).
+
+### 1.5 Vertragsverwaltung (Contract Lifecycle Management) — [`2026-06-17-spec-vertragsverwaltung.md`](specs/2026-06-17-spec-vertragsverwaltung.md)
 **State:** Open. No `libs/contract*` exists yet. Extends the `documents`/`Document` model; uses persons/orgs/memberships and the RAG/Gemini setup.
 - 🔴 Whole feature open — `ContractModel` aggregate, lifecycle state machine, Fristen/Kündigung/Verlängerung reminders, contract hierarchy (§1).
 - 🔴 Multi-stage approval workflow — v1 is status-tracking only (idea 2.4) (§1, §11.3).
