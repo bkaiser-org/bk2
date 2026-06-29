@@ -142,6 +142,12 @@ guides, the admin clicks.
 8. **Generate environment & verify** `[auto]`
    - `source ./apps/{tenantId}-app/.env && ts-node ./set-env.js`
    - `pnpm nx build {tenantId}-app` to confirm it compiles.
+9. **Create the first admin user** `[manual / app]` — a new tenant is unusable until one user can
+   log in. Create a Firebase auth account (`createFirebaseUser` callable, wrapped by AOC →
+   AdminOps `createFirebaseAccount`), a tenant-scoped `persons/{personKey}` (`PersonModel`), and a
+   `users/{uid}` (`UserModel`, doc id = `uid`, `personKey`, `roles: { admin: true }`,
+   `tenants: [tenantId]`). *(Added during implementation — the original step list stopped at the
+   build; a tenant with no admin user cannot be administered.)*
 
 ## Security & idempotency
 

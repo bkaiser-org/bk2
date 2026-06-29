@@ -51,9 +51,9 @@ Fully-written specs with **no (or only foundational) implementation** yet.
 - 🔴 Non-PDF output formats — button offered only when `outputFormat === 'pdf'`.
 
 ### 1.4 Tenant Provisioning (app-first) — [`2026-06-29-tenant-provisioning-design.md`](specs/2026-06-29-tenant-provisioning-design.md)
-**State:** Open. A `provision-tenant` skill + Nx app generator (CMS-minimal template derived from `scs-app`) to set up a new tenant Web App in the shared Firebase project.
+**State:** Partially implemented. The `@bk2/tools:app` generator + CMS-minimal template + the `provision-tenant` runbook skill are in place; per-tenant runs and the deferred topics below remain.
 - 🟡 Component A/B — `tools/src/generators/app/files/` (CMS-minimal: bootstrap + auth + cms-page/section/menu + profile, all domain features stripped) + `@bk2/tools:app` Nx generator (token substitution, `--dry-run`, idempotent) — generator and template implemented and verified by end-to-end build.
-- 🔴 Component C — the `provision-tenant` skill orchestrating Firebase MCP Web App registration, AppConfig doc, starter CMS pages/menu seed, `.env`, generator, build verify.
+- 🟡 Component C — the `provision-tenant` skill (`.claude/skills/provision-tenant/`) orchestrating Firebase MCP Web App registration, AppConfig doc, app scaffold, starter CMS pages/menu seed, `.env`, build verify, and first-admin-user creation. Runbook authored; exercised per tenant.
 - 🔴 Per-use-case building blocks (okr/kring domain features grafted onto the shell) — planned future direction, separate spec.
 - 🔴 Website (`TENANT-web`) scaffolding — deferred to a follow-up spec.
 - 🔴 New Firebase project per tenant; tenant rules/functions/index deploys; per-tenant Sentry — out of scope (shared project reused).
