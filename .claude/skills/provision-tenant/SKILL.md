@@ -105,17 +105,37 @@ NX_TASK_TARGET_PROJECT={tenantId}-app ts-node ./set-env.js     # writes environm
 pnpm nx build {tenantId}-app                                   # success = the tenant app is sound
 ```
 
-### 9. Create the first admin user `[manual / app]`
-A new tenant is unusable until one user can log in. Goal: a Firebase auth account + a
-tenant-scoped `PersonModel` + a `UserModel` with the `admin` role.
-- Create the Firebase account via the `createFirebaseUser` callable (the AOC → **AdminOps** UI in
-  the running app already wraps this as `createFirebaseAccount(email, password, displayName)` →
-  returns `uid`). The operator must be signed in as an existing admin (shared project).
-- Create **`persons/{personKey}`** — `new PersonModel(tenantId)` with `firstName/lastName/favEmail`
-  → `personService.create` → `personKey`.
-- Create **`users/{uid}`** — `new UserModel(tenantId)` with `bkey = uid` (users doc id = uid),
-  `personKey`, `loginEmail = email`, and `roles = { admin: true }` (see `Roles` in
-  `libs/shared/models/.../roles.ts`) → `userService.create`.
+### 9. First admin user — select-or-create at three levels `[manual / app]`
+A new tenant is unusable until one user can log in as admin. There are **three independent
+identities**, each *select-existing* or *create-new*: a **Firebase auth account** (`uid`), a
+**`PersonModel`** (`persons/{personKey}`), and a **`UserModel`** (`users/{uid}`). Persons and users
+are **shared across tenants** via their `tenants[]` array (`array-contains` queries) — so "reuse"
+means *append the new `tenantId`*, not duplicate. Ask the operator which path for each.
+
+Resolve `email` first, then decide each level:
+
+**A. Firebase identity (`uid`)**
+- *Reuse existing:* operator gives the email → `getUidByEmail(email)` (CF) → `uid`.
+- *Create new:* `createFirebaseAccount(email, password, displayName)` (AOC → **AdminOps**, wraps the
+  `createFirebaseUser` CF) → `uid`. The operator must be signed in as an existing admin.
+
+**B. Person (`persons/{personKey}`)**
+- *Select existing:* pick from `AppStore.allPersons()` (current-tenant list) or look up by
+  `favEmail`/name. If the person doc does **not** already include the new tenant, append it:
+  `person.tenants.push(tenantId)` → `personService.update(person)`. (A person from a *different*
+  tenant isn't in `allPersons` — read it by `personKey` as admin, then append.)
+- *Create new:* `new PersonModel(tenantId)` with `firstName/lastName/favEmail` →
+  `personService.create` → `personKey`.
+
+**C. User (`users/{uid}`, doc id = uid)**
+- *Reuse existing:* `userService.read(uid)`. If found, append the new tenant if missing
+  (`user.tenants.push(tenantId)`) and ensure the role (`user.roles.admin = true`) →
+  `userService.update`. ⚠️ **Roles are global** — granting `admin` here makes this identity admin in
+  **every** tenant in its `tenants[]`. For strict per-tenant separation, create a fresh identity
+  instead (the model's intent is "one tenant per user").
+- *Create new:* `createUserFromPerson(person, tenantId)` (sets `personKey`, `loginEmail`, names,
+  `roles:{registered:true}`), then override `user.roles = { admin: true }` and `user.bkey = uid`
+  (users doc id = uid) → `userService.create`. See `Roles` in `libs/shared/models/.../roles.ts`.
 
 ## Quick reference
 
@@ -124,10 +144,11 @@ tenant-scoped `PersonModel` + a `UserModel` with the `admin` role.
 | App config | `app-config` | id = `tenantId` | `new AppConfig(tenantId)` |
 | Welcome page | `pages` | id = `bkey` = `welcome` | `new PageModel(tenantId)`, `type:'content'`, `isPrivate:false` |
 | Menu item | `menuItems` | looked up by `name` field | `new MenuItemModel(tenantId)` |
-| Person | `persons` | id = `personKey` | `new PersonModel(tenantId)` |
-| Admin user | `users` | id = `uid` | `new UserModel(tenantId)`, `roles:{admin:true}` |
+| Person | `persons` | id = `personKey` (shared across tenants) | new: `new PersonModel(tenantId)` · reuse: `person.tenants.push(tenantId)` |
+| Admin user | `users` | id = `uid` (shared across tenants) | new: `createUserFromPerson(person, tenantId)` + `roles:{admin:true}` · reuse: append tenant + set role |
 
-Every doc carries `tenants: [tenantId]` (set by each model's constructor). No model factory
+Every doc carries `tenants: [tenantId]` (set by each model's constructor); reusing an existing
+person/user across tenants means **appending** the tenantId, not duplicating. No model factory
 functions exist — instantiate the class with `tenantId`.
 
 ## Out of scope (separate work)
@@ -149,3 +170,7 @@ functions exist — instantiate the class with `tenantId`.
   environment first.
 - Forgetting `roles: { admin: true }` or the right `tenants` on the first user — the operator
   then can't administer the new tenant.
+- Reusing an existing user and granting `admin` without realizing **roles are global** — that user
+  becomes admin in every tenant in their `tenants[]`. Use a fresh identity for a tenant-scoped admin.
+- Duplicating a person/user instead of appending the tenantId — persons/users are shared documents
+  (`tenants` is `array-contains`-queried); a second doc fragments the identity.

@@ -142,12 +142,16 @@ guides, the admin clicks.
 8. **Generate environment & verify** `[auto]`
    - `source ./apps/{tenantId}-app/.env && ts-node ./set-env.js`
    - `pnpm nx build {tenantId}-app` to confirm it compiles.
-9. **Create the first admin user** `[manual / app]` — a new tenant is unusable until one user can
-   log in. Create a Firebase auth account (`createFirebaseUser` callable, wrapped by AOC →
-   AdminOps `createFirebaseAccount`), a tenant-scoped `persons/{personKey}` (`PersonModel`), and a
-   `users/{uid}` (`UserModel`, doc id = `uid`, `personKey`, `roles: { admin: true }`,
-   `tenants: [tenantId]`). *(Added during implementation — the original step list stopped at the
-   build; a tenant with no admin user cannot be administered.)*
+9. **First admin user** `[manual / app]` — a new tenant is unusable until one user can log in.
+   **Select-or-create at three independent levels**, since persons and users are shared across
+   tenants via their `tenants[]` array (reuse = *append* the tenantId, not duplicate):
+   (a) Firebase identity (`uid`) — reuse via `getUidByEmail` or create via `createFirebaseUser`;
+   (b) `persons/{personKey}` (`PersonModel`) — select existing (append tenant) or create;
+   (c) `users/{uid}` (`UserModel`, doc id = `uid`, `personKey`, `tenants` incl. tenantId,
+   `roles: { admin: true }`) — reuse (append tenant + role) or create via `createUserFromPerson`.
+   Caveat: `UserModel.roles` are **global** across the user's tenants. *(Added during
+   implementation — the original step list stopped at the build; a tenant needs an admin, and the
+   operator wanted to reuse existing persons/users.)*
 
 ## Security & idempotency
 
