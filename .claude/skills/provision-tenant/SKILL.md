@@ -105,45 +105,34 @@ NX_TASK_TARGET_PROJECT={tenantId}-app ts-node ./set-env.js     # writes environm
 pnpm nx build {tenantId}-app                                   # success = the tenant app is sound
 ```
 
-### 9. First admin user — select-or-create at three levels `[manual / app]`
-A new tenant is unusable until one user can log in as admin. There are **three independent
-identities**, each *select-existing* or *create-new*: a **Firebase auth account** (`uid`), a
-**`PersonModel`** (`persons/{personKey}`), and a **`UserModel`** (`users/{uid}`). Persons and users
-are **shared across tenants** via their `tenants[]` array (`array-contains` queries) — so "reuse"
-means *append the new `tenantId`*, not duplicate. Ask the operator which path for each.
+### 9. First admin user `[manual / app]`
+A new tenant is unusable until one user can log in as admin. **REQUIRED BACKGROUND:** read the
+**`tenant-model`** skill — it explains why `users/{uid}` is single-tenant (doc id = Firebase uid),
+why persons are shared across tenants, and how roles work. The flow below follows from that.
 
-**Decision prompt — ask the operator before doing anything in this step:**
-1. *Email* of the first admin?
-2. *Firebase login* — reuse the existing account for this email, or create a new one (with a password)?
-3. *Person* — select an existing person record (search by email/name), or create a new one?
-4. *User* — reuse this email's existing `UserModel` (append the new tenant + admin role — ⚠️ makes
-   them admin in **all** their tenants), or create a fresh tenant-scoped admin user?
-5. *Roles* — `admin` (default), or a narrower set from `Roles`?
+Ask the operator only for the **email**; the rest is automatic except the person.
 
-Then resolve `email` and apply each level:
+**9.0 Probe the email `[auto]`** — the "does it exist / right tenant?" check:
+- `getUidByEmail(email)` → Firebase account? (`uid` or none)
+- If `uid`: `userService.read(uid)` → is there a `UserModel`, and **which tenant** is it bound to?
+  - this tenant → already provisioned (re-run); reuse, just confirm `roles.admin`.
+  - a **different** tenant → ⚠️ conflict (a uid is single-tenant) — use a different admin email.
+  - none → it will be created below.
 
-**A. Firebase identity (`uid`)**
-- *Reuse existing:* operator gives the email → `getUidByEmail(email)` (CF) → `uid`.
-- *Create new:* `createFirebaseAccount(email, password, displayName)` (AOC → **AdminOps**, wraps the
-  `createFirebaseUser` CF) → `uid`. The operator must be signed in as an existing admin.
+**A. Firebase account `[auto]`** — email already has one (probe found a `uid`) → use it; else
+`createFirebaseAccount(email, <random password>, displayName)` (AOC → **AdminOps**, wraps the
+`createFirebaseUser` CF; operator signed in as admin) → `uid`. Operator resets the password later
+via the normal reset flow.
 
-**B. Person (`persons/{personKey}`)**
-- *Select existing:* pick from `AppStore.allPersons()` (current-tenant list) or look up by
-  `favEmail`/name. If the person doc does **not** already include the new tenant, append it:
-  `person.tenants.push(tenantId)` → `personService.update(person)`. (A person from a *different*
-  tenant isn't in `allPersons` — read it by `personKey` as admin, then append.)
-- *Create new:* `new PersonModel(tenantId)` with `firstName/lastName/favEmail` →
-  `personService.create` → `personKey`.
+**B. Person `[reuse or new-modal]`** — the one decision:
+- *Found* (linked to the existing user, or picked from `AppStore.allPersons()` / by `favEmail`/name)
+  → reuse; if its `tenants[]` lacks this tenant, append (`person.tenants.push(tenantId)` →
+  `personService.update`).
+- *Not found* → open the **person-new modal** → `personService.create` → `personKey`.
 
-**C. User (`users/{uid}`, doc id = uid)**
-- *Reuse existing:* `userService.read(uid)`. If found, append the new tenant if missing
-  (`user.tenants.push(tenantId)`) and ensure the role (`user.roles.admin = true`) →
-  `userService.update`. ⚠️ **Roles are global** — granting `admin` here makes this identity admin in
-  **every** tenant in its `tenants[]`. For strict per-tenant separation, create a fresh identity
-  instead (the model's intent is "one tenant per user").
-- *Create new:* `createUserFromPerson(person, tenantId)` (sets `personKey`, `loginEmail`, names,
-  `roles:{registered:true}`), then override `user.roles = { admin: true }` and `user.bkey = uid`
-  (users doc id = uid) → `userService.create`. See `Roles` in `libs/shared/models/.../roles.ts`.
+**C. Single-tenant admin user `[auto]`** — `createUserFromPerson(person, tenantId)`, then set
+`user.bkey = uid` (doc id = uid) and `user.roles = { admin: true }` (or the narrower set chosen) →
+`userService.create`. Leave `tenants = [tenantId]` (single-tenant).
 
 ## Quick reference
 
@@ -152,12 +141,12 @@ Then resolve `email` and apply each level:
 | App config | `app-config` | id = `tenantId` | `new AppConfig(tenantId)` |
 | Welcome page | `pages` | id = `bkey` = `welcome` | `new PageModel(tenantId)`, `type:'content'`, `isPrivate:false` |
 | Menu item | `menuItems` | looked up by `name` field | `new MenuItemModel(tenantId)` |
-| Person | `persons` | id = `personKey` (shared across tenants) | new: `new PersonModel(tenantId)` · reuse: `person.tenants.push(tenantId)` |
-| Admin user | `users` | id = `uid` (shared across tenants) | new: `createUserFromPerson(person, tenantId)` + `roles:{admin:true}` · reuse: append tenant + set role |
+| Person | `persons` | id = `personKey` (**shared** across tenants) | new: `new PersonModel(tenantId)` · reuse: `person.tenants.push(tenantId)` |
+| Admin user | `users` | id = `uid` (**single-tenant**, one per Firebase identity) | `createUserFromPerson(person, tenantId)` + `bkey=uid` + `roles:{admin:true}` |
 
-Every doc carries `tenants: [tenantId]` (set by each model's constructor); reusing an existing
-person/user across tenants means **appending** the tenantId, not duplicating. No model factory
-functions exist — instantiate the class with `tenantId`.
+Every doc carries `tenants: [tenantId]` (set by each model's constructor). Persons are shared across
+tenants (reuse = append the tenantId); users are single-tenant (one `users/{uid}` per identity). See
+the **`tenant-model`** skill. No model factory functions exist — instantiate the class with `tenantId`.
 
 ## Out of scope (separate work)
 - **Website** (`TENANT-web`) scaffolding — deferred.
@@ -176,9 +165,10 @@ functions exist — instantiate the class with `tenantId`.
   resolves if the `pages` doc **id is `welcome`** (bkey = doc id).
 - Building before the `.env` exists — `set-env.js` needs `FIREBASE_WEBAPP_CONFIG` in the
   environment first.
-- Forgetting `roles: { admin: true }` or the right `tenants` on the first user — the operator
-  then can't administer the new tenant.
-- Reusing an existing user and granting `admin` without realizing **roles are global** — that user
-  becomes admin in every tenant in their `tenants[]`. Use a fresh identity for a tenant-scoped admin.
-- Duplicating a person/user instead of appending the tenantId — persons/users are shared documents
+- Forgetting `roles: { admin: true }` or `bkey = uid` on the first user — the operator then can't
+  log in/administer the new tenant.
+- Binding an email's existing `users/{uid}` to a second tenant — a user is single-tenant and the doc
+  id is the uid, so reusing the uid would clobber the other tenant's user. Use a different admin
+  email (see the **`tenant-model`** skill).
+- Duplicating a **person** instead of appending the tenantId — persons are shared documents
   (`tenants` is `array-contains`-queried); a second doc fragments the identity.
