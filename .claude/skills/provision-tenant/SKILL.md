@@ -32,9 +32,15 @@ Ask for and validate:
   record the intent but only scaffold the app.
 
 ### 2. Register the Firebase Web App `[auto]`
-Use the Firebase MCP in the shared project `bkaiser-org`:
-- `firebase_create_app` — platform `WEB`, displayName `{tenantId}-app` → returns the new `appId`.
-- `firebase_get_sdk_config` (platform WEB, the new appId) → returns the web config object
+Use the Firebase MCP in the shared project `bkaiser-org`. **Check for an existing app first** —
+Firebase Web App display names are NOT unique, so calling `firebase_create_app` twice silently
+creates a duplicate app with a different `appId`. Be resume-safe:
+- `firebase_list_apps` (platform WEB) → look for one whose displayName is `{tenantId}-app`.
+  - **If found:** reuse its `appId` (do NOT create another). Confirm with the operator it is the
+    intended app.
+  - **If not found:** `firebase_create_app` — platform `WEB`, displayName `{tenantId}-app` →
+    returns the new `appId`.
+- `firebase_get_sdk_config` (platform WEB, that `appId`) → returns the web config object
   (`apiKey`, `authDomain`, `projectId`, `storageBucket`, `messagingSenderId`, `appId`,
   `measurementId`). Keep it for step 7.
 
@@ -132,6 +138,9 @@ functions exist — instantiate the class with `tenantId`.
   future direction.
 
 ## Common mistakes
+- Calling `firebase_create_app` without checking first — display names aren't unique, so a re-run
+  creates a **duplicate** Web App (new `appId`, new reCAPTCHA, drifted `.env`). Always
+  `firebase_list_apps` first and reuse the existing `{tenantId}-app` (step 2).
 - Committing `.env` / `environment.ts` / `firebase-config.js` — they are git-ignored; never commit
   secrets (project hard rule).
 - Seeding the welcome page with an auto-generated doc id — the route `public/welcome` only
