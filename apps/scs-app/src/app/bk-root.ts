@@ -80,6 +80,16 @@ import { ConsentService } from '@bk2/consent-data-access';
         display: block;
         width: 33%;
       }
+      /* Covers the (always-mounted) router outlet while the app is not yet ready. */
+      .app-ready-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--ion-background-color, #fff);
+      }
     `,
   ],
   template: `
@@ -137,10 +147,20 @@ import { ConsentService } from '@bk2/consent-data-access';
           disabled/not-visible (matching ion-router-outlet's own absolute fill).
         -->
         <div id="main" class="ion-page">
-          @if (isAppReady()) {
-            <ion-router-outlet />
-          } @else {
-            <bk-spinner />
+          <!--
+            The <ion-router-outlet> must ALWAYS stay in the DOM. Removing it (e.g. via
+            @if) while an Ionic navigation transition is in flight destroys the
+            StackController and crashes with "can't access property 'commit', d is
+            undefined" (StackController.transition reads the cleared containerEl). Feature
+            routes are instead held until the app is ready by isAppReadyGuard (see
+            app.routes.ts); here we only overlay a spinner on top of the still-mounted
+            outlet during the not-ready window.
+          -->
+          <ion-router-outlet />
+          @if (!isAppReady()) {
+            <div class="app-ready-overlay">
+              <bk-spinner />
+            </div>
           }
         </div>
       </ion-split-pane>
@@ -191,35 +211,10 @@ export class BkRoot {
   protected mainMenuName = computed(() => `main_${this.appStore.tenantId()}`);
   protected logoUrl = computed(() => `${this.appStore.services.imgixBaseUrl()}/${getImgixUrlWithAutoParams(this.appStore.appConfig().logoUrl)}`);
 
-  protected isUserSessionReady = computed(() => {
-    const fbUser = this.appStore.fbUser();
-    const currentUser = this.appStore.currentUser();
-
-    // If the Firebase auth state is null, the user is logged out. We are ready.
-    if (fbUser === null) {
-      return true;
-    }
-
-    // If the Firebase auth state is populated, we are only ready if the
-    // corresponding application user object has also been found.
-    if (fbUser && currentUser) {
-      return true;
-    }
-
-    // Otherwise, we are in a transitional state (e.g., logging in but waiting for data).
-    return false;
-  });
-
-  // Gate feature rendering (the router-outlet) until the app is ready. Logged-out
-  // users may render public routes immediately; authenticated users wait until the
-  // UserModel AND the system reference data (categories, read synchronously via
-  // getCategory) have loaded — otherwise feature components crash on a not-yet-loaded
-  // category during the post-login load window (wider on mobile Safari).
-  protected isAppReady = computed(() => {
-    if (!this.isUserSessionReady()) return false;
-    if (this.appStore.fbUser() === null) return true;
-    return this.appStore.areCategoriesReady();
-  });
+  // Single source of truth lives on the AppStore (also consumed by isAppReadyGuard).
+  // isUserSessionReady gates the menu spinner; isAppReady gates the outlet overlay.
+  protected isUserSessionReady = this.appStore.isUserSessionReady;
+  protected isAppReady = this.appStore.isAppReady;
 
   protected hasRole(role: RoleName | undefined): boolean {
     return hasRole(role, this.appStore.currentUser());

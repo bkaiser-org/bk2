@@ -1,13 +1,13 @@
 
 import { Route } from '@angular/router';
-import { isAdminGuard, isAuthenticatedGuard, isPrivilegedGuard } from '@bk2/auth-feature';
+import { isAdminGuard, isAppReadyGuard, isAuthenticatedGuard, isPrivilegedGuard } from '@bk2/auth-feature';
 
-export const appRoutes: Route[] = [
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'public/welcome'
-  },
+// Feature routes are activation-gated by isAppReadyGuard (applied on the wrapping parent
+// in appRoutes below): navigation is held until the app is ready (auth settled +
+// UserModel/categories loaded) instead of removing the <ion-router-outlet> from the DOM.
+// Gating the outlet via @if destroyed it mid-transition and crashed Ionic's
+// StackController ("can't access property 'commit'"). See isAppReadyGuard.
+const featureRoutes: Route[] = [
   {
     path: 'public',
     children: [
@@ -424,4 +424,19 @@ export const appRoutes: Route[] = [
     ],
   },
   { path: '**', loadComponent: () => import('@bk2/cms-page-feature').then(m => m.ErrorPage), data: { errorName: 'pageNotFound' } },
+];
+
+export const appRoutes: Route[] = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'public/welcome'
+  },
+  {
+    // Componentless parent: applies the app-ready gate to every feature route without
+    // ever removing the router outlet from the DOM.
+    path: '',
+    canActivateChild: [isAppReadyGuard],
+    children: featureRoutes,
+  },
 ];
