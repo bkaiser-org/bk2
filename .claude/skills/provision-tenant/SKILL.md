@@ -105,34 +105,44 @@ NX_TASK_TARGET_PROJECT={tenantId}-app ts-node ./set-env.js     # writes environm
 pnpm nx build {tenantId}-app                                   # success = the tenant app is sound
 ```
 
-### 9. First admin user `[manual / app]`
-A new tenant is unusable until one user can log in as admin. **REQUIRED BACKGROUND:** read the
-**`tenant-model`** skill — it explains why `users/{uid}` is single-tenant (doc id = Firebase uid),
-why persons are shared across tenants, and how roles work. The flow below follows from that.
+### 9. First admin user
+A new tenant is unusable until one user can log in as admin. **REQUIRED BACKGROUND:** the
+**`tenant-model`** skill (`users/{uid}` is single-tenant, persons are shared, roles model) and the
+**`address-model`** skill (favorite email → `person.favEmail` replication).
 
-Ask the operator only for the **email**; the rest is automatic except the person.
+**Who does what.** You (the agent) act through the **Firebase MCP** (Firestore reads/writes,
+`auth_get_users`) and the shell — you **cannot** open the app's modals or call its Angular services.
+So you write the Firestore docs directly via MCP (which correctly stamps `tenants: [tenantId]` for
+the *new* tenant); the **operator** creates the Firebase **auth account** (no MCP create-user tool,
+and the new tenant has no admin to do it in-app yet). Ask the operator for the **email**.
 
-**9.0 Probe the email `[auto]`** — the "does it exist / right tenant?" check:
-- `getUidByEmail(email)` → Firebase account? (`uid` or none)
-- If `uid`: `userService.read(uid)` → is there a `UserModel`, and **which tenant** is it bound to?
-  - this tenant → already provisioned (re-run); reuse, just confirm `roles.admin`.
+**9.0 Probe the email `[auto, MCP]`** — "does it exist / right tenant?":
+- `auth_get_users` (by email) → Firebase account? (`uid` or none).
+- If `uid`: `firestore_get_document users/{uid}` → a `UserModel`, and **which tenant** (`tenants[]`)?
+  - this tenant → already provisioned (re-run); confirm `roles.admin`, done.
   - a **different** tenant → ⚠️ conflict (a uid is single-tenant) — use a different admin email.
-  - none → it will be created below.
+  - none → create below.
 
-**A. Firebase account `[auto]`** — email already has one (probe found a `uid`) → use it; else
-`createFirebaseAccount(email, <random password>, displayName)` (AOC → **AdminOps**, wraps the
-`createFirebaseUser` CF; operator signed in as admin) → `uid`. Operator resets the password later
-via the normal reset flow.
+**A. Firebase auth account `[manual]`** — only if the probe found no `uid`. Operator creates it
+(Firebase console → Authentication → Add user, or AOC → AdminOps from an existing admin session — the
+account is project-global). Re-run `auth_get_users` → `uid`. Operator sets the password via reset.
 
-**B. Person `[reuse or new-modal]`** — the one decision:
-- *Found* (linked to the existing user, or picked from `AppStore.allPersons()` / by `favEmail`/name)
-  → reuse; if its `tenants[]` lacks this tenant, append (`person.tenants.push(tenantId)` →
-  `personService.update`).
-- *Not found* → open the **person-new modal** → `personService.create` → `personKey`.
+**B. Person + favorite email `[auto, MCP]`** — ask the operator for **firstName / lastName /
+gender** (`'male'`|`'female'`), then create automatically (operator adds further attributes later):
+- `firestore_add_document persons` → `{ firstName, lastName, gender, tenants:[tenantId],
+  isArchived:false }` → note the `personKey`.
+- `firestore_add_document addresses` → `{ addressChannel:'email', email:<the email>,
+  isFavorite:true, parentKey:personKey, tenants:[tenantId], isArchived:false }`. A DB-triggered CF
+  replicates this into `person.favEmail` — **don't set `favEmail` directly** (see **`address-model`**).
+- (If the probe linked an existing person, reuse its `personKey`; append the tenant if missing.)
 
-**C. Single-tenant admin user `[auto]`** — `createUserFromPerson(person, tenantId)`, then set
-`user.bkey = uid` (doc id = uid) and `user.roles = { admin: true }` (or the narrower set chosen) →
-`userService.create`. Leave `tenants = [tenantId]` (single-tenant).
+**C. Single-tenant admin user `[auto, MCP]`** — `firestore_update_document users/{uid}` (doc id =
+uid): `{ loginEmail:<email>, personKey, firstName, lastName, tenants:[tenantId],
+roles:{ admin:true }, isArchived:false }`.
+
+> **Caveat — direct MCP writes bypass the service layer** (`personService`/`addressService`/
+> `userService` populate search `index`/derived fields). Records work for login + admin and self-heal
+> on the first in-app save.
 
 ## Quick reference
 
@@ -141,8 +151,9 @@ via the normal reset flow.
 | App config | `app-config` | id = `tenantId` | `new AppConfig(tenantId)` |
 | Welcome page | `pages` | id = `bkey` = `welcome` | `new PageModel(tenantId)`, `type:'content'`, `isPrivate:false` |
 | Menu item | `menuItems` | looked up by `name` field | `new MenuItemModel(tenantId)` |
-| Person | `persons` | id = `personKey` (**shared** across tenants) | new: `new PersonModel(tenantId)` · reuse: `person.tenants.push(tenantId)` |
-| Admin user | `users` | id = `uid` (**single-tenant**, one per Firebase identity) | `createUserFromPerson(person, tenantId)` + `bkey=uid` + `roles:{admin:true}` |
+| Person | `persons` | id = `personKey` (**shared** across tenants) | `{ firstName, lastName, gender, tenants:[tenantId] }` |
+| Favorite email | `addresses` | linked by `parentKey` = personKey | `{ addressChannel:'email', email, isFavorite:true, parentKey }` → CF sets `person.favEmail` |
+| Admin user | `users` | id = `uid` (**single-tenant**, one per Firebase identity) | `{ loginEmail, personKey, tenants:[tenantId], roles:{admin:true} }` |
 
 Every doc carries `tenants: [tenantId]` (set by each model's constructor). Persons are shared across
 tenants (reuse = append the tenantId); users are single-tenant (one `users/{uid}` per identity). See
@@ -172,3 +183,5 @@ the **`tenant-model`** skill. No model factory functions exist — instantiate t
   email (see the **`tenant-model`** skill).
 - Duplicating a **person** instead of appending the tenantId — persons are shared documents
   (`tenants` is `array-contains`-queried); a second doc fragments the identity.
+- Setting `person.favEmail` directly — it's replicated from the favorite `email` address by a CF.
+  Create the favorite address instead (see the **`address-model`** skill).

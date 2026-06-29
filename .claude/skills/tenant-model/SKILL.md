@@ -78,6 +78,7 @@ tenant, so granting `admin` is safe and tenant-local.
 | Create Firebase account | `createFirebaseAccount(email, password, displayName)` → uid |
 
 ## Related
+- Contact details (a person's `favEmail`/`favPhone` come from favorite addresses): **`address-model`** skill.
 - Provisioning a whole new tenant: **`provision-tenant`** skill.
 - Deploying / environment generation: **`firebase-deploy`** skill.
 - A second-level **accounting** tenant (`accountingTenantId`) scopes finance data within a tenant —
