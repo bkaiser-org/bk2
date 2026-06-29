@@ -112,7 +112,15 @@ identities**, each *select-existing* or *create-new*: a **Firebase auth account*
 are **shared across tenants** via their `tenants[]` array (`array-contains` queries) — so "reuse"
 means *append the new `tenantId`*, not duplicate. Ask the operator which path for each.
 
-Resolve `email` first, then decide each level:
+**Decision prompt — ask the operator before doing anything in this step:**
+1. *Email* of the first admin?
+2. *Firebase login* — reuse the existing account for this email, or create a new one (with a password)?
+3. *Person* — select an existing person record (search by email/name), or create a new one?
+4. *User* — reuse this email's existing `UserModel` (append the new tenant + admin role — ⚠️ makes
+   them admin in **all** their tenants), or create a fresh tenant-scoped admin user?
+5. *Roles* — `admin` (default), or a narrower set from `Roles`?
+
+Then resolve `email` and apply each level:
 
 **A. Firebase identity (`uid`)**
 - *Reuse existing:* operator gives the email → `getUidByEmail(email)` (CF) → `uid`.
