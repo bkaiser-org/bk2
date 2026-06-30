@@ -5,7 +5,7 @@ but is not yet fully implemented**. Use it to see, at a glance, what is still op
 source doc lives. Each entry links back to its source and lists only the topics that were
 **postponed or excluded** — never a description of what was built.
 
-**Last compiled:** 2026-06-22.
+**Last compiled:** 2026-06-30.
 
 ## Document layout (`docs/`)
 
@@ -90,6 +90,15 @@ Fully-written specs with **no (or only foundational) implementation** yet.
 - 🔴 Whole feature open — two Cloud Functions, two feature modals, `computePersonFieldDiffs` util, new `add()` flow.
 - 🔴 Out of scope — privacy filtering of candidate attributes (memberAdmin-gated, sees all); general merge tool for pre-existing duplicates.
 - 🟡 Accepted simplifications — case-sensitive `lastName` match; fav-field address dedupe heuristic.
+
+### 1.10 Mobile Release Pipeline (local builds + fastlane + Capawesome OTA) — [`2026-06-30-spec-mobile-release-pipeline.md`](specs/2026-06-30-spec-mobile-release-pipeline.md)
+**State:** Open (specified, not started). Supersedes the parked cloud-build approach (`spec-capawesome-native-builds.md`). Local M4 native builds, fastlane store submission, and Capawesome Cloud Live Updates (OTA) for the web layer; only `@capawesome/capacitor-file-picker` is present today — no live-update plugin, channel config, or `Fastfile`.
+- 🔴 Whole pipeline open — fastlane `Fastfile` (iOS/Android lanes), `@capawesome/capacitor-live-update` plugin + `capacitor.config.ts` channel/rollback config, `LiveUpdate.ready()`, versioned `production-N` channels (§7–§9), phased rollout (§14).
+- 🔴 Signing custody — `match`/Keychain certs, Android keystore backup, ASC API key, Play service-account JSON (§6).
+- 🔴 Hybrid CI — OTA bundle upload in GitHub Actions; native release stays local on the M4 (§11).
+- 🔴 §5 binary-compatibility gate + §7 channel discipline to be documented in `CLAUDE.md` (Phase 5).
+- ❓ OTA DPA + EU storage/CDN residency; bundle secret audit; `match` vs local certs; keystore origin; iOS extensions; versioned vs rolling channel; update UX; macOS-runner fallback (§15).
+- 🔴 Out of scope — Capawesome Native Builds / cloud runners; Capawesome publishing; Electron/desktop (§1).
 
 ---
 
@@ -399,3 +408,8 @@ Client-side.
 ### 4.36 QR Payment Slip — [`2026-06-17-qr-payment-slip-design.md`](specs/2026-06-17-qr-payment-slip-design.md)
 Unstructured slip.
 🔴 structured QR references (QRR/SCOR) + QR-IBAN → see awaiting-impl spec 1.2; per-generation QR-setting override; non-CHF currencies.
+
+### 4.37 AOC Session Extension — [`2026-06-24-aoc-session-extension-design.md`](specs/2026-06-24-aoc-session-extension-design.md)
+`aoc-session` list view reworked (bk-list-filter search/status, context menu, per-row ActionSheet, session-detail/statistics modals, `SessionModel.index`, `libs/session/{data-access,util}`).
+🔴 Persisting hidden-user list / chosen duration across reloads; reusable `session` UI lib; pagination/virtual scroll; editing/deleting sessions (read-only admin view) (§8).
+❓ `getSessionIndex` placement; `exportRaw` CSV columns; orphan/stale thresholds (10/30 min) (§9).
