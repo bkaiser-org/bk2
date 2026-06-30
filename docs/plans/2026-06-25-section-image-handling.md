@@ -366,8 +366,8 @@ In `libs/cms/section/util/src/lib/section-i18n.ts`, inside the `SECTION_I18N_KEY
   // image upload / advanced toggle
   form_advanced_label:                      PFX + 'form.advanced.label',
   image_upload_action:                      PFX + 'image.upload.action',
-  image_upload_slot_logo:                   PFX + 'image.upload.slot.logo',
-  image_upload_slot_hero:                   PFX + 'image.upload.slot.hero',
+  image_upload_slot_logo:                   PFX + 'image.upload.logo',
+  image_upload_slot_hero:                   PFX + 'image.upload.hero',
   image_overwrite_title:                    PFX + 'image.overwrite.title',
   image_overwrite_message:                  PFX + 'image.overwrite.message',
 ```
