@@ -83,6 +83,10 @@ export const appConfig: ApplicationConfig = {
         defaultLang: 'de',
         reRenderOnLangChange: true,
         prodMode: !isDevMode(),
+        // Retry a failed scope/lang fetch before giving up (helps transient network blips).
+        // Note: this does NOT cover Safari aborting in-flight requests on reload — that case is
+        // handled by the catchError in I18nService.translate(), since the page is unloading.
+        failedRetries: 3,
       },
       loader: TranslocoHttpLoader,
     }),
