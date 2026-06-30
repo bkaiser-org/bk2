@@ -1822,7 +1822,7 @@ import { EsignService } from '@bk2/esign-data-access';
             <ion-icon src="{{ 'reload' | svgIcon }}" slot="icon-only" />
           </ion-button>
           <ion-button (click)="close()">
-            <ion-icon src="{{ 'close' | svgIcon }}" slot="icon-only" />
+            <ion-icon src="{{ 'cancel' | svgIcon }}" slot="icon-only" />
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
