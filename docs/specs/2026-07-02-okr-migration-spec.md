@@ -84,20 +84,26 @@ Measured against the current tree. Each row is a codemod pass with its own verif
 | Component selectors | `bk-*` → `okr-*` | ~224 distinct (`selector:`, templates, 2 scss files) | Verify no global CSS elsewhere. |
 | Class / type names | `Bk*` → `Okr*` | 9: `BkModel`, `BkModels`, `BkRoot`, `BkEnvironment`, `BkAvatar`, `BkEditor`, `BkListSkeleton`, `BkLabelSelectModal`, `BkSpinnerName` | |
 | Helper fn names | `bk<X>` → `okr<X>` | 11: `bkError`, `bkTranslate`, `bkPrompt`, `bkComment`, `bkValue`, `bkSearch`, `bkSearchCity`, `bkShowToast`, `bkQuickEntry`, `bkAutofocus`, `bkFocus` | |
-| Brand / project text | `bk2` → `okr`, `bkaiser-org` → `openkring` (repo refs), project name in `nx.json` / root `package.json` / README | thousands of text hits | Curated; see exclusions. |
+| Brand / project text | `bk2` → `okr`, project name in `nx.json` / root `package.json` / README | thousands of text hits | Curated; see exclusions. **`bkaiser-org` is NOT renamed** (it is the Firebase project id *and* the GitHub org for private repos). |
+| File renames (`git mv`) | `apps/<app>/…/bk-root.ts` → `okr-root.ts`; `**/bk-config.ts` → `**/okr-config.ts` (+ update the `.gitignore` pattern) | `bk-root.ts` (1 per app), `bk-config.ts` (git-ignored) | Done with the `BkRoot`→`OkrRoot` class rename (2b). `bk-config.ts` is generated/ignored like `set-env.js`. |
 | Root `*.md` triage | each of AUTH.md, BEXIO.md, INVOICE.md, APPARCH.md, ERROR_MONITORING.md, FCM_SETUP_GUIDE.md, FEATURES.md, OVERVIEW.md, OPERATIONS.md, README.md | ~12 files | Sort each → public `docs/` (rewritten) or private `planning/`. |
 
 ### Exclusion list (MUST NOT be renamed)
 
 The rename must **not** touch infrastructure/data identifiers:
 
-- Firebase project ids and `.firebaserc`.
+- **Firebase project id `bkaiser-org`** (`.firebaserc` `"default": "bkaiser-org"`) and every derived URL
+  (`bkaiser-org.web.app`, `bkaiser-org.firebasestorage.app`, etc.) in `storage.ts`, `environment.ts`,
+  and elsewhere. **The literal string `bkaiser-org` is never renamed** — it doubles as the Firebase
+  project id and the GitHub org owning the private repos.
+- **imgix base url `bkaiser.imgix.net`** (13 files) — stays.
 - Firebase Hosting target/site names in `firebase.json`.
 - Firestore collection names and document-field names that are **stored** (e.g. `personKey`,
   `orgKey`, `memberKey`, `parentKey`, `folderKeys`, and every stored `key` field).
 - Any secret/env var names read by `set-env.js` / GCP Secret Manager.
-- `**/bk-config.ts` filename pattern in `.gitignore` (verify whether it must become `okr-config.ts`;
-  if so, update the ignore rule together with the file, but treat as config, not brand text).
+- **Repository URLs / git remotes** (`bkaiser-org/bk2`, `repository` fields, README badges): do **not**
+  let the blanket `bk2`→`okr` codemod touch these — the public repo becomes `openkring/okr` and each
+  private app becomes `bkaiser-org/<app>`, set per-repo during Phase 6, not by text replace.
 
 ## 5. Data & Schema Consequences of `bkey` → `okey`
 
@@ -200,7 +206,8 @@ Operate on **mirror clones** so `filter-repo` can rewrite history safely.
   build against the `@okr/*` libs from the core.
 - Create the **public** `openkring/okr` repo, push the purged core.
 - Set `bkaiser-org/bk2` **private** (archive).
-- Update Firebase/CI/remotes (`origin`), and any repo references in deploy config.
+- Update the local `origin` remote and per-repo `repository`/README URLs (public → `openkring/okr`,
+  private apps → `bkaiser-org/<app>`). No CI to update (manual Firebase Hosting deploy).
 
 **Gate:** `openkring/okr` is public and contains no private paths in history or tree.
 **Depends on:** Phase 5.
@@ -240,11 +247,14 @@ remove private paths from past commits.
 | Work corrupts the reference | All work in `~/proj/bkaiser/okr`; `bk2` untouched until Phase 7. |
 | Public contributor confusion (empty submodule dirs) | Document topology + onboarding in Phase 7. |
 
-## 9. Open Questions
+## 9. Resolved Questions
 
-- **Video-producer coupling:** confirm the `_producer` pipeline has no hard dependency on the old
-  `docs/documentation/videos/` path once moved under `planning/video-producer/`.
-- **`bk-config.ts` ignore pattern:** decide whether the config filename becomes `okr-config.ts`
-  (config, not brand text — verify usages before changing).
-- **CI provider:** identify any CI/CD (GitHub Actions, etc.) referencing `bkaiser-org/bk2` or `@bk2/*`
-  that must be updated in Phase 6.
+- **D11 (public history):** approved — `git filter-repo` preserving libs/functions history, with the
+  single-genesis-commit fallback only if the Phase 5 secret scan finds unremovable secrets.
+- **Video-producer coupling:** confirmed no hard dependency on the old `docs/documentation/videos/`
+  path once moved under `planning/video-producer/`.
+- **`bk-config.ts`:** becomes `okr-config.ts` (rename the file + the `.gitignore` pattern).
+- **CI:** none. Deployment is manual via Firebase Hosting — no CI/CD repo references to update. Phase 6
+  only updates the local `origin` remote and per-repo `repository` fields.
+- **`bkaiser-org` / imgix:** the Firebase project id `bkaiser-org` and imgix base url
+  `bkaiser.imgix.net` remain unchanged (see the §4 exclusion list).
