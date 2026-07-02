@@ -77,7 +77,9 @@ Measured against the current tree. Each row is a codemod pass with its own verif
 
 | Category | From → To | Approx. scale | Notes |
 |---|---|---|---|
-| Import alias namespace | `@bk2/*` → `@okr/*` | 211 tsconfig paths, ~1019 import sites, every lib `package.json` `name` | Largest, mechanical. |
+| Import alias namespace | `@bk2/*` → `@okr/*` | 211 paths in `tsconfig.base.json` + 5 in `tsconfig.base.build.json` + per-lib `libs/shared/util-core/tsconfig.lib.json`; ~1019 import sites; every lib `package.json` `name` | Largest, mechanical. **All** tsconfig path maps, not just `tsconfig.base.json`. |
+| Nx workspace scope | `nx.json` `"npmScope": "bk2"` → `"okr"` | 1 | **Root cause** of `@bk2/` — generators derive the alias from it. Must change or new libs regenerate as `@bk2/`. |
+| Angular selector prefix | `project.json` `"prefix": "bk"` → `"okr"` | 209 files | ⚠️ Must change **in the same pass** as the `bk-*`→`okr-*` selector rename (2b); otherwise `@angular-eslint/component-selector` lint fails and new components regenerate as `bk-*`. |
 | Doc-id field | `bkey` → `okey` | ~981 `.bkey` sites, ~40 model decls, 5 `idField:` sites, strip-before-write deletes | Code-only, no data migration (§5). |
 | Component selectors | `bk-*` → `okr-*` | ~224 distinct (`selector:`, templates, 2 scss files) | Verify no global CSS elsewhere. |
 | Class / type names | `Bk*` → `Okr*` | 9: `BkModel`, `BkModels`, `BkRoot`, `BkEnvironment`, `BkAvatar`, `BkEditor`, `BkListSkeleton`, `BkLabelSelectModal`, `BkSpinnerName` | |
@@ -138,11 +140,17 @@ All work happens in `~/proj/bkaiser/okr`, a fresh clone of `bk2`. `bk2` stays un
 Ordered by blast radius; each sub-step is a codemod + its own verification gate. Prefer `git mv` for
 file renames and scripted find/replace (ripgrep + `sed`/`comby`/ts-morph) for identifiers.
 
-- **2a Namespace:** `@bk2/*` → `@okr/*` — `tsconfig.base.json` (211 paths), every lib `package.json`
-  `name`, all import sites. Gate: `tsc --noEmit` per lib + `nx build` for a representative app.
-- **2b Structural:** `bkey`→`okey` (incl. `idField:` + strip deletes); `bk-*`→`okr-*` selectors (incl.
-  `selector:`, templates, scss); `Bk*`→`Okr*` classes; `bk<X>`→`okr<X>` fns. One pass per identifier
-  class, each gated by build + type-check.
+- **2a Namespace + Nx scope:** set `nx.json` `"npmScope": "okr"`; `@bk2/*` → `@okr/*` in **all** path
+  maps (`tsconfig.base.json` 211, `tsconfig.base.build.json` 5, `libs/shared/util-core/tsconfig.lib.json`);
+  every lib `package.json` `name`; the 3 `vite/vitest.config.*` module mappers that reference `@bk2`;
+  all import sites. Gate: `tsc --noEmit` per lib + `nx build` for a representative app. Sanity-check:
+  `nx generate` a throwaway lib produces `@okr/…`, then discard. Note: the git-ignored generated
+  `set-env.js` (imports `@bk2/shared-config`/`BkEnvironment`) is not in the repo but must be
+  regenerated/updated locally or the dev `environment.ts` step breaks.
+- **2b Structural + selector prefix:** `bkey`→`okey` (incl. `idField:` + strip deletes); `bk-*`→`okr-*`
+  selectors (incl. `selector:`, templates, scss) **together with** flipping `"prefix": "bk"`→`"okr"` in
+  all 209 `project.json` (same pass — lint enforces the prefix against the selectors); `Bk*`→`Okr*`
+  classes; `bk<X>`→`okr<X>` fns. One pass per identifier class, each gated by build + type-check + lint.
 - **2c Brand/text + doc triage:** `bk2`→`okr`, `bkaiser-org`→`openkring` repo refs, project name in
   `nx.json`/`package.json`/README. Triage root `*.md` (§4) into public `docs/` (rewritten) vs private
   `planning/`. Update the `docs/specs`→`planning/specs` convention in `CLAUDE.md` and the
