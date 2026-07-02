@@ -36,6 +36,11 @@ Fully-written specs with **no (or only foundational) implementation** yet.
 **State:** Open. No `libs/finance/salary*` exists yet.
 - 🔴 Whole feature open. Drives the deferred Sozialabgaben config (idea 2.3) and depends on the accounting core (Accounting, ch 3).
 
+### 1.1a bk2 → okr / openkring Migration — [`2026-07-02-okr-migration-spec.md`](specs/2026-07-02-okr-migration-spec.md)
+**State:** Open. Whole-repo rebrand (`bk2`/`@bk2`→`okr`/`@okr`, `bkey`→`okey`) + split into public `openkring/okr` core plus private per-app / planning / skills submodules.
+- 🔴 Phases 0–7 all open (baseline → untrack transient dirs → deep rename → dir reorg → filter-repo split → purged public core + secret scan → wire submodules & publish → cutover verify).
+- ❓ Video-producer path coupling, `bk-config.ts`→`okr-config.ts`, CI refs to `bkaiser-org/bk2` (§9 open questions).
+
 ### 1.2 QR Payment Reference & Bank Reconciliation — [`2026-06-17-qr-payment-reference-reconciliation-spec.md`](specs/2026-06-17-qr-payment-reference-reconciliation-spec.md)
 **State:** Partially implemented (slip/Phase 0 work landing via the [QR Payment Slip design](specs/2026-06-17-qr-payment-slip-design.md); reconciliation phases open).
 - 🟡 Phase 0 — `InvoiceModel.paymentReference`, `isQrIban` classifier, QRR generator, dual-IBAN slip logic.
